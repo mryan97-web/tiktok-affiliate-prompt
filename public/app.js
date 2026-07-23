@@ -176,7 +176,8 @@ function getOptions() {
   const selectors = [
     'gender', 'ethnicity', 'age', 'bodyType', 'expression', 'pose',
     'shotType', 'cameraAngle', 'background', 'artStyle', 'lighting',
-    'colorTone', 'hairStyle', 'mood', 'clothing', 'bottoms', 'accessories', 'hairColor'
+    'colorTone', 'hairStyle', 'mood', 'activity', 'timeOfDay',
+    'clothing', 'bottoms', 'accessories', 'hairColor'
   ];
   const options = {};
   selectors.forEach(id => {

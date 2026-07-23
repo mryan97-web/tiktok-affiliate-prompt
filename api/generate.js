@@ -160,6 +160,8 @@ function buildCustomParams(options) {
   if (options.bottoms) parts.push(`- Bawahan: ${options.bottoms}`);
   if (options.accessories) parts.push(`- Aksesoris: ${options.accessories}`);
   if (options.mood) parts.push(`- Mood/Suasana: ${options.mood}`);
+  if (options.activity) parts.push(`- Aktivitas/Adegan: ${options.activity}`);
+  if (options.timeOfDay) parts.push(`- Waktu: ${options.timeOfDay}`);
   if (options.ethnicity) parts.push(`- Etnis/Kulit: ${options.ethnicity}`);
   if (options.bodyType) parts.push(`- Body Type: ${options.bodyType}`);
   if (options.age) parts.push(`- Rentang Usia: ${options.age}`);
