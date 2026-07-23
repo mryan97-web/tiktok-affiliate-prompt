@@ -256,8 +256,22 @@ async function generatePrompt() {
 
 // ===== RENDER RESULT =====
 function renderResult(data) {
-  const prompt = data.prompt || {};
+  let prompt = data.prompt || {};
   const raw = data.raw || '';
+
+  // Fallback: if prompt object is empty or has no prompt_utama, try parsing from raw JSON
+  if (!prompt.prompt_utama && raw) {
+    try {
+      const rawJsonMatch = raw.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (rawJsonMatch) {
+        const parsed = JSON.parse(rawJsonMatch[1]);
+        prompt = parsed;
+      }
+    } catch (e) {
+      // ignore parse failure
+    }
+  }
+
   const breakdown = prompt.detail_prompt_breakdown || {};
   const mainPrompt = prompt.prompt_utama || '';
 
