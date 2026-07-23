@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Gemini API key not configured' });
 
-    const targetModels = ['gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-2.0-flash'];
+    const targetModels = ['gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-3-pro-preview', 'gemini-3-flash-preview'];
 
     // Step 1: listModels — cek model terdaftar
     let registered = new Set();
