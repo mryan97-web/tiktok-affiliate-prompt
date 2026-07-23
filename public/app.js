@@ -1,447 +1,283 @@
-/* === TikTok Affiliate Prompt Generator — Frontend JS === */
+/* === Generator Prompt Model by Areka Official Store === */
+/* LEGO Master Database System — karakter konsisten, tinggal ganti produk */
+
+const $ = id => document.getElementById(id);
 
 const state = {
-  imageData: null,
-  mimeType: null,
-  fileName: null,
-  faceImageData: null,
-  faceMimeType: null,
-  faceFileName: null,
-  loading: false,
-  apiKey: null,
+  masterModel: 'Indonesian male, 22 years old, Southeast Asian, 172 cm, slim athletic body, neat side-part hairstyle, tan skin, clean-shaven',
+  masterStudio: 'White cyclorama studio, softbox right and left, grey floor, soft diffused shadow',
+  masterCamera: 'Camera directly behind, eye level, locked camera, 85mm lens, f/2.8, center composition, vertical 9:16',
+  masterPose: 'One hand in pocket, relaxed',
+  masterProduct: '',
 };
 
-// ===== DOM REFS =====
-const $ = id => document.getElementById(id);
-const uploadZone = $('uploadZone');
-const fileInput = $('fileInput');
-const previewImage = $('previewImage');
-const uploadPlaceholder = $('uploadPlaceholder');
-const btnRemove = $('btnRemove');
-const faceUploadZone = $('faceUploadZone');
-const faceFileInput = $('faceFileInput');
-const previewFace = $('previewFace');
-const facePlaceholder = $('facePlaceholder');
-const btnRemoveFace = $('btnRemoveFace');
-const btnGenerate = $('btnGenerate');
-const loaderOverlay = $('loaderOverlay');
-const outputEmpty = $('outputEmpty');
-const outputResult = $('outputResult');
-const outputContent = $('outputContent');
-const toast = $('toast');
+const POSE_SUFFIX = {
+  'Hands on hips, confident stance': 'The model stands with hands on hips, elbows slightly bent, fingers spread confidently, shoulders back.',
+  'One hand in pocket, relaxed': 'The model stands with left hand casually in pocket, right hand relaxed at side, slight natural stance.',
+  'Relaxed standing, arms at sides': 'The model stands naturally with arms relaxed at sides, weight shifted slightly to one leg for a natural look.',
+  'Walking slowly forward': 'The model walks slowly forward toward camera with natural gait, slight arm swing, relaxed expression.',
+  'Looking over shoulder back at camera': 'The model looks back over right shoulder toward camera, body slightly turned away, hand near pocket.',
+  'Crossed arms, slight smirk': 'The model stands with arms crossed at chest, slight smirk, confident and relaxed upper body.',
+  'Holding phone, looking down': 'The model holds smartphone in right hand at waist level, gaze directed down at phone screen.',
+  'Adjusting collar, looking up': 'The model adjusts collar with right hand, chin slightly lifted, gaze directed slightly upward toward camera.',
+};
 
-// ===== CHECK API HEALTH =====
-async function checkAPI() {
-  const statusEl = $('apiStatus');
-  statusEl.textContent = '⚪ Checking...';
-  
-  try {
-    const res = await fetch('/api/generate', { method: 'OPTIONS' });
-    if (res.ok || res.status === 405) {
-      statusEl.textContent = '✅ API Ready';
-      statusEl.className = 'api-status online';
-      state.apiKey = 'configured';
-    } else {
-      statusEl.textContent = '⚠️ API Issue';
-      statusEl.className = 'api-status';
-    }
-  } catch {
-    statusEl.textContent = '🔴 API Offline';
-    statusEl.className = 'api-status offline';
-  }
+const PRODUCTS = [
+  { value: '', label: '— Pilih produk —' },
+  { value: 'Black cotton oversized T-shirt', label: 'Kaos Oversized Hitam' },
+  { value: 'Maroon cotton oversized T-shirt', label: 'Kaos Oversized Maroon' },
+  { value: 'Cream cotton oversized T-shirt', label: 'Kaos Oversized Cream' },
+  { value: 'White cotton oversized T-shirt', label: 'Kaos Oversized Putih' },
+  { value: 'Navy blue cotton oversized T-shirt', label: 'Kaos Oversized Navy' },
+  { value: 'Olive green cotton oversized T-shirt', label: 'Kaos Oversized Olive' },
+  { value: 'Charcoal grey oversized hoodie', label: 'Hoodie Oversized Charcoal' },
+  { value: 'Black oversized hoodie', label: 'Hoodie Oversized Hitam' },
+  { value: 'Cream oversized hoodie', label: 'Hoodie Oversized Cream' },
+  { value: 'Cargo pants black', label: 'Cargo Pants Hitam' },
+  { value: 'Cargo pants army green', label: 'Cargo Pants Army Green' },
+  { value: 'Blue straight jeans', label: 'Jeans Blue Straight' },
+  { value: 'Black slim jeans', label: 'Jeans Black Slim' },
+  { value: 'Grey sweatpants', label: 'Sweatpants Abu' },
+  { value: 'Denim jacket', label: 'Denim Jacket' },
+  { value: 'White sneakers', label: 'Sneakers Putih' },
+];
+
+// ===== INIT: sync DOM → state =====
+function initSync() {
+  state.masterModel = $('masterModel').value;
+  state.masterStudio = $('masterStudio').value;
+  state.masterCamera = $('masterCamera').value;
+  state.masterPose = $('masterPose').value;
+  state.masterProduct = $('masterProduct').value;
+
+  $('masterModel').addEventListener('input', () => { state.masterModel = $('masterModel').value; });
+  $('masterStudio').addEventListener('input', () => { state.masterStudio = $('masterStudio').value; });
+  $('masterCamera').addEventListener('input', () => { state.masterCamera = $('masterCamera').value; });
+  $('masterPose').addEventListener('change', () => { state.masterPose = $('masterPose').value; });
+  $('masterProduct').addEventListener('change', () => { state.masterProduct = $('masterProduct').value; });
 }
 
-// ===== MAIN IMAGE UPLOAD =====
-uploadZone.addEventListener('click', () => fileInput.click());
+// ===== BUILD PROMPT (LEGO style) =====
+function buildImagePrompt() {
+  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
+  if (!masterProduct) return '';
 
-uploadZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadZone.classList.add('dragover');
-});
+  const poseDetail = POSE_SUFFIX[masterPose] || '';
+  const product = masterProduct;
 
-uploadZone.addEventListener('dragleave', () => {
-  uploadZone.classList.remove('dragover');
-});
-
-uploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadZone.classList.remove('dragover');
-  if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-});
-
-fileInput.addEventListener('change', (e) => {
-  if (e.target.files.length > 0) handleFile(e.target.files[0]);
-});
-
-function handleFile(file) {
-  if (!file.type.match(/image\/(jpeg|png|webp)/)) {
-    showToast('Format gambar harus JPG, PNG, atau WEBP', 'error');
-    return;
-  }
-  if (file.size > 10 * 1024 * 1024) {
-    showToast('File terlalu besar. Maks 10MB', 'error');
-    return;
-  }
-
-  state.fileName = file.name;
-  state.mimeType = file.type;
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    state.imageData = e.target.result.split(',')[1];
-    previewImage.src = e.target.result;
-    previewImage.classList.remove('hidden');
-    uploadPlaceholder.classList.add('hidden');
-    btnRemove.classList.remove('hidden');
-    $('faceRefCard').classList.remove('hidden');
-    btnGenerate.disabled = false;
-    showToast('Gambar siap! ✅', 'success');
-  };
-  reader.readAsDataURL(file);
+  return [
+    `A full-length portrait photo of a ${masterModel}.`,
+    poseDetail,
+    `Wearing: ${product}.`,
+    `Studio: ${masterStudio}. Camera: ${masterCamera}.`,
+    `Soft natural studio lighting, clean commercial fashion look, high detail, 4k, product photography style for TikTok shop.`
+  ].join(' ');
 }
 
-function removeImage() {
-  state.imageData = null;
-  state.mimeType = null;
-  state.fileName = null;
-  previewImage.classList.add('hidden');
-  uploadPlaceholder.classList.remove('hidden');
-  btnRemove.classList.add('hidden');
-  fileInput.value = '';
-  $('faceRefCard').classList.add('hidden');
-  removeFaceImage();
-  btnGenerate.disabled = true;
+function buildVideoPromptUniversal() {
+  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
+  if (!masterProduct) return '';
+
+  const poseDesc = POSE_SUFFIX[masterPose] || masterPose;
+
+  return [
+    `Use the uploaded image as the first frame and visual reference.`,
+    `Keep exactly the same model identity: ${masterModel}.`,
+    `Keep exactly the same studio and lighting: ${masterStudio}.`,
+    `Keep exactly the same camera and framing: ${masterCamera}.`,
+    `Keep exactly the same pose: ${poseDesc}`,
+    `The model wears: ${masterProduct}.`,
+    `Only the clothing is different from the reference image. Everything else must remain identical.`,
+    `Slow cinematic movement, soft focus breathing, 5 seconds, smooth loop, 9:16 vertical, TikTok format.`
+  ].join('\n');
 }
 
-// ===== FACE REFERENCE UPLOAD =====
-faceUploadZone.addEventListener('click', () => faceFileInput.click());
+function buildVideoPromptVeo() {
+  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
+  if (!masterProduct) return '';
 
-faceUploadZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  faceUploadZone.classList.add('dragover');
-});
+  const poseDesc = POSE_SUFFIX[masterPose] || masterPose;
 
-faceUploadZone.addEventListener('dragleave', () => {
-  faceUploadZone.classList.remove('dragover');
-});
+  return [
+    `Frame 0 (reference): uploaded image of Indonesian male model in ${masterProduct}.`,
+    `Frame 1-24 (0-2s): ${poseDesc}. Camera locked at eye level, 85mm f/2.8, center composition. The model wears ${masterProduct} on a white cyclorama studio with softbox lighting.`,
+    `Frame 25-48 (2-4s): slow subtle breathing motion — chest rises naturally, slight micro-movement in shoulders and arms.`,
+    `Frame 49-60 (4-5s): hold pose with micro-expression — slight natural eye blink.`,
+    `Consistent: same model, same studio, same lighting, same camera position, same framing. Only the ${masterProduct} remains as the product focus.`,
+    `9:16 vertical, 5 seconds, loop-ready, photorealistic, studio product showcase style.`
+  ].join('\n');
+}
 
-faceUploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  faceUploadZone.classList.remove('dragover');
-  if (e.dataTransfer.files.length > 0) handleFaceFile(e.dataTransfer.files[0]);
-});
+// ===== GENERATE =====
+function generatePrompt() {
+  const btn = $('btnGenerate');
 
-faceFileInput.addEventListener('change', (e) => {
-  if (e.target.files.length > 0) handleFaceFile(e.target.files[0]);
-});
-
-function handleFaceFile(file) {
-  if (!file.type.match(/image\/(jpeg|png|webp)/)) {
-    showToast('Format gambar harus JPG, PNG, atau WEBP', 'error');
-    return;
-  }
-  if (file.size > 10 * 1024 * 1024) {
-    showToast('File terlalu besar. Maks 10MB', 'error');
+  if (!state.masterProduct) {
+    showToast('Pilih produk dulu!');
     return;
   }
 
-  state.faceFileName = file.name;
-  state.faceMimeType = file.type;
+  btn.disabled = true;
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    state.faceImageData = e.target.result.split(',')[1];
-    previewFace.src = e.target.result;
-    previewFace.classList.remove('hidden');
-    facePlaceholder.classList.add('hidden');
-    btnRemoveFace.classList.remove('hidden');
-    showToast('Face reference siap! ✅', 'success');
-  };
-  reader.readAsDataURL(file);
-}
+  // Buat semua prompt lokal (instant — no API needed)
+  const imagePrompt = buildImagePrompt();
+  const videoUniversal = buildVideoPromptUniversal();
+  const videoVeo = buildVideoPromptVeo();
 
-function removeFaceImage() {
-  state.faceImageData = null;
-  state.faceMimeType = null;
-  state.faceFileName = null;
-  previewFace.classList.add('hidden');
-  facePlaceholder.classList.remove('hidden');
-  btnRemoveFace.classList.add('hidden');
-  previewFace.src = '';
-  faceFileInput.value = '';
-}
-
-// ===== DROPDOWN HELPERS =====
-function getOptions() {
-  const selectors = [
-    'gender', 'ethnicity', 'age', 'bodyType', 'expression', 'pose',
-    'shotType', 'cameraAngle', 'background', 'artStyle', 'lighting',
-    'colorTone', 'hairStyle', 'mood', 'activity', 'timeOfDay',
-    'clothing', 'bottoms', 'accessories', 'hairColor'
-  ];
-  const options = {};
-  selectors.forEach(id => {
-    const val = $(id).value;
-    if (val) options[id] = val;
+  renderResult({
+    imagePrompt,
+    videoUniversal,
+    videoVeo,
+    product: state.masterProduct,
+    pose: state.masterPose,
+    model: state.masterModel,
+    raw: '',
+    usage: {}
   });
-  const extra = $('extraDetails').value.trim();
-  if (extra) options.extraDetails = extra;
-  return options;
+
+  showToast('Prompt siap! ✅', 'success');
+  btn.disabled = false;
 }
 
-function resetAll() {
-  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-  $('extraDetails').value = '';
-  removeFaceImage();
-  showToast('Semua opsi direset', 'success');
-}
-
-// ===== GENERATE PROMPT =====
-async function generatePrompt() {
-  if (!state.imageData) {
-    showToast('Upload gambar dulu!', 'error');
-    return;
-  }
-
-  if (btnGenerate.classList.contains('loading')) return;
-
-  // Animate button
-  btnGenerate.classList.add('loading');
-  btnGenerate.innerHTML = `
-    <div class="spinner" style="width:16px;height:16px;border-width:2px;"></div>
-    Menganalisis...
-  `;
-  
-  loaderOverlay.classList.remove('hidden');
-  outputEmpty.classList.add('hidden');
-  outputResult.classList.add('hidden');
-  outputResult.innerHTML = '';
-
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        image: state.imageData,
-        mimeType: state.mimeType,
-        faceImage: state.faceImageData,
-        faceMimeType: state.faceMimeType,
-        options: getOptions(),
-        model: $('modelSelect').value
-      })
-    });
-
-    const data = await res.json();
-
-    if (!data.success) {
-      throw new Error(data.error || 'Gagal generate');
-    }
-
-    renderResult(data);
-    showToast('Prompt berhasil di-generate! ✅', 'success');
-
-  } catch (err) {
-    showToast('Error: ' + err.message, 'error');
-    outputEmpty.classList.remove('hidden');
-  } finally {
-    btnGenerate.classList.remove('loading');
-    btnGenerate.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-      Generate Prompt
-    `;
-    loaderOverlay.classList.add('hidden');
-  }
-}
-
-// ===== RENDER RESULT =====
+// ===== RENDER =====
 function renderResult(data) {
-  let prompt = data.prompt || {};
-  const raw = data.raw || '';
+  const out = $('outputArea');
+  const footer = $('outputFooter');
+  const tokenCount = $('tokenCount');
 
-  // Fallback: if prompt object is empty or has no prompt_utama, try parsing from raw JSON
-  if (!prompt.prompt_utama && raw) {
-    try {
-      const rawJsonMatch = raw.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (rawJsonMatch) {
-        const parsed = JSON.parse(rawJsonMatch[1]);
-        prompt = parsed;
-      }
-    } catch (e) {
-      // ignore parse failure
-    }
-  }
-
-  const breakdown = prompt.detail_prompt_breakdown || {};
-  const mainPrompt = prompt.prompt_utama || prompt.prompt_gambar || '';
-  const videoPrompt = prompt.prompt_video_universal || prompt.prompt_video || prompt.prompt_video_umum || '';
-  const videoGeminiVeo = prompt.prompt_video_gemini_veo3 || prompt.prompt_video_gemini_veo || '';
+  const imgPrompt = data.imagePrompt || '';
+  const vidUniversal = data.videoUniversal || '';
+  const vidVeo = data.videoVeo || '';
+  const product = data.product || state.masterProduct;
+  const pose = data.pose || state.masterPose;
+  const model = data.model || state.masterModel;
 
   let html = '';
 
-  // Main prompt (Gambar)
-  if (mainPrompt) {
-    html += `<div class="prompt-section video-section">
-      <div class="prompt-section-header">📸 <strong>Prompt Gambar</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(mainPrompt).replace(/'/g, "\\'")}')">📋 Salin</span></div>
-      <div class="prompt-main">${escapeHtml(mainPrompt)}</div>
-    </div>`;
-  }
-
-  // Video prompts
-  if (videoPrompt) {
-    html += `<div class="prompt-section video-section">
-      <div class="prompt-section-header">🎬 <strong>Prompt Video (Universal)</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(videoPrompt).replace(/'/g, "\\'")}')">📋 Salin</span></div>
-      <div class="prompt-main">${escapeHtml(videoPrompt)}</div>
-      <div class="video-badges">
-        <span>🎥 Gemini Video</span><span>🎬 Runway</span><span>📽️ Kling</span><span>✨ Pika</span><span>🌟 Sora</span>
+  // Summary table
+  html += `
+    <div class="output-section">
+      <div class="output-section-header">
+        <span>📋 Ringkasan Rakitan</span>
       </div>
-    </div>`;
-  }
-  if (videoGeminiVeo) {
-    html += `<div class="prompt-section video-section">
-      <div class="prompt-section-header">🎥 <strong>Prompt Video — Gemini & Veo 3</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(videoGeminiVeo).replace(/'/g, "\\'")}')">📋 Salin</span></div>
-      <div class="prompt-main">${escapeHtml(videoGeminiVeo)}</div>
-      <div class="video-badges">
-        <span>🧠 Gemini Video</span><span>🎥 Veo 3</span>
-      </div>
-    </div>`;
-  }
+      <table class="output-summary-table">
+        <tr><td>Model</td><td>${escapeHtml(model)}</td></tr>
+        <tr><td>Produk</td><td>${escapeHtml(product)}</td></tr>
+        <tr><td>Pose</td><td>${escapeHtml(pose)}</td></tr>
+      </table>
+    </div>
+  `;
 
-  // Map Indonesian snake_case -> display labels
-  const sectionMap = [
-    { key: 'gender_dan_demografi', label: '1. Gender & Demografi' },
-    { key: 'ekspresi_wajah', label: '2. Ekspresi Wajah' },
-    { key: 'pose_dan_gesture', label: '3. Pose & Gesture' },
-    { key: 'shot_type', label: '4. Shot Type' },
-    { key: 'camera_angle', label: '5. Camera Angle' },
-    { key: 'background_location', label: '6. Background / Location' },
-    { key: 'art_style', label: '7. Art Style' },
-    { key: 'lighting', label: '8. Lighting' },
-    { key: 'color_tone', label: '9. Color Tone' },
-    { key: 'warna_dominan', label: '10. Warna Dominan' },
-    { key: 'detail_pakaian_dan_aksesoris', label: '11. Detail Pakaian & Aksesoris' },
-    { key: 'detail_rambut', label: '12. Detail Rambut' },
-    { key: 'vibe_mood_suasana', label: '13. Vibe / Mood / Suasana' },
-    { key: 'detail_fitur_wajah', label: '14. Detail Fitur Wajah' },
-  ];
-
-  for (const { key, label } of sectionMap) {
-    const content = breakdown[key] || prompt[key];
-    if (content && content !== 'N/A' && !content.startsWith('Tidak ada')) {
-      html += `
-        <div class="prompt-section">
-          <h4>${escapeHtml(label)}</h4>
-          <p>${escapeHtml(typeof content === 'string' ? content : JSON.stringify(content, null, 2))}</p>
-        </div>
-      `;
-    }
-  }
-
-  // Raw toggle
-  if (raw) {
+  // Image prompt
+  if (imgPrompt) {
     html += `
-      <div class="raw-toggle" onclick="toggleRaw(this)">
-        📄 Lihat response mentah
-      </div>
-      <div class="raw-content" style="display:none">
-        <pre style="font-size:11px;color:var(--text-muted);text-align:left;white-space:pre-wrap;max-height:300px;overflow-y:auto;">${escapeHtml(raw)}</pre>
+      <div class="output-section">
+        <div class="output-section-header">
+          <span><span class="output-section-icon">📸</span> Prompt Gambar</span>
+          <button class="copy-btn" onclick="copyText(${JSON.stringify(imgPrompt)})">📋 Salin</button>
+        </div>
+        <div class="output-text">${escapeHtml(imgPrompt)}</div>
+        <div class="output-video-badges">
+          <span>🎨 Midjourney</span>
+          <span>🖼️ Stable Diffusion</span>
+          <span>🤖 Dall-E</span>
+          <span>🧠 Gemini Image</span>
+        </div>
       </div>
     `;
   }
 
-  // Token usage
-  if (data.usage) {
-    const usage = data.usage;
-    $('tokenCount').textContent = `Tokens: ${usage.promptTokenCount || '?'} in → ${usage.candidatesTokenCount || '?'} out`;
-    $('outputFooter').classList.remove('hidden');
+  // Video universal
+  if (vidUniversal) {
+    html += `
+      <div class="output-section">
+        <div class="output-section-header">
+          <span><span class="output-section-icon">🎬</span> Prompt Video — Universal</span>
+          <button class="copy-btn" onclick="copyText(${JSON.stringify(vidUniversal)})">📋 Salin</button>
+        </div>
+        <div class="output-text">${escapeHtml(vidUniversal)}</div>
+        <div class="output-video-badges">
+          <span>🎬 Runway</span>
+          <span>📽️ Kling</span>
+          <span>✨ Pika</span>
+          <span>🌟 Sora</span>
+          <span>🧠 Gemini Video</span>
+        </div>
+      </div>
+    `;
   }
 
-  outputResult.innerHTML = html;
-  outputResult.classList.remove('hidden');
+  // Video Veo 3
+  if (vidVeo) {
+    html += `
+      <div class="output-section">
+        <div class="output-section-header">
+          <span><span class="output-section-icon">🎥</span> Prompt Video — Gemini & Veo 3</span>
+          <button class="copy-btn" onclick="copyText(${JSON.stringify(vidVeo)})">📋 Salin</button>
+        </div>
+        <div class="output-text">${escapeHtml(vidVeo)}</div>
+        <div class="output-video-badges">
+          <span>🎥 Veo 3</span>
+          <span>🧠 Gemini Video</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Raw
+  if (data.raw) {
+    html += `
+      <div class="output-section">
+        <div class="output-section-header">
+          <span>📄 Response Mentah</span>
+        </div>
+        <div class="output-text" style="font-size:11px;color:var(--text-muted);max-height:200px;overflow-y:auto;">${escapeHtml(data.raw)}</div>
+      </div>
+    `;
+  }
+
+  out.innerHTML = html;
+
+  if (data.usage && data.usage.promptTokenCount) {
+    tokenCount.textContent = `Tokens: ${data.usage.promptTokenCount || '?'} in → ${data.usage.candidatesTokenCount || '?'} out`;
+  } else {
+    tokenCount.textContent = 'Tokens: N/A (local build)';
+  }
+  footer.classList.remove('hidden');
 }
 
-function toggleRaw(el) {
-  const next = el.nextElementSibling;
-  if (next && next.classList.contains('raw-content')) {
-    const isHidden = next.style.display === 'none';
-    next.style.display = isHidden ? 'block' : 'none';
-    el.textContent = isHidden ? '🙈 Sembunyikan raw' : '📄 Lihat response mentah';
-  }
-}
-
-// ===== COPY & EXPORT =====
-function copyPrompt() {
-  const text = extractText();
-  if (!text) {
-    showToast('Belum ada prompt untuk di-copy', 'error');
-    return;
-  }
-  
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('Prompt berhasil di-copy! 📋', 'success');
-  }).catch(() => {
-    // Fallback
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    ta.remove();
-    showToast('Prompt di-copy! 📋', 'success');
+// ===== COPY ALL =====
+function copyAll() {
+  const parts = [];
+  const sections = document.querySelectorAll('.output-section');
+  sections.forEach(sec => {
+    const header = sec.querySelector('.output-section-header span');
+    const text = sec.querySelector('.output-text');
+    if (header && text) {
+      parts.push(header.textContent.trim() + '\n' + text.textContent.trim());
+    }
   });
+  const full = parts.join('\n\n---\n\n');
+  copyText(full);
 }
 
-function exportPrompt(e) {
-  if (e) e.preventDefault();
-  const text = extractText();
-  if (!text) {
-    showToast('Belum ada prompt untuk di-export', 'error');
-    return;
+// ===== MANAGE PRODUCTS =====
+function manageProducts() {
+  const sel = $('masterProduct');
+  const currentVal = sel.value;
+  const newLabel = prompt('Tambah produk baru (contoh: Pink oversized T-shirt):');
+  if (newLabel && newLabel.trim()) {
+    const opt = document.createElement('option');
+    opt.value = newLabel.trim();
+    opt.textContent = newLabel.trim();
+    sel.appendChild(opt);
+    sel.value = newLabel.trim();
+    state.masterProduct = newLabel.trim();
+    showToast(`Produk "${newLabel.trim()}" ditambahkan ✅`);
   }
-
-  const blob = new Blob([text], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `prompt-${Date.now()}.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('Prompt di-export! 💾', 'success');
 }
 
-function extractText() {
-  const main = outputResult.querySelector('.prompt-main');
-  if (main) return main.textContent.trim();
-
-  // Fallback: collect all sections
-  const sections = outputResult.querySelectorAll('.prompt-section');
-  let text = '';
-  sections.forEach(s => {
-    const h4 = s.querySelector('h4');
-    const p = s.querySelector('p');
-    if (h4 && p) text += `${h4.textContent}: ${p.textContent}\n`;
-  });
-  return text.trim();
-}
-
-// ===== UTILITY =====
-function escapeHtml(str) {
-  if (!str) return '';
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-function showToast(msg, type = 'success') {
-  toast.textContent = msg;
-  toast.className = `toast ${type}`;
-  toast.classList.remove('hidden');
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => toast.classList.add('hidden'), 3000);
-}
-
-// ===== MODEL SELECTOR (dynamic — fetch active models from API) =====
+// ===== MODEL SELECTOR =====
 const modelSelect = $('modelSelect');
 const modelStatus = $('modelStatus');
 const MODEL_OPTIONS = [
@@ -457,20 +293,13 @@ const MODEL_OPTIONS = [
 async function loadModels() {
   try {
     modelStatus.innerHTML = `<span class="dot-loading"></span> <span class="model-status-text">Mengecek model...</span>`;
-
     const res = await fetch('/api/models');
     const data = await res.json();
+    if (!data.success || !data.models) { renderStaticModels(); return; }
 
-    if (!data.success || !data.models) {
-      renderStaticModels();
-      return;
-    }
-
-    // Build lookup
     const statusMap = {};
     data.models.forEach(m => { statusMap[m.id] = m; });
 
-    // Rebuild select
     modelSelect.innerHTML = '';
     let firstSelectable = null;
     let preferredActive = null;
@@ -479,42 +308,21 @@ async function loadModels() {
       const info = statusMap[opt.value];
       const option = document.createElement('option');
       option.value = opt.value;
-
-      let statusEmoji = '';
-      let statusLabel = '';
-
-      if (!info || info.status === 'unavailable' || info.status === 'not_found') {
-        statusEmoji = '❌';
-        statusLabel = 'Tidak tersedia';
-        option.disabled = true;
-      } else if (info.status === 'quota_exhausted') {
-        statusEmoji = '⏳';
-        statusLabel = 'Kuota habis';
-        option.disabled = true;
-      } else if (info.status === 'listed_no_quota') {
-        statusEmoji = '⚠️';
-        statusLabel = 'Tak bisa dipakai';
-        option.disabled = true;
-      } else if (info.pingStatus === 'active') {
-        statusEmoji = '✅';
-        statusLabel = 'Aktif';
+      let emoji = '❌';
+      if (!info || info.status === 'unavailable' || info.status === 'not_found') { option.disabled = true; }
+      else if (info.status === 'quota_exhausted') { emoji = '⏳'; option.disabled = true; }
+      else if (info.status === 'listed_no_quota') { emoji = '⚠️'; option.disabled = true; }
+      else if (info.pingStatus === 'active') {
+        emoji = '✅';
         if (!firstSelectable) firstSelectable = opt.value;
         if (opt.recommended) preferredActive = opt.value;
-      } else {
-        statusEmoji = '❓';
-        statusLabel = 'Error';
-        option.disabled = true;
-      }
-
-      option.textContent = `${opt.label} ${statusEmoji}`;
+      } else { option.disabled = true; }
+      option.textContent = `${opt.label} ${emoji}`;
       modelSelect.appendChild(option);
     });
 
-    // Auto-select
     const toSelect = preferredActive || firstSelectable || MODEL_OPTIONS[0].value;
     modelSelect.value = toSelect;
-
-    // Update status bar
     const selectedInfo = statusMap[modelSelect.value];
     updateModelStatus(selectedInfo);
   } catch (err) {
@@ -538,76 +346,72 @@ function renderStaticModels() {
 function updateModelStatus(info) {
   const selected = modelSelect.value;
   const opt = MODEL_OPTIONS.find(o => o.value === selected);
-  const labelText = opt ? opt.label : selected;
-
-  if (!info) {
-    modelStatus.innerHTML = `<span class="dot-active"></span> ${selected} — Aktif`;
-    return;
-  }
-
-  let dot, statusText;
-  if (info.status === 'active') {
-    dot = '<span class="dot-active"></span>';
-    statusText = 'Aktif ✅ — Siap pakai';
-  } else if (info.status === 'quota_exhausted') {
-    dot = '<span class="dot-warning"></span>';
-    statusText = 'Kuota harian habis ⏳ — Coba besok atau ganti model';
-  } else if (info.status === 'listed_no_quota') {
-    dot = '<span class="dot-warning"></span>';
-    statusText = 'Terdaftar tapi quota 0 ⚠️';
-  } else {
-    dot = '<span class="dot-offline"></span>';
-    statusText = 'Tidak tersedia ❌';
-  }
-
-  modelStatus.innerHTML = `${dot} <span class="model-status-text">${labelText} — ${statusText}</span>`;
+  const label = opt ? opt.label : selected;
+  if (!info) { modelStatus.innerHTML = `<span class="dot-active"></span> <span class="model-status-text">${selected} — Aktif</span>`; return; }
+  let dot, text;
+  if (info.status === 'active') { dot = '<span class="dot-active"></span>'; text = 'Aktif ✅ — Siap pakai'; }
+  else if (info.status === 'quota_exhausted') { dot = '<span class="dot-warning"></span>'; text = 'Kuota harian habis ⏳'; }
+  else { dot = '<span class="dot-offline"></span>'; text = 'Tidak tersedia ❌'; }
+  modelStatus.innerHTML = `${dot} <span class="model-status-text">${label} — ${text}</span>`;
 }
 
 modelSelect.addEventListener('change', () => {
-  // Re-fetch status for selected model
   fetch('/api/models').then(r => r.json()).then(data => {
-    if (data.success) {
-      const info = data.models.find(m => m.id === modelSelect.value);
-      updateModelStatus(info);
-    }
+    if (data.success) { updateModelStatus(data.models.find(m => m.id === modelSelect.value)); }
   }).catch(() => {});
-  showToast(`Model diganti`, 'success');
 });
 
-// ===== COPY TEXT HELPER =====
+// ===== COPY HELPER =====
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('✅ Copied!', 'success');
-    }).catch(() => fallbackCopy(text));
-  } else {
-    fallbackCopy(text);
-  }
+    navigator.clipboard.writeText(text).then(() => { showToast('✅ Copied!'); }).catch(() => fallbackCopy(text));
+  } else { fallbackCopy(text); }
 }
 function fallbackCopy(text) {
   const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed'; ta.style.left = '-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  document.execCommand('copy');
-  document.body.removeChild(ta);
-  showToast('✅ Copied!', 'success');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+  document.body.removeChild(ta); showToast('✅ Copied!');
+}
+
+// ===== TOAST =====
+function showToast(msg, type) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast';
+  if (type === 'error') t.style.borderColor = 'var(--danger)';
+  else t.style.borderColor = 'var(--accent)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+// ===== CHECK API =====
+async function checkAPI() {
+  const status = $('apiStatus');
+  try {
+    const res = await fetch('/api/models');
+    if (res.ok) { status.textContent = '🟢 Online'; status.className = 'api-status online'; }
+    else { status.textContent = '🔴 Offline'; status.className = 'api-status offline'; }
+  } catch {
+    status.textContent = '🔴 Offline'; status.className = 'api-status offline';
+  }
+}
+
+// ===== ESCAPE =====
+function escapeHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
 }
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
-  // Ctrl+Enter = Generate
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-    e.preventDefault();
-    generatePrompt();
-  }
-  // Escape = close loader
-  if (e.key === 'Escape' && !loaderOverlay.classList.contains('hidden')) {
-    loaderOverlay.classList.add('hidden');
-  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); generatePrompt(); }
+  if (e.key === 'Escape') { $('loaderOverlay').classList.add('hidden'); }
 });
 
 // ===== INIT =====
+initSync();
 checkAPI();
 loadModels();

@@ -23,665 +23,158 @@
             </linearGradient>
           </defs>
         </svg>
-        <span class="logo-text"><strong>Generator Prompt Foto Model</strong></span>
+        <span class="logo-text"><strong>Generator Prompt Model</strong></span>
         <span class="badge">by Areka Official Store</span>
       </div>
       <div class="header-right">
-        <a href="#" class="github-link" onclick="exportPrompt(event)">📋 Salin</a>
-        <span class="api-status" id="apiStatus">⚪ Menunggu API Key</span>
+        <span class="api-status" id="apiStatus">⚪ ...</span>
       </div>
     </header>
 
+    <!-- Subtitle -->
+    <div class="app-subtitle">
+      Sistem LEGO Master Database — karakter konsisten, tinggal ganti produk
+    </div>
+
+    <!-- MODEL SELECTOR BAR -->
     <div class="model-selector-bar">
       <div class="model-selector-inner">
         <label for="modelSelect">🧠 Model AI:</label>
-        <select id="modelSelect">
-          <option value="gemini-3.5-flash-lite" selected>⚡ Gemini 3.5 Flash Lite</option>
-          <option value="gemini-3.5-flash">✨ Gemini 3.5 Flash</option>
-          <option value="gemini-2.5-flash">🔥 Gemini 2.5 Flash</option>
-          <option value="gemini-2.0-flash">⚡ Gemini 2.0 Flash</option>
-          <option value="gemini-2.0-flash-lite">🪶 Gemini 2.0 Flash Lite</option>
-          <option value="gemini-3-pro-preview">🧪 Gemini 3 Pro Preview</option>
-          <option value="gemini-3-flash-preview">🧪 Gemini 3 Flash Preview</option>
-        </select>
+        <select id="modelSelect"></select>
         <span class="model-status" id="modelStatus">
-          <span class="dot-active"></span> gemini-3.5-flash-lite — Aktif
+          <span class="dot-active"></span> <span class="model-status-text">gemini-3.5-flash-lite — Aktif</span>
         </span>
       </div>
     </div>
 
-    <div class="app-subtitle">
-      Bikin prompt gambar AI yang kamu inginkan dan siap dicustom sesukamu
-    </div>
-
-    <main class="main-grid">
-      <!-- LEFT: UPLOAD + DROPDOWNS -->
-      <section class="input-panel">
-        <!-- Upload Area -->
-        <div class="upload-card">
-          <!-- Main Character Upload -->
-          <div class="upload-zone" id="uploadZone">
-            <div class="upload-placeholder" id="uploadPlaceholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-              </svg>
-              <p><strong>Drop gambar karakter utama</strong> atau klik untuk upload</p>
-              <small>Format: JPG, PNG, WEBP — Maks 10MB</small>
-            </div>
-            <img id="previewImage" class="preview-image hidden" alt="Preview Character" />
-            <button class="btn-remove hidden" id="btnRemove" onclick="removeImage()">✕</button>
+    <!-- MAIN LAYOUT: Left = Master DB, Right = Output -->
+    <div class="main-layout">
+      <!-- LEFT PANEL — Master Database -->
+      <div class="left-panel">
+        <!-- DATABASE A — Master Model (fixed) -->
+        <div class="db-section">
+          <div class="db-section-header">
+            <span>👤 DATABASE A — Master Model</span>
+            <span class="db-badge fix">FIXED</span>
           </div>
-          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
-
-          <!-- Face Reference Upload (opsional) -->
-          <div class="upload-card face-ref-card" id="faceRefCard">
-            <div class="face-ref-header">
-              <span class="face-ref-label">🧑‍🎨 <strong>Reference Wajah/Kepala</strong></span>
-              <span class="badge-optional">Opsional</span>
-            </div>
-            <div class="upload-zone upload-zone-sm" id="faceUploadZone">
-              <div class="upload-placeholder-sm" id="facePlaceholder">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-                </svg>
-                <p>Upload <strong>close-up wajah</strong> untuk referensi detail fitur</p>
-                <small>Wajah close-up saja (mata, hidung, mulut, bentuk wajah)</small>
-              </div>
-              <img id="previewFace" class="preview-image hidden" alt="Face Preview" />
-              <button class="btn-remove hidden" id="btnRemoveFace" onclick="removeFaceImage()">✕</button>
-            </div>
-            <input type="file" id="faceFileInput" accept="image/jpeg,image/png,image/webp" hidden />
+          <div class="db-content">
+            <textarea id="masterModel" rows="3">Indonesian male, 22 years old, Southeast Asian, 172 cm, slim athletic body, neat side-part hairstyle, tan skin, clean-shaven</textarea>
+            <div class="db-hint">Karakter tetap — jangan pernah berubah</div>
           </div>
         </div>
 
-        <!-- Dropdown Panel -->
-        <div class="controls-card">
-          <div class="controls-header">
-            <h3>🎛️ Detail Karakter</h3>
-            <button class="btn-small" onclick="resetAll()">↺ Reset</button>
+        <!-- DATABASE B — Master Studio (fixed) -->
+        <div class="db-section">
+          <div class="db-section-header">
+            <span>🎬 DATABASE B — Master Studio</span>
+            <span class="db-badge fix">FIXED</span>
           </div>
-
-          <div class="controls-grid">
-            <!-- Row 1 -->
-            <div class="control-group">
-              <label>Gender</label>
-              <select id="gender">
-                <option value="">— Auto detect —</option>
-                <option value="Female">👩 Female (Perempuan)</option>
-                <option value="Male">👨 Male (Laki-laki)</option>
-                <option value="Non-binary">⚧ Non-binary / Androgynous</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Etnis / Warna Kulit</label>
-              <select id="ethnicity">
-                <option value="">— Auto detect —</option>
-                <option value="Asian (East Asia)">Asian — East Asia (Cina, Jepang, Korea)</option>
-                <option value="Asian (Southeast Asia)">Asian — Southeast Asia (Indo, Melayu, Thai)</option>
-                <option value="Asian (South Asia)">Asian — South Asia (India, Pakistan)</option>
-                <option value="Caucasian / White">Caucasian / White (Eropa, Amerika)</option>
-                <option value="Black / African">Black / African</option>
-                <option value="Hispanic / Latino">Hispanic / Latino</option>
-                <option value="Middle Eastern">Middle Eastern (Arab, Persia)</option>
-                <option value="Mixed / Multiracial">Mixed / Multiracial</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Rentang Usia</label>
-              <select id="age">
-                <option value="">— Auto detect —</option>
-                <option value="Child (5-12)">Anak-anak (5-12)</option>
-                <option value="Teen (13-17)">Remaja (13-17)</option>
-                <option value="Young Adult (18-25)">Dewasa Muda (18-25)</option>
-                <option value="Adult (26-35)">Dewasa (26-35)</option>
-                <option value="Mature (36-50)">Matang (36-50)</option>
-                <option value="Senior (50+)">Senior (50+)</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Body Type</label>
-              <select id="bodyType">
-                <option value="">— Auto detect —</option>
-                <option value="Slim / Lean">Slim / Lean — Ramping</option>
-                <option value="Athletic / Fit">Athletic / Fit — Atletis</option>
-                <option value="Average">Average — Rata-rata</option>
-                <option value="Curvy / Voluptuous">Curvy / Voluptuous — Berisi</option>
-                <option value="Muscular / Buff">Muscular / Buff — Berotot</option>
-                <option value="Plus-size / Full-figured">Plus-size / Full-figured</option>
-                <option value="Petite">Petite — Mungil</option>
-                <option value="Tall / Slender">Tall / Slender — Tinggi Ramping</option>
-              </select>
-            </div>
-
-            <!-- Row 2 -->
-            <div class="control-group">
-              <label>Ekspresi Wajah</label>
-              <select id="expression">
-                <option value="">— Auto detect —</option>
-                <option value="Natural / Relaxed">Natural / Relaxed — Santai</option>
-                <option value="Smiling / Happy">😊 Smiling / Happy — Senyum ceria</option>
-                <option value="Big Laugh / Laughing">😂 Big Laugh / Laughing — Tertawa</option>
-                <option value="Serious / Stern">😐 Serious / Stern — Serius</option>
-                <option value="Confident / Smirk">😏 Confident / Smirk — Percaya Diri</option>
-                <option value="Flirty / Playful">😉 Flirty / Playful — Genit</option>
-                <option value="Surprised / Shocked">😮 Surprised / Shocked — Terkejut</option>
-                <option value="Seductive">😈 Seductive — Menggoda</option>
-                <option value="Sad / Melancholic">😢 Sad / Melancholic — Sedih</option>
-                <option value="Angry / Fierce">😠 Angry / Fierce — Marah</option>
-                <option value="Mysterious">🤫 Mysterious — Misterius</option>
-                <option value="Blank / Expressionless">Blank / Expressionless — Tanpa ekspresi</option>
-                <option value="Cute / Innocent">🥺 Cute / Innocent — Imut polos</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Pose & Gesture</label>
-              <select id="pose">
-                <option value="">— Auto detect —</option>
-                <option value="Standing full body frontal">🧍 Standing — Full body frontal</option>
-                <option value="Standing three-quarter turn">Standing — Three-quarter turn</option>
-                <option value="Standing side profile">Standing — Side profile</option>
-                <option value="Standing with hands in pockets">Standing — Tangan di saku santai</option>
-                <option value="Standing arms crossed">Standing — Lengan bersedekap</option>
-                <option value="Standing one hand on hip">Standing — Satu tangan di pinggang</option>
-                <option value="Standing both hands on hip">Standing — Dua tangan di pinggang (power pose)</option>
-                <option value="Standing leaning on wall">Standing — Bersandar di tembok</option>
-                <option value="Standing leaning back">Standing — Condong ke belakang santai</option>
-                <option value="Standing hand behind head">Standing — Tangan di belakang kepala</option>
-                <option value="Standing hands clasped front">Standing — Tangan di depan (genggam)</option>
-                <option value="Walking towards camera">🚶 Fashion Walk — Berjalan ke arah kamera</option>
-                <option value="Walking on runway">Fashion Walk — Catwalk runway</option>
-                <option value="Walking looking back">Fashion Walk — Berjalan sambil menoleh ke belakang</option>
-                <option value="Striding confidently">Striding — Langkah percaya diri</option>
-                <option value="Sitting on chair sideways">🪑 Sitting — Duduk menyamping di kursi</option>
-                <option value="Sitting on chair facing back">Sitting — Duduk membelakangi kursi</option>
-                <option value="Sitting on floor elegantly">Sitting — Duduk di lantai elegan</option>
-                <option value="Sitting cross-legged">Sitting — Duduk bersila</option>
-                <option value="Sitting on stool one leg up">Sitting — Duduk di stool satu kaki naik</option>
-                <option value="Sitting on edge of bed">Sitting — Duduk di tepi kasur</option>
-                <option value="Sitting with legs crossed">Sitting — Duduk silang kaki (model pose)</option>
-                <option value="Crouching / Squatting stylish">Crouching — Jongkok gaya model</option>
-                <option value="Kneeling on one knee">Kneeling — Satu lutut</option>
-                <option value="One knee down dramatic">Kneeling — Satu lutut dramatis</option>
-                <option value="Leaning forward towards camera">Leaning — Condong ke depan ke kamera</option>
-                <option value="Leaning on table/desk">Leaning — Bersandar di meja</option>
-                <option value="Leaning on railing">Leaning — Bersandar di pagar</option>
-                <option value="Arms up stretching">Arms up — Tangan ke atas stretching</option>
-                <option value="Hand on face touching cheek">Hand on face — Tangan sentuh pipi</option>
-                <option value="Hand running through hair">Hand on hair — Tangan di rambut</option>
-                <option value="Hand on chin thinking">Hand on chin — Tangan di dagu berpikir</option>
-                <option value="Arms crossed leaning forward">Arms crossed — Bertumpu tangan bersedekap</option>
-                <option value="One hand in pocket looking away">One hand pocket — Satu tangan saku, lihat ke samping</option>
-                <option value="Both hands in pockets">Both hands pocket — Dua tangan di saku</option>
-                <option value="Thumbs up casual">👍 Thumbs up — Jempol santai</option>
-                <option value="Peace sign / V pose near face">✌️ Peace sign — V di dekat wajah</option>
-                <option value="Heart hand gesture">🫶 Heart gesture — Tangan bentuk hati</option>
-                <option value="Pointing at camera">👉 Pointing — Menunjuk kamera</option>
-                <option value="Phone selfie pose holding phone">📱 Selfie pose — Pegang handphone</option>
-                <option value="Holding product in front">📦 Holding product — Produk di depan dada</option>
-                <option value="Holding product to the side">Holding product — Produk di samping</option>
-                <option value="Posing with bag / accessory">Posing with bag — Pose tas / aksesoris</option>
-                <option value="Checking watch / bracelet">Checking watch — Lihat jam / gelang</option>
-                <option value="Adjusting collar / tie">Adjusting collar — Atur kerah / dasi</option>
-                <option value="Touching accessories (earring/necklace)">Touching acc — Sentuh anting/kalung</option>
-                <option value="Lying down on back looking up">🛌 Lying — Telentang lihat ke atas</option>
-                <option value="Lying on side propped on elbow">Lying — Miring bertumpu siku</option>
-                <option value="Lying on stomach legs up">Lying — Tengkurap kaki naik</option>
-                <option value="Jumping mid-air">🤸 Jumping — Melompat di udara</option>
-                <option value="Dancing candid moment">💃 Dancing — Momen menari spontan</option>
-                <option value="Twirling dress / skirt">Twirling — Memutar dress / rok</option>
-                <option value="Hand on hat adjusting">Hand on hat — Pegang topi</option>
-                <option value="Leaning on car / vehicle">Leaning on car — Bersandar di mobil</option>
-                <option value="Sitting on car hood">Sitting on car — Duduk di kap mobil</option>
-                <option value="With pet / animal pose">With pet — Pose dengan hewan</option>
-                <option value="Group pose with friends">Group — Pose grup bersama teman</option>
-                <option value="Supermodel smize (smiling with eyes)">Supermodel — Smize (senyum dengan mata)</option>
-                <option value="Supermodel fierce look">Supermodel — Fierce look tajam</option>
-                <option value="Supermodel casual hand in hair">Supermodel — Tangan di rambut casual</option>
-                <option value="T-pose confident">T-pose — Tangan terbuka percaya diri</option>
-                <option value="Hand on chest / heart area">Hand on chest — Tangan di dada</option>
-                <option value="Bent over forward">Bent over — Membungkuk ke depan</option>
-                <option value="Looking over shoulder (over-the-shoulder glance)">🔥 Over-shoulder look — Menoleh lewat bahu</option>
-                <option value="Looking down with attitude">Looking down — Tatap ke bawah attitude</option>
-                <option value="Looking up with expression">Looking up — Tatap ke atas ekspresif</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Shot Type</label>
-              <select id="shotType">
-                <option value="">— Auto detect —</option>
-                <option value="Extreme Wide Shot (EWS)">Extreme Wide Shot (EWS) — Pemandangan luas</option>
-                <option value="Wide Shot (WS) / Full Body">Wide Shot / Full Body — Seluruh tubuh</option>
-                <option value="Medium Wide Shot (MWS)">Medium Wide Shot — 3/4 tubuh</option>
-                <option value="Medium Shot (MS)">Medium Shot — Setengah badan (pinggang ke atas)</option>
-                <option value="Medium Close-up (MCU)">Medium Close-up — Dada ke atas</option>
-                <option value="Close-up (CU)">Close-up — Wajah penuh</option>
-                <option value="Extreme Close-up (ECU)">Extreme Close-up — Mata/bibir/detail</option>
-                <option value="Cowboy Shot (thigh-up)">Cowboy Shot — Paha ke atas</option>
-                <option value="Over-the-shoulder (OTS)">Over-the-shoulder (OTS) — Bahu dari belakang</option>
-                <option value="Two Shot">Two Shot — Dua orang</option>
-                <option value="Group Shot">Group Shot — Banyak orang</option>
-                <option value="Dutch Angle / Tilted">Dutch Angle — Miring dinamis</option>
-                <option value="POV (Point of View)">POV — Sudut pandang orang pertama</option>
-              </select>
-            </div>
-
-            <!-- Row 3 -->
-            <div class="control-group">
-              <label>Camera Angle</label>
-              <select id="cameraAngle">
-                <option value="">— Auto detect —</option>
-                <option value="Eye Level">Eye Level — Sejajar mata (natural)</option>
-                <option value="Low Angle">Low Angle — Dari bawah (terlihat kuat)</option>
-                <option value="High Angle">High Angle — Dari atas (terlihat kecil)</option>
-                <option value="Bird's Eye View (Top-down)">Bird's Eye View — Tepat di atas</option>
-                <option value="Worm's Eye View">Worm's Eye View — Dari tanah</option>
-                <option value="Dutch Angle / Canted">Dutch Angle — Miring horison</option>
-                <option value="Overhead Shot">Overhead Shot — Langsung dari atas</option>
-                <option value="Front">Front — Depan langsung</option>
-                <option value="Three-quarter Front">Three-quarter Front — 45° depan</option>
-                <option value="Side Profile">Side Profile — Samping</option>
-                <option value="Three-quarter Back">Three-quarter Back — 45° belakang</option>
-                <option value="From Behind">From Behind — Dari belakang</option>
-                <option value="Upward Angle (hero shot)">Upward Angle — Hero shot dari bawah</option>
-                <option value="Downward Angle">Downward Angle — Dari atas miring</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Background / Location</label>
-              <select id="background">
-                <option value="">— Auto detect —</option>
-                <option value="Plain / Solid Color Background">Plain / Solid Color — Latar polos (studio)</option>
-                <option value="White Background (product)">White Background — Latar putih bersih</option>
-                <option value="Gradient Background">Gradient Background — Latar gradien</option>
-                <option value="Studio / Indoor">Studio / Indoor — Dalam ruangan studio</option>
-                <option value="Bedroom / Cozy Room">Bedroom — Kamar tidur cozy</option>
-                <option value="Living Room">Living Room — Ruang tamu</option>
-                <option value="Kitchen">Kitchen — Dapur</option>
-                <option value="Office / Workspace">Office — Kantor / Ruang kerja</option>
-                <option value="Cafe / Restaurant">☕ Cafe / Restaurant — Kafe</option>
-                <option value="Street / Urban">🏙️ Street — Jalanan kota</option>
-                <option value="Beach / Ocean">🏖️ Beach — Pantai / Laut</option>
-                <option value="Park / Garden">🌳 Park / Garden — Taman</option>
-                <option value="Forest / Nature">🌲 Forest — Hutan alam</option>
-                <option value="Mountain / Hill">⛰️ Mountain — Gunung</option>
-                <option value="Cityscape / Skyline">🌆 Cityscape — Pemandangan kota</option>
-                <option value="Rooftop">Rooftop — Atap gedung</option>
-                <option value="Gym / Fitness">💪 Gym — Tempat fitness</option>
-                <option value="Pool / Beachside">🏊 Pool — Kolam renang</option>
-                <option value="Blurry Background (Bokeh)">Blurry / Bokeh — Latar blur</option>
-                <option value="Night Scene">🌃 Night Scene — Malam hari</option>
-                <option value="Neon / Cyberpunk">💜 Neon / Cyberpunk — Lampu neon</option>
-                <option value="Fantasy / Magical">🧚 Fantasy / Magical — Fantasi</option>
-                <option value="Minimalist / Clean">Minimalist — Latar minimalis</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Art Style / Genre</label>
-              <select id="artStyle">
-                <option value="">— Auto detect —</option>
-                <option value="Photorealistic / Real Life">📷 Photorealistic — Realistis foto</option>
-                <option value="Cinematic / Film Look">🎬 Cinematic — Gaya film</option>
-                <option value="Portrait Photography">Portrait Photography — Potret studio</option>
-                <option value="Fashion Editorial">Fashion Editorial — Editorial fashion</option>
-                <option value="Street Photography">Street Photography — Jurnalistik jalanan</option>
-                <option value="Anime / Manga">🎨 Anime / Manga — Gaya Jepang</option>
-                <option value="Cartoon / Illustration">Cartoon / Illustration — Kartun</option>
-                <option value="Digital Art / 2D">Digital Art / 2D — Seni digital</option>
-                <option value="3D Render / C4D">3D Render — Render 3D realistik</option>
-                <option value="3D Pixar / Disney Style">3D Pixar Style — Gaya animasi 3D kartun</option>
-                <option value="Oil Painting">🎨 Oil Painting — Lukisan cat minyak</option>
-                <option value="Watercolor">Watercolor — Cat air</option>
-                <option value="Sketch / Line Art">Sketch — Sketsa pensil</option>
-                <option value="Vaporwave / Retro">🌴 Vaporwave / Retro — Estetik 80s</option>
-                <option value="Cyberpunk / Sci-fi">🤖 Cyberpunk — Futuristik neon</option>
-                <option value="Fantasy / Ethereal">✨ Fantasy / Ethereal — Fantasi magis</option>
-                <option value="Dark / Moody">Dark / Moody — Gelap dramatis</option>
-                <option value="Vintage / Retro">📻 Vintage / Retro — Klasik lawas</option>
-                <option value="Minimalist Art">Minimalist Art — Seni minimalis</option>
-                <option value="Pixel Art">🟦 Pixel Art — Gaya 8-bit</option>
-                <option value="AI Generated">🤖 AI Generated — Gaya SDXL/Midjourney</option>
-                <option value="Hyperrealistic">Hyperrealistic — Sangat detail realistik</option>
-              </select>
-            </div>
-
-            <!-- Row 4 -->
-            <div class="control-group">
-              <label>Lighting</label>
-              <select id="lighting">
-                <option value="">— Auto detect —</option>
-                <option value="Natural Light (Daylight)">☀️ Natural Light — Cahaya matahari</option>
-                <option value="Golden Hour (Sunset)">🌅 Golden Hour — Sore jingga</option>
-                <option value="Blue Hour (Twilight)">🌆 Blue Hour — Senja biru</option>
-                <option value="Soft / Diffused">Soft / Diffused — Cahaya lembut</option>
-                <option value="Harsh / Direct">Harsh / Direct — Cahaya keras langsung</option>
-                <option value="Studio Softbox">Studio Softbox — Pencahayaan studio</option>
-                <option value="Ring Light">Ring Light — Cincin cahaya (beauty)</option>
-                <option value="Rembrandt Lighting">Rembrandt Lighting — 1 sisi terang (dramatis)</option>
-                <option value="Side Lighting">Side Lighting — Samping kiri/kanan</option>
-                <option value="Backlight / Silhouette">Backlight / Silhouette — Dari belakang</option>
-                <option value="Top Lighting">Top Lighting — Dari atas</option>
-                <option value="Neon / Colorful">Neon / Colorful — Lampu warna-warni</option>
-                <option value="Candlelight / Warm">🕯️ Candlelight — Lilin hangat</option>
-                <option value="Moonlight">🌙 Moonlight — Cahaya bulan</option>
-                <option value="Mixed Lighting">Mixed Lighting — Campuran</option>
-                <option value="Dramatic / Chiaroscuro">Dramatic / Chiaroscuro — Kontras tinggi</option>
-                <option value="Fluorescent / Office">Fluorescent — Lampu kantor putih</option>
-                <option value="Warm Temperature">Warm — Suhu hangat (3200K)</option>
-                <option value="Cool Temperature">Cool — Suhu dingin (5600K)</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Color Tone</label>
-              <select id="colorTone">
-                <option value="">— Auto detect —</option>
-                <option value="Warm Tone (orange/red/yellow dominant)">☀️ Warm Tone — Jingga, merah, kuning dominan</option>
-                <option value="Warm Golden">Warm Golden — Keemasan hangat</option>
-                <option value="Warm Sepia / Vintage">Warm Sepia — Vintage kecoklatan</option>
-                <option value="Warm Peach / Coral">Warm Peach — Persik coral</option>
-                <option value="Cool Tone (blue/purple/green dominant)">❄️ Cool Tone — Biru, ungu, hijau dominan</option>
-                <option value="Cool Blue / Ocean">Cool Blue — Biru dingin ocean</option>
-                <option value="Cool Pastel">Cool Pastel — Pastel sejuk</option>
-                <option value="Cool Neon / Cyberpunk">Cool Neon — Neon biru-ungu</option>
-                <option value="Neutral / True Color">Neutral — Warna asli seimbang</option>
-                <option value="High Contrast Warm">🔥 High Contrast Warm — Kontras tinggi hangat</option>
-                <option value="High Contrast Cool">💎 High Contrast Cool — Kontras tinggi dingin</option>
-                <option value="Desaturated / Muted (muted warm)">Desaturated Warm — Lembut warm reduced</option>
-                <option value="Desaturated / Muted (muted cool)">Desaturated Cool — Lembut cool reduced</option>
-                <option value="Black & White / Monochrome">⚫ Black & White — Hitam putih</option>
-                <option value="Pastel Dreamy (warm pastel)">🎀 Pastel Dreamy — Warm pastel</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Gaya Rambut</label>
-              <select id="hairStyle">
-                <option value="">— Auto detect —</option>
-                <option value="Straight Long">Straight Long — Lurus panjang</option>
-                <option value="Straight Medium">Straight Medium — Lurus sebahu</option>
-                <option value="Straight Short / Bob">Straight Short / Bob — Lurus pendek</option>
-                <option value="Curly Long">Curly Long — Keriting panjang</option>
-                <option value="Curly Short">Curly Short — Keriting pendek</option>
-                <option value="Wavy">Wavy — Bergelombang</option>
-                <option value="Ponytail">Ponytail — Ekor kuda</option>
-                <option value="Bun / Updo">Bun / Updo — Sanggul</option>
-                <option value="Braids / Cornrows">Braids — Kepang</option>
-                <option value="Dreadlocks / Locs">Dreadlocks — Rambut gimbal</option>
-                <option value="Buzz Cut / Bald">Buzz Cut / Bald — Botak/pendek militer</option>
-                <option value="Pixie Cut">Pixie Cut — Pendek pixie</option>
-                <option value="Mohawk / Undercut">Mohawk / Undercut</option>
-                <option value="Side Part / Slicked">Side Part — Rapi disisir</option>
-                <option value="Messy / Bedhead">Messy — Acak-acakan</option>
-                <option value="Twin Tails / Buns">Twin Tails / Buns — Dua ekor</option>
-                <option value="Long with Bangs">Long with Bangs — Panjang poni</option>
-                <option value="Afro / Natural">Afro / Natural — Natural keriting</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Mood / Suasana</label>
-              <select id="mood">
-                <option value="">— Auto detect —</option>
-                <option value="Happy / Cheerful">😄 Happy / Cheerful — Ceria</option>
-                <option value="Calm / Peaceful">😌 Calm / Peaceful — Tenang</option>
-                <option value="Confident / Powerful">💪 Confident / Powerful — Percaya diri</option>
-                <option value="Romantic / Intimate">💕 Romantic — Romantis</option>
-                <option value="Mysterious / Dark">🔮 Mysterious / Dark — Misterius gelap</option>
-                <option value="Elegant / Classy">✨ Elegant / Classy — Elegan mewah</option>
-                <option value="Edgy / Rebellious">🔥 Edgy / Rebellious — Berani</option>
-                <option value="Cozy / Warm">🏠 Cozy / Warm — Hangat nyaman</option>
-                <option value="Dreamy / Ethereal">🌙 Dreamy / Ethereal — Mimpi</option>
-                <option value="Dramatic / Intense">🎭 Dramatic / Intense — Dramatis</option>
-                <option value="Fresh / Energetic">⚡ Fresh / Energetic — Segar energik</option>
-                <option value="Nostalgic / Vintage">📸 Nostalgic — Nostalgia lawas</option>
-                <option value="Professional / Clean">💼 Professional — Profesional bersih</option>
-                <option value="Playful / Fun">🎉 Playful / Fun — Main-main</option>
-                <option value="Serious / Authoritative">🎯 Serious — Serius berwibawa</option>
-                <option value="Casual / Santai">Casual / Santai — Santai rileks</option>
-                <option value="Funny / Lucu">😆 Funny / Lucu — Kocak menghibur</option>
-              </select>
-            </div>
-
-            <!-- Row 5 — Aktivitas & Waktu -->
-            <div class="control-group">
-              <label>🏍️ Aktivitas / Adegan</label>
-              <select id="activity">
-                <option value="">— Auto detect —</option>
-                <option value="Nongkrong di Cafe bareng teman">☕ Nongkrong di Cafe — Ngobrol bareng teman</option>
-                <option value="Nongkrong di Cafe sendiri">☕ Nongkrong di Cafe — Sendiri sambil ngopi</option>
-                <option value="Lagi Belanja di Mall / Outfit">🛍️ Belanja di Mall / Pilih baju</option>
-                <option value="Lagi Belanja di Pasar Tradisional">🛍️ Belanja di Pasar Tradisional</option>
-                <option value="Riding Motor Vario">🛵 Riding Motor — Honda Vario</option>
-                <option value="Riding Motor Beat">🛵 Riding Motor — Honda Beat</option>
-                <option value="Riding Motor Ninja">🏍️ Riding Motor — Kawasaki Ninja</option>
-                <option value="Riding Motor NMAX">🛵 Riding Motor — Yamaha NMAX</option>
-                <option value="Riding Motor Matic Lain">🛵 Riding Motor — Matic lain</option>
-                <option value="Riding Motor Sport">🏍️ Riding Motor — Sport / Gede</option>
-                <option value="Jalan-jalan di Pantai">🏖️ Jalan-jalan di Pantai</option>
-                <option value="Jalan-jalan di Taman / Mal">🌳 Jalan-jalan di Taman Kota / Mall</option>
-                <option value="Jalan-jalan di Pedesaan / Sawah">🌾 Jalan-jalan di Pedesaan / Sawah</option>
-                <option value="Olahraga / Gym">💪 Olahraga / Gym — Fitness</option>
-                <option value="Jogging / Lari Pagi">🏃 Jogging — Lari pagi</option>
-                <option value="Naik Gunung / Hiking">⛰️ Naik Gunung / Hiking</option>
-                <option value="Fotografi / Content Creation">📸 Fotografi / Bikin konten</option>
-                <option value="Makan di Restoran">🍽️ Makan di Restoran / Mewah</option>
-                <option value="Makan di Street Food / Kaki Lima">🍜 Makan di Street Food / Kaki Lima</option>
-                <option value="Di Rumah / Santai di Kamar">🏠 Di Rumah / Santai di Kamar</option>
-                <option value="Berkumpul Keluarga">👨‍👩‍👧‍👦 Berkumpul Keluarga di Rumah</option>
-                <option value="Pesta / Party">🎉 Pesta / Party — Bersama teman</option>
-                <option value="Konser Musik">🎤 Konser Musik — Nonton band</option>
-                <option value="Naik Mobil / Traveling">🚗 Naik Mobil / Traveling</option>
-                <option value="Bersepeda">🚴 Bersepeda di taman/kota</option>
-                <option value="Berenang / Kolam Renang">🏊 Berenang di kolam renang</option>
-                <option value="Di Kampus / Sekolah">🎒 Di Kampus / Sekolah — Belajar</option>
-                <option value="Di Kantor / Kerja">💼 Di Kantor / Kerja — Office</option>
-                <option value="Berkuda">🐴 Berkuda di padang rumput</option>
-                <option value="Main Musik / Band">🎸 Main Musik / Band</option>
-                <option value="Healing / Liburan">🌴 Healing / Liburan — Resort pantai</option>
-                <option value="Camping / Glamping">🏕️ Camping / Glamping — Alam terbuka</option>
-                <option value="Salon / Perawatan Diri">💇 Salon / Perawatan Diri — Spa</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>⏰ Waktu</label>
-              <select id="timeOfDay">
-                <option value="">— Auto detect —</option>
-                <option value="Pagi (Sunrise / Golden Morning)">🌅 Pagi — Sunrise / Golden hour pagi</option>
-                <option value="Siang (Terang)">☀️ Siang — Cahaya terang</option>
-                <option value="Sore (Golden Hour)">🌇 Sore — Golden hour sore</option>
-                <option value="Senja / Sunset">🌆 Senja — Sunset / Maghrib</option>
-                <option value="Malam (Gelap / Urban Lights)">🌃 Malam — Lampu kota</option>
-                <option value="Malam (Party / Neon)">🌃 Malam — Party / Neon lights</option>
-                <option value="Malam (Romantic Dim)">🌙 Malam — Romantis remang-remang</option>
-                <option value="Dini Hari / Midnight">🌌 Dini Hari — Sepi gelap</option>
-              </select>
-            </div>
-
-            <!-- Row 6 -->
-            <div class="control-group">
-              <label>Pakaian / Outfit</label>
-              <select id="clothing">
-                <option value="">— Auto detect —</option>
-                <option value="Casual / T-shirt & Jeans">Casual — Kaos & Jeans santai</option>
-                <option value="Streetwear / Hoodie">Streetwear — Hoodie & sneakers</option>
-                <option value="Formal / Suit & Tie">🤵 Formal — Jas & dasi</option>
-                <option value="Business Casual">Business Casual — Kantoran santai</option>
-                <option value="Elegant / Dress">👗 Elegant Dress — Gaun elegan</option>
-                <option value="Sportswear / Active">🏃 Sportswear — Olahraga</option>
-                <option value="Swimsuit / Bikini">👙 Swimsuit — Baju renang</option>
-                <option value="Traditional / Kebaya">Traditional — Kebaya / Batik</option>
-                <option value="Traditional / Kimono">Traditional — Kimono Jepang</option>
-                <option value="Traditional / Hanbok">Traditional — Hanbok Korea</option>
-                <option value="Crop Top & Skirt">Crop Top & Rok pendek</option>
-                <option value="Oversized / Baggy">Oversized — Longgar kebesaran</option>
-                <option value="Leather / Biker">Leather — Jaket kulit</option>
-                <option value="Denim / Jacket">Denim Jacket — Jaket denim</option>
-                <option value="Coat / Winter">🧥 Coat — Mantel musim dingin</option>
-                <option value="Uniform / Costume">Uniform — Seragam / Kostum</option>
-                <option value="Lingerie / Sleepwear">Lingerie / Sleepwear — Pakaian tidur</option>
-                <option value="Minimalist / Nude tones">Minimalist — Warna nude minimalis</option>
-                <option value="Bohemian / Flowy">Bohemian — Longgar flowy</option>
-                <option value="Punk / Grunge">Punk / Grunge</option>
-                <option value="Preppy / Chic">Preppy / Chic — Rapi gaya kampus</option>
-                <option value="Tight / Form-fitting">Tight — Ketat body-fit</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Bawahan</label>
-              <select id="bottoms">
-                <option value="">— Auto detect —</option>
-                <option value="Jeans (Slim Fit)">👖 Jeans — Slim Fit</option>
-                <option value="Jeans (Straight)">👖 Jeans — Straight / Lurus</option>
-                <option value="Jeans (Baggy / Loose)">👖 Jeans — Baggy / Longgar</option>
-                <option value="Jeans (Boyfriend)">👖 Jeans — Boyfriend</option>
-                <option value="Jeans (Skinny)">👖 Jeans — Skinny</option>
-                <option value="Jeans (Flared / Bell Bottom)">👖 Jeans — Flared / Bell Bottom</option>
-                <option value="Rok Mini">Rok Mini — Pendek</option>
-                <option value="Rok Midi">Rok Midi — Selutut</option>
-                <option value="Rok Maxi / Panjang">Rok Maxi — Panjang</option>
-                <option value="Rok Plisket">Rok Plisket — Lipit-lipit</option>
-                <option value="Rok A-Line">Rok A-Line — Mengembang ke bawah</option>
-                <option value="Rok Pencil">Rok Pencil — Ketat lurus</option>
-                <option value="Rok Denim">Rok Denim — Jeans</option>
-                <option value="Rok Tutu / Ballerina">Rok Tutu — Balerina</option>
-                <option value="Rok Lipit / Pleated">Rok Lipit — Pleated seragam</option>
-                <option value="Celana Pendek (Hot Pants)">🩳 Celana Pendek — Hot Pants</option>
-                <option value="Celana Pendek (Bermuda)">🩳 Celana Pendek — Bermuda</option>
-                <option value="Celana Pendek (Denim Shorts)">🩳 Celana Pendek — Denim Shorts</option>
-                <option value="Celana Pendek (Running Shorts)">🩳 Celana Pendek — Running / Olahraga</option>
-                <option value="Celana Panjang (Trousers)">👖 Celana Panjang — Trousers / Formal</option>
-                <option value="Celana Panjang (Chino)">👖 Celana Panjang — Chino</option>
-                <option value="Celana Panjang (Cargo)">👖 Celana Panjang — Cargo</option>
-                <option value="Celana Panjang (Wide Leg)">👖 Celana Panjang — Wide Leg</option>
-                <option value="Celana Panjang (Palazzo)">👖 Celana Panjang — Palazzo</option>
-                <option value="Celana Panjang (Skinny)">👖 Celana Panjang — Skinny</option>
-                <option value="Celana Panjang (Kulot)">👖 Celana Panjang — Kulot / Culottes</option>
-                <option value="Leggings">Leggings — Ketat stretch</option>
-                <option value="Overall / Jumpsuit">Overall / Jumpsuit — Terusan</option>
-                <option value="Celana Yoga">🧘 Celana Yoga — Yoga pants</option>
-                <option value="Sarung / Kain">Sarung / Kain — Tradisional</option>
-                <option value="None — Tidak pakai bawahan">None — Hanya atasan</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Aksesoris</label>
-              <select id="accessories">
-                <option value="">— Auto detect —</option>
-                <option value="None / No accessories">None — Tidak ada</option>
-                <option value="Sunglasses">🕶️ Sunglasses — Kacamata hitam</option>
-                <option value="Glasses (prescription)">👓 Glasses — Kacamata</option>
-                <option value="Hat / Cap">🧢 Hat / Cap — Topi</option>
-                <option value="Bucket Hat">Bucket Hat — Topi petani</option>
-                <option value="Necklace / Chain">📿 Necklace — Kalung / rantai</option>
-                <option value="Earrings">💎 Earrings — Anting</option>
-                <option value="Ring / Rings">💍 Ring — Cincin</option>
-                <option value="Bracelet / Watch">⌚ Bracelet / Watch — Gelang / jam</option>
-                <option value="Piercing (nose/lip/brow)">Piercing — Tindik hidung/bibir</option>
-                <option value="Scarf / Shawl">🧣 Scarf — Syal</option>
-                <option value="Belt">Belt — Ikat pinggang</option>
-                <option value="Bag / Handbag">👜 Bag — Tas tangan</option>
-                <option value="Backpack">🎒 Backpack — Ransel</option>
-                <option value="Headband / Hair clips">Headband — Ikat rambut / jepit</option>
-                <option value="Crown / Tiara">👑 Crown — Mahkota</option>
-                <option value="Tattoo visible">Tattoo — Tato terlihat</option>
-                <option value="Tattoo (sleeve)">Tattoo Sleeve — Tato lengan penuh</option>
-                <option value="Face mask / Masker">😷 Face mask — Masker</option>
-                <option value="Headphones">🎧 Headphones — Headset</option>
-                <option value="Microphone">🎤 Microphone — Mic</option>
-                <option value="Props / Handheld item">Props — Properti di tangan</option>
-                <option value="Gloves">🧤 Gloves — Sarung tangan</option>
-                <option value="Boots / High heels">👢 Boots / Heels — Sepatu hak</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label>Warna Rambut</label>
-              <select id="hairColor">
-                <option value="">— Auto detect —</option>
-                <option value="Black">Black — Hitam</option>
-                <option value="Dark Brown">Dark Brown — Coklat tua</option>
-                <option value="Light Brown">Light Brown — Coklat muda</option>
-                <option value="Blonde / Platinum">Blonde — Pirang</option>
-                <option value="Red / Auburn">Red — Merah / Auburn</option>
-                <option value="Blue (dyed)">Blue — Biru (diwarnai)</option>
-                <option value="Pink (dyed)">Pink — Merah muda (diwarnai)</option>
-                <option value="Purple (dyed)">Purple — Ungu (diwarnai)</option>
-                <option value="Green (dyed)">Green — Hijau (diwarnai)</option>
-                <option value="Silver / Grey">Silver — Perak / Abu</option>
-                <option value="Ombre / Balayage">Ombre / Balayage — Gradasi</option>
-                <option value="White / Grey natural">White — Putih / uban</option>
-                <option value="Rainbow / Multicolor">🌈 Rainbow — Pelangi warna-warni</option>
-              </select>
-            </div>
-
-            <!-- Extra detail area -->
-            <div class="control-group full-width">
-              <label>Detail Tambahan (opsional)</label>
-              <textarea id="extraDetails" rows="2" placeholder="Misal: background warna pastel pink, baju oversize, pose santai sambil pegang produk skincare..."></textarea>
-            </div>
-          </div>
-
-          <!-- GENERATE BUTTON -->
-          <button class="btn-generate" id="btnGenerate" onclick="generatePrompt()" disabled>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-            Generate Prompt
-          </button>
-        </div>
-      </section>
-
-      <!-- RIGHT: OUTPUT -->
-      <section class="output-panel">
-        <div class="output-header">
-          <h3>📝 Hasil Prompt</h3>
-          <div class="output-actions">
-            <button class="btn-small" onclick="copyPrompt()">📋 Copy</button>
-            <button class="btn-small" onclick="exportPrompt()">💾 Export</button>
+          <div class="db-content">
+            <textarea id="masterStudio" rows="3">White cyclorama studio, softbox right and left, grey floor, soft diffused shadow</textarea>
+            <div class="db-hint">Background & lighting tetap</div>
           </div>
         </div>
-        <div class="output-content" id="outputContent">
-          <div class="output-empty" id="outputEmpty">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-              <polyline points="14,2 14,8 20,8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10,9 9,9 8,9"/>
-            </svg>
-            <p>Upload gambar dan atur detail karakter</p>
-            <small>Klik <strong>Generate Prompt</strong> untuk mulai</small>
-          </div>
-          <div id="outputResult" class="hidden"></div>
-        </div>
-        <div class="output-footer" id="outputFooter" class="hidden">
-          <span class="token-count" id="tokenCount">—</span>
-        </div>
-      </section>
-    </main>
 
-    <!-- Loader overlay -->
-    <div class="loader-overlay hidden" id="loaderOverlay">
-      <div class="loader-content">
-        <div class="spinner"></div>
-        <p>Menganalisis gambar...</p>
-        <small>Gemini AI sedang memproses</small>
+        <!-- DATABASE C — Master Camera (fixed) -->
+        <div class="db-section">
+          <div class="db-section-header">
+            <span>📷 DATABASE C — Master Camera</span>
+            <span class="db-badge fix">FIXED</span>
+          </div>
+          <div class="db-content">
+            <textarea id="masterCamera" rows="3">Camera directly behind, eye level, locked camera, 85mm lens, f/2.8, center composition, vertical 9:16</textarea>
+            <div class="db-hint">Angle & lens tetap</div>
+          </div>
+        </div>
+
+        <!-- DATABASE D — Master Pose (dropdown) -->
+        <div class="db-section">
+          <div class="db-section-header">
+            <span>🧘 DATABASE D — Master Pose</span>
+            <span class="db-badge variable">VARIABLE</span>
+          </div>
+          <div class="db-content">
+            <select id="masterPose">
+              <option value="Hands on hips, confident stance">Pose 1 — Hands on hips</option>
+              <option value="One hand in pocket, relaxed" selected>Pose 2 — One hand in pocket</option>
+              <option value="Relaxed standing, arms at sides">Pose 3 — Relaxed standing</option>
+              <option value="Walking slowly forward">Pose 4 — Walking slowly</option>
+              <option value="Looking over shoulder back at camera">Pose 5 — Looking over shoulder</option>
+              <option value="Crossed arms, slight smirk">Pose 6 — Crossed arms</option>
+              <option value="Holding phone, looking down">Pose 7 — Holding phone</option>
+              <option value="Adjusting collar, looking up">Pose 8 — Adjusting collar</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- DATABASE E — Produk (yang sering ganti) -->
+        <div class="db-section">
+          <div class="db-section-header">
+            <span>👕 DATABASE E — Produk</span>
+            <span class="db-badge variable">VARIABLE</span>
+          </div>
+          <div class="db-content">
+            <div class="product-selector-row">
+              <select id="masterProduct">
+                <option value="">— Pilih produk —</option>
+                <option value="Black cotton oversized T-shirt">Kaos Oversized Hitam</option>
+                <option value="Maroon cotton oversized T-shirt">Kaos Oversized Maroon</option>
+                <option value="Cream cotton oversized T-shirt">Kaos Oversized Cream</option>
+                <option value="White cotton oversized T-shirt">Kaos Oversized Putih</option>
+                <option value="Navy blue cotton oversized T-shirt">Kaos Oversized Navy</option>
+                <option value="Olive green cotton oversized T-shirt">Kaos Oversized Olive</option>
+                <option value="Charcoal grey oversized hoodie">Hoodie Oversized Charcoal</option>
+                <option value="Black oversized hoodie">Hoodie Oversized Hitam</option>
+                <option value="Cream oversized hoodie">Hoodie Oversized Cream</option>
+                <option value="Cargo pants black">Cargo Pants Hitam</option>
+                <option value="Cargo pants army green">Cargo Pants Army Green</option>
+                <option value="Blue straight jeans">Jeans Blue Straight</option>
+                <option value="Black slim jeans">Jeans Black Slim</option>
+                <option value="Grey sweatpants">Sweatpants Abu</option>
+                <option value="Denim jacket">Denim Jacket</option>
+                <option value="White sneakers">Sneakers Putih</option>
+              </select>
+              <button class="btn-small" onclick="manageProducts()">✏️</button>
+            </div>
+            <div class="db-hint">Pilih produk yang mau dipromosikan</div>
+          </div>
+        </div>
+
+        <!-- GENERATE BUTTON -->
+        <button class="btn-generate" id="btnGenerate" onclick="generatePrompt()">
+          <span class="btn-icon">⚡</span> Generate Prompt
+        </button>
+      </div>
+
+      <!-- RIGHT PANEL — Output -->
+      <div class="right-panel">
+        <div class="output-area" id="outputArea">
+          <div class="output-empty">
+            <div class="empty-icon">🧩</div>
+            <h3>Prompt Siap Dirakit</h3>
+            <p>Pilih produk + pose, lalu klik Generate</p>
+          </div>
+        </div>
+        <div class="output-footer hidden" id="outputFooter">
+          <div class="footer-left">
+            <span id="tokenCount"></span>
+          </div>
+          <div class="footer-right">
+            <button class="btn-small" onclick="copyAll()">📋 Salin Semua</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Toast -->
+    <!-- LOADER -->
+    <div class="loader-overlay hidden" id="loaderOverlay">
+      <div class="loader-modal">
+        <div class="loader-spinner"></div>
+        <p>Merakit prompt...</p>
+      </div>
+    </div>
+
+    <!-- TOAST -->
     <div class="toast hidden" id="toast"></div>
   </div>
 
