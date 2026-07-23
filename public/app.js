@@ -174,7 +174,7 @@ function renderResult(data) {
       <div class="output-section">
         <div class="output-section-header">
           <span><span class="output-section-icon">📸</span> Prompt Gambar</span>
-          <button class="copy-btn" onclick="copyText(${JSON.stringify(imgPrompt)})">📋 Salin</button>
+          <button class="copy-btn" data-prompt="${escapeAttr(imgPrompt)}">📋 Salin</button>
         </div>
         <div class="output-text">${escapeHtml(imgPrompt)}</div>
         <div class="output-video-badges">
@@ -193,7 +193,7 @@ function renderResult(data) {
       <div class="output-section">
         <div class="output-section-header">
           <span><span class="output-section-icon">🎬</span> Prompt Video — Universal</span>
-          <button class="copy-btn" onclick="copyText(${JSON.stringify(vidUniversal)})">📋 Salin</button>
+          <button class="copy-btn" data-prompt="${escapeAttr(vidUniversal)}">📋 Salin</button>
         </div>
         <div class="output-text">${escapeHtml(vidUniversal)}</div>
         <div class="output-video-badges">
@@ -213,7 +213,7 @@ function renderResult(data) {
       <div class="output-section">
         <div class="output-section-header">
           <span><span class="output-section-icon">🎥</span> Prompt Video — Gemini & Veo 3</span>
-          <button class="copy-btn" onclick="copyText(${JSON.stringify(vidVeo)})">📋 Salin</button>
+          <button class="copy-btn" data-prompt="${escapeAttr(vidVeo)}">📋 Salin</button>
         </div>
         <div class="output-text">${escapeHtml(vidVeo)}</div>
         <div class="output-video-badges">
@@ -368,6 +368,19 @@ function escapeHtml(str) {
   d.textContent = str;
   return d.innerHTML;
 }
+
+function escapeAttr(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '&#10;');
+}
+
+// ===== CLIPBOARD via data-prompt =====
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.copy-btn');
+  if (btn && btn.dataset.prompt) {
+    copyText(btn.dataset.prompt);
+  }
+});
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
