@@ -94,6 +94,7 @@ function handleFile(file) {
     uploadPlaceholder.classList.add('hidden');
     btnRemove.classList.remove('hidden');
     $('faceRefCard').classList.remove('hidden');
+    btnGenerate.disabled = false;
     showToast('Gambar siap! ✅', 'success');
   };
   reader.readAsDataURL(file);
