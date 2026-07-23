@@ -421,12 +421,12 @@ const modelStatus = $('modelStatus');
 const MODEL_OPTIONS = [
   { value: 'gemini-3.5-flash-lite', label: '⚡ Gemini 3.5 Flash Lite', recommended: true },
   { value: 'gemini-3.5-flash', label: '✨ Gemini 3.5 Flash' },
-  { value: 'gemini-2.0-flash', label: '⚡ Gemini 2.0 Flash' },
+  { value: 'gemini-2.0-flash', label: '🔄 Gemini 2.0 Flash' },
 ];
 
 async function loadModels() {
   try {
-    modelStatus.innerHTML = `<span class="dot-loading"></span> Mengecek model...`;
+    modelStatus.innerHTML = `<span class="dot-loading"></span> <span class="model-status-text">Mengecek model...</span>`;
 
     const res = await fetch('/api/models');
     const data = await res.json();
@@ -436,32 +436,57 @@ async function loadModels() {
       return;
     }
 
-    const activeMap = {};
-    data.models.forEach(m => { activeMap[m.id] = m.active; });
+    // Build lookup
+    const statusMap = {};
+    data.models.forEach(m => { statusMap[m.id] = m; });
 
-    // Rebuild select options with active/inactive state
+    // Rebuild select
     modelSelect.innerHTML = '';
-    let firstActive = null;
+    let firstSelectable = null;
+    let preferredActive = null;
 
     MODEL_OPTIONS.forEach(opt => {
-      const isActive = activeMap[opt.value];
+      const info = statusMap[opt.value];
       const option = document.createElement('option');
       option.value = opt.value;
-      option.textContent = opt.label;
-      option.disabled = !isActive;
-      if (!isActive) option.textContent += ' ❌ (nonaktif)';
-      else if (opt.recommended) option.textContent += ' ✅';
 
-      if (isActive && !firstActive) firstActive = opt.value;
+      let statusEmoji = '';
+      let statusLabel = '';
+
+      if (!info || info.status === 'unavailable' || info.status === 'not_found') {
+        statusEmoji = '❌';
+        statusLabel = 'Tidak tersedia';
+        option.disabled = true;
+      } else if (info.status === 'quota_exhausted') {
+        statusEmoji = '⏳';
+        statusLabel = 'Kuota habis';
+        option.disabled = true;
+      } else if (info.status === 'listed_no_quota') {
+        statusEmoji = '⚠️';
+        statusLabel = 'Tak bisa dipakai';
+        option.disabled = true;
+      } else if (info.pingStatus === 'active') {
+        statusEmoji = '✅';
+        statusLabel = 'Aktif';
+        if (!firstSelectable) firstSelectable = opt.value;
+        if (opt.recommended) preferredActive = opt.value;
+      } else {
+        statusEmoji = '❓';
+        statusLabel = 'Error';
+        option.disabled = true;
+      }
+
+      option.textContent = `${opt.label} ${statusEmoji}`;
       modelSelect.appendChild(option);
     });
 
-    // Select first active (prefer recommended)
-    const preferred = MODEL_OPTIONS.find(o => o.recommended && activeMap[o.value]);
-    modelSelect.value = preferred ? preferred.value : (firstActive || MODEL_OPTIONS[0].value);
+    // Auto-select
+    const toSelect = preferredActive || firstSelectable || MODEL_OPTIONS[0].value;
+    modelSelect.value = toSelect;
 
-    // Update status
-    updateModelStatus();
+    // Update status bar
+    const selectedInfo = statusMap[modelSelect.value];
+    updateModelStatus(selectedInfo);
   } catch (err) {
     console.error('Model check failed:', err);
     renderStaticModels();
@@ -477,17 +502,47 @@ function renderStaticModels() {
     modelSelect.appendChild(option);
   });
   modelSelect.value = 'gemini-3.5-flash-lite';
-  updateModelStatus();
+  updateModelStatus({ status: 'active', pingStatus: 'active' });
 }
 
-function updateModelStatus() {
+function updateModelStatus(info) {
   const selected = modelSelect.value;
   const opt = MODEL_OPTIONS.find(o => o.value === selected);
-  const label = modelSelect.options[modelSelect.selectedIndex]?.text || selected;
-  modelStatus.innerHTML = `<span class="dot-active"></span> ${selected} — Aktif`;
+  const labelText = opt ? opt.label : selected;
+
+  if (!info) {
+    modelStatus.innerHTML = `<span class="dot-active"></span> ${selected} — Aktif`;
+    return;
+  }
+
+  let dot, statusText;
+  if (info.status === 'active') {
+    dot = '<span class="dot-active"></span>';
+    statusText = 'Aktif ✅ — Siap pakai';
+  } else if (info.status === 'quota_exhausted') {
+    dot = '<span class="dot-warning"></span>';
+    statusText = 'Kuota harian habis ⏳ — Coba besok atau ganti model';
+  } else if (info.status === 'listed_no_quota') {
+    dot = '<span class="dot-warning"></span>';
+    statusText = 'Terdaftar tapi quota 0 ⚠️';
+  } else {
+    dot = '<span class="dot-offline"></span>';
+    statusText = 'Tidak tersedia ❌';
+  }
+
+  modelStatus.innerHTML = `${dot} <span class="model-status-text">${labelText} — ${statusText}</span>`;
 }
 
-modelSelect.addEventListener('change', updateModelStatus);
+modelSelect.addEventListener('change', () => {
+  // Re-fetch status for selected model
+  fetch('/api/models').then(r => r.json()).then(data => {
+    if (data.success) {
+      const info = data.models.find(m => m.id === modelSelect.value);
+      updateModelStatus(info);
+    }
+  }).catch(() => {});
+  showToast(`Model diganti`, 'success');
+});
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
