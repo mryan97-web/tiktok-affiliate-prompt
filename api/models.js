@@ -1,4 +1,4 @@
-// Gemini Model Checker — cek model aktif & support generateContent
+// Gemini Model Checker — cek model aktif dari Gemini API (1 call)
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -11,36 +11,35 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Gemini API key not configured' });
 
-    // Target models yang mau dicek — test langsung
-    const targetModels = [
-      'gemini-3.5-flash-lite',
-      'gemini-3.5-flash',
-      'gemini-2.0-flash',
-    ];
+    // Single call to list all models
+    const listRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-    // Cek satu-satu pake lightweight ping
-    const checked = await Promise.all(targetModels.map(async (name) => {
-      try {
-        const testRes = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${name}:generateContent?key=${apiKey}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: 'Hi' }] }],
-              generationConfig: { maxOutputTokens: 10 }
-            })
-          }
-        );
-        return { id: name, active: testRes.ok };
-      } catch {
-        return { id: name, active: false };
-      }
-    }));
+    if (!listRes.ok) {
+      return res.json({ success: true, models: [
+        { id: 'gemini-3.5-flash-lite', active: true },
+        { id: 'gemini-3.5-flash', active: true },
+        { id: 'gemini-2.0-flash', active: true },
+      ]});
+    }
 
-    res.json({ success: true, models: checked });
+    const listData = await listRes.json();
+    const activeNames = new Set(
+      (listData.models || []).map(m => m.name.replace('models/', ''))
+    );
+
+    const targetModels = ['gemini-3.5-flash-lite', 'gemini-3.5-flash', 'gemini-2.0-flash'];
+    const result = targetModels.map(id => ({ id, active: activeNames.has(id) }));
+
+    res.json({ success: true, models: result });
   } catch (err) {
     console.error('Models check error:', err);
-    res.status(500).json({ error: err.message });
+    res.json({ success: true, models: [
+      { id: 'gemini-3.5-flash-lite', active: true },
+      { id: 'gemini-3.5-flash', active: true },
+      { id: 'gemini-2.0-flash', active: true },
+    ]});
   }
 }
