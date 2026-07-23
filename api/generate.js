@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { image, mimeType, faceImage, faceMimeType, options } = req.body;
+    const { image, mimeType, faceImage, faceMimeType, options, model } = req.body;
     if (!image) return res.status(400).json({ error: 'Image required' });
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -89,7 +89,9 @@ ${customParams}
       }
     };
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    // Determine model from request (frontend selector) or default
+    const selectedModel = model || 'gemini-3.5-flash-lite';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
 
     const geminiRes = await fetch(url, {
       method: 'POST',

@@ -100,6 +100,63 @@ body {
 .api-status.online { background: rgba(34,197,94,0.15); color: var(--success); }
 .api-status.offline { background: rgba(239,68,68,0.15); color: var(--danger); }
 
+/* ===== MODEL SELECTOR BAR ===== */
+.model-selector-bar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.model-selector-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.model-selector-inner label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.model-selector-inner select {
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 220px;
+}
+
+.model-selector-inner select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.model-status {
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot-active {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(34,197,94,0.4);
+}
+
 /* ===== MAIN GRID ===== */
 .main-grid {
   display: grid;

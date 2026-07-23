@@ -225,7 +225,8 @@ async function generatePrompt() {
         mimeType: state.mimeType,
         faceImage: state.faceImageData,
         faceMimeType: state.faceMimeType,
-        options: getOptions()
+        options: getOptions(),
+        model: $('modelSelect').value
       })
     });
 
@@ -403,6 +404,17 @@ function showToast(msg, type = 'success') {
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
+
+// ===== MODEL SELECTOR (update active indicator) =====
+const modelSelect = $('modelSelect');
+const modelStatus = $('modelStatus');
+
+modelSelect.addEventListener('change', () => {
+  const val = modelSelect.value;
+  const label = modelSelect.options[modelSelect.selectedIndex].text;
+  modelStatus.innerHTML = `<span class="dot-active"></span> ${val} — Aktif`;
+  showToast(`Model diganti: ${label}`, 'success');
+});
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
