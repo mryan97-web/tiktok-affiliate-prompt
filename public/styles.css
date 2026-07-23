@@ -450,6 +450,9 @@ body {
 }
 .toast.hidden { opacity: 0; transform: translateX(-50%) translateY(20px); pointer-events: none; }
 
+/* ===== HIDDEN UTILITY ===== */
+.hidden { display: none !important; }
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
