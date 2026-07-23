@@ -51,7 +51,7 @@ async function checkAPI() {
   }
 }
 
-// ===== UPLOAD HANDLERS =====
+// ===== MAIN IMAGE UPLOAD =====
 uploadZone.addEventListener('click', () => fileInput.click());
 
 uploadZone.addEventListener('dragover', (e) => {
@@ -66,8 +66,7 @@ uploadZone.addEventListener('dragleave', () => {
 uploadZone.addEventListener('drop', (e) => {
   e.preventDefault();
   uploadZone.classList.remove('dragover');
-  const files = e.dataTransfer.files;
-  if (files.length > 0) handleFile(files[0]);
+  if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
 });
 
 fileInput.addEventListener('change', (e) => {
@@ -79,7 +78,6 @@ function handleFile(file) {
     showToast('Format gambar harus JPG, PNG, atau WEBP', 'error');
     return;
   }
-  
   if (file.size > 10 * 1024 * 1024) {
     showToast('File terlalu besar. Maks 10MB', 'error');
     return;
@@ -90,13 +88,13 @@ function handleFile(file) {
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    state.imageData = e.target.result.split(',')[1]; // base64 tanpa header
+    state.imageData = e.target.result.split(',')[1];
     previewImage.src = e.target.result;
     previewImage.classList.remove('hidden');
     uploadPlaceholder.classList.add('hidden');
     btnRemove.classList.remove('hidden');
-    btnGenerate.disabled = false;
-    showToast('Gambar siap! Atur detail lalu Generate', 'success');
+    $('faceRefCard').classList.remove('hidden');
+    showToast('Gambar siap! ✅', 'success');
   };
   reader.readAsDataURL(file);
 }
@@ -108,8 +106,9 @@ function removeImage() {
   previewImage.classList.add('hidden');
   uploadPlaceholder.classList.remove('hidden');
   btnRemove.classList.add('hidden');
-  previewImage.src = '';
   fileInput.value = '';
+  $('faceRefCard').classList.add('hidden');
+  removeFaceImage();
   btnGenerate.disabled = true;
 }
 
@@ -258,58 +257,53 @@ async function generatePrompt() {
 function renderResult(data) {
   const prompt = data.prompt || {};
   const raw = data.raw || '';
-  
+  const breakdown = prompt.detail_prompt_breakdown || {};
+  const mainPrompt = prompt.prompt_utama || '';
+
   let html = '';
 
-  if (prompt.raw) {
-    // Fallback: tampilkan raw markdown
-    html = `<div class="prompt-main">${escapeHtml(prompt.raw)}</div>`;
-  } else {
-    // Structured prompt utama
-    const mainPrompt = prompt['📸 Prompt Utama'] || prompt.mainPrompt || '';
-    
-    if (mainPrompt) {
-      html += `<div class="prompt-main">${escapeHtml(mainPrompt)}</div>`;
-    }
+  // Main prompt
+  if (mainPrompt) {
+    html += `<div class="prompt-main">${escapeHtml(mainPrompt)}</div>`;
+  }
 
-    // Detail sections
-    const sections = [
-      '1. Gender & Demografi',
-      '2. Ekspresi Wajah',
-      '3. Pose & Gesture',
-      '4. Shot Type',
-      '5. Camera Angle',
-      '6. Background / Location',
-      '7. Art Style',
-      '8. Lighting',
-      '9. Color Tone',
-      '10. Warna Dominan',
-      '11. Detail Pakaian & Aksesoris',
-      '12. Detail Rambut',
-      '13. Vibe / Mood / Suasana',
-      '14. Detail Fitur Wajah'
-    ];
+  // Map Indonesian snake_case -> display labels
+  const sectionMap = [
+    { key: 'gender_dan_demografi', label: '1. Gender & Demografi' },
+    { key: 'ekspresi_wajah', label: '2. Ekspresi Wajah' },
+    { key: 'pose_dan_gesture', label: '3. Pose & Gesture' },
+    { key: 'shot_type', label: '4. Shot Type' },
+    { key: 'camera_angle', label: '5. Camera Angle' },
+    { key: 'background_location', label: '6. Background / Location' },
+    { key: 'art_style', label: '7. Art Style' },
+    { key: 'lighting', label: '8. Lighting' },
+    { key: 'color_tone', label: '9. Color Tone' },
+    { key: 'warna_dominan', label: '10. Warna Dominan' },
+    { key: 'detail_pakaian_dan_aksesoris', label: '11. Detail Pakaian & Aksesoris' },
+    { key: 'detail_rambut', label: '12. Detail Rambut' },
+    { key: 'vibe_mood_suasana', label: '13. Vibe / Mood / Suasana' },
+    { key: 'detail_fitur_wajah', label: '14. Detail Fitur Wajah' },
+  ];
 
-    for (const section of sections) {
-      const content = prompt[section];
-      if (content) {
-        html += `
-          <div class="prompt-section">
-            <h4>${escapeHtml(section)}</h4>
-            <p>${escapeHtml(typeof content === 'string' ? content : JSON.stringify(content, null, 2))}</p>
-          </div>
-        `;
-      }
+  for (const { key, label } of sectionMap) {
+    const content = breakdown[key] || prompt[key];
+    if (content && content !== 'N/A' && !content.startsWith('Tidak ada')) {
+      html += `
+        <div class="prompt-section">
+          <h4>${escapeHtml(label)}</h4>
+          <p>${escapeHtml(typeof content === 'string' ? content : JSON.stringify(content, null, 2))}</p>
+        </div>
+      `;
     }
   }
 
   // Raw toggle
-  if (raw && raw !== JSON.stringify(prompt, null, 2)) {
+  if (raw) {
     html += `
       <div class="raw-toggle" onclick="toggleRaw(this)">
         📄 Lihat response mentah
       </div>
-      <div class="raw-toggle hidden" style="display:none">
+      <div class="raw-content" style="display:none">
         <pre style="font-size:11px;color:var(--text-muted);text-align:left;white-space:pre-wrap;max-height:300px;overflow-y:auto;">${escapeHtml(raw)}</pre>
       </div>
     `;
@@ -328,9 +322,10 @@ function renderResult(data) {
 
 function toggleRaw(el) {
   const next = el.nextElementSibling;
-  if (next && next.classList.contains('raw-toggle')) {
-    next.style.display = next.style.display === 'none' ? 'block' : 'none';
-    el.textContent = el.textContent.includes('Lihat') ? '🙈 Sembunyikan raw' : '📄 Lihat response mentah';
+  if (next && next.classList.contains('raw-content')) {
+    const isHidden = next.style.display === 'none';
+    next.style.display = isHidden ? 'block' : 'none';
+    el.textContent = isHidden ? '🙈 Sembunyikan raw' : '📄 Lihat response mentah';
   }
 }
 
@@ -425,7 +420,6 @@ document.addEventListener('keydown', (e) => {
   }
   // Escape = close loader
   if (e.key === 'Escape' && !loaderOverlay.classList.contains('hidden')) {
-    // Cannot cancel API call, but hide loader
     loaderOverlay.classList.add('hidden');
   }
 });

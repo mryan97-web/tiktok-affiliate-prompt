@@ -85,7 +85,7 @@ ${customParams}
         temperature: 0.4,
         topP: 0.95,
         topK: 40,
-        maxOutputTokens: 4096
+        maxOutputTokens: 1024
       }
     };
 
