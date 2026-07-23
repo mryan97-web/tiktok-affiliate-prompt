@@ -291,44 +291,8 @@ const MODEL_OPTIONS = [
 ];
 
 async function loadModels() {
-  try {
-    modelStatus.innerHTML = `<span class="dot-loading"></span> <span class="model-status-text">Mengecek model...</span>`;
-    const res = await fetch('/api/models');
-    const data = await res.json();
-    if (!data.success || !data.models) { renderStaticModels(); return; }
-
-    const statusMap = {};
-    data.models.forEach(m => { statusMap[m.id] = m; });
-
-    modelSelect.innerHTML = '';
-    let firstSelectable = null;
-    let preferredActive = null;
-
-    MODEL_OPTIONS.forEach(opt => {
-      const info = statusMap[opt.value];
-      const option = document.createElement('option');
-      option.value = opt.value;
-      let emoji = '❌';
-      if (!info || info.status === 'unavailable' || info.status === 'not_found') { option.disabled = true; }
-      else if (info.status === 'quota_exhausted') { emoji = '⏳'; option.disabled = true; }
-      else if (info.status === 'listed_no_quota') { emoji = '⚠️'; option.disabled = true; }
-      else if (info.pingStatus === 'active') {
-        emoji = '✅';
-        if (!firstSelectable) firstSelectable = opt.value;
-        if (opt.recommended) preferredActive = opt.value;
-      } else { option.disabled = true; }
-      option.textContent = `${opt.label} ${emoji}`;
-      modelSelect.appendChild(option);
-    });
-
-    const toSelect = preferredActive || firstSelectable || MODEL_OPTIONS[0].value;
-    modelSelect.value = toSelect;
-    const selectedInfo = statusMap[modelSelect.value];
-    updateModelStatus(selectedInfo);
-  } catch (err) {
-    console.error('Model check failed:', err);
-    renderStaticModels();
-  }
+  // Skip API check — render all models as active immediately
+  renderStaticModels();
 }
 
 function renderStaticModels() {
