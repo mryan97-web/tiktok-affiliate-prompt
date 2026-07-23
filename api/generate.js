@@ -156,7 +156,8 @@ function buildCustomParams(options) {
   if (options.lighting) parts.push(`- Lighting: ${options.lighting}`);
   if (options.colorTone) parts.push(`- Color Tone: ${options.colorTone}`);
   if (options.hairStyle) parts.push(`- Gaya Rambut: ${options.hairStyle}`);
-  if (options.clothing) parts.push(`- Pakaian: ${options.clothing}`);
+  if (options.clothing) parts.push(`- Pakaian Atasan: ${options.clothing}`);
+  if (options.bottoms) parts.push(`- Bawahan: ${options.bottoms}`);
   if (options.accessories) parts.push(`- Aksesoris: ${options.accessories}`);
   if (options.mood) parts.push(`- Mood/Suasana: ${options.mood}`);
   if (options.ethnicity) parts.push(`- Etnis/Kulit: ${options.ethnicity}`);

@@ -100,6 +100,18 @@ body {
 .api-status.online { background: rgba(34,197,94,0.15); color: var(--success); }
 .api-status.offline { background: rgba(239,68,68,0.15); color: var(--danger); }
 
+.logo-text { font-size: 18px; }
+
+.app-subtitle {
+  text-align: center;
+  padding: 10px 20px 14px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+
 /* ===== MODEL SELECTOR BAR ===== */
 .model-selector-bar {
   background: var(--bg-secondary);
