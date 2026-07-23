@@ -182,9 +182,67 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  z-index: 2;
 }
 
 .btn-remove:hover { background: var(--danger); }
+
+/* Face Reference Card */
+.face-ref-card {
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.face-ref-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-hover);
+}
+
+.face-ref-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.badge-optional {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(255,107,53,0.15);
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+
+.upload-zone-sm {
+  min-height: 90px;
+  border: 1px dashed var(--border);
+  border-radius: 0;
+  margin: 0;
+}
+
+.upload-zone-sm:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.upload-placeholder-sm {
+  text-align: center;
+  padding: 16px;
+  pointer-events: none;
+}
+
+.upload-placeholder-sm svg { margin-bottom: 6px; opacity: 0.5; }
+.upload-placeholder-sm p { font-size: 13px; margin-bottom: 2px; color: var(--text-secondary); }
+.upload-placeholder-sm small { color: var(--text-muted); font-size: 11px; }
 
 /* Controls Card */
 .controls-card {

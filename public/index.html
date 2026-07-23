@@ -37,18 +37,41 @@
       <section class="input-panel">
         <!-- Upload Area -->
         <div class="upload-card">
+          <!-- Main Character Upload -->
           <div class="upload-zone" id="uploadZone">
             <div class="upload-placeholder" id="uploadPlaceholder">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
               </svg>
-              <p><strong>Drag & drop gambar</strong> atau klik untuk upload</p>
+              <p><strong>Drop gambar karakter utama</strong> atau klik untuk upload</p>
               <small>Format: JPG, PNG, WEBP — Maks 10MB</small>
             </div>
-            <img id="previewImage" class="preview-image hidden" alt="Preview" />
+            <img id="previewImage" class="preview-image hidden" alt="Preview Character" />
             <button class="btn-remove hidden" id="btnRemove" onclick="removeImage()">✕</button>
           </div>
           <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
+
+          <!-- Face Reference Upload (opsional) -->
+          <div class="upload-card face-ref-card" id="faceRefCard">
+            <div class="face-ref-header">
+              <span class="face-ref-label">🧑‍🎨 <strong>Reference Wajah/Kepala</strong></span>
+              <span class="badge-optional">Opsional</span>
+            </div>
+            <div class="upload-zone upload-zone-sm" id="faceUploadZone">
+              <div class="upload-placeholder-sm" id="facePlaceholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.5">
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                </svg>
+                <p>Upload <strong>close-up wajah</strong> untuk referensi detail fitur</p>
+                <small>Wajah close-up saja (mata, hidung, mulut, bentuk wajah)</small>
+              </div>
+              <img id="previewFace" class="preview-image hidden" alt="Face Preview" />
+              <button class="btn-remove hidden" id="btnRemoveFace" onclick="removeFaceImage()">✕</button>
+            </div>
+            <input type="file" id="faceFileInput" accept="image/jpeg,image/png,image/webp" hidden />
+          </div>
         </div>
 
         <!-- Dropdown Panel -->
@@ -138,30 +161,72 @@
               <label>Pose & Gesture</label>
               <select id="pose">
                 <option value="">— Auto detect —</option>
-                <option value="Standing (full body)">🧍 Standing — Berdiri tegak</option>
-                <option value="Standing (hands in pockets)">Standing — Tangan di saku</option>
-                <option value="Standing (arms crossed)">Standing — Tangan bersedekap</option>
-                <option value="Standing (hand on hip)">Standing — Tangan di pinggang</option>
-                <option value="Standing (leaning on wall)">Standing — Bersandar di tembok</option>
-                <option value="Sitting (chair/bench)">🪑 Sitting — Duduk di kursi</option>
-                <option value="Sitting (floor/ground)">Sitting — Duduk di lantai</option>
-                <option value="Sitting (cross-legged)">Sitting — Bersila</option>
-                <option value="Walking / Striding">🚶 Walking — Berjalan</option>
-                <option value="Running / Jogging">🏃 Running — Berlari</option>
-                <option value="Leaning forward">Leaning forward — Condong ke depan</option>
-                <option value="Lying down (back)">🛌 Lying down — Telentang</option>
-                <option value="Lying down (side)">Lying down — Miring</option>
-                <option value="Crouching / Squatting">Crouching / Squatting — Jongkok</option>
-                <option value="Jumping / Hopping">🤸 Jumping — Melompat</option>
-                <option value="Dancing pose">💃 Dancing — Pose menari</option>
-                <option value="Holding product (hand gesture)">📦 Holding product — Memegang produk</option>
-                <option value="Pointing / Gesturing">👉 Pointing — Menunjuk</option>
-                <option value="Thumbs up">👍 Thumbs up — Jempol</option>
-                <option value="Peace sign / V pose">✌️ Peace sign — V gesture</option>
-                <option value="Hand on face / chin">Hand on face — Tangan di dagu</option>
-                <option value="Model pose (hand behind head)">Model pose — Tangan di belakang kepala</option>
-                <option value="T-pose (arms out)">T-pose — Tangan terbuka</option>
-                <option value="Kneeling / One knee">Kneeling — Berlutut</option>
+                <option value="Standing full body frontal">🧍 Standing — Full body frontal</option>
+                <option value="Standing three-quarter turn">Standing — Three-quarter turn</option>
+                <option value="Standing side profile">Standing — Side profile</option>
+                <option value="Standing with hands in pockets">Standing — Tangan di saku santai</option>
+                <option value="Standing arms crossed">Standing — Lengan bersedekap</option>
+                <option value="Standing one hand on hip">Standing — Satu tangan di pinggang</option>
+                <option value="Standing both hands on hip">Standing — Dua tangan di pinggang (power pose)</option>
+                <option value="Standing leaning on wall">Standing — Bersandar di tembok</option>
+                <option value="Standing leaning back">Standing — Condong ke belakang santai</option>
+                <option value="Standing hand behind head">Standing — Tangan di belakang kepala</option>
+                <option value="Standing hands clasped front">Standing — Tangan di depan (genggam)</option>
+                <option value="Walking towards camera">🚶 Fashion Walk — Berjalan ke arah kamera</option>
+                <option value="Walking on runway">Fashion Walk — Catwalk runway</option>
+                <option value="Walking looking back">Fashion Walk — Berjalan sambil menoleh ke belakang</option>
+                <option value="Striding confidently">Striding — Langkah percaya diri</option>
+                <option value="Sitting on chair sideways">🪑 Sitting — Duduk menyamping di kursi</option>
+                <option value="Sitting on chair facing back">Sitting — Duduk membelakangi kursi</option>
+                <option value="Sitting on floor elegantly">Sitting — Duduk di lantai elegan</option>
+                <option value="Sitting cross-legged">Sitting — Duduk bersila</option>
+                <option value="Sitting on stool one leg up">Sitting — Duduk di stool satu kaki naik</option>
+                <option value="Sitting on edge of bed">Sitting — Duduk di tepi kasur</option>
+                <option value="Sitting with legs crossed">Sitting — Duduk silang kaki (model pose)</option>
+                <option value="Crouching / Squatting stylish">Crouching — Jongkok gaya model</option>
+                <option value="Kneeling on one knee">Kneeling — Satu lutut</option>
+                <option value="One knee down dramatic">Kneeling — Satu lutut dramatis</option>
+                <option value="Leaning forward towards camera">Leaning — Condong ke depan ke kamera</option>
+                <option value="Leaning on table/desk">Leaning — Bersandar di meja</option>
+                <option value="Leaning on railing">Leaning — Bersandar di pagar</option>
+                <option value="Arms up stretching">Arms up — Tangan ke atas stretching</option>
+                <option value="Hand on face touching cheek">Hand on face — Tangan sentuh pipi</option>
+                <option value="Hand running through hair">Hand on hair — Tangan di rambut</option>
+                <option value="Hand on chin thinking">Hand on chin — Tangan di dagu berpikir</option>
+                <option value="Arms crossed leaning forward">Arms crossed — Bertumpu tangan bersedekap</option>
+                <option value="One hand in pocket looking away">One hand pocket — Satu tangan saku, lihat ke samping</option>
+                <option value="Both hands in pockets">Both hands pocket — Dua tangan di saku</option>
+                <option value="Thumbs up casual">👍 Thumbs up — Jempol santai</option>
+                <option value="Peace sign / V pose near face">✌️ Peace sign — V di dekat wajah</option>
+                <option value="Heart hand gesture">🫶 Heart gesture — Tangan bentuk hati</option>
+                <option value="Pointing at camera">👉 Pointing — Menunjuk kamera</option>
+                <option value="Phone selfie pose holding phone">📱 Selfie pose — Pegang handphone</option>
+                <option value="Holding product in front">📦 Holding product — Produk di depan dada</option>
+                <option value="Holding product to the side">Holding product — Produk di samping</option>
+                <option value="Posing with bag / accessory">Posing with bag — Pose tas / aksesoris</option>
+                <option value="Checking watch / bracelet">Checking watch — Lihat jam / gelang</option>
+                <option value="Adjusting collar / tie">Adjusting collar — Atur kerah / dasi</option>
+                <option value="Touching accessories (earring/necklace)">Touching acc — Sentuh anting/kalung</option>
+                <option value="Lying down on back looking up">🛌 Lying — Telentang lihat ke atas</option>
+                <option value="Lying on side propped on elbow">Lying — Miring bertumpu siku</option>
+                <option value="Lying on stomach legs up">Lying — Tengkurap kaki naik</option>
+                <option value="Jumping mid-air">🤸 Jumping — Melompat di udara</option>
+                <option value="Dancing candid moment">💃 Dancing — Momen menari spontan</option>
+                <option value="Twirling dress / skirt">Twirling — Memutar dress / rok</option>
+                <option value="Hand on hat adjusting">Hand on hat — Pegang topi</option>
+                <option value="Leaning on car / vehicle">Leaning on car — Bersandar di mobil</option>
+                <option value="Sitting on car hood">Sitting on car — Duduk di kap mobil</option>
+                <option value="With pet / animal pose">With pet — Pose dengan hewan</option>
+                <option value="Group pose with friends">Group — Pose grup bersama teman</option>
+                <option value="Supermodel smize (smiling with eyes)">Supermodel — Smize (senyum dengan mata)</option>
+                <option value="Supermodel fierce look">Supermodel — Fierce look tajam</option>
+                <option value="Supermodel casual hand in hair">Supermodel — Tangan di rambut casual</option>
+                <option value="T-pose confident">T-pose — Tangan terbuka percaya diri</option>
+                <option value="Hand on chest / heart area">Hand on chest — Tangan di dada</option>
+                <option value="Bent over forward">Bent over — Membungkuk ke depan</option>
+                <option value="Looking over shoulder (over-the-shoulder glance)">🔥 Over-shoulder look — Menoleh lewat bahu</option>
+                <option value="Looking down with attitude">Looking down — Tatap ke bawah attitude</option>
+                <option value="Looking up with expression">Looking up — Tatap ke atas ekspresif</option>
               </select>
             </div>
 
@@ -290,6 +355,28 @@
                 <option value="Fluorescent / Office">Fluorescent — Lampu kantor putih</option>
                 <option value="Warm Temperature">Warm — Suhu hangat (3200K)</option>
                 <option value="Cool Temperature">Cool — Suhu dingin (5600K)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label>Color Tone</label>
+              <select id="colorTone">
+                <option value="">— Auto detect —</option>
+                <option value="Warm Tone (orange/red/yellow dominant)">☀️ Warm Tone — Jingga, merah, kuning dominan</option>
+                <option value="Warm Golden">Warm Golden — Keemasan hangat</option>
+                <option value="Warm Sepia / Vintage">Warm Sepia — Vintage kecoklatan</option>
+                <option value="Warm Peach / Coral">Warm Peach — Persik coral</option>
+                <option value="Cool Tone (blue/purple/green dominant)">❄️ Cool Tone — Biru, ungu, hijau dominan</option>
+                <option value="Cool Blue / Ocean">Cool Blue — Biru dingin ocean</option>
+                <option value="Cool Pastel">Cool Pastel — Pastel sejuk</option>
+                <option value="Cool Neon / Cyberpunk">Cool Neon — Neon biru-ungu</option>
+                <option value="Neutral / True Color">Neutral — Warna asli seimbang</option>
+                <option value="High Contrast Warm">🔥 High Contrast Warm — Kontras tinggi hangat</option>
+                <option value="High Contrast Cool">💎 High Contrast Cool — Kontras tinggi dingin</option>
+                <option value="Desaturated / Muted (muted warm)">Desaturated Warm — Lembut warm reduced</option>
+                <option value="Desaturated / Muted (muted cool)">Desaturated Cool — Lembut cool reduced</option>
+                <option value="Black & White / Monochrome">⚫ Black & White — Hitam putih</option>
+                <option value="Pastel Dreamy (warm pastel)">🎀 Pastel Dreamy — Warm pastel</option>
               </select>
             </div>
 

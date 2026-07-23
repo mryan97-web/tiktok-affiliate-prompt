@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { image, mimeType, options } = req.body;
+    const { image, mimeType, faceImage, faceMimeType, options } = req.body;
     if (!image) return res.status(400).json({ error: 'Image required' });
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -37,10 +37,12 @@ Tugas Anda: analisis gambar yang diberikan, lalu buat prompt terstruktur yang DE
 ### 6. Background / Location  
 ### 7. Art Style
 ### 8. Lighting
-### 9. Warna Dominan
-### 10. Detail Pakaian & Aksesoris
-### 11. Detail Rambut
-### 12. Vibe / Mood / Suasana
+### 9. Color Tone
+### 10. Warna Dominan
+### 11. Detail Pakaian & Aksesoris
+### 12. Detail Rambut
+### 13. Vibe / Mood / Suasana
+### 14. Detail Fitur Wajah (mata, hidung, mulut, bentuk wajah, alis, rahang)
 
 ${customParams}
 
@@ -50,22 +52,35 @@ ${customParams}
 - Semakin detail semakin bagus — sebut warna, tekstur, material, arah cahaya, angle lensa
 - Ukuran prompt minimal 150 kata
 - Untuk gender, ekspresi, pose, shot type, camera angle, background, art style, lighting — ikuti pilihan user jika ada
+- Untuk Color Tone — utamakan pilihan user (Warm/Cool/Neutral/dll), deskripsikan dominasi warna
 - Output dalam format JSON terstruktur`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
+    // Build parts array — main image always
+    const parts = [
+      { text: systemPrompt },
+      {
+        inline_data: {
+          mime_type: mimeType || 'image/jpeg',
+          data: image
+        }
+      }
+    ];
+
+    // If face reference image is provided, add as second image
+    if (faceImage) {
+      parts.push({
+        text: "Referensi detail wajah/kepala — analisis fitur wajah secara detail: bentuk wajah, mata, hidung, mulut, alis, rahang, struktur tulang wajah, kulit, dan detail lainnya. Gunakan informasi ini untuk memperkaya bagian 'Detail Fitur Wajah' dan detail rambut pada output."
+      });
+      parts.push({
+        inline_data: {
+          mime_type: faceMimeType || 'image/jpeg',
+          data: faceImage
+        }
+      });
+    }
 
     const payload = {
-      contents: [{
-        parts: [
-          { text: systemPrompt },
-          {
-            inline_data: {
-              mime_type: mimeType || 'image/jpeg',
-              data: image
-            }
-          }
-        ]
-      }],
+      contents: [{ parts }],
       generationConfig: {
         temperature: 0.4,
         topP: 0.95,
@@ -127,6 +142,7 @@ function buildCustomParams(options) {
   if (options.background) parts.push(`- Background/Lokasi: ${options.background}`);
   if (options.artStyle) parts.push(`- Art Style: ${options.artStyle}`);
   if (options.lighting) parts.push(`- Lighting: ${options.lighting}`);
+  if (options.colorTone) parts.push(`- Color Tone: ${options.colorTone}`);
   if (options.hairStyle) parts.push(`- Gaya Rambut: ${options.hairStyle}`);
   if (options.clothing) parts.push(`- Pakaian: ${options.clothing}`);
   if (options.accessories) parts.push(`- Aksesoris: ${options.accessories}`);

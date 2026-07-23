@@ -4,6 +4,9 @@ const state = {
   imageData: null,
   mimeType: null,
   fileName: null,
+  faceImageData: null,
+  faceMimeType: null,
+  faceFileName: null,
   loading: false,
   apiKey: null,
 };
@@ -15,6 +18,11 @@ const fileInput = $('fileInput');
 const previewImage = $('previewImage');
 const uploadPlaceholder = $('uploadPlaceholder');
 const btnRemove = $('btnRemove');
+const faceUploadZone = $('faceUploadZone');
+const faceFileInput = $('faceFileInput');
+const previewFace = $('previewFace');
+const facePlaceholder = $('facePlaceholder');
+const btnRemoveFace = $('btnRemoveFace');
 const btnGenerate = $('btnGenerate');
 const loaderOverlay = $('loaderOverlay');
 const outputEmpty = $('outputEmpty');
@@ -105,12 +113,70 @@ function removeImage() {
   btnGenerate.disabled = true;
 }
 
+// ===== FACE REFERENCE UPLOAD =====
+faceUploadZone.addEventListener('click', () => faceFileInput.click());
+
+faceUploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  faceUploadZone.classList.add('dragover');
+});
+
+faceUploadZone.addEventListener('dragleave', () => {
+  faceUploadZone.classList.remove('dragover');
+});
+
+faceUploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  faceUploadZone.classList.remove('dragover');
+  if (e.dataTransfer.files.length > 0) handleFaceFile(e.dataTransfer.files[0]);
+});
+
+faceFileInput.addEventListener('change', (e) => {
+  if (e.target.files.length > 0) handleFaceFile(e.target.files[0]);
+});
+
+function handleFaceFile(file) {
+  if (!file.type.match(/image\/(jpeg|png|webp)/)) {
+    showToast('Format gambar harus JPG, PNG, atau WEBP', 'error');
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('File terlalu besar. Maks 10MB', 'error');
+    return;
+  }
+
+  state.faceFileName = file.name;
+  state.faceMimeType = file.type;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state.faceImageData = e.target.result.split(',')[1];
+    previewFace.src = e.target.result;
+    previewFace.classList.remove('hidden');
+    facePlaceholder.classList.add('hidden');
+    btnRemoveFace.classList.remove('hidden');
+    showToast('Face reference siap! ✅', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeFaceImage() {
+  state.faceImageData = null;
+  state.faceMimeType = null;
+  state.faceFileName = null;
+  previewFace.classList.add('hidden');
+  facePlaceholder.classList.remove('hidden');
+  btnRemoveFace.classList.add('hidden');
+  previewFace.src = '';
+  faceFileInput.value = '';
+}
+
 // ===== DROPDOWN HELPERS =====
 function getOptions() {
   const selectors = [
     'gender', 'ethnicity', 'age', 'bodyType', 'expression', 'pose',
     'shotType', 'cameraAngle', 'background', 'artStyle', 'lighting',
-    'hairStyle', 'mood', 'clothing', 'accessories', 'hairColor'
+    'colorTone', 'hairStyle', 'mood', 'clothing', 'accessories', 'hairColor'
   ];
   const options = {};
   selectors.forEach(id => {
@@ -125,6 +191,7 @@ function getOptions() {
 function resetAll() {
   document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
   $('extraDetails').value = '';
+  removeFaceImage();
   showToast('Semua opsi direset', 'success');
 }
 
@@ -156,6 +223,8 @@ async function generatePrompt() {
       body: JSON.stringify({
         image: state.imageData,
         mimeType: state.mimeType,
+        faceImage: state.faceImageData,
+        faceMimeType: state.faceMimeType,
         options: getOptions()
       })
     });
@@ -212,10 +281,12 @@ function renderResult(data) {
       '6. Background / Location',
       '7. Art Style',
       '8. Lighting',
-      '9. Warna Dominan',
-      '10. Detail Pakaian & Aksesoris',
-      '11. Detail Rambut',
-      '12. Vibe / Mood / Suasana'
+      '9. Color Tone',
+      '10. Warna Dominan',
+      '11. Detail Pakaian & Aksesoris',
+      '12. Detail Rambut',
+      '13. Vibe / Mood / Suasana',
+      '14. Detail Fitur Wajah'
     ];
 
     for (const section of sections) {
