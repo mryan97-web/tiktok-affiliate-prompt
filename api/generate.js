@@ -60,6 +60,7 @@ ${customParams}
 - Untuk Color Tone — utamakan pilihan user (Warm/Cool/Neutral/dll), deskripsikan dominasi warna
 - Untuk Aspect Ratio — WAJIB **9:16 Portrait (vertical)** karena untuk TikTok. Tulis "vertical 9:16 portrait shot" di prompt utama
 - Untuk gambar **produk tanpa model**: di bagian Gender, Ekspresi, Pose, Rambut, Fitur Wajah — isi dengan REKOMENDASI ideal untuk promosi produk tersebut
+- **PENTING — Akurasi Pakaian**: Hanya deskripsikan pakaian/aksesoris yang BENAR-BENAR TERLIHAT di gambar. JANGAN menambahkan item pakaian bawah (celana, rok, jeans, dll) jika tidak terlihat. Jika gambar hanya menunjukkan kaos/baju bagian atas saja, tulis "Hanya bagian atas yang terlihat — rekomendasi: padukan dengan [rekomendasi bawahan sesuai gaya]"
 - Output dalam format JSON terstruktur`;
 
     // Build parts array — main image always
