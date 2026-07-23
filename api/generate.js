@@ -22,45 +22,57 @@ export default async function handler(req, res) {
     
     const systemPrompt = `Anda adalah asisten AI ahli untuk konten TikTok Affiliate — analisis gambar produk fashion dan buat prompt untuk konten promosi.
 
-Tugas Anda: analisis gambar yang diberikan, lalu buat prompt terstruktur yang DETAIL.
+Tugas Anda: analisis gambar yang diberikan, lalu buat:
+1. **Prompt Gambar** — untuk AI image generator (Midjourney, SDXL, Dall-E, Gemini)
+2. **Prompt Video** — untuk AI video generator (Gemini Video, Veo 3, Kling, Runway, Pika, Sora)
 
 # ATURAN PENTING:
 - Jika gambar mengandung **MANUSIA/MODEL** → analisis karakter seperti biasa (gender, ekspresi, pose, fitur wajah, dll)
 - Jika gambar HANYA **PRODUK/BARANG** (kaos, baju, aksesoris tanpa orang) → deskripsikan PRODUK secara detail sebagai fokus utama. Bagian karakter/model tetap diisi dengan **REKOMENDASI** model ideal untuk produk ini (gender, pose, ekspresi, fitur wajah yang cocok untuk mempromosikan produk tersebut)
 
 # FORMAT OUTPUT — WAJIB IKUTI STRUKTUR INI:
-## 📸 Prompt Utama
-[Prompt paragraf panjang yang detail — gabungan semua elemen di bawah dalam kalimat natural]
 
-## ✨ Detail Prompt Breakdown
+## 📸 Prompt Gambar
+[Prompt paragraf panjang yang detail — untuk AI image generator. Gabungan semua elemen di bawah dalam kalimat natural. Minimal 150 kata]
 
-### 1. Gender & Demografi
-### 2. Ekspresi Wajah
-### 3. Pose & Gesture
-### 4. Shot Type
-### 5. Camera Angle
-### 6. Background / Location  
-### 7. Art Style
-### 8. Lighting
-### 9. Color Tone
-### 10. Warna Dominan
-### 11. Detail Pakaian & Aksesoris
-### 12. Detail Rambut
-### 13. Vibe / Mood / Suasana
-### 14. Detail Fitur Wajah (mata, hidung, mulut, bentuk wajah, alis, rahang)
+### ✨ Detail Prompt Breakdown
+| No | Kategori | Deskripsi |
+|----|----------|-----------|
+| 1 | Gender & Demografi | ... |
+| 2 | Ekspresi Wajah | ... |
+| 3 | Pose & Gesture | ... |
+| 4 | Shot Type | ... |
+| 5 | Camera Angle | ... |
+| 6 | Background / Location | ... |
+| 7 | Art Style | ... |
+| 8 | Lighting | ... |
+| 9 | Color Tone | ... |
+| 10 | Warna Dominan | ... |
+| 11 | Detail Pakaian & Aksesoris | ... |
+| 12 | Detail Rambut | ... |
+| 13 | Vibe / Mood / Suasana | ... |
+| 14 | Detail Fitur Wajah | ... |
 
 ${customParams}
 
+## 🎬 Prompt Video — Format Umum (Gemini Video / Runway / Pika / Kling / Sora)
+[Prompt bahasa Inggris — short cinematic prompt untuk AI video. Include: deskripsi karakter, gerakan, background, lighting, mood. Format cocok untuk semua platform video AI.]
+
+## 🎥 Prompt Video — Gemini & Veo 3
+[Prompt bahasa Inggris — detail untuk Gemini Video / Veo 3. Frame-by-frame description in English. Include camera movement, action, transition, duration (5-10 detik).]
+
 # RULES:
 - Semua poin WAJIB diisi — jangan ada yang kosong
-- Gunakan bahasa Indonesia campur English untuk istilah teknis (photography/AI terms dalam English)
+- Untuk teks tabel, gunakan format markdown table
+- **Prompt Gambar** dalam bahasa Indonesia campur English (istilah teknis)
+- **Prompt Video** dalam bahasa Inggris (format universal untuk video AI)
 - Semakin detail semakin bagus — sebut warna, tekstur, material, arah cahaya, angle lensa
-- Ukuran prompt minimal 150 kata
+- Ukuran prompt gambar minimal 150 kata
 - Untuk gender, ekspresi, pose, shot type, camera angle, background, art style, lighting — ikuti pilihan user jika ada
 - Untuk Color Tone — utamakan pilihan user (Warm/Cool/Neutral/dll), deskripsikan dominasi warna
-- Untuk Aspect Ratio — WAJIB **9:16 Portrait (vertical)** karena untuk TikTok. Tulis "vertical 9:16 portrait shot" di prompt utama
+- Untuk Aspect Ratio — WAJIB **9:16 Portrait (vertical)** karena untuk TikTok. Tulis "vertical 9:16 portrait shot" di prompt
 - Untuk gambar **produk tanpa model**: di bagian Gender, Ekspresi, Pose, Rambut, Fitur Wajah — isi dengan REKOMENDASI ideal untuk promosi produk tersebut
-- **PENTING — Akurasi Pakaian**: Hanya deskripsikan pakaian/aksesoris yang BENAR-BENAR TERLIHAT di gambar. JANGAN menambahkan item pakaian bawah (celana, rok, jeans, dll) jika tidak terlihat. Jika gambar hanya menunjukkan kaos/baju bagian atas saja, tulis "Hanya bagian atas yang terlihat — rekomendasi: padukan dengan [rekomendasi bawahan sesuai gaya]"
+- **PENTING — Akurasi Pakaian**: Hanya deskripsikan pakaian/aksesoris yang BENAR-BENAR TERLIHAT di gambar. JANGAN menambahkan item pakaian bawah (celana, rok, jeans, dll) jika tidak terlihat
 - Output dalam format JSON terstruktur`;
 
     // Build parts array — main image always
@@ -93,7 +105,7 @@ ${customParams}
         temperature: 0.4,
         topP: 0.95,
         topK: 40,
-        maxOutputTokens: 1024
+        maxOutputTokens: 2048
       }
     };
 

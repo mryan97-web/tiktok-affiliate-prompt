@@ -274,13 +274,38 @@ function renderResult(data) {
   }
 
   const breakdown = prompt.detail_prompt_breakdown || {};
-  const mainPrompt = prompt.prompt_utama || '';
+  const mainPrompt = prompt.prompt_utama || prompt.prompt_gambar || '';
+  const videoPrompt = prompt.prompt_video_universal || prompt.prompt_video || '';
+  const videoGeminiVeo = prompt.prompt_video_gemini_veo3 || '';
 
   let html = '';
 
-  // Main prompt
+  // Main prompt (Gambar)
   if (mainPrompt) {
-    html += `<div class="prompt-main">${escapeHtml(mainPrompt)}</div>`;
+    html += `<div class="prompt-section video-section">
+      <div class="prompt-section-header">📸 <strong>Prompt Gambar</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(mainPrompt).replace(/'/g, "\\'")}')">📋 Salin</span></div>
+      <div class="prompt-main">${escapeHtml(mainPrompt)}</div>
+    </div>`;
+  }
+
+  // Video prompts
+  if (videoPrompt) {
+    html += `<div class="prompt-section video-section">
+      <div class="prompt-section-header">🎬 <strong>Prompt Video (Universal)</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(videoPrompt).replace(/'/g, "\\'")}')">📋 Salin</span></div>
+      <div class="prompt-main">${escapeHtml(videoPrompt)}</div>
+      <div class="video-badges">
+        <span>🎥 Gemini Video</span><span>🎬 Runway</span><span>📽️ Kling</span><span>✨ Pika</span><span>🌟 Sora</span>
+      </div>
+    </div>`;
+  }
+  if (videoGeminiVeo) {
+    html += `<div class="prompt-section video-section">
+      <div class="prompt-section-header">🎥 <strong>Prompt Video — Gemini & Veo 3</strong> <span class="badge-copy" onclick="copyText('${escapeHtml(videoGeminiVeo).replace(/'/g, "\\'")}')">📋 Salin</span></div>
+      <div class="prompt-main">${escapeHtml(videoGeminiVeo)}</div>
+      <div class="video-badges">
+        <span>🧠 Gemini Video</span><span>🎥 Veo 3</span>
+      </div>
+    </div>`;
   }
 
   // Map Indonesian snake_case -> display labels
@@ -548,6 +573,27 @@ modelSelect.addEventListener('change', () => {
   }).catch(() => {});
   showToast(`Model diganti`, 'success');
 });
+
+// ===== COPY TEXT HELPER =====
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('✅ Copied!', 'success');
+    }).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showToast('✅ Copied!', 'success');
+}
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
