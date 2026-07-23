@@ -53,7 +53,7 @@ ${customParams}
 - Ukuran prompt minimal 150 kata
 - Untuk gender, ekspresi, pose, shot type, camera angle, background, art style, lighting — ikuti pilihan user jika ada
 - Untuk Color Tone — utamakan pilihan user (Warm/Cool/Neutral/dll), deskripsikan dominasi warna
-- Untuk Aspect Ratio — UTAMAKAN pilihan user. Default untuk TikTok: **9:16 Portrait**. Deskripsikan framing/orientasi dalam prompt utama (contoh: "vertical 9:16 portrait shot", "landscape 16:9 wide shot")
+- Untuk Aspect Ratio — WAJIB **9:16 Portrait (vertical)** karena untuk TikTok. Tulis "vertical 9:16 portrait shot" di prompt utama
 - Output dalam format JSON terstruktur`;
 
     // Build parts array — main image always
@@ -148,7 +148,6 @@ function buildCustomParams(options) {
   if (options.artStyle) parts.push(`- Art Style: ${options.artStyle}`);
   if (options.lighting) parts.push(`- Lighting: ${options.lighting}`);
   if (options.colorTone) parts.push(`- Color Tone: ${options.colorTone}`);
-  if (options.aspectRatio) parts.push(`- Aspect Ratio / Orientasi: ${options.aspectRatio}`);
   if (options.hairStyle) parts.push(`- Gaya Rambut: ${options.hairStyle}`);
   if (options.clothing) parts.push(`- Pakaian: ${options.clothing}`);
   if (options.accessories) parts.push(`- Aksesoris: ${options.accessories}`);
