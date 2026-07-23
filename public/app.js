@@ -275,8 +275,8 @@ function renderResult(data) {
 
   const breakdown = prompt.detail_prompt_breakdown || {};
   const mainPrompt = prompt.prompt_utama || prompt.prompt_gambar || '';
-  const videoPrompt = prompt.prompt_video_universal || prompt.prompt_video || '';
-  const videoGeminiVeo = prompt.prompt_video_gemini_veo3 || '';
+  const videoPrompt = prompt.prompt_video_universal || prompt.prompt_video || prompt.prompt_video_umum || '';
+  const videoGeminiVeo = prompt.prompt_video_gemini_veo3 || prompt.prompt_video_gemini_veo || '';
 
   let html = '';
 
