@@ -415,16 +415,83 @@ function showToast(msg, type = 'success') {
   toast._timer = setTimeout(() => toast.classList.add('hidden'), 3000);
 }
 
-// ===== MODEL SELECTOR (update active indicator) =====
+// ===== MODEL SELECTOR (dynamic — fetch active models from API) =====
 const modelSelect = $('modelSelect');
 const modelStatus = $('modelStatus');
+const MODEL_OPTIONS = [
+  { value: 'gemini-3.5-flash-lite', label: '⚡ Gemini 3.5 Flash Lite', recommended: true },
+  { value: 'gemini-3.5-flash', label: '✨ Gemini 3.5 Flash' },
+  { value: 'gemini-2.5-flash', label: '🔥 Gemini 2.5 Flash' },
+  { value: 'gemini-2.0-flash', label: '⚡ Gemini 2.0 Flash' },
+  { value: 'gemini-2.0-flash-lite', label: '🪶 Gemini 2.0 Flash Lite' },
+  { value: 'gemini-3-pro-preview', label: '🧪 Gemini 3 Pro Preview' },
+  { value: 'gemini-3-flash-preview', label: '🧪 Gemini 3 Flash Preview' },
+];
 
-modelSelect.addEventListener('change', () => {
-  const val = modelSelect.value;
-  const label = modelSelect.options[modelSelect.selectedIndex].text;
-  modelStatus.innerHTML = `<span class="dot-active"></span> ${val} — Aktif`;
-  showToast(`Model diganti: ${label}`, 'success');
-});
+async function loadModels() {
+  try {
+    modelStatus.innerHTML = `<span class="dot-loading"></span> Mengecek model...`;
+
+    const res = await fetch('/api/models');
+    const data = await res.json();
+
+    if (!data.success || !data.models) {
+      renderStaticModels();
+      return;
+    }
+
+    const activeMap = {};
+    data.models.forEach(m => { activeMap[m.id] = m.active; });
+
+    // Rebuild select options with active/inactive state
+    modelSelect.innerHTML = '';
+    let firstActive = null;
+
+    MODEL_OPTIONS.forEach(opt => {
+      const isActive = activeMap[opt.value];
+      const option = document.createElement('option');
+      option.value = opt.value;
+      option.textContent = opt.label;
+      option.disabled = !isActive;
+      if (!isActive) option.textContent += ' ❌ (nonaktif)';
+      else if (opt.recommended) option.textContent += ' ✅';
+
+      if (isActive && !firstActive) firstActive = opt.value;
+      modelSelect.appendChild(option);
+    });
+
+    // Select first active (prefer recommended)
+    const preferred = MODEL_OPTIONS.find(o => o.recommended && activeMap[o.value]);
+    modelSelect.value = preferred ? preferred.value : (firstActive || MODEL_OPTIONS[0].value);
+
+    // Update status
+    updateModelStatus();
+  } catch (err) {
+    console.error('Model check failed:', err);
+    renderStaticModels();
+  }
+}
+
+function renderStaticModels() {
+  modelSelect.innerHTML = '';
+  MODEL_OPTIONS.forEach(opt => {
+    const option = document.createElement('option');
+    option.value = opt.value;
+    option.textContent = opt.label + (opt.recommended ? ' ✅' : '');
+    modelSelect.appendChild(option);
+  });
+  modelSelect.value = 'gemini-3.5-flash-lite';
+  updateModelStatus();
+}
+
+function updateModelStatus() {
+  const selected = modelSelect.value;
+  const opt = MODEL_OPTIONS.find(o => o.value === selected);
+  const label = modelSelect.options[modelSelect.selectedIndex]?.text || selected;
+  modelStatus.innerHTML = `<span class="dot-active"></span> ${selected} — Aktif`;
+}
+
+modelSelect.addEventListener('change', updateModelStatus);
 
 // ===== KEYBOARD SHORTCUTS =====
 document.addEventListener('keydown', (e) => {
@@ -441,3 +508,4 @@ document.addEventListener('keydown', (e) => {
 
 // ===== INIT =====
 checkAPI();
+loadModels();
