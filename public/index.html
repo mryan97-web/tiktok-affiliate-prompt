@@ -2330,7 +2330,8 @@ STATUS: ✅ READY TO GENERATE<br>
               </div>
               <div class="gen-card">
                 <div class="gen-card-title">📦 Product</div>
-                <select class="gen-select" id="gen-product">
+                <select class="gen-select" id="gen-product" onchange="onProductModeChange()">
+                  <option value="upload_custom">📷 Upload Produk Saya (Recommended)</option>
                   <option value="parfum_arab">Arabic Perfume — Luxury</option>
                   <option value="parfum_floral">Floral Perfume — Women</option>
                   <option value="parfum_musk">Musk Perfume — Premium</option>
@@ -2340,6 +2341,19 @@ STATUS: ✅ READY TO GENERATE<br>
                   <option value="gift_set">Gift Set — Bundle</option>
                   <option value="miniset">Mini Set — Travel Pack</option>
                 </select>
+                <div id="productUploadBox" class="product-upload-box">
+                  <label class="product-upload-label" for="gen-product-file">
+                    <input type="file" id="gen-product-file" accept="image/*" onchange="onProductFileSelected(event)" hidden>
+                    <span class="product-upload-cta">📁 Pilih / drop foto produk</span>
+                    <span class="product-upload-hint">JPG/PNG · botol parfum yang mau diiklankan</span>
+                  </label>
+                  <div id="productPreviewWrap" class="product-preview-wrap hidden">
+                    <img id="productPreview" class="product-preview" alt="Product preview">
+                    <button type="button" class="product-clear-btn" onclick="clearProductUpload()">✕ Hapus</button>
+                  </div>
+                  <div id="productDescStatus" class="product-desc-status"></div>
+                  <textarea id="gen-product-desc" class="gen-textarea product-desc-input" rows="2" placeholder="Deskripsi produk (auto dari AI setelah upload, bisa diedit)..."></textarea>
+                </div>
               </div>
               <div class="gen-card">
                 <div class="gen-card-title">💎 Marketing Style</div>
@@ -2463,7 +2477,11 @@ STATUS: ✅ READY TO GENERATE<br>
                 <div class="gen-card-title">✏️ Custom Request (Optional)</div>
                 <textarea class="gen-textarea" id="gen-custom" placeholder="Contoh: sedang memegang parfum dengan kedua tangan, tersenyum ke kamera..." rows="2"></textarea>
               </div>
-              <button class="gen-generate-btn" onclick="generatePrompt()">⚡ GENERATE FINAL PROMPT</button>
+              <label class="gen-check-row">
+                <input type="checkbox" id="gen-auto-image" checked>
+                <span>🖼️ Auto-generate gambar setelah prompt (pakai produk upload sebagai referensi)</span>
+              </label>
+              <button class="gen-generate-btn" onclick="generatePrompt()">⚡ GENERATE PROMPT + GAMBAR</button>
             </div>
             <div class="gen-output" id="genOutput">
               <div class="gen-output-placeholder">

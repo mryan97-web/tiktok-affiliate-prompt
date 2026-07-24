@@ -504,11 +504,6 @@ function buildMarketing(mktKey) {
   return cleanText(m.desc.split(',')[0]);
 }
 
-function buildProduct(prodKey) {
-  const p = PRODUCTS[prodKey] || PRODUCTS.parfum_arab;
-  return cleanText(p.desc);
-}
-
 function buildCamera(camKey, shotKey) {
   const c = CAMERAS[camKey] || CAMERAS['9_16_portrait'];
   const s = CAMERA_SHOTS[shotKey] || CAMERA_SHOTS.medium_closeup;
@@ -619,11 +614,116 @@ function buildIdeogramPrompt(parts) {
 }
 
 // ===================================================================
+// PRODUCT UPLOAD STATE
+// ===================================================================
+let UPLOADED_PRODUCT = null; // { base64, mimeType, dataUrl, description }
+
+function onProductModeChange() {
+  const key = document.getElementById('gen-product')?.value;
+  const box = document.getElementById('productUploadBox');
+  if (!box) return;
+  if (key === 'upload_custom') box.classList.remove('hidden');
+  else box.classList.add('hidden');
+}
+
+function setProductStatus(msg, isError) {
+  const el = document.getElementById('productDescStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.style.color = isError ? '#dc2626' : '';
+}
+
+async function onProductFileSelected(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    setProductStatus('File harus gambar (JPG/PNG/WebP)', true);
+    return;
+  }
+  if (file.size > 8 * 1024 * 1024) {
+    setProductStatus('Max 8MB — kompres dulu', true);
+    return;
+  }
+
+  setProductStatus('⏳ Membaca gambar...');
+  try {
+    const dataUrl = await readFileAsDataURL(file);
+    const base64 = dataUrl.split(',')[1];
+    const mimeType = file.type || 'image/jpeg';
+
+    UPLOADED_PRODUCT = { base64, mimeType, dataUrl, description: '' };
+
+    const preview = document.getElementById('productPreview');
+    const wrap = document.getElementById('productPreviewWrap');
+    if (preview) preview.src = dataUrl;
+    if (wrap) wrap.classList.remove('hidden');
+
+    setProductStatus('🤖 AI menganalisis produk...');
+    const res = await fetch('/api/product-analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: base64, mimeType }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      setProductStatus('⚠️ Analisis gagal — isi deskripsi manual', true);
+      return;
+    }
+
+    UPLOADED_PRODUCT.description = data.description || '';
+    const descEl = document.getElementById('gen-product-desc');
+    if (descEl) descEl.value = UPLOADED_PRODUCT.description;
+    setProductStatus('✅ Produk siap dipakai di prompt');
+  } catch (err) {
+    console.error(err);
+    setProductStatus('⚠️ Upload error: ' + err.message, true);
+  }
+}
+
+function clearProductUpload() {
+  UPLOADED_PRODUCT = null;
+  const fileEl = document.getElementById('gen-product-file');
+  const descEl = document.getElementById('gen-product-desc');
+  const preview = document.getElementById('productPreview');
+  const wrap = document.getElementById('productPreviewWrap');
+  if (fileEl) fileEl.value = '';
+  if (descEl) descEl.value = '';
+  if (preview) preview.src = '';
+  if (wrap) wrap.classList.add('hidden');
+  setProductStatus('');
+}
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Gagal baca file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function getCustomProductDescription() {
+  const typed = document.getElementById('gen-product-desc')?.value?.trim() || '';
+  if (typed) return typed;
+  return UPLOADED_PRODUCT?.description || '';
+}
+
+function buildProduct(prodKey) {
+  if (prodKey === 'upload_custom') {
+    const desc = getCustomProductDescription();
+    return cleanText(desc || 'exact product from uploaded perfume bottle photo, realistic glass bottle, label facing camera');
+  }
+  const p = PRODUCTS[prodKey];
+  return p ? cleanText(p.desc) : '';
+}
+
+// ===================================================================
 // LAST GENERATED (for copy)
 // ===================================================================
 let LAST_PROMPT = '';
 let LAST_NEGATIVE = '';
 let LAST_FULL = '';
+let LAST_IMAGE_DATAURL = '';
 
 function copyPromptOnly() {
   // Always include negative — penting untuk image gen
@@ -648,134 +748,162 @@ function copyFullOutput() {
   copyText(clean);
 }
 
+function downloadLastImage() {
+  if (!LAST_IMAGE_DATAURL) return showToast('⚠️ Belum ada gambar');
+  const a = document.createElement('a');
+  a.href = LAST_IMAGE_DATAURL;
+  a.download = `areka-product-${Date.now()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('⬇️ Gambar diunduh');
+}
+
 function buildCopyBar() {
   return `<div class="gen-copy-bar">
     <button class="gen-copy-btn primary" onclick="copyPromptOnly()">📋 Salin Prompt + Negative</button>
     <button class="gen-copy-btn" onclick="copyNegativeOnly()">🚫 Salin Negative Saja</button>
+    ${LAST_IMAGE_DATAURL ? '<button class="gen-copy-btn" onclick="downloadLastImage()">⬇️ Unduh Gambar</button>' : ''}
   </div>`;
 }
 
 // ===================================================================
 // MAIN GENERATOR — FASE 8 FINAL OUTPUT
 // ===================================================================
-function generatePrompt() {
-  // 1. INPUT COLLECTOR
-  const character = document.getElementById('gen-character').value;
-  const sceneKey = document.getElementById('gen-scene').value;
-  const prodKey = document.getElementById('gen-product').value;
-  const mktKey = document.getElementById('gen-marketing').value;
-  const poseKey = document.getElementById('gen-pose').value;
-  const camKey = document.getElementById('gen-camera').value;
-  const shotKey = document.getElementById('gen-shot').value;
-  const lgtKey = document.getElementById('gen-lighting').value;
-  const brdKey = document.getElementById('gen-brand').value;
-  const modelKey = document.getElementById('gen-model').value;
-  const lengthKey = document.getElementById('gen-length').value;
-  const templateKey = document.getElementById('gen-template').value;
-  const customReq = document.getElementById('gen-custom').value.trim();
-
-  // 2. STATE + VALIDATION
-  const state = { character, scene: sceneKey, product: prodKey, marketing: mktKey, camera: camKey, lighting: lgtKey, brand: brdKey, pose: poseKey, shot: shotKey };
-  const validation = validatePrompt(state);
-
-  // 3. CLEAN PARTS — no DNA dump, no identity lock spam
-  const parts = {
-    subject: buildSubjectCompact(),
-    subjectShort: buildSubjectShort(),
-    scene: buildScene(sceneKey),
-    marketing: buildMarketing(mktKey),
-    product: buildProduct(prodKey),
-    pose: buildPose(poseKey),
-    camera: buildCamera(camKey, shotKey),
-    lighting: buildLighting(lgtKey),
-    composition: buildComposition(brdKey),
-    brand: buildBrand(brdKey),
-    noBrand: brdKey === 'no_brand',
-    quality: buildQuality(),
-    custom: customReq || '',
-    negative: buildNegativePrompt(brdKey === 'no_brand'),
-  };
-
-  // 4. MODEL CONFIG + LENGTH
-  const modelConf = MODEL_CONFIG[modelKey] || MODEL_CONFIG.gpt;
-  const wordCaps = {
-    ultra_short: 30,
-    short: 55,
-    medium: 110,
-    long: 180,
-    ultra_long: 260,
-  };
-  let maxWords = wordCaps.medium;
-  if (lengthKey !== 'auto') {
-    maxWords = wordCaps[lengthKey] || wordCaps.medium;
-  } else {
-    maxWords = Math.max(40, Math.round(modelConf.max_tokens * 0.85));
+async function generatePrompt() {
+  const btn = document.querySelector('.gen-generate-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '⏳ Generating...';
   }
 
-  // 5. BUILD CLEAN PROMPT PER MODEL
-  let mainPrompt = '';
-  if (modelKey === 'flux') {
-    mainPrompt = buildKeywordPrompt(parts);
-  } else if (modelKey === 'midjourney') {
-    mainPrompt = buildMidjourneyPrompt(parts, modelConf);
-  } else if (modelKey === 'sdxl') {
-    mainPrompt = buildSdxlPrompt(parts);
-  } else if (modelKey === 'ideogram') {
-    mainPrompt = buildIdeogramPrompt(parts);
-  } else {
-    // gpt / imagen / default — natural clean paragraph
-    mainPrompt = buildNaturalPrompt(parts);
-  }
+  try {
+    // 1. INPUT COLLECTOR
+    const character = document.getElementById('gen-character').value;
+    const sceneKey = document.getElementById('gen-scene').value;
+    const prodKey = document.getElementById('gen-product').value;
+    const mktKey = document.getElementById('gen-marketing').value;
+    const poseKey = document.getElementById('gen-pose').value;
+    const camKey = document.getElementById('gen-camera').value;
+    const shotKey = document.getElementById('gen-shot').value;
+    const lgtKey = document.getElementById('gen-lighting').value;
+    const brdKey = document.getElementById('gen-brand').value;
+    const modelKey = document.getElementById('gen-model').value;
+    const lengthKey = document.getElementById('gen-length').value;
+    const templateKey = document.getElementById('gen-template').value;
+    const customReq = document.getElementById('gen-custom').value.trim();
+    const autoImage = document.getElementById('gen-auto-image')?.checked !== false;
 
-  // 6. FINAL CLEAN + LENGTH TRIM
-  mainPrompt = cleanText(mainPrompt);
-  if (modelKey !== 'midjourney') {
-    mainPrompt = trimByWords(mainPrompt, maxWords);
-  }
+    if (prodKey === 'upload_custom' && !getCustomProductDescription() && !UPLOADED_PRODUCT) {
+      showToast('⚠️ Upload foto produk dulu');
+      return;
+    }
 
-  // 7. BUILD FINAL OUTPUT FORMAT
-  const outputEl = document.getElementById('genOutput');
-  const modelLabel = modelConf.label;
-  const ar = CAMERAS[camKey] ? CAMERAS[camKey].ar : '9:16';
-  const qualityLabel = 'Ultra Realistic';
-  const status = validation.valid ? '✅ READY TO GENERATE' : '⚠️ PERLU REVISI';
-  const score = validation.score;
+    // sync typed description into upload state
+    if (prodKey === 'upload_custom' && UPLOADED_PRODUCT) {
+      UPLOADED_PRODUCT.description = getCustomProductDescription();
+    }
 
-  let html = '';
+    // 2. STATE + VALIDATION
+    const state = { character, scene: sceneKey, product: prodKey, marketing: mktKey, camera: camKey, lighting: lgtKey, brand: brdKey, pose: poseKey, shot: shotKey };
+    const validation = validatePrompt(state);
 
-  // Store for copy buttons — pure text only, no labels/metadata
-  LAST_PROMPT = mainPrompt;
-  LAST_NEGATIVE = parts.negative;
-  LAST_FULL = parts.negative ? `${mainPrompt}\n\n${parts.negative}` : mainPrompt;
+    // 3. CLEAN PARTS — no DNA dump, no identity lock spam
+    const parts = {
+      subject: buildSubjectCompact(),
+      subjectShort: buildSubjectShort(),
+      scene: buildScene(sceneKey),
+      marketing: buildMarketing(mktKey),
+      product: buildProduct(prodKey),
+      pose: buildPose(poseKey),
+      camera: buildCamera(camKey, shotKey),
+      lighting: buildLighting(lgtKey),
+      composition: buildComposition(brdKey),
+      brand: buildBrand(brdKey),
+      noBrand: brdKey === 'no_brand',
+      quality: buildQuality(),
+      custom: customReq || '',
+      negative: buildNegativePrompt(brdKey === 'no_brand'),
+    };
 
-  if (templateKey === 'prompt_only') {
-    html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
-  } else if (templateKey === 'prompt_negative') {
-    html = `<div class="gen-output-ready">
+    // 4. MODEL CONFIG + LENGTH
+    const modelConf = MODEL_CONFIG[modelKey] || MODEL_CONFIG.gpt;
+    const wordCaps = {
+      ultra_short: 30,
+      short: 55,
+      medium: 110,
+      long: 180,
+      ultra_long: 260,
+    };
+    let maxWords = wordCaps.medium;
+    if (lengthKey !== 'auto') {
+      maxWords = wordCaps[lengthKey] || wordCaps.medium;
+    } else {
+      maxWords = Math.max(40, Math.round(modelConf.max_tokens * 0.85));
+    }
+
+    // 5. BUILD CLEAN PROMPT PER MODEL
+    let mainPrompt = '';
+    if (modelKey === 'flux') {
+      mainPrompt = buildKeywordPrompt(parts);
+    } else if (modelKey === 'midjourney') {
+      mainPrompt = buildMidjourneyPrompt(parts, modelConf);
+    } else if (modelKey === 'sdxl') {
+      mainPrompt = buildSdxlPrompt(parts);
+    } else if (modelKey === 'ideogram') {
+      mainPrompt = buildIdeogramPrompt(parts);
+    } else {
+      // gpt / imagen / default — natural clean paragraph
+      mainPrompt = buildNaturalPrompt(parts);
+    }
+
+    // 6. FINAL CLEAN + LENGTH TRIM
+    mainPrompt = cleanText(mainPrompt);
+    if (modelKey !== 'midjourney') {
+      mainPrompt = trimByWords(mainPrompt, maxWords);
+    }
+
+    // 7. BUILD FINAL OUTPUT FORMAT
+    const outputEl = document.getElementById('genOutput');
+    const modelLabel = modelConf.label;
+    const ar = CAMERAS[camKey] ? CAMERAS[camKey].ar : '9:16';
+    const qualityLabel = 'Ultra Realistic';
+    const status = validation.valid ? '✅ READY TO GENERATE' : '⚠️ PERLU REVISI';
+    const score = validation.score;
+
+    let html = '';
+
+    // Store for copy buttons — pure text only, no labels/metadata
+    LAST_PROMPT = mainPrompt;
+    LAST_NEGATIVE = parts.negative;
+    LAST_FULL = parts.negative ? `${mainPrompt}\n\n${parts.negative}` : mainPrompt;
+    LAST_IMAGE_DATAURL = '';
+
+    if (templateKey === 'prompt_only') {
+      html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
+    } else if (templateKey === 'prompt_negative') {
+      html = `<div class="gen-output-ready">
       <div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
       <div class="gen-section"><span class="gen-section-label">NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
     </div>`;
-  } else if (templateKey === 'json') {
-    // JSON copy stays pure payload without UI labels
-    const jsonOut = JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative }, null, 2);
-    LAST_PROMPT = mainPrompt;
-    LAST_NEGATIVE = parts.negative;
-    LAST_FULL = jsonOut;
-    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${jsonOut}</pre></div>`;
-  } else if (templateKey === 'markdown') {
-    // Markdown copy = clean content only
-    const mdOut = `${mainPrompt}\n\n${parts.negative}`;
-    LAST_FULL = mdOut;
-    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${mdOut}</pre></div>`;
-  } else if (templateKey === 'api') {
-    const payload = { prompt: mainPrompt, negative_prompt: parts.negative, model: modelKey, aspect_ratio: ar, quality: 'ultra_realistic', style: modelConf.style, width: 1080, height: ar === '9:16' ? 1920 : ar === '1:1' ? 1080 : ar === '4:5' ? 1350 : 1080 };
-    const apiOut = JSON.stringify(payload, null, 2);
-    LAST_FULL = apiOut;
-    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${apiOut}</pre></div>`;
-  } else {
-    // Full template: display metadata on screen, but copy remains clean
-    html = `<div class="gen-output-ready">
+    } else if (templateKey === 'json') {
+      const jsonOut = JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative }, null, 2);
+      LAST_PROMPT = mainPrompt;
+      LAST_NEGATIVE = parts.negative;
+      LAST_FULL = jsonOut;
+      html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${jsonOut}</pre></div>`;
+    } else if (templateKey === 'markdown') {
+      const mdOut = `${mainPrompt}\n\n${parts.negative}`;
+      LAST_FULL = mdOut;
+      html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${mdOut}</pre></div>`;
+    } else if (templateKey === 'api') {
+      const payload = { prompt: mainPrompt, negative_prompt: parts.negative, model: modelKey, aspect_ratio: ar, quality: 'ultra_realistic', style: modelConf.style, width: 1080, height: ar === '9:16' ? 1920 : ar === '1:1' ? 1080 : ar === '4:5' ? 1350 : 1080 };
+      const apiOut = JSON.stringify(payload, null, 2);
+      LAST_FULL = apiOut;
+      html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${apiOut}</pre></div>`;
+    } else {
+      html = `<div class="gen-output-ready">
       <div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
       <div class="gen-section"><span class="gen-section-label">NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
@@ -790,10 +918,100 @@ function generatePrompt() {
       </div>
       ${!validation.valid ? `<hr class="gen-section-divider"><div class="gen-section" style="color:#e53e3e;"><strong>⚠️ Issues:</strong> ${validation.issues.join(', ')}</div>` : ''}
     </div>`;
+    }
+
+    // product source note
+    if (prodKey === 'upload_custom') {
+      html += `<div class="gen-status-line ok">📦 Produk: dari upload / deskripsi custom</div>`;
+    }
+
+    outputEl.innerHTML = buildCopyBar() + html + `<div id="genImageSlot"></div>`;
+
+    // 8. AUTO IMAGE GENERATE
+    if (autoImage) {
+      await generateImageFromPrompt({
+        prompt: mainPrompt,
+        negative: parts.negative,
+        aspectRatio: ar,
+        productImage: prodKey === 'upload_custom' ? UPLOADED_PRODUCT : null,
+      });
+    } else {
+      showToast('✅ Prompt siap — salin & generate di AI image tool');
+    }
+  } catch (err) {
+    console.error(err);
+    showToast('❌ Error: ' + err.message);
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '⚡ GENERATE PROMPT + GAMBAR';
+    }
+  }
+}
+
+async function generateImageFromPrompt({ prompt, negative, aspectRatio, productImage }) {
+  const slot = document.getElementById('genImageSlot');
+  if (slot) {
+    slot.innerHTML = `<div class="gen-status-line">🖼️ Generating gambar dengan produk referensi...</div>`;
   }
 
-  outputEl.innerHTML = buildCopyBar() + html;
-  showToast('✅ Prompt generated');
+  try {
+    const body = {
+      prompt,
+      negative,
+      aspectRatio: aspectRatio || '9:16',
+    };
+    if (productImage?.base64) {
+      body.productImage = productImage.base64;
+      body.productMimeType = productImage.mimeType || 'image/jpeg';
+    }
+
+    const res = await fetch('/api/image-generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+
+    if (!res.ok || !data.success || !data.imageBase64) {
+      if (slot) {
+        slot.innerHTML = `<div class="gen-status-line err">⚠️ Generate gambar gagal: ${escapeHtml(data.error || data.detail || 'unknown')}. Prompt tetap siap disalin.</div>`;
+      }
+      showToast('⚠️ Prompt OK, gambar gagal');
+      return;
+    }
+
+    LAST_IMAGE_DATAURL = `data:${data.mimeType || 'image/png'};base64,${data.imageBase64}`;
+    if (slot) {
+      slot.innerHTML = `
+        <div class="gen-result-image-wrap">
+          <div class="gen-section-label">GENERATED IMAGE</div>
+          <img class="gen-result-image" src="${LAST_IMAGE_DATAURL}" alt="Generated ad image">
+          <div class="gen-image-actions">
+            <button class="gen-copy-btn primary" onclick="downloadLastImage()">⬇️ Unduh Gambar</button>
+            <button class="gen-copy-btn" onclick="copyPromptOnly()">📋 Salin Prompt + Negative</button>
+          </div>
+          <div class="gen-status-line ok">✅ Model: ${escapeHtml(data.model || 'gemini-image')}</div>
+        </div>`;
+    }
+    // refresh copy bar with download button
+    const bar = document.querySelector('.gen-copy-bar');
+    if (bar) bar.outerHTML = buildCopyBar();
+    showToast('✅ Prompt + gambar siap');
+  } catch (err) {
+    if (slot) {
+      slot.innerHTML = `<div class="gen-status-line err">⚠️ Generate gambar error: ${escapeHtml(err.message)}</div>`;
+    }
+    showToast('⚠️ Prompt OK, gambar error');
+  }
+}
+
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 
@@ -1024,4 +1242,5 @@ function showToast(msg) {
 document.addEventListener('DOMContentLoaded', () => {
   // Default to generator view
   switchPanel('generator');
+  onProductModeChange();
 });
