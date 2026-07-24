@@ -626,8 +626,12 @@ let LAST_NEGATIVE = '';
 let LAST_FULL = '';
 
 function copyPromptOnly() {
+  // Always include negative — penting untuk image gen
   if (!LAST_PROMPT) return showToast('⚠️ Generate dulu');
-  copyText(LAST_PROMPT);
+  const text = LAST_NEGATIVE
+    ? `${LAST_PROMPT}\n\nNegative prompt: ${LAST_NEGATIVE}`
+    : LAST_PROMPT;
+  copyText(text);
 }
 
 function copyNegativeOnly() {
@@ -636,19 +640,18 @@ function copyNegativeOnly() {
 }
 
 function copyFullOutput() {
-  // Clean payload only — no labels, no model/style metadata
+  // Same clean payload: prompt + negative, no model/style chrome
   if (!LAST_PROMPT) return showToast('⚠️ Generate dulu');
   const clean = LAST_NEGATIVE
-    ? `${LAST_PROMPT}\n\n${LAST_NEGATIVE}`
+    ? `${LAST_PROMPT}\n\nNegative prompt: ${LAST_NEGATIVE}`
     : LAST_PROMPT;
   copyText(clean);
 }
 
 function buildCopyBar() {
   return `<div class="gen-copy-bar">
-    <button class="gen-copy-btn" onclick="copyPromptOnly()">📋 Salin Prompt</button>
-    <button class="gen-copy-btn" onclick="copyNegativeOnly()">🚫 Salin Negative</button>
-    <button class="gen-copy-btn primary" onclick="copyFullOutput()">📄 Salin Prompt + Negative</button>
+    <button class="gen-copy-btn primary" onclick="copyPromptOnly()">📋 Salin Prompt + Negative</button>
+    <button class="gen-copy-btn" onclick="copyNegativeOnly()">🚫 Salin Negative Saja</button>
   </div>`;
 }
 
