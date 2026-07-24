@@ -228,6 +228,7 @@ const QUALITY_NEVER = [
 // FASE 5 — BRAND DATABASE
 // ===================================================================
 const BRANDS = {
+  no_brand: { label: 'Tanpa Brand / No Text', banner: '', cta: '', noText: true },
   areka_default: { label: 'AREKA OFFICIAL STORE', banner: 'AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning', cta: '🛒 Cek Keranjang Kuning' },
   areka_flashsale: { label: 'AREKA FLASH SALE', banner: '🔴 AREKA FLASH SALE — DISKON 50% 🏃', cta: '🔴 Beli Sekarang — Flash Sale!' },
   areka_new: { label: 'AREKA NEW ARRIVAL', banner: '✨ AREKA NEW ARRIVAL — Parfum Terbaru ✨', cta: '✨ Lihat Produk Baru' },
@@ -411,11 +412,15 @@ function buildLighting(lgtKey) {
   return cleanText(l.desc.split(',').slice(0, 3).join(','));
 }
 
-function buildComposition() {
+function buildComposition(brdKey) {
+  if (brdKey === 'no_brand') {
+    return 'subject fills about 65% of frame, face in upper third, product held naturally with label facing camera, clean commercial composition, no banner, no text overlay';
+  }
   return 'subject fills about 65% of frame, face in upper third, product held naturally with label facing camera, brand banner only at bottom 8%, clean commercial composition';
 }
 
 function buildBrand(brdKey) {
+  if (brdKey === 'no_brand') return '';
   const b = BRANDS[brdKey] || BRANDS.areka_default;
   return cleanText(b.banner);
 }
@@ -428,9 +433,12 @@ function buildPose() {
   return cleanText(CHARACTER_DNA.pose_natural);
 }
 
-function buildNegativePrompt() {
-  const all = [...new Set([...NEGATIVE_PROMPT_BASE, ...QUALITY_NEVER.map((q) => q.replace(/^No\s+/i, '').toLowerCase())])];
-  return all.join(', ');
+function buildNegativePrompt(noBrand) {
+  const base = [...new Set([...NEGATIVE_PROMPT_BASE, ...QUALITY_NEVER.map((q) => q.replace(/^No\s+/i, '').toLowerCase())])];
+  if (noBrand) {
+    base.push('text', 'words', 'letters', 'caption', 'subtitle', 'banner text', 'logo', 'watermark', 'typography', 'signage');
+  }
+  return [...new Set(base)].join(', ');
 }
 
 function buildNaturalPrompt(parts) {
@@ -444,7 +452,7 @@ function buildNaturalPrompt(parts) {
     parts.camera,
     parts.lighting,
     parts.composition,
-    parts.brand ? `subtle brand banner text: ${parts.brand}` : null,
+    parts.brand ? `subtle brand banner text: ${parts.brand}` : (parts.noBrand ? 'no text, no logo, no watermark, no banner, no writing on image' : null),
     parts.quality,
   ]);
 }
@@ -494,7 +502,7 @@ function buildIdeogramPrompt(parts) {
     `holding ${parts.product.split(',')[0].toLowerCase()}`,
     parts.pose,
     parts.lighting.split(',')[0],
-    parts.brand,
+    parts.brand || (parts.noBrand ? 'no text no logo' : null),
     parts.custom || '',
     'photorealistic commercial style',
   ]);
@@ -561,11 +569,12 @@ function generatePrompt() {
     pose: buildPose(),
     camera: buildCamera(camKey),
     lighting: buildLighting(lgtKey),
-    composition: buildComposition(),
+    composition: buildComposition(brdKey),
     brand: buildBrand(brdKey),
+    noBrand: brdKey === 'no_brand',
     quality: buildQuality(),
     custom: customReq || '',
-    negative: buildNegativePrompt(),
+    negative: buildNegativePrompt(brdKey === 'no_brand'),
   };
 
   // 4. MODEL CONFIG + LENGTH
