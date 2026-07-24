@@ -1,4 +1,4 @@
-/* Prompt Database System — FASE 1 + 2 + 3 */
+/* Prompt Database System — All FASE 1-4 */
 /* Navigasi modul + Utility */
 
 // ===== SWITCH PANEL =====
@@ -20,12 +20,13 @@ function switchPanel(panelId) {
     fase1: 'FASE 1 — Fondasi Prompt Database',
     fase2: 'FASE 2 — Visual Engine',
     fase3: 'FASE 3 — Marketing Engine',
-    fase4: 'FASE 4 (Coming Soon)',
+    fase4: 'FASE 4 — Scene Engine',
   };
   const subs = {
     fase1: 'Character DNA · Identity Lock · Prompt Assembly',
     fase2: 'Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets',
-    fase3: 'Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok Affiliate · Conversion · CTA · Shop · Social Commerce · Marketing Consistency',
+    fase3: 'Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Consistency',
+    fase4: 'Scene Library · Default Store · Store Environment · Activity · Product Interaction · Customer Scene · Product Category · Time · Mood · Seasonal · Scene Variation · Props · Consistency · Templates · Output',
   };
   document.getElementById('infoBar').querySelector('strong').textContent = labels[panelId] || panelId;
   document.getElementById('infoText').textContent = subs[panelId] || '';
@@ -67,6 +68,21 @@ function showModule(mod) {
     shop: 'MODUL 24 — Shop Environment Experience',
     social: 'MODUL 25 — Social Commerce Style',
     mconsistency: 'MODUL 26 — Marketing Consistency Rules',
+    scene: 'MODUL 27 — Scene Library',
+    defaultScene: 'MODUL 28 — Default Store Scene',
+    environment: 'MODUL 29 — Store Environment Engine',
+    activity: 'MODUL 30 — Activity Engine',
+    productInt: 'MODUL 31 — Product Interaction Engine',
+    customerScene: 'MODUL 32 — Customer Scene Engine',
+    category: 'MODUL 33 — Product Category Engine',
+    time: 'MODUL 34 — Time Engine',
+    mood: 'MODUL 35 — Mood Engine',
+    seasonal: 'MODUL 36 — Seasonal Engine',
+    variation: 'MODUL 37 — Scene Variation Engine',
+    props: 'MODUL 38 — Props Engine',
+    sceneConsistency: 'MODUL 39 — Scene Consistency Rules',
+    templates: 'MODUL 40 — Scene Template Library',
+    outputEngine: 'MODUL 41 — Output Engine',
   };
   document.getElementById('docInfo').textContent = 'Menampilkan: ' + (names[mod] || mod);
 }
@@ -106,4 +122,4 @@ function showToast(msg) {
 }
 
 // ===== INIT =====
-showModule('role');
+showModule('scene');

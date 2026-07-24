@@ -373,6 +373,38 @@ body {
 }
 .psych-item strong { color: var(--text); }
 
+/* ===== FASE 4 — SCENE ENGINE ===== */
+.fase-4-badge { background: rgba(245,158,11,0.08); color: #b8860b; }
+
+.activity-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+.activity-item {
+  font-size: 10px; font-weight: 600;
+  background: var(--accent-light); color: #8B5E3C;
+  padding: 4px 10px; border-radius: 99px;
+}
+.activity-item.primary { background: #2d241a; color: #C7976F; }
+
+.props-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+.prop-item {
+  font-size: 10px; font-weight: 600;
+  background: rgba(99,102,241,0.08); color: #4f46e5;
+  padding: 4px 10px; border-radius: 99px;
+}
+
+.template-grid { display: flex; flex-direction: column; gap: 5px; }
+.template-card {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 10px; background: var(--bg);
+  display: grid; grid-template-columns: 24px 1fr;
+  gap: 6px; align-items: start;
+}
+.template-num {
+  font-size: 12px; font-weight: 800; color: var(--accent);
+  font-family: var(--mono);
+}
+.template-title { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+.template-desc { font-size: 9px; color: var(--text-sec); line-height: 1.4; grid-column: 1 / -1; padding-left: 30px; }
+
 @media (max-width: 860px) {
   .main-layout { grid-template-columns: 1fr; }
   .left-panel { display: none; }

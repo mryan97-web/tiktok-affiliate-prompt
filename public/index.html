@@ -26,7 +26,7 @@
       <button class="fase-tab" data-panel="fase1" onclick="switchPanel('fase1')">FASE 1</button>
       <button class="fase-tab" data-panel="fase2" onclick="switchPanel('fase2')">FASE 2</button>
       <button class="fase-tab active" data-panel="fase3" onclick="switchPanel('fase3')">FASE 3</button>
-      <button class="fase-tab disabled-tab">FASE 4</button>
+      <button class="fase-tab" data-panel="fase4" onclick="switchPanel('fase4')">FASE 4</button>
     </div>
   </header>
 
@@ -84,9 +84,23 @@
       </div>
 
       <!-- FASE 4 -->
-      <div class="panel-group" data-panel="fase4" style="display:none;">
-        <div class="fase-badge fase-4-badge">FASE 4 ⏳</div>
-        <div class="modul-card disabled"><div class="modul-header"><div class="modul-icon">🏷️</div><div class="modul-title-group"><span class="modul-title">MODUL 27 — Branding Engine</span><span class="modul-desc">Overlay brand & identitas visual</span></div><div class="modul-status pending">⏳</div></div></div>
+      <div class="panel-group" data-panel="fase4">
+        <div class="fase-badge fase-4-badge">FASE 4 — Scene Engine 🔥</div>
+        <div class="modul-card active" data-module="scene" data-panel="fase4" onclick="showModule('scene')"><div class="modul-header"><div class="modul-icon">📚</div><div class="modul-title-group"><span class="modul-title">MODUL 27 — Scene Library</span><span class="modul-desc">Perpustakaan adegan reusable</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="defaultScene" data-panel="fase4" onclick="showModule('defaultScene')"><div class="modul-header"><div class="modul-icon">🏬</div><div class="modul-title-group"><span class="modul-title">MODUL 28 — Default Store</span><span class="modul-desc">Adegan toko parfum utama</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="environment" data-panel="fase4" onclick="showModule('environment')"><div class="modul-header"><div class="modul-icon">🏗️</div><div class="modul-title-group"><span class="modul-title">MODUL 29 — Store Environment</span><span class="modul-desc">Lingkungan toko realistis</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="activity" data-panel="fase4" onclick="showModule('activity')"><div class="modul-header"><div class="modul-icon">🏃</div><div class="modul-title-group"><span class="modul-title">MODUL 30 — Activity Engine</span><span class="modul-desc">22 aktivitas karakter</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="productInt" data-panel="fase4" onclick="showModule('productInt')"><div class="modul-header"><div class="modul-icon">🤝</div><div class="modul-title-group"><span class="modul-title">MODUL 31 — Product Interaction</span><span class="modul-desc">Interaksi dengan produk</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="customerScene" data-panel="fase4" onclick="showModule('customerScene')"><div class="modul-header"><div class="modul-icon">👥</div><div class="modul-title-group"><span class="modul-title">MODUL 32 — Customer Scene</span><span class="modul-desc">Interaksi dengan pelanggan</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="category" data-panel="fase4" onclick="showModule('category')"><div class="modul-header"><div class="modul-icon">🏷️</div><div class="modul-title-group"><span class="modul-title">MODUL 33 — Product Category</span><span class="modul-desc">11 kategori parfum</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="time" data-panel="fase4" onclick="showModule('time')"><div class="modul-header"><div class="modul-icon">⏰</div><div class="modul-title-group"><span class="modul-title">MODUL 34 — Time Engine</span><span class="modul-desc">Waktu & jam operasional</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="mood" data-panel="fase4" onclick="showModule('mood')"><div class="modul-header"><div class="modul-icon">😌</div><div class="modul-title-group"><span class="modul-title">MODUL 35 — Mood Engine</span><span class="modul-desc">12 suasana berbeda</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="seasonal" data-panel="fase4" onclick="showModule('seasonal')"><div class="modul-header"><div class="modul-icon">🎄</div><div class="modul-title-group"><span class="modul-title">MODUL 36 — Seasonal Engine</span><span class="modul-desc">Adegan musiman & event</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="variation" data-panel="fase4" onclick="showModule('variation')"><div class="modul-header"><div class="modul-icon">🔄</div><div class="modul-title-group"><span class="modul-title">MODUL 37 — Scene Variation</span><span class="modul-desc">Variasi tanpa ubah karakter</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="props" data-panel="fase4" onclick="showModule('props')"><div class="modul-header"><div class="modul-icon">🎭</div><div class="modul-title-group"><span class="modul-title">MODUL 38 — Props Engine</span><span class="modul-desc">Properti pendukung scene</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="sceneConsistency" data-panel="fase4" onclick="showModule('sceneConsistency')"><div class="modul-header"><div class="modul-icon">🔐</div><div class="modul-title-group"><span class="modul-title">MODUL 39 — Scene Consistency</span><span class="modul-desc">Aturan permanen scene</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="templates" data-panel="fase4" onclick="showModule('templates')"><div class="modul-header"><div class="modul-icon">📋</div><div class="modul-title-group"><span class="modul-title">MODUL 40 — Scene Templates</span><span class="modul-desc">10 template siap pakai</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="outputEngine" data-panel="fase4" onclick="showModule('outputEngine')"><div class="modul-header"><div class="modul-icon">📤</div><div class="modul-title-group"><span class="modul-title">MODUL 41 — Output Engine</span><span class="modul-desc">Integrasi akhir scene</span></div><div class="modul-status complete">✅</div></div></div>
       </div>
     </div>
 
@@ -178,7 +192,7 @@
         </div>
 
         <div class="doc-view" id="view-assembly">
-          <div class="doc-header"><h1>⚡ MODUL 3 — Prompt Assembly</h1><p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button><span class="doc-meta">19 langkah</span></div></div>
+          <div class="doc-header"><h1>⚡ MODUL 3 — Prompt Assembly</h1><p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button><span class="doc-meta">29 langkah</span></div></div>
           <div class="doc-content">
             <div class="doc-section"><h2>Urutan Lengkap (3 Fase)</h2>
               <div class="flow-diagram">
@@ -232,9 +246,13 @@
                 <div class="flow-connector">↓</div>
                 <div class="flow-node" style="--level:3"><span class="flow-num">25</span><span class="flow-label">🔐 Marketing Consistency</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:4"><span class="flow-num">26</span><span class="flow-label">🏷️ Branding Engine</span><span class="flow-desc">FASE 4</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">26</span><span class="flow-label">📚 Scene Library</span><span class="flow-desc">FASE 4 — Scene + Aktivitas</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:0"><span class="flow-num">27</span><span class="flow-label">🚫 Negative Prompt</span><span class="flow-desc">Quality control akhir</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">27</span><span class="flow-label">🎭 Props + Mood</span><span class="flow-desc">FASE 4 — Properti + Suasana</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:4"><span class="flow-num">28</span><span class="flow-label">🏷️ Branding Engine</span><span class="flow-desc">Overlay brand</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:0"><span class="flow-num">29</span><span class="flow-label">🚫 Negative Prompt</span><span class="flow-desc">Quality control akhir</span></div>
                 <div class="flow-connector">↓</div>
                 <div class="flow-node goal"><span class="flow-num">✓</span><span class="flow-label">✅ Final Prompt</span><span class="flow-desc">Siap pakai</span></div>
               </div>
@@ -243,8 +261,8 @@
               <div class="fase-table">
                 <div class="fase-row"><span class="fase-name fase-1">FASE 1 ✅</span><span class="fase-mods">Character DNA · Identity Lock · Prompt Assembly</span></div>
                 <div class="fase-row"><span class="fase-name fase-2">FASE 2 ✅</span><span class="fase-mods">Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets</span></div>
-                <div class="fase-row"><span class="fase-name fase-3">FASE 3 🔥</span><span class="fase-mods">Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Marketing Consistency</span></div>
-                <div class="fase-row"><span class="fase-name fase-4">FASE 4 ⏳</span><span class="fase-mods">Branding Engine · Marketing Behavior</span></div>
+                <div class="fase-row"><span class="fase-name fase-3">FASE 3 ✅</span><span class="fase-mods">Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Marketing Consistency</span></div>
+                <div class="fase-row"><span class="fase-name fase-4">FASE 4 🔥</span><span class="fase-mods">Scene Library · Default Store · Environment · Activity · Product Interaction · Customer Scene · Category · Time · Mood · Seasonal · Variation · Props · Consistency · Templates · Output</span></div>
               </div>
             </div>
           </div>
@@ -630,6 +648,335 @@
               <div class="lock-card var"><div class="lock-head variable">Never Confusing Gesture</div><div class="lock-detail"><div class="lock-reason">Tidak pernah membuat gestur yang membingungkan.</div></div></div>
               <div class="lock-card var"><div class="lock-head variable">Never Empty Store</div><div class="lock-detail"><div class="lock-reason">Tidak pernah menghasilkan suasana toko yang kosong.</div></div></div>
             </div>
+          </div>
+        </div>
+
+        <!-- ==================== FASE 4 — SCENE ENGINE ==================== -->
+
+        <!-- view-scene -->
+        <div class="doc-view active" id="view-scene">
+          <div class="doc-header"><h1>📚 MODUL 27 — Scene Library</h1><p class="doc-desc">Perpustakaan adegan yang dapat digunakan ulang. Setiap scene memiliki ID, kategori, mood, properti, dan prompt sendiri.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('scene')">📋 Salin Modul</button><span class="doc-meta">7 komponen per scene</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Struktur Scene</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Scene ID</span><span class="attr-val">Kode unik scene — e.g. AREKA_SCENE_001</span></div>
+                <div class="attr-row"><span class="attr-key">Nama Scene</span><span class="attr-val">Judul deskriptif — e.g. "Menawarkan Parfum Terbaru"</span></div>
+                <div class="attr-row"><span class="attr-key">Kategori</span><span class="attr-val">Store · Review · Live · Packing · Gift · Unboxing · Compare · Promo</span></div>
+                <div class="attr-row"><span class="attr-key">Deskripsi</span><span class="attr-val">Penjelasan singkat situasi dan aktivitas</span></div>
+                <div class="attr-row"><span class="attr-key">Aktivitas Utama</span><span class="attr-val">Apa yang dilakukan karakter</span></div>
+                <div class="attr-row"><span class="attr-key">Lokasi</span><span class="attr-val">Di mana scene berlangsung</span></div>
+                <div class="attr-row"><span class="attr-key">Properti</span><span class="attr-val">Objek pendukung di scene</span></div>
+                <div class="attr-row"><span class="attr-key">Posisi Karakter</span><span class="attr-val">Berdiri, duduk, berjalan, dll</span></div>
+                <div class="attr-row"><span class="attr-key">Posisi Produk</span><span class="attr-val">Di tangan, di meja, di rak, dll</span></div>
+                <div class="attr-row"><span class="attr-key">Mood</span><span class="attr-val">Suasana scene — warm, luxury, busy, dll</span></div>
+                <div class="attr-row"><span class="attr-key">Platform</span><span class="attr-val">TikTok · Shopee · IG · FB · Marketplace · Banner</span></div>
+                <div class="attr-row"><span class="attr-key">Prompt Scene</span><span class="attr-val">Teks prompt untuk AI Image Generator</span></div>
+                <div class="attr-row"><span class="attr-key">Negative Rules</span><span class="attr-val">Aturan larangan spesifik untuk scene ini</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-defaultScene -->
+        <div class="doc-view" id="view-defaultScene">
+          <div class="doc-header"><h1>🏬 MODUL 28 — Default Store Scene</h1><p class="doc-desc">Adegan utama toko parfum premium. Scene default untuk AREKA_GIRL_001.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('defaultScene')">📋 Salin Modul</button><span class="doc-meta">1 scene utama · 12 elemen</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Deskripsi Default Store</h2>
+              <div class="lock-card"><div class="lock-head locked">Lokasi</div><div class="lock-detail"><div class="lock-reason">Toko parfum premium modern. Karakter berdiri di belakang meja etalase kaca dengan rak parfum penuh di belakang.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Pencahayaan</div><div class="lock-detail"><div class="lock-reason">LED hangat (3500K–4500K). Interior bersih, mewah, elegan, nyaman.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Produk</div><div class="lock-detail"><div class="lock-reason">Tersusun rapi di rak dan etalase. Tidak ada rak kosong. Tidak ada area berantakan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Suasana</div><div class="lock-detail"><div class="lock-reason">Toko parfum yang aktif melayani pelanggan. Hidup, profesional, premium.</div></div></div>
+            </div>
+            <div class="doc-note-box">Default Store Scene adalah fondasi semua scene. Scene lain adalah variasi dari default ini. Karakter tidak boleh terlihat seperti model berpose — harus seperti Beauty Advisor yang benar-benar bekerja.</div>
+          </div>
+        </div>
+
+        <!-- view-environment -->
+        <div class="doc-view" id="view-environment">
+          <div class="doc-header"><h1>🏗️ MODUL 29 — Store Environment Engine</h1><p class="doc-desc">Database lingkungan toko yang realistis untuk berbagai variasi scene.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('environment')">📋 Salin Modul</button><span class="doc-meta">10 lokasi · 10 elemen interior</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Lokasi Toko</h2>
+              <div class="lens-grid">
+                <div class="lens-card primary"><div class="lens-badge">⭐ DEFAULT</div><div class="lens-label">Toko Parfum Modern</div><div class="lens-stat">Interior bersih, rak kaca, LED hangat, meja etalase, nuansa premium.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Luxury Boutique</div><div class="lens-stat">Butik eksklusif, dekorasi mewah, pencahayaan dramatis, langka.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Mall Perfume Store</div><div class="lens-stat">Toko di mal besar, banyak pengunjung, etalase besar.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Premium Fragrance Corner</div><div class="lens-stat">Area parfum premium di department store, counter eksklusif.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Duty Free Shop</div><div class="lens-stat">Bandara, bebas bea, banyak pilihan internasional.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Beauty Department</div><div class="lens-stat">Bagian kecantikan department store, merk campuran.</div></div>
+                <div class="lens-card"><div class="lens-badge">📌 VARIASI</div><div class="lens-label">Flagship Store AREKA</div><div class="lens-stat">Toko utama AREKA, branding penuh, eksklusif.</div></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Elemen Interior</h2>
+              <div class="lock-card"><div class="lock-head locked">Interior</div><div class="lock-detail"><div class="lock-reason">Modern mewah, warna netral hangat (putih, krem, cokelat emas).</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Lantai</div><div class="lock-detail"><div class="lock-reason">Marmer atau parkit premium. Bersih mengkilap.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Rak</div><div class="lock-detail"><div class="lock-reason">Kayu atau kaca. Pencahayaan internal di rak. Produk tersusun rapi.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Etalase</div><div class="lock-detail"><div class="lock-reason">Kaca bersih. Pencahayaan spotlight.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Dekorasi</div><div class="lock-detail"><div class="lock-reason">Bunga segar, elemen brand AREKA, vas premium, minimalis.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-activity -->
+        <div class="doc-view" id="view-activity">
+          <div class="doc-header"><h1>🏃 MODUL 30 — Activity Engine</h1><p class="doc-desc">22 aktivitas yang membuat karakter selalu tampak bekerja. Setiap scene = aktivitas spesifik.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('activity')">📋 Salin Modul</button><span class="doc-meta">22 aktivitas</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Daftar Aktivitas</h2>
+              <div class="activity-grid">
+                <div class="activity-item primary">Menawarkan parfum ⭐</div>
+                <div class="activity-item primary">Menjelaskan parfum ⭐</div>
+                <div class="activity-item primary">Memegang parfum ⭐</div>
+                <div class="activity-item">Membandingkan parfum</div>
+                <div class="activity-item">Memberikan rekomendasi</div>
+                <div class="activity-item">Melayani pelanggan</div>
+                <div class="activity-item">Menunjukkan tester</div>
+                <div class="activity-item">Menata parfum di rak</div>
+                <div class="activity-item">Mengisi etalase</div>
+                <div class="activity-item">Membuat gift set</div>
+                <div class="activity-item">Membungkus pesanan</div>
+                <div class="activity-item">Menyiapkan pesanan online</div>
+                <div class="activity-item">Menunjukkan promo</div>
+                <div class="activity-item">Menyusun produk baru</div>
+                <div class="activity-item">Live TikTok</div>
+                <div class="activity-item">Membuat video review</div>
+                <div class="activity-item">Mengambil produk dari rak</div>
+                <div class="activity-item">Menyerahkan parfum ke pelanggan</div>
+                <div class="activity-item">Membuka kemasan parfum</div>
+                <div class="activity-item">Memeriksa stok parfum</div>
+                <div class="activity-item">Membersihkan etalase</div>
+                <div class="activity-item">Menyemprot tester parfum</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-productInt -->
+        <div class="doc-view" id="view-productInt">
+          <div class="doc-header"><h1>🤝 MODUL 31 — Product Interaction Engine</h1><p class="doc-desc">Mengatur interaksi karakter dengan produk. Produk harus diperlakukan dengan hati-hati dan profesional.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('productInt')">📋 Salin Modul</button><span class="doc-meta">9 interaksi · 4 larangan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Interaksi yang Diperbolehkan</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Memegang</span><span class="attr-val">Genggaman natural. Botol dipegang di bagian badan, bukan tutup. Rileks.</span></div>
+                <div class="attr-row"><span class="attr-key">Mengangkat</span><span class="attr-val">Mengangkat botol setinggi bahu, label menghadap kamera.</span></div>
+                <div class="attr-row"><span class="attr-key">Menunjukkan</span><span class="attr-val">Produk dipresentasikan dengan telapak tangan terbuka.</span></div>
+                <div class="attr-row"><span class="attr-key">Membuka Kotak</span><span class="attr-val">Membuka kemasan parfum. Menunjukkan isi dalam box.</span></div>
+                <div class="attr-row"><span class="attr-key">Menyemprot Tester</span><span class="attr-val">Gerakan menyemprot ke udara atau kertas tester.</span></div>
+                <div class="attr-row"><span class="attr-key">Menata Produk</span><span class="attr-val">Menempatkan produk di rak atau etalase dengan rapi.</span></div>
+                <div class="attr-row"><span class="attr-key">Membandingkan</span><span class="attr-val">Dua produk dipegang bersebelahan. Posisi seimbang.</span></div>
+                <div class="attr-row"><span class="attr-key">Mengembalikan ke Rak</span><span class="attr-val">Menempatkan produk kembali ke rak dengan hati-hati.</span></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Larangan</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Tidak menutupi label. Tidak menjatuhkan produk. Tidak memegang dengan posisi aneh. Tidak memegang terlalu keras.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-customerScene -->
+        <div class="doc-view" id="view-customerScene">
+          <div class="doc-header"><h1>👥 MODUL 32 — Customer Scene Engine</h1><p class="doc-desc">Interaksi karakter dengan pelanggan. Pelanggan sebagai pendukung, bukan fokus.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('customerScene')">📋 Salin Modul</button><span class="doc-meta">7 interaksi pelanggan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Scene Pelanggan</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Bertanya</span><span class="attr-val">Pelanggan sedang bertanya. Karakter mendengarkan dengan senyum.</span></div>
+                <div class="attr-row"><span class="attr-key">Menjawab</span><span class="attr-val">Karakter menjawab pertanyaan. Ekspresi informatif dan ramah.</span></div>
+                <div class="attr-row"><span class="attr-key">Rekomendasi</span><span class="attr-val">Karakter memberikan rekomendasi personal. Menunjuk produk yang cocok.</span></div>
+                <div class="attr-row"><span class="attr-key">Menyerahkan</span><span class="attr-val">Karakter menyerahkan parfum ke pelanggan. Gestur sopan.</span></div>
+                <div class="attr-row"><span class="attr-key">Tester</span><span class="attr-val">Menunjukkan cara penggunaan tester parfum.</span></div>
+                <div class="attr-row"><span class="attr-key">Perbedaan Aroma</span><span class="attr-val">Menjelaskan perbedaan antara dua aroma. Pelanggan melihat dan membandingkan.</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Pelanggan hanya sebagai elemen pendukung. Fokus utama tetap AREKA_GIRL_001. Pelanggan boleh tidak tampak (implied presence) — cukup karakter yang bertindak seolah ada pelanggan.</div>
+          </div>
+        </div>
+
+        <!-- view-category -->
+        <div class="doc-view" id="view-category">
+          <div class="doc-header"><h1>🏷️ MODUL 33 — Product Category Engine</h1><p class="doc-desc">Scene dapat digunakan untuk 11 kategori parfum berbeda tanpa mengubah identitas karakter.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('category')">📋 Salin Modul</button><span class="doc-meta">11 kategori parfum</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Kategori Produk</h2>
+              <div class="tag-list">
+                <span class="vibe-tag">Luxury Perfume</span>
+                <span class="vibe-tag">Arabic Perfume</span>
+                <span class="vibe-tag">Local Perfume</span>
+                <span class="vibe-tag">Niche Perfume</span>
+                <span class="vibe-tag">Designer Perfume</span>
+                <span class="vibe-tag">Gift Perfume</span>
+                <span class="vibe-tag">Travel Size</span>
+                <span class="vibe-tag">Body Mist</span>
+                <span class="vibe-tag">Roll On Perfume</span>
+                <span class="vibe-tag">Exclusive Collection</span>
+                <span class="vibe-tag">Limited Edition</span>
+              </div>
+            </div>
+            <div class="doc-note-box">Setiap kategori punya sedikit perbedaan scene: Luxury = butik mewah. Travel Size = compact display. Gift = wrapping corner. Tapi karakter tetap sama.</div>
+          </div>
+        </div>
+
+        <!-- view-time -->
+        <div class="doc-view" id="view-time">
+          <div class="doc-header"><h1>⏰ MODUL 34 — Time Engine</h1><p class="doc-desc">Mengatur waktu scene — jam operasional, event, hari spesial.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('time')">📋 Salin Modul</button><span class="doc-meta">10 pilihan waktu</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Pilihan Waktu</h2>
+              <div class="tag-list">
+                <span class="vibe-tag">Pagi — 09:00-11:00</span>
+                <span class="vibe-tag">Siang — 11:00-14:00</span>
+                <span class="vibe-tag">Sore — 14:00-17:00</span>
+                <span class="vibe-tag">Malam — 17:00-21:00</span>
+                <span class="vibe-tag">Jam Operasional Toko</span>
+                <span class="vibe-tag">Grand Opening</span>
+                <span class="vibe-tag">Weekend</span>
+                <span class="vibe-tag">Promo Spesial</span>
+                <span class="vibe-tag">Hari Raya</span>
+                <span class="vibe-tag">Hari Biasa</span>
+              </div>
+            </div>
+            <div class="doc-note-box">Waktu mempengaruhi pencahayaan, jumlah pelanggan (implied), dan mood. Malam = lampu toko lebih terlihat. Weekend = lebih ramai.</div>
+          </div>
+        </div>
+
+        <!-- view-mood -->
+        <div class="doc-view" id="view-mood">
+          <div class="doc-header"><h1>😌 MODUL 35 — Mood Engine</h1><p class="doc-desc">12 suasana berbeda untuk variasi scene. Mood mempengaruhi tone visual dan ekspresi karakter.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('mood')">📋 Salin Modul</button><span class="doc-meta">12 mood</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Pilihan Mood</h2>
+              <div class="tag-list">
+                <span class="vibe-tag">Luxury</span>
+                <span class="vibe-tag">Friendly</span>
+                <span class="vibe-tag">Premium</span>
+                <span class="vibe-tag">Warm</span>
+                <span class="vibe-tag">Elegant</span>
+                <span class="vibe-tag">Professional</span>
+                <span class="vibe-tag">Busy Store</span>
+                <span class="vibe-tag">Relaxed Shopping</span>
+                <span class="vibe-tag">Exclusive</span>
+                <span class="vibe-tag">Modern</span>
+                <span class="vibe-tag">Clean</span>
+                <span class="vibe-tag">Bright</span>
+              </div>
+            </div>
+            <div class="doc-note-box">Default mood: Warm + Premium + Friendly. Mood lain digunakan untuk variasi konten tanpa mengubah identitas karakter.</div>
+          </div>
+        </div>
+
+        <!-- view-seasonal -->
+        <div class="doc-view" id="view-seasonal">
+          <div class="doc-header"><h1>🎄 MODUL 36 — Seasonal Engine</h1><p class="doc-desc">Adegan musiman untuk event dan momen spesial sepanjang tahun.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('seasonal')">📋 Salin Modul</button><span class="doc-meta">12 event musiman</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Event & Musim</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Ramadan</span><span class="attr-val">Dekorasi islami, nuansa hangat, promo spesial Ramadan.</span></div>
+                <div class="attr-row"><span class="attr-key">Lebaran</span><span class="attr-val">Gift set parfum, dekorasi Lebaran, kemasan hadiah.</span></div>
+                <div class="attr-row"><span class="attr-key">Valentine</span><span class="attr-val">Dekorasi merah muda, parfum sebagai kado cinta.</span></div>
+                <div class="attr-row"><span class="attr-key">Tahun Baru</span><span class="attr-val">Dekorasi gold/silver, koleksi limited edition.</span></div>
+                <div class="attr-row"><span class="attr-key">11.11 / 12.12</span><span class="attr-val">Banner promo besar, diskon spesial, ramai.</span></div>
+                <div class="attr-row"><span class="attr-key">Harbolnas</span><span class="attr-val">Hari Belanja Online Nasional. Promo nasional.</span></div>
+                <div class="attr-row"><span class="attr-key">Flash Sale</span><span class="attr-val">Urgent, stok terbatas, CTA lebih kuat.</span></div>
+                <div class="attr-row"><span class="attr-key">Launch Produk Baru</span><span class="attr-val">Ribbon cutting, display spesial, eksklusif.</span></div>
+                <div class="attr-row"><span class="attr-key">Birthday Sale</span><span class="attr-val">Ulang tahun AREKA, diskon spesial.</span></div>
+                <div class="attr-row"><span class="attr-key">Natal</span><span class="attr-val">Dekorasi natal, gift season, warm tone.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-variation -->
+        <div class="doc-view" id="view-variation">
+          <div class="doc-header"><h1>🔄 MODUL 37 — Scene Variation Engine</h1><p class="doc-desc">Menghasilkan variasi scene tanpa mengubah identitas karakter. 10 dimensi variasi.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('variation')">📋 Salin Modul</button><span class="doc-meta">10 dimensi variasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Dimensi Variasi</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Sudut Toko</span><span class="attr-val">Kiri meja · Kanan meja · Tengah · Samping rak</span></div>
+                <div class="attr-row"><span class="attr-key">Posisi Rak</span><span class="attr-val">Rak kiri · Rak kanan · Rak tengah · Rak belakang</span></div>
+                <div class="attr-row"><span class="attr-key">Dekorasi</span><span class="attr-val">Bunga · Tanpa bunga · Banner promo · Dekorasi musiman</span></div>
+                <div class="attr-row"><span class="attr-key">Jenis Parfum</span><span class="attr-val">Botol besar · Botol kecil · Box · Tester · Gift set</span></div>
+                <div class="attr-row"><span class="attr-key">Arah Tubuh</span><span class="attr-val">Menghadap kamera · 3/4 kanan · 3/4 kiri · Profil</span></div>
+                <div class="attr-row"><span class="attr-key">Posisi Tangan</span><span class="attr-val">Memegang produk · Menunjuk · Terbuka · Di meja</span></div>
+                <div class="attr-row"><span class="attr-key">Background</span><span class="attr-val">Rak penuh · Etalase · Display promo · Dinding brand</span></div>
+                <div class="attr-row"><span class="attr-key">Aktivitas</span><span class="attr-val">22 aktivitas dari Activity Engine</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box"><strong>Aturan:</strong> Wajah AREKA_GIRL_001 TETAP SAMA di semua variasi. Hanya sudut, posisi, aktivitas, dan properti yang berubah.</div>
+          </div>
+        </div>
+
+        <!-- view-props -->
+        <div class="doc-view" id="view-props">
+          <div class="doc-header"><h1>🎭 MODUL 38 — Props Engine</h1><p class="doc-desc">Properti pendukung yang membuat scene terasa hidup dan realistis.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('props')">📋 Salin Modul</button><span class="doc-meta">12 properti</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Properti Pendukung</h2>
+              <div class="props-grid">
+                <div class="prop-item">Kotak Parfum</div>
+                <div class="prop-item">Tas Belanja</div>
+                <div class="prop-item">Pita Hadiah</div>
+                <div class="prop-item">Katalog Parfum</div>
+                <div class="prop-item">Kartu Promo</div>
+                <div class="prop-item">Tester Parfum</div>
+                <div class="prop-item">Kertas Pembungkus</div>
+                <div class="prop-item">Mesin Kasir</div>
+                <div class="prop-item">Scanner Barcode</div>
+                <div class="prop-item">Keranjang Belanja</div>
+                <div class="prop-item">Vas Bunga</div>
+                <div class="prop-item">Dekorasi Premium</div>
+              </div>
+            </div>
+            <div class="doc-note-box">Properti ditambahkan sesuai konteks scene. Tidak semua properti harus ada. Pilih yang relevan dengan aktivitas karakter.</div>
+          </div>
+        </div>
+
+        <!-- view-sceneConsistency -->
+        <div class="doc-view" id="view-sceneConsistency">
+          <div class="doc-header"><h1>🔐 MODUL 39 — Scene Consistency Rules</h1><p class="doc-desc">Aturan permanen yang memastikan scene selalu realistis, premium, dan konsisten.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('sceneConsistency')">📋 Salin Modul</button><span class="doc-meta">8 Always · 4 Never</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>✅ Always</h2>
+              <div class="lock-card"><div class="lock-head locked">Realistis</div><div class="lock-detail"><div class="lock-reason">Scene harus selalu terlihat realistis, seperti foto toko parfum sungguhan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Bersih</div><div class="lock-detail"><div class="lock-reason">Toko selalu bersih, etalase mengkilap, lantai tidak bernoda.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Rak Penuh</div><div class="lock-detail"><div class="lock-reason">Rak tidak boleh kosong. Produk tersusun rapi, tidak ada celah kosong.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Karakter Fokus</div><div class="lock-detail"><div class="lock-reason">Karakter selalu menjadi fokus utama scene. Background adalah pendukung.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Produk Terlihat</div><div class="lock-detail"><div class="lock-reason">Produk selalu mudah dikenali. Label menghadap kamera.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Lingkungan Premium</div><div class="lock-detail"><div class="lock-reason">Toko terlihat premium. Bukan toko pinggir jalan atau pasar.</div></div></div>
+            </div>
+            <div class="doc-section"><h2>🚫 Never</h2>
+              <div class="lock-card var"><div class="lock-head variable">Toko Kosong</div><div class="lock-detail"><div class="lock-reason">Tidak menghasilkan scene dengan toko kosong tanpa produk.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Berantakan</div><div class="lock-detail"><div class="lock-reason">Tidak ada etalase berantakan, produk jatuh, atau area kotor.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Produk Melayang</div><div class="lock-detail"><div class="lock-reason">Tidak ada produk di posisi yang tidak realistis (melayang, miring aneh).</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Perspektif Salah</div><div class="lock-detail"><div class="lock-reason">Tidak ada perspektif yang tidak mungkin secara fotografi.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-templates -->
+        <div class="doc-view" id="view-templates">
+          <div class="doc-header"><h1>📋 MODUL 40 — Scene Template Library</h1><p class="doc-desc">10 template scene siap pakai. Setiap template bisa langsung digunakan tanpa mengubah Character DNA.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('templates')">📋 Salin Modul</button><span class="doc-meta">10 template</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Template Scene</h2>
+              <div class="template-grid">
+                <div class="template-card"><div class="template-num">01</div><div class="template-title">Menawarkan Parfum Terbaru</div><div class="template-desc">Karakter berdiri di belakang meja, memegang botol parfum terbaru, tersenyum hangat, label menghadap kamera. Background rak parfum penuh.</div></div>
+                <div class="template-card"><div class="template-num">02</div><div class="template-title">Menjelaskan Aroma Parfum</div><div class="template-desc">Karakter memegang parfum di satu tangan, tangan lain menunjuk label. Ekspresi informatif, seolah menjelaskan notes aroma.</div></div>
+                <div class="template-card"><div class="template-num">03</div><div class="template-title">Melayani Pelanggan</div><div class="template-desc">Karakter melihat ke arah pelanggan (sedikit ke samping kamera), tersenyum, memegang produk yang direkomendasikan.</div></div>
+                <div class="template-card"><div class="template-num">04</div><div class="template-title">Live TikTok</div><div class="template-desc">Karakter melihat langsung ke kamera. Enerjik, ramah. Produk diangkat setinggi bahu. Ekspresi seperti sedang bicara ke penonton.</div></div>
+                <div class="template-card"><div class="template-num">05</div><div class="template-title">Packing Pesanan</div><div class="template-desc">Karakter di meja dengan kotak parfum terbuka, kertas pembungkus, pita hadiah. Sedang menyiapkan pesanan online.</div></div>
+                <div class="template-card"><div class="template-num">06</div><div class="template-title">Membuat Gift Set</div><div class="template-desc">Karakter menyusun parfum + body mist + lotion dalam keranjang hadiah. Ekspresi senang dan kreatif.</div></div>
+                <div class="template-card"><div class="template-num">07</div><div class="template-title">Menata Rak Parfum</div><div class="template-desc">Karakter di samping rak, sedang menata botol parfum. Sampingan, tidak frontal. Produk di tangan, rak penuh.</div></div>
+                <div class="template-card"><div class="template-num">08</div><div class="template-title">Menerima Stok Baru</div><div class="template-desc">Karakter memegang kardus stok baru, ekspresi senang. Produk baru akan segera tersedia.</div></div>
+                <div class="template-card"><div class="template-num">09</div><div class="template-title">Menunjukkan Promo</div><div class="template-desc">Karakter memegang produk + kartu promo. Banner diskon terlihat di background. Ekspresi "jangan sampai kelewatan!"</div></div>
+                <div class="template-card"><div class="template-num">10</div><div class="template-title">Membandingkan Dua Parfum</div><div class="template-desc">Karakter memegang dua botol parfum, satu di masing-masing tangan, sedikit diangkat. Ekspresi netral informatif.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-outputEngine -->
+        <div class="doc-view" id="view-outputEngine">
+          <div class="doc-header"><h1>📤 MODUL 41 — Output Engine</h1><p class="doc-desc">Integrasi akhir Scene Engine dengan seluruh sistem. Memastikan scene cocok dengan DNA, Visual, dan Marketing Engine.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('outputEngine')">📋 Salin Modul</button><span class="doc-meta">5 kriteria integrasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Kriteria Output Scene</h2>
+              <div class="lock-card"><div class="lock-head locked">Cocok Character DNA</div><div class="lock-detail"><div class="lock-reason">Scene tidak mengubah identitas AREKA_GIRL_001. Wajah, tubuh, makeup, rambut tetap sama.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Cocok Visual Engine</div><div class="lock-detail"><div class="lock-reason">Scene mengikuti aturan Camera, Lens, Lighting, Color, Composition, Quality dari FASE 2.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Cocok Marketing Engine</div><div class="lock-detail"><div class="lock-reason">Scene membuat karakter terlihat sebagai Beauty Advisor yang sedang bekerja dan menjual.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Mudah Dipadukan</div><div class="lock-detail"><div class="lock-reason">Scene dapat dipadukan dengan Product Engine dan Branding Engine tanpa konflik.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Reusable</div><div class="lock-detail"><div class="lock-reason">Scene dapat digunakan kembali untuk berbagai kampanye promosi tanpa perubahan.</div></div></div>
+            </div>
+            <div class="doc-note-box">Scene Engine selesai. AREKA_GIRL_001 sekarang dapat muncul di ribuan scene berbeda — berbagai lokasi, aktivitas, mood, musim, dan kategori produk — sambil tetap mempertahankan identitas karakter, kualitas visual, dan perilaku marketing yang konsisten.</div>
           </div>
         </div>
 
