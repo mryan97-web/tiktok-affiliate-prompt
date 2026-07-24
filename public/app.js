@@ -57,7 +57,7 @@ const CHARACTER_DNA = {
   makeup_eyeshadow: 'Neutral',
   makeup_lipstick: 'Nude pink',
   // Clothing - default
-  outfit: 'Minimalist fitted black short sleeve top',
+  outfit: 'minimalist fitted black short sleeve top',
   outfit_style: 'Tanpa logo, minimal jewelry',
   // Personality for prompt
   expression: 'Warm, friendly, professional smile',
@@ -301,27 +301,14 @@ const LENGTH_CONFIG = {
 };
 
 // ===================================================================
-// NEGATIVE PROMPT DATABASE (built from all FASEs)
+// NEGATIVE PROMPT DATABASE (clean, no filler)
 // ===================================================================
 const NEGATIVE_PROMPT_BASE = [
-  'No plastic skin', 'No cartoon style', 'No anime', 'No distorted face',
-  'No distorted hands', 'No extra fingers', 'No missing fingers',
-  'No bad anatomy', 'No disfigured', 'No ugly', 'No deformed',
-  'No mutation', 'No mutated hands', 'No poorly drawn face',
-  'No poorly drawn hands', 'No blurry', 'No low quality', 'No low resolution',
-  'No worst quality', 'No normal quality', 'No grainy', 'No noisy',
-  'No dark spots', 'No overexposed', 'No underexposed', 'No oversaturated',
-  'No high contrast', 'No unnatural colors', 'No unrealistic lighting',
-  'No watermark', 'No text watermark', 'No signature', 'No logo',
-  'No extra limbs', 'No cloned face', 'No malformed limbs',
-  'No cross-eyed', 'No uneven eyes', 'No asymmetrical features',
-  'No dirty lens', 'No dust spots', 'No lens flare (unless intentional)',
-  'No 3D render', 'No CGI looking', 'No digital art looking',
-  'No illustration', 'No painting', 'No sketch', 'No drawing',
-  'No amateur', 'No snapshot looking', 'No quick snap',
-  'No Instagram filter', 'No beauty filter effect',
-  'No mannequin', 'No mannequin hands', 'No mannequin face',
-  'No mannequin looking', 'No unnatural skin texture',
+  'plastic skin', 'cartoon', 'anime', 'distorted face', 'distorted hands',
+  'extra fingers', 'missing fingers', 'bad anatomy', 'deformed',
+  'blurry', 'low quality', 'oversaturated', 'unrealistic lighting',
+  'watermark', 'logo text', 'extra limbs', 'mannequin', 'cgi',
+  'illustration', 'painting', 'sketch', 'amateur snapshot',
 ];
 
 // ===================================================================
@@ -344,96 +331,173 @@ function validatePrompt(state) {
 }
 
 // ===================================================================
-// PROMPT ASSEMBLER ENGINE (FASE 6 + 8)
+// CLEANUP HELPERS
+// ===================================================================
+function cleanText(text) {
+  return String(text || '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([,.;:])/g, '$1')
+    .replace(/([,.;:])\1+/g, '$1')
+    .replace(/(,\s*)+/g, ', ')
+    .replace(/(\.\s*)+/g, '. ')
+    .replace(/\s+—\s+/g, ' — ')
+    .trim()
+    .replace(/^[.,;\s]+|[.,;\s]+$/g, '');
+}
+
+function dedupeWords(text) {
+  const seen = new Set();
+  return cleanText(text)
+    .split(' ')
+    .filter((w) => {
+      const key = w.toLowerCase().replace(/[.,;:]+$/g, '');
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .join(' ');
+}
+
+function joinParts(parts) {
+  return cleanText(parts.filter(Boolean).join('. ')) + '.';
+}
+
+function trimByWords(text, maxWords) {
+  const words = cleanText(text).split(' ').filter(Boolean);
+  if (words.length <= maxWords) return words.join(' ');
+  return words.slice(0, maxWords).join(' ');
+}
+
+// ===================================================================
+// PROMPT ASSEMBLER ENGINE (FASE 6 + 8) — CLEAN VERSION
 // ===================================================================
 
-/** Build the DNA description string */
-function buildDNA() {
+/** Compact subject — Gemini already locks face consistency */
+function buildSubjectCompact() {
   const d = CHARACTER_DNA;
-  return [
-    `AREKA_GIRL_001, ${d.gender} ${d.age}, ${d.nationality}`,
-    `Wajah: ${d.face_shape}, rahang ${d.jaw}, dagu ${d.chin}`,
-    `Kulit: ${d.skin}, ${d.skin_texture}, ${d.skin_glow}`,
-    `Mata: ${d.eye_shape}, ${d.eye_color}, ${d.eye_expression}`,
-    `Alis: ${d.brow_shape}, ${d.brow_thickness}, ${d.brow_color}`,
-    `Hidung: ${d.nose_shape}, ujung ${d.nose_tip}`,
-    `Bibir: ${d.lip_shape}, ${d.lip_color}`,
-    `Rambut: ${d.hair_color} ${d.hair_texture}, ${d.hair_length}, ${d.hair_style}`,
-    `Makeup: ${d.makeup_style}, ${d.makeup_lipstick}, ${d.makeup_blush}`,
-    `Tubuh: ${d.height}, ${d.body}, ${d.proportion}`,
-    `Outfit: ${d.outfit}, ${d.outfit_style}`,
-    `Ekspresi: ${d.expression}`,
-  ];
+  return `same consistent woman AREKA_GIRL_001, Indonesian beauty advisor, 25 years old, warm light beige skin, soft oval face, dark brown almond eyes, long straight black shoulder-length hair, natural soft makeup, slim feminine figure, wearing ${d.outfit}`;
 }
 
-/** Build identity lock description */
-function buildIdentityLock() {
-  return DNA_LOCK_RULES.join('. ');
+/** Short subject for keyword models */
+function buildSubjectShort() {
+  return 'Indonesian female beauty advisor, 25yo, warm beige skin, oval face, dark brown almond eyes, long black hair, natural makeup, black fitted top';
 }
 
-/** Build scene description */
+/** Scene only — no element dump (desc already complete) */
 function buildScene(sceneKey) {
-  const s = SCENES[sceneKey];
-  if (!s) return SCENES.luxury_store.desc;
-  return s.desc + '. ' + s.elements.slice(0, 4).join(', ') + '.';
+  const s = SCENES[sceneKey] || SCENES.luxury_store;
+  return cleanText(s.desc);
 }
 
-/** Build marketing description */
+/** Marketing as short role, not trait dump */
 function buildMarketing(mktKey) {
-  const m = MARKETING[mktKey];
-  if (!m) return MARKETING.beauty_advisor.desc;
-  return m.desc + '. ' + m.traits.join(', ') + '.';
+  const m = MARKETING[mktKey] || MARKETING.beauty_advisor;
+  return cleanText(m.desc.split(',')[0]);
 }
 
-/** Build product description */
 function buildProduct(prodKey) {
-  const p = PRODUCTS[prodKey];
-  if (!p) return PRODUCTS.parfum_arab.desc;
-  return p.desc;
+  const p = PRODUCTS[prodKey] || PRODUCTS.parfum_arab;
+  return cleanText(p.desc);
 }
 
-/** Build camera description */
 function buildCamera(camKey) {
-  const c = CAMERAS[camKey];
-  if (!c) return CAMERAS['9_16_portrait'].label;
-  return `${c.label} — ${c.distance}, ${c.height}, ${c.lens}, ${c.orient} ${c.ar}, platform ${c.platform}`;
+  const c = CAMERAS[camKey] || CAMERAS['9_16_portrait'];
+  return `${c.distance}, ${c.height}, ${c.lens}, ${c.ar} ${c.orient.toLowerCase()} for ${c.platform}`;
 }
 
-/** Build lighting description */
 function buildLighting(lgtKey) {
-  const l = LIGHTINGS[lgtKey];
-  if (!l) return LIGHTINGS.warm_led.desc;
-  return l.desc;
+  const l = LIGHTINGS[lgtKey] || LIGHTINGS.warm_led;
+  // take first clause only — avoid overlong light recipes
+  return cleanText(l.desc.split(',').slice(0, 3).join(','));
 }
 
-/** Build composition description */
 function buildComposition() {
-  const c = COMPOSITION;
-  return `Karakter ${c.character_frame}, wajah di ${c.face_position}. ${c.product_position}. Banner: ${c.banner_position}. ${c.banner_safe}. ${c.safe_area}. Visual hierarchy: ${c.visual_hierarchy}.`;
+  return 'subject fills about 65% of frame, face in upper third, product held naturally with label facing camera, brand banner only at bottom 8%, clean commercial composition';
 }
 
-/** Build brand description */
 function buildBrand(brdKey) {
-  const b = BRANDS[brdKey];
-  if (!b) return BRANDS.areka_default.banner;
-  return `${b.banner}. CTA: ${b.cta}`;
+  const b = BRANDS[brdKey] || BRANDS.areka_default;
+  return cleanText(b.banner);
 }
 
-/** Build quality description */
 function buildQuality() {
-  return QUALITY.slice(0, 8).join(', ') + '.';
+  return 'photorealistic commercial photography, luxury retail aesthetic, natural skin texture, sharp focus, magazine quality';
 }
 
-/** Build quality never / negative */
-function buildQualityNever() {
-  return QUALITY_NEVER.join(', ') + '.';
+function buildPose() {
+  return cleanText(CHARACTER_DNA.pose_natural);
 }
 
-/** Build full negative prompt */
 function buildNegativePrompt() {
-  // Deduplicate
-  const all = [...new Set([...NEGATIVE_PROMPT_BASE, ...QUALITY_NEVER])];
+  const all = [...new Set([...NEGATIVE_PROMPT_BASE, ...QUALITY_NEVER.map((q) => q.replace(/^No\s+/i, '').toLowerCase())])];
   return all.join(', ');
+}
+
+function buildNaturalPrompt(parts) {
+  return joinParts([
+    parts.subject,
+    `working as ${parts.marketing}`,
+    `in ${parts.scene}`,
+    `holding ${parts.product}`,
+    parts.pose,
+    parts.custom ? parts.custom : null,
+    parts.camera,
+    parts.lighting,
+    parts.composition,
+    parts.brand ? `subtle brand banner text: ${parts.brand}` : null,
+    parts.quality,
+  ]);
+}
+
+function buildKeywordPrompt(parts) {
+  return cleanText([
+    parts.subjectShort,
+    parts.scene.split(',')[0],
+    `holding ${parts.product.split(',')[0].toLowerCase()}`,
+    parts.pose,
+    parts.lighting.split(',')[0],
+    parts.camera.split(',')[0],
+    parts.custom || '',
+    'photorealistic, commercial quality',
+  ].filter(Boolean).join(', '));
+}
+
+function buildMidjourneyPrompt(parts, model) {
+  const body = [
+    parts.subjectShort,
+    parts.scene.split(',')[0].toLowerCase(),
+    `holding ${parts.product.split(',')[0].toLowerCase()}`,
+    parts.pose,
+    parts.lighting.split(',')[0].toLowerCase(),
+    parts.custom || '',
+  ].filter(Boolean).join(' -- ');
+  return cleanText(body + ' ' + (model.suffix || ''));
+}
+
+function buildSdxlPrompt(parts) {
+  return cleanText([
+    'masterpiece, best quality',
+    parts.subjectShort,
+    `(${parts.scene.split(',')[0].toLowerCase()}:1.2)`,
+    `(holding ${parts.product.split(',')[0].toLowerCase()}:1.3)`,
+    parts.pose,
+    `(${parts.lighting.split(',')[0].toLowerCase()}:1.2)`,
+    parts.camera.split(',')[0],
+    parts.custom || '',
+    'photorealistic, commercial photography, 8k',
+  ].filter(Boolean).join(', '));
+}
+
+function buildIdeogramPrompt(parts) {
+  return joinParts([
+    parts.subjectShort + ' at luxury perfume store',
+    `holding ${parts.product.split(',')[0].toLowerCase()}`,
+    parts.pose,
+    parts.lighting.split(',')[0],
+    parts.brand,
+    parts.custom || '',
+    'photorealistic commercial style',
+  ]);
 }
 
 // ===================================================================
@@ -470,7 +534,7 @@ function buildCopyBar() {
 // MAIN GENERATOR — FASE 8 FINAL OUTPUT
 // ===================================================================
 function generatePrompt() {
-  // 1. INPUT COLLECTOR — read all selections
+  // 1. INPUT COLLECTOR
   const character = document.getElementById('gen-character').value;
   const sceneKey = document.getElementById('gen-scene').value;
   const prodKey = document.getElementById('gen-product').value;
@@ -483,115 +547,66 @@ function generatePrompt() {
   const templateKey = document.getElementById('gen-template').value;
   const customReq = document.getElementById('gen-custom').value.trim();
 
-  // 2. ASSEMBLE all parts
+  // 2. STATE + VALIDATION
   const state = { character, scene: sceneKey, product: prodKey, marketing: mktKey, camera: camKey, lighting: lgtKey, brand: brdKey };
-
-  // 3. VALIDATION (FASE 7)
   const validation = validatePrompt(state);
 
-  // 4. BUILD EACH SECTION
+  // 3. CLEAN PARTS — no DNA dump, no identity lock spam
   const parts = {
-    system: 'AI Image Generation for AREKA OFFICIAL STORE — Commercial Perfume Photography',
-    dna: buildDNA().join('; '),
-    identity: buildIdentityLock(),
+    subject: buildSubjectCompact(),
+    subjectShort: buildSubjectShort(),
     scene: buildScene(sceneKey),
     marketing: buildMarketing(mktKey),
     product: buildProduct(prodKey),
-    pose: CHARACTER_DNA.pose_natural,
+    pose: buildPose(),
     camera: buildCamera(camKey),
     lighting: buildLighting(lgtKey),
     composition: buildComposition(),
     brand: buildBrand(brdKey),
     quality: buildQuality(),
-    custom: customReq || undefined,
+    custom: customReq || '',
     negative: buildNegativePrompt(),
   };
 
-  // 5. LENGTH ADJUSTMENT
+  // 4. MODEL CONFIG + LENGTH
   const modelConf = MODEL_CONFIG[modelKey] || MODEL_CONFIG.gpt;
-  let lengthMult = 1.0;
+  const wordCaps = {
+    ultra_short: 30,
+    short: 55,
+    medium: 110,
+    long: 180,
+    ultra_long: 260,
+  };
+  let maxWords = wordCaps.medium;
   if (lengthKey !== 'auto') {
-    lengthMult = (LENGTH_CONFIG[lengthKey] || LENGTH_CONFIG.medium).mult;
+    maxWords = wordCaps[lengthKey] || wordCaps.medium;
   } else {
-    // Auto based on model
-    lengthMult = modelConf.max_tokens / 100;
+    maxWords = Math.max(40, Math.round(modelConf.max_tokens * 0.85));
   }
 
-  // 6. BUILD PROMPT TEXT based on model style
+  // 5. BUILD CLEAN PROMPT PER MODEL
   let mainPrompt = '';
-  const model = modelConf;
-
-  if (modelKey === 'gpt' || modelKey === 'imagen') {
-    // Natural paragraph style
-    mainPrompt = parts.dna + '. ';
-    mainPrompt += 'She is ' + parts.identity.toLowerCase() + '. ';
-    mainPrompt += 'Scene: ' + parts.scene + ' ';
-    mainPrompt += 'She works as ' + parts.marketing + ' ';
-    mainPrompt += 'She is holding a ' + parts.product + '. ';
-    mainPrompt += parts.pose + '. ';
-    mainPrompt += 'Camera: ' + parts.camera + '. ';
-    mainPrompt += 'Lighting: ' + parts.lighting + '. ';
-    mainPrompt += 'Composition: ' + parts.composition + ' ';
-    mainPrompt += 'Brand signage: ' + parts.brand + '. ';
-    mainPrompt += 'Quality: ' + parts.quality + ' ';
-    mainPrompt += 'Professional commercial perfume photography, luxury retail aesthetic.';
-    if (parts.custom) mainPrompt += ' ' + parts.custom + '.';
-  } else if (modelKey === 'flux') {
-    // Short keyword style
-    mainPrompt = 'Indonesian female beauty advisor, 25yo, warm light beige skin, almond dark brown eyes, oval face, long black hair. ';
-    mainPrompt += parts.scene.split('.')[0] + '. ';
-    mainPrompt += 'Holding ' + parts.product.toLowerCase() + '. ';
-    mainPrompt += parts.pose + '. ';
-    mainPrompt += parts.lighting.split(',')[0] + '. ';
-    mainPrompt += parts.camera.split('—')[0].trim() + '. ';
-    mainPrompt += 'Photorealistic, commercial quality. ';
-    if (parts.custom) mainPrompt += parts.custom + '.';
+  if (modelKey === 'flux') {
+    mainPrompt = buildKeywordPrompt(parts);
   } else if (modelKey === 'midjourney') {
-    // Artistic cinematic style
-    mainPrompt = 'Indonesian beauty advisor, 25 years old, warm skin tone, elegant oval face, long black hair, almond eyes, natural makeup -- ';
-    mainPrompt += 'working at luxury perfume store, ' + parts.scene.split(',')[0].toLowerCase() + ' -- ';
-    mainPrompt += 'holding ' + parts.product.toLowerCase() + ' -- ';
-    mainPrompt += parts.pose + ' -- ';
-    mainPrompt += parts.lighting.split(',')[0].toLowerCase() + ' -- ';
-    mainPrompt += model.suffix;
-    if (parts.custom) mainPrompt += ' -- ' + parts.custom;
+    mainPrompt = buildMidjourneyPrompt(parts, modelConf);
   } else if (modelKey === 'sdxl') {
-    // Structured weighted
-    mainPrompt = 'masterpiece, best quality, ';
-    mainPrompt += '1girl, indonesian, 25yo, warm skin, oval face, long black hair, almond eyes, natural makeup, black top, ';
-    mainPrompt += '(luxury perfume store:1.2), ' + parts.scene.split(',')[0].toLowerCase() + ', ';
-    mainPrompt += '(holding ' + parts.product.toLowerCase() + ':1.3), ';
-    mainPrompt += parts.pose + ', ';
-    mainPrompt += '(' + parts.lighting.split(',')[0].toLowerCase() + ':1.2), ';
-    mainPrompt += parts.camera.split('—')[0].trim() + ', ';
-    mainPrompt += 'photorealistic, commercial photography, 8k, ';
-    if (parts.custom) mainPrompt += parts.custom + ', ';
-    mainPrompt += 'negative: ' + parts.negative.slice(0, 200);
+    mainPrompt = buildSdxlPrompt(parts);
   } else if (modelKey === 'ideogram') {
-    // Short text-friendly
-    mainPrompt = 'Indonesian beauty advisor at luxury perfume store. ';
-    mainPrompt += 'Holding ' + parts.product.toLowerCase() + '. ';
-    mainPrompt += parts.pose + '. ';
-    mainPrompt += parts.lighting.split(',')[0] + '. ';
-    mainPrompt += 'Photorealistic style. ';
-    mainPrompt += parts.brand + ' ';
-    if (parts.custom) mainPrompt += parts.custom + ' ';
-    mainPrompt += 'AREKA OFFICIAL STORE';
+    mainPrompt = buildIdeogramPrompt(parts);
+  } else {
+    // gpt / imagen / default — natural clean paragraph
+    mainPrompt = buildNaturalPrompt(parts);
   }
 
-  // 7. APPLY LENGTH TRIMMING
-  if (lengthMult < 1.0) {
-    const words = mainPrompt.split(' ');
-    const targetLen = Math.max(20, Math.floor(words.length * lengthMult));
-    mainPrompt = words.slice(0, targetLen).join(' ');
-  } else if (lengthMult > 1.5) {
-    // For ultra long, add more detail
-    mainPrompt += ' ' + parts.dna + ' ' + parts.scene + ' ' + parts.composition;
+  // 6. FINAL CLEAN + LENGTH TRIM
+  mainPrompt = cleanText(mainPrompt);
+  if (modelKey !== 'midjourney') {
+    mainPrompt = trimByWords(mainPrompt, maxWords);
   }
 
-  // 8. BUILD FINAL OUTPUT FORMAT
+  // 7. BUILD FINAL OUTPUT FORMAT
   const outputEl = document.getElementById('genOutput');
-
   const modelLabel = modelConf.label;
   const ar = CAMERAS[camKey] ? CAMERAS[camKey].ar : '9:16';
   const qualityLabel = 'Ultra Realistic';
@@ -628,7 +643,6 @@ function generatePrompt() {
     LAST_FULL = apiOut;
     html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${apiOut}</pre></div>`;
   } else {
-    // Full template (default)
     LAST_FULL = `FINAL PROMPT\n${mainPrompt}\n\nNEGATIVE PROMPT\n${parts.negative}\n\nModel: ${modelLabel}\nStyle: ${modelConf.style}\nAspect Ratio: ${ar}\nQuality: ${qualityLabel}\nStatus: ${status}\nQuality Score: ${score}/100`;
     html = `<div class="gen-output-ready">
       <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
