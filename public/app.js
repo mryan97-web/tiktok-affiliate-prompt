@@ -182,14 +182,28 @@ const MARKETING = {
 };
 
 // ===================================================================
-// FASE 2 — CAMERA, LIGHTING, COMPOSITION DATABASE
+// FASE 2 — CAMERA, SHOT, LIGHTING, COMPOSITION DATABASE
 // ===================================================================
 const CAMERAS = {
-  '9_16_portrait': { label: '9:16 Portrait', ar: '9:16', orient: 'Portrait', distance: 'Medium Close Up', height: 'Eye Level', lens: '85mm', platform: 'TikTok' },
-  '1_1_square': { label: '1:1 Square', ar: '1:1', orient: 'Square', distance: 'Medium Shot', height: 'Eye Level', lens: '50mm', platform: 'Instagram' },
-  '16_9_landscape': { label: '16:9 Landscape', ar: '16:9', orient: 'Landscape', distance: 'Medium Long Shot', height: 'Eye Level', lens: '35mm', platform: 'Website' },
-  '4_5_portrait': { label: '4:5 Portrait', ar: '4:5', orient: 'Portrait', distance: 'Medium Close Up', height: 'Eye Level', lens: '85mm', platform: 'Marketplace' },
-  '2_3_portrait': { label: '2:3 Portrait', ar: '2:3', orient: 'Portrait', distance: 'Medium Shot', height: 'Slight High Angle', lens: '50mm', platform: 'Pinterest' },
+  '9_16_portrait': { label: '9:16 Portrait', ar: '9:16', orient: 'Portrait', platform: 'TikTok' },
+  '1_1_square': { label: '1:1 Square', ar: '1:1', orient: 'Square', platform: 'Instagram' },
+  '16_9_landscape': { label: '16:9 Landscape', ar: '16:9', orient: 'Landscape', platform: 'Website' },
+  '4_5_portrait': { label: '4:5 Portrait', ar: '4:5', orient: 'Portrait', platform: 'Marketplace' },
+  '2_3_portrait': { label: '2:3 Portrait', ar: '2:3', orient: 'Portrait', platform: 'Pinterest' },
+};
+
+// Camera framing / angle — independent from aspect ratio
+const CAMERA_SHOTS = {
+  medium_closeup: { label: 'Medium Close Up', desc: 'Medium close-up, eye level, 85mm, face and product clearly visible' },
+  closeup_product: { label: 'Close Up Produk', desc: 'Close-up on perfume bottle and hands, 85mm, product label sharp and readable' },
+  medium_shot: { label: 'Medium Shot', desc: 'Medium shot from waist up, eye level, 50mm, full upper body with product' },
+  cowboy_shot: { label: 'Cowboy Shot', desc: 'Cowboy shot from mid-thigh up, eye level, 50mm, body language visible' },
+  over_shoulder: { label: 'Over Shoulder', desc: 'Slight over-the-shoulder angle toward product display, natural retail POV' },
+  high_angle: { label: 'High Angle', desc: 'Slight high angle looking down, 35mm, elegant top-down retail composition' },
+  low_angle: { label: 'Low Angle', desc: 'Slight low angle looking up, 35mm, confident premium presence' },
+  side_profile: { label: 'Side Profile', desc: 'Three-quarter side angle, 50mm, elegant profile with product in hand' },
+  top_down: { label: 'Top Down / Flat Lay', desc: 'Top-down flat lay angle focusing on hands and perfume bottle on counter' },
+  selfie_pov: { label: 'Selfie / POV', desc: 'Selfie-style front camera POV, arm-length distance, natural TikTok framing' },
 };
 
 const LIGHTINGS = {
@@ -199,6 +213,100 @@ const LIGHTINGS = {
   natural_window: { label: 'Natural Window', desc: 'Natural window light, soft indirect daylight, cool fill from sky, warm bounce from interior, natural fresh look' },
   ring_light: { label: 'Ring Light Beauty', desc: 'Ring light frontal flat lighting, even illumination, minimal shadows, beauty portrait style, soft even skin tone' },
   mood_ambient: { label: 'Mood Ambient', desc: 'Mood ambient lighting, dramatic chiaroscuro, warm accent lights, deep shadows, mysterious premium atmosphere' },
+};
+
+// ===================================================================
+// POSE / ACTIVITY / GESTURE DATABASE
+// ===================================================================
+const POSES = {
+  hold_chest: {
+    label: 'Memegang Parfum (Depan Dada)',
+    desc: 'standing behind counter, holding perfume bottle naturally in right hand at chest level, relaxed grip, label facing camera, slight lean forward, warm professional smile',
+  },
+  lift_shoulder: {
+    label: 'Mengangkat Parfum (Setinggi Bahu)',
+    desc: 'lifting perfume bottle to shoulder height with elegant slow motion, bottle body held gently, label facing camera, proud confident expression',
+  },
+  point_label: {
+    label: 'Menunjuk Label Parfum',
+    desc: 'holding perfume bottle in one hand while index finger of other hand points at the bottle label, guiding attention to product details, informative expression',
+  },
+  point_product: {
+    label: 'Menunjuk Parfum ke Kamera',
+    desc: 'pointing perfume bottle toward camera with open inviting gesture, presenting product clearly, label facing camera, friendly recommendation pose',
+  },
+  open_cap: {
+    label: 'Membuka Tutup Botol',
+    desc: 'opening the perfume bottle cap carefully with both hands, one hand holding bottle body, other hand removing cap, focused elegant movement, label still visible',
+  },
+  close_cap: {
+    label: 'Menutup Tutup Botol',
+    desc: 'placing the cap back onto the perfume bottle carefully with both hands, precise elegant motion, bottle held steady, professional retail handling',
+  },
+  spray_air: {
+    label: 'Menyemprot Parfum ke Udara',
+    desc: 'spraying perfume into the air with one hand, nozzle pressed gently, fine mist visible, other hand supporting bottle base, elegant demonstration pose',
+  },
+  spray_wrist: {
+    label: 'Menyemprot ke Pergelangan Tangan',
+    desc: 'spraying perfume onto inner wrist, bottle nozzle close to wrist, elegant fragrance testing pose, soft smile, natural product demo',
+  },
+  spray_tester: {
+    label: 'Menyemprot ke Kertas Tester',
+    desc: 'spraying perfume onto a paper tester strip held in the other hand, bottle nozzle aimed at strip, professional fragrance consultation pose',
+  },
+  open_box: {
+    label: 'Membuka Kemasan / Box',
+    desc: 'opening perfume packaging box with both hands, revealing bottle inside, careful unboxing pose, excited but professional expression',
+  },
+  compare_two: {
+    label: 'Membandingkan 2 Parfum',
+    desc: 'holding two perfume bottles side by side at equal height, balanced composition, comparing products for customer recommendation',
+  },
+  offer_customer: {
+    label: 'Menawarkan ke Pelanggan',
+    desc: 'offering perfume bottle toward viewer with open palm presentation, welcoming body language, as if recommending to customer',
+  },
+  hand_over: {
+    label: 'Menyerahkan Parfum',
+    desc: 'handing perfume bottle forward politely with both hands, respectful retail gesture, warm smile, customer service pose',
+  },
+  shelf_pick: {
+    label: 'Mengambil dari Rak',
+    desc: 'reaching to take perfume bottle from wooden shelf display, natural retail activity, body slightly turned toward shelf, product selected carefully',
+  },
+  shelf_place: {
+    label: 'Menata ke Etalase',
+    desc: 'placing perfume bottle neatly onto glass display counter or shelf, careful product styling pose, organized retail activity',
+  },
+  gift_wrap: {
+    label: 'Membungkus Gift Set',
+    desc: 'wrapping perfume gift set with ribbon and tissue paper on packing table, both hands active, behind-the-scenes retail activity',
+  },
+  explain_notes: {
+    label: 'Menjelaskan Aroma / Notes',
+    desc: 'holding perfume near chest while other hand gestures explaining fragrance notes, informative expression, consultant teaching pose',
+  },
+  smell_cap: {
+    label: 'Mencium Aroma dari Tutup',
+    desc: 'holding open perfume cap near nose to smell fragrance, eyes softly closed or looking aside, elegant sensory moment, bottle still in other hand',
+  },
+  show_size: {
+    label: 'Menunjukkan Ukuran Botol',
+    desc: 'presenting perfume bottle size clearly between fingers, travel-size or full-size comparison vibe, product scale visible to camera',
+  },
+  live_tiktok: {
+    label: 'Live TikTok / Review',
+    desc: 'talking to camera while holding perfume bottle near face, energetic TikTok live style, engaging expression, product always visible',
+  },
+  counter_lean: {
+    label: 'Bersandar di Counter (Default)',
+    desc: 'standing behind glass display counter with slight lean forward, hands resting near perfume bottle on counter, natural beauty advisor stance',
+  },
+  invite_look: {
+    label: 'Mengajak Melihat Produk',
+    desc: 'open palm gesture inviting viewer to look at perfume bottle on counter, friendly welcoming pose, product as visual focus',
+  },
 };
 
 const COMPOSITION = {
@@ -401,9 +509,10 @@ function buildProduct(prodKey) {
   return cleanText(p.desc);
 }
 
-function buildCamera(camKey) {
+function buildCamera(camKey, shotKey) {
   const c = CAMERAS[camKey] || CAMERAS['9_16_portrait'];
-  return `${c.distance}, ${c.height}, ${c.lens}, ${c.ar} ${c.orient.toLowerCase()} for ${c.platform}`;
+  const s = CAMERA_SHOTS[shotKey] || CAMERA_SHOTS.medium_closeup;
+  return `${s.desc}, ${c.ar} ${c.orient.toLowerCase()} for ${c.platform}`;
 }
 
 function buildLighting(lgtKey) {
@@ -429,8 +538,9 @@ function buildQuality() {
   return 'photorealistic commercial photography, luxury retail aesthetic, natural skin texture, sharp focus, magazine quality';
 }
 
-function buildPose() {
-  return cleanText(CHARACTER_DNA.pose_natural);
+function buildPose(poseKey) {
+  const p = POSES[poseKey] || POSES.hold_chest;
+  return cleanText(p.desc);
 }
 
 function buildNegativePrompt(noBrand) {
@@ -446,8 +556,8 @@ function buildNaturalPrompt(parts) {
     parts.subject,
     `working as ${parts.marketing}`,
     `in ${parts.scene}`,
-    `holding ${parts.product}`,
     parts.pose,
+    parts.product ? `featuring ${parts.product}` : null,
     parts.custom ? parts.custom : null,
     parts.camera,
     parts.lighting,
@@ -461,8 +571,8 @@ function buildKeywordPrompt(parts) {
   return cleanText([
     parts.subjectShort,
     parts.scene.split(',')[0],
-    `holding ${parts.product.split(',')[0].toLowerCase()}`,
-    parts.pose,
+    parts.pose.split(',')[0],
+    parts.product ? parts.product.split(',')[0] : '',
     parts.lighting.split(',')[0],
     parts.camera.split(',')[0],
     parts.custom || '',
@@ -474,8 +584,8 @@ function buildMidjourneyPrompt(parts, model) {
   const body = [
     parts.subjectShort,
     parts.scene.split(',')[0].toLowerCase(),
-    `holding ${parts.product.split(',')[0].toLowerCase()}`,
-    parts.pose,
+    parts.pose.split(',')[0].toLowerCase(),
+    parts.product ? parts.product.split(',')[0].toLowerCase() : '',
     parts.lighting.split(',')[0].toLowerCase(),
     parts.custom || '',
   ].filter(Boolean).join(' -- ');
@@ -487,8 +597,8 @@ function buildSdxlPrompt(parts) {
     'masterpiece, best quality',
     parts.subjectShort,
     `(${parts.scene.split(',')[0].toLowerCase()}:1.2)`,
-    `(holding ${parts.product.split(',')[0].toLowerCase()}:1.3)`,
-    parts.pose,
+    `(${parts.pose.split(',')[0].toLowerCase()}:1.3)`,
+    parts.product ? `(${parts.product.split(',')[0].toLowerCase()}:1.2)` : '',
     `(${parts.lighting.split(',')[0].toLowerCase()}:1.2)`,
     parts.camera.split(',')[0],
     parts.custom || '',
@@ -499,8 +609,8 @@ function buildSdxlPrompt(parts) {
 function buildIdeogramPrompt(parts) {
   return joinParts([
     parts.subjectShort + ' at luxury perfume store',
-    `holding ${parts.product.split(',')[0].toLowerCase()}`,
-    parts.pose,
+    parts.pose.split(',')[0],
+    parts.product ? parts.product.split(',')[0].toLowerCase() : null,
     parts.lighting.split(',')[0],
     parts.brand || (parts.noBrand ? 'no text no logo' : null),
     parts.custom || '',
@@ -551,7 +661,9 @@ function generatePrompt() {
   const sceneKey = document.getElementById('gen-scene').value;
   const prodKey = document.getElementById('gen-product').value;
   const mktKey = document.getElementById('gen-marketing').value;
+  const poseKey = document.getElementById('gen-pose').value;
   const camKey = document.getElementById('gen-camera').value;
+  const shotKey = document.getElementById('gen-shot').value;
   const lgtKey = document.getElementById('gen-lighting').value;
   const brdKey = document.getElementById('gen-brand').value;
   const modelKey = document.getElementById('gen-model').value;
@@ -560,7 +672,7 @@ function generatePrompt() {
   const customReq = document.getElementById('gen-custom').value.trim();
 
   // 2. STATE + VALIDATION
-  const state = { character, scene: sceneKey, product: prodKey, marketing: mktKey, camera: camKey, lighting: lgtKey, brand: brdKey };
+  const state = { character, scene: sceneKey, product: prodKey, marketing: mktKey, camera: camKey, lighting: lgtKey, brand: brdKey, pose: poseKey, shot: shotKey };
   const validation = validatePrompt(state);
 
   // 3. CLEAN PARTS — no DNA dump, no identity lock spam
@@ -570,8 +682,8 @@ function generatePrompt() {
     scene: buildScene(sceneKey),
     marketing: buildMarketing(mktKey),
     product: buildProduct(prodKey),
-    pose: buildPose(),
-    camera: buildCamera(camKey),
+    pose: buildPose(poseKey),
+    camera: buildCamera(camKey, shotKey),
     lighting: buildLighting(lgtKey),
     composition: buildComposition(brdKey),
     brand: buildBrand(brdKey),
