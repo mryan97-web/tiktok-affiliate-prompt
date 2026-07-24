@@ -1,4 +1,4 @@
-/* Prompt Database System — All FASE 1-4 */
+/* Prompt Database System — All FASE 1-5 */
 /* Navigasi modul + Utility */
 
 // ===== SWITCH PANEL =====
@@ -21,12 +21,14 @@ function switchPanel(panelId) {
     fase2: 'FASE 2 — Visual Engine',
     fase3: 'FASE 3 — Marketing Engine',
     fase4: 'FASE 4 — Scene Engine',
+    fase5: 'FASE 5 — Brand & Product Engine',
   };
   const subs = {
     fase1: 'Character DNA · Identity Lock · Prompt Assembly',
     fase2: 'Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets',
     fase3: 'Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Consistency',
-    fase4: 'Scene Library · Default Store · Store Environment · Activity · Product Interaction · Customer Scene · Product Category · Time · Mood · Seasonal · Scene Variation · Props · Consistency · Templates · Output',
+    fase4: 'Scene Library · Default Store · Store Environment · Activity · Product Interaction · Customer Scene · Product Category · Time · Mood · Seasonal · Variation · Props · Consistency · Templates · Output',
+    fase5: 'Brand Identity · Product Database · Product Display · Hierarchy · Placement · Banner · Typography · Color System · Campaign · Social Commerce · CTA · Consistency · Templates · Output',
   };
   document.getElementById('infoBar').querySelector('strong').textContent = labels[panelId] || panelId;
   document.getElementById('infoText').textContent = subs[panelId] || '';
@@ -83,6 +85,20 @@ function showModule(mod) {
     sceneConsistency: 'MODUL 39 — Scene Consistency Rules',
     templates: 'MODUL 40 — Scene Template Library',
     outputEngine: 'MODUL 41 — Output Engine',
+    brand: 'MODUL 42 — Brand Identity Engine',
+    productDB: 'MODUL 43 — Product Database Engine',
+    productDisplay: 'MODUL 44 — Product Display Engine',
+    hierarchy: 'MODUL 45 — Product Hierarchy Engine',
+    placement: 'MODUL 46 — Product Placement Engine',
+    banner: 'MODUL 47 — Promotional Banner Engine',
+    typography: 'MODUL 48 — Typography Engine',
+    colorSystem: 'MODUL 49 — Color System Engine',
+    campaign: 'MODUL 50 — Campaign Engine',
+    socialCommerce: 'MODUL 51 — Social Commerce Engine',
+    ctaEngine: 'MODUL 52 — CTA Engine',
+    brandConsistency: 'MODUL 53 — Brand Consistency Rules',
+    productTemplates: 'MODUL 54 — Product Template Library',
+    brandOutput: 'MODUL 55 — Output Engine',
   };
   document.getElementById('docInfo').textContent = 'Menampilkan: ' + (names[mod] || mod);
 }
@@ -122,4 +138,4 @@ function showToast(msg) {
 }
 
 // ===== INIT =====
-showModule('scene');
+showModule('brand');
