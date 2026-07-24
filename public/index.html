@@ -15,401 +15,578 @@
       <div class="logo">
         <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
           <rect width="36" height="36" rx="8" fill="#2d241a" />
-          <text x="18" y="24" text-anchor="middle" font-size="18" font-weight="700" fill="#C7976F" font-family="Inter">A</text>
+          <text x="18" y="23" text-anchor="middle" font-size="16" font-weight="700" fill="#C7976F" font-family="Inter">A</text>
         </svg>
         <div class="logo-text-group">
-          <span class="logo-text">Prompt Database — FASE 1</span>
+          <span class="logo-title">Prompt Database System</span>
           <span class="logo-sub">AREKA OFFICIAL STORE</span>
         </div>
-        <span class="badge">🧬 FONDASI</span>
+        <span class="badge">FASE 1</span>
       </div>
-      <div class="header-right">
-        <span class="api-status" id="apiStatus">⚪ ...</span>
+      <div class="header-nav">
+        <button class="nav-btn active" onclick="showModule('dna')">🧬 Character DNA</button>
+        <button class="nav-btn" onclick="showModule('lock')">🔒 Identity Lock</button>
+        <button class="nav-btn" onclick="showModule('assembly')">⚡ Prompt Assembly</button>
       </div>
     </header>
 
-    <!-- SUBTITLE -->
-    <div class="app-subtitle">
-      FASE 1 — Fondasi Prompt Database · Character DNA · Identity Lock · Prompt Assembly
-    </div>
-
-    <!-- INFO BAR — Fase Info -->
+    <!-- INFO BAR -->
     <div class="info-bar">
-      <div class="info-icon">📌</div>
-      <div class="info-text">
-        <strong>Fase 1</strong> — hanya membangun fondasi karakter. Scene, kamera, pencahayaan, pemasaran, dan branding akan dibuat di fase terpisah.
-      </div>
+      <strong>FASE 1 — Fondasi Prompt Database</strong>
+      <span class="separator">·</span>
+      Membangun fondasi karakter permanen. Scene, kamera, pencahayaan, pemasaran, branding belum termasuk — akan dibuat di fase terpisah.
     </div>
 
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
-      <!-- LEFT PANEL — Database -->
+      <!-- LEFT PANEL — Daftar Modul -->
       <div class="left-panel">
         <!-- MODUL 1 — Character DNA -->
-        <div class="db-section expanded" id="modul1">
-          <div class="db-section-header clickable" onclick="toggleSection('modul1')">
-            <div class="db-header-left">
-              <span class="db-section-icon">🧬</span>
-              <span>MODUL 1 — Character DNA</span>
+        <div class="modul-card" data-module="dna">
+          <div class="modul-header">
+            <div class="modul-icon">🧬</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 1 — Character DNA</span>
+              <span class="modul-desc">Database identitas visual karakter utama</span>
             </div>
-            <div class="db-header-right">
-              <span class="db-badge lock">LOCKED</span>
-              <span class="toggle-icon">▾</span>
-            </div>
+            <div class="modul-status complete">✅ Selesai</div>
           </div>
-          <div class="db-body">
-            <!-- 1.1 Identitas Dasar -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.1 Identitas Dasar</div>
-              <div class="db-grid-2">
-                <div class="db-field">
-                  <label>Character ID</label>
-                  <input type="text" id="charId" value="AREKA_GIRL_001" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Nama Internal</label>
-                  <input type="text" id="charName" value="Areka Girl" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Gender</label>
-                  <input type="text" id="charGender" value="Perempuan" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Umur</label>
-                  <input type="text" id="charAge" value="25 tahun" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Kebangsaan</label>
-                  <input type="text" id="charNation" value="Indonesia" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Etnis</label>
-                  <input type="text" id="charEthnic" value="Asia Tenggara (Melayu)" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Tinggi Badan</label>
-                  <input type="text" id="charHeight" value="160 cm" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Bentuk Tubuh</label>
-                  <input type="text" id="charBodyShape" value="Slim" readonly class="field-readonly" />
-                </div>
-                <div class="db-field">
-                  <label>Proporsi Tubuh</label>
-                  <input type="text" id="charBodyProp" value="Feminin natural, proporsional" readonly class="field-readonly" />
-                </div>
-              </div>
-            </div>
-
-            <!-- 1.2 Wajah -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.2 Wajah</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Bentuk Wajah</label><input type="text" id="faceShape" value="Oval lembut" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Bentuk Rahang</label><input type="text" id="faceJaw" value="Gentle, refined" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Bentuk Dagu</label><input type="text" id="faceChin" value="Rounded dengan slight taper" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Bentuk Pipi</label><input type="text" id="faceCheeks" value="Softly defined" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Dahi</label><input type="text" id="faceForehead" value="Medium height, proporsional" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Simetri Wajah</label><input type="text" id="faceSymmetry" value="Natural dan balanced" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Warna Kulit</label><input type="text" id="faceSkinColor" value="Sawo matang hangat (warm light beige)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Tekstur Kulit</label><input type="text" id="faceSkinTex" value="Halus natural, subtle texture" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Kilau Kulit</label><input type="text" id="faceSkinGlow" value="Healthy glow, natural" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.3 Mata -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.3 Mata</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Bentuk Mata</label><input type="text" id="eyeShape" value="Almond sedang" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Ukuran Mata</label><input type="text" id="eyeSize" value="Sedang, proporsional" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Jarak Antar Mata</label><input type="text" id="eyeDist" value="Seimbang (balanced)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Warna Mata</label><input type="text" id="eyeColor" value="Cokelat gelap (dark brown)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Ekspresi Mata</label><input type="text" id="eyeExpr" value="Hangat, ramah, engaged" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Kelopak Mata</label><input type="text" id="eyeLid" value="Soft crease, natural" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Bulu Mata</label><input type="text" id="eyeLashes" value="Defined natural, tidak exaggerated" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.4 Alis -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.4 Alis</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Bentuk Alis</label><input type="text" id="browShape" value="Soft natural arch" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Ketebalan Alis</label><input type="text" id="browThick" value="Medium" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Warna Alis</label><input type="text" id="browColor" value="Dark brown to black" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.5 Hidung -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.5 Hidung</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Pangkal Hidung</label><input type="text" id="noseBridge" value="Straight bridge" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Batang Hidung</label><input type="text" id="noseDorsum" value="Lurus proporsional" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Ujung Hidung</label><input type="text" id="noseTip" value="Rounded" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Lebar Hidung</label><input type="text" id="noseWidth" value="Small to medium" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.6 Bibir -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.6 Bibir</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Bentuk Bibir</label><input type="text" id="lipShape" value="Cupid's bow terdefinisi" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Ketebalan Bibir</label><input type="text" id="lipFull" value="Medium fullness" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Warna Alami Bibir</label><input type="text" id="lipColor" value="Natural pink" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Senyuman</label><input type="text" id="lipSmile" value="Friendly, gigi atas sedikit terlihat" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.7 Rambut -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.7 Rambut</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Warna Rambut</label><input type="text" id="hairColor" value="Hitam natural" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Panjang Rambut</label><input type="text" id="hairLength" value="Panjang, below shoulders" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Tekstur Rambut</label><input type="text" id="hairTex" value="Lurus (straight)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Belahan Rambut</label><input type="text" id="hairPart" value="Soft side part" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Kilau Rambut</label><input type="text" id="hairShine" value="Healthy shine" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.8 Makeup -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.8 Makeup (Natural Beauty)</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Foundation</label><input type="text" id="muFoundation" value="Soft matte" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Blush</label><input type="text" id="muBlush" value="Light pink" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Eyeshadow</label><input type="text" id="muEyeshadow" value="Neutral, soft" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Eyeliner</label><input type="text" id="muEyeliner" value="Brown, natural" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Lipstick</label><input type="text" id="muLipstick" value="Nude pink" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.9 Tubuh -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.9 Tubuh</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Bentuk Bahu</label><input type="text" id="bodyShoulders" value="Relaxed, proporsional" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Panjang Leher</label><input type="text" id="bodyNeck" value="Proporsional, elegan" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Proporsi Tangan</label><input type="text" id="bodyArms" value="Natural, 5 jari, kuku bersih" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Proporsi Kaki</label><input type="text" id="bodyLegs" value="Proporsional, tidak terlihat di frame" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.10 Outfit Default -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.10 Outfit Default</div>
-              <div class="db-grid-2">
-                <div class="db-field"><label>Atasan</label><input type="text" id="outfitTop" value="Minimalist fitted black short sleeve top" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Bawahan</label><input type="text" id="outfitBottom" value="— (tidak terlihat, upper body framing)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Sepatu</label><input type="text" id="outfitShoes" value="— (tidak terlihat)" readonly class="field-readonly" /></div>
-                <div class="db-field"><label>Aksesori</label><input type="text" id="outfitAcc" value="Minimal jewelry" readonly class="field-readonly" /></div>
-              </div>
-            </div>
-
-            <!-- 1.11 Karakter Visual -->
-            <div class="db-subsection">
-              <div class="db-sub-header">1.11 Karakter Visual</div>
-              <div class="db-field" style="grid-column: 1/-1;">
-                <textarea id="charVisual" rows="2" readonly class="field-readonly">Ramah, profesional, elegan, dapat dipercaya, hangat, premium, modern, ceria, approachable, feminine</textarea>
-              </div>
-            </div>
+          <div class="modul-subs">
+            <span class="sub-item checked">1.1 Identitas Dasar</span>
+            <span class="sub-item checked">1.2 Wajah</span>
+            <span class="sub-item checked">1.3 Mata</span>
+            <span class="sub-item checked">1.4 Alis</span>
+            <span class="sub-item checked">1.5 Hidung</span>
+            <span class="sub-item checked">1.6 Bibir</span>
+            <span class="sub-item checked">1.7 Rambut</span>
+            <span class="sub-item checked">1.8 Makeup</span>
+            <span class="sub-item checked">1.9 Tubuh</span>
+            <span class="sub-item checked">1.10 Outfit Default</span>
+            <span class="sub-item checked">1.11 Karakter Visual</span>
           </div>
         </div>
 
         <!-- MODUL 2 — Identity Lock -->
-        <div class="db-section expanded" id="modul2">
-          <div class="db-section-header clickable" onclick="toggleSection('modul2')">
-            <div class="db-header-left">
-              <span class="db-section-icon">🔒</span>
-              <span>MODUL 2 — Identity Lock</span>
+        <div class="modul-card" data-module="lock">
+          <div class="modul-header">
+            <div class="modul-icon">🔒</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 2 — Identity Lock</span>
+              <span class="modul-desc">Aturan permanen konsistensi karakter</span>
             </div>
-            <div class="db-header-right">
-              <span class="db-badge rule">RULES</span>
-              <span class="toggle-icon">▾</span>
-            </div>
+            <div class="modul-status complete">✅ Selesai</div>
           </div>
-          <div class="db-body">
-            <div class="identity-table">
-              <div class="identity-row header">
-                <div class="id-col-cat">Kategori</div>
-                <div class="id-col-attr">Atribut</div>
-                <div class="id-col-status">Status</div>
-                <div class="id-col-reason">Alasan</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Wajah</div>
-                <div class="id-col-attr">Bentuk wajah, rahang, dagu, pipi, simetri, warna kulit, tekstur kulit, kilau kulit</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Identitas visual utama — perubahan akan membuat karakter berbeda orang</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Mata</div>
-                <div class="id-col-attr">Bentuk, ukuran, jarak, warna, kelopak, bulu mata</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Jendela jiwa — perubahan drastis mengubah persepsi karakter</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Alis</div>
-                <div class="id-col-attr">Bentuk, ketebalan, warna</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Mengubah ekspresi dasar dan struktur wajah</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Hidung</div>
-                <div class="id-col-attr">Pangkal, batang, ujung, lebar</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Fitur yang sangat identik dengan wajah seseorang</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Bibir</div>
-                <div class="id-col-attr">Bentuk, ketebalan, warna alami, senyuman</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Senyuman adalah signature karakter</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Rambut</div>
-                <div class="id-col-attr">Warna, panjang, tekstur, belahan, kilau</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Bagian besar dari identitas visual karakter</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Makeup</div>
-                <div class="id-col-attr">Foundation, blush, eyeshadow, eyeliner, lipstick</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Natural beauty look — konsisten dengan karakter</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Tubuh</div>
-                <div class="id-col-attr">Tinggi, bentuk tubuh, proporsi, bentuk bahu, leher</div>
-                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
-                <div class="id-col-reason">Proporsi fisik yang tidak berubah</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Outfit</div>
-                <div class="id-col-attr">Atasan, bawahan, sepatu, aksesori</div>
-                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
-                <div class="id-col-reason">Berubah sesuai produk/kampanye — tidak mempengaruhi identitas wajah</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Pose</div>
-                <div class="id-col-attr">Pose tubuh, gestur, posisi tangan</div>
-                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
-                <div class="id-col-reason">Berubah sesuai konteks iklan tanpa mengubah karakter</div>
-              </div>
-              <div class="identity-row">
-                <div class="id-col-cat">Ekspresi Ringan</div>
-                <div class="id-col-attr">Mood, intensitas senyum, arah pandang</div>
-                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
-                <div class="id-col-reason">Variasi natural tanpa mengubah identitas</div>
-              </div>
-            </div>
-            <div class="db-hint">Aturan ini akan digabungkan sebelum semua prompt lain.</div>
+          <div class="modul-subs">
+            <span class="sub-item checked">Atribut LOCKED (8 kategori)</span>
+            <span class="sub-item checked">Atribut VARIABLE (3 kategori)</span>
+            <span class="sub-item checked">Alasan setiap aturan</span>
           </div>
         </div>
 
         <!-- MODUL 3 — Prompt Assembly -->
-        <div class="db-section expanded" id="modul3">
-          <div class="db-section-header clickable" onclick="toggleSection('modul3')">
-            <div class="db-header-left">
-              <span class="db-section-icon">⚡</span>
-              <span>MODUL 3 — Prompt Assembly</span>
+        <div class="modul-card" data-module="assembly">
+          <div class="modul-header">
+            <div class="modul-icon">⚡</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 3 — Prompt Assembly</span>
+              <span class="modul-desc">Sistem penyusunan prompt modular</span>
             </div>
-            <div class="db-header-right">
-              <span class="db-badge rule">FLOW</span>
-              <span class="toggle-icon">▾</span>
+            <div class="modul-status complete">✅ Selesai</div>
+          </div>
+          <div class="modul-subs">
+            <span class="sub-item checked">Urutan penyusunan (10 langkah)</span>
+            <span class="sub-item checked">Dependency Graph</span>
+            <span class="sub-item checked">Diagram alur</span>
+          </div>
+        </div>
+
+        <!-- FASE 2-4 (placeholder) -->
+        <div class="fase-divider">
+          <span>FASE SELANJUTNYA</span>
+        </div>
+
+        <div class="modul-card disabled" data-module="scene">
+          <div class="modul-header">
+            <div class="modul-icon">🎬</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 4 — Scene Engine</span>
+              <span class="modul-desc">Latar tempat & lingkungan</span>
+            </div>
+            <div class="modul-status pending">⏳ FASE 2</div>
+          </div>
+        </div>
+
+        <div class="modul-card disabled" data-module="product">
+          <div class="modul-header">
+            <div class="modul-icon">📦</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 5 — Product Module</span>
+              <span class="modul-desc">Objek produk dalam frame</span>
+            </div>
+            <div class="modul-status pending">⏳ FASE 2</div>
+          </div>
+        </div>
+
+        <div class="modul-card disabled" data-module="pose">
+          <div class="modul-header">
+            <div class="modul-icon">🧘</div>
+            <div class="modul-title-group">
+              <span class="modul-title">MODUL 6 — Pose Module</span>
+              <span class="modul-desc">Gestur & posisi karakter</span>
+            </div>
+            <div class="modul-status pending">⏳ FASE 2</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL — Output Dokumentasi -->
+      <div class="right-panel">
+        <div class="output-container" id="outputContainer">
+          <!-- Character DNA (default view) -->
+          <div class="doc-view active" id="view-dna">
+            <div class="doc-header">
+              <h1>🧬 MODUL 1 — Character DNA</h1>
+              <p class="doc-desc">Database identitas visual karakter utama. Dokumentasi lengkap yang bisa dipanggil ulang oleh modul lain.</p>
+              <div class="doc-actions">
+                <button class="doc-btn" onclick="copyModule('dna')">📋 Salin Modul</button>
+                <span class="doc-meta">11 sub-bagian · 38 atribut</span>
+              </div>
+            </div>
+
+            <div class="doc-content">
+              <!-- 1.1 Identitas Dasar -->
+              <div class="doc-section">
+                <h2>1.1 Identitas Dasar</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Character ID</span><span class="attr-val">AREKA_GIRL_001</span></div>
+                  <div class="attr-row"><span class="attr-key">Nama Internal</span><span class="attr-val">Areka Girl</span></div>
+                  <div class="attr-row"><span class="attr-key">Gender</span><span class="attr-val">Perempuan</span></div>
+                  <div class="attr-row"><span class="attr-key">Umur</span><span class="attr-val">25 tahun</span></div>
+                  <div class="attr-row"><span class="attr-key">Kebangsaan</span><span class="attr-val">Indonesia</span></div>
+                  <div class="attr-row"><span class="attr-key">Etnis</span><span class="attr-val">Asia Tenggara (Melayu)</span></div>
+                  <div class="attr-row"><span class="attr-key">Tinggi Badan</span><span class="attr-val">160 cm</span></div>
+                  <div class="attr-row"><span class="attr-key">Bentuk Tubuh</span><span class="attr-val">Slim</span></div>
+                  <div class="attr-row"><span class="attr-key">Proporsi Tubuh</span><span class="attr-val">Feminin natural, proporsional</span></div>
+                </div>
+              </div>
+
+              <!-- 1.2 Wajah -->
+              <div class="doc-section">
+                <h2>1.2 Wajah</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Bentuk Wajah</span><span class="attr-val">Oval lembut — Soft oval</span></div>
+                  <div class="attr-row"><span class="attr-key">Bentuk Rahang</span><span class="attr-val">Gentle dan refined — Gentle and refined jawline</span></div>
+                  <div class="attr-row"><span class="attr-key">Bentuk Dagu</span><span class="attr-val">Rounded dengan slight taper — Rounded with a slight taper</span></div>
+                  <div class="attr-row"><span class="attr-key">Bentuk Pipi</span><span class="attr-val">Softly defined — Softly defined cheekbones</span></div>
+                  <div class="attr-row"><span class="attr-key">Dahi</span><span class="attr-val">Medium height, proporsional — Medium forehead</span></div>
+                  <div class="attr-row"><span class="attr-key">Simetri Wajah</span><span class="attr-val">Natural dan balanced — Natural and balanced symmetry</span></div>
+                  <div class="attr-row"><span class="attr-key">Warna Kulit</span><span class="attr-val">Sawo matang hangat — Warm light beige Indonesian complexion</span></div>
+                  <div class="attr-row"><span class="attr-key">Tekstur Kulit</span><span class="attr-val">Halus natural, subtle texture — Smooth natural texture</span></div>
+                  <div class="attr-row"><span class="attr-key">Tingkat Kilau Kulit</span><span class="attr-val">Healthy glow — Healthy natural glow, bukan plastik/porcelain</span></div>
+                </div>
+              </div>
+
+              <!-- 1.3 Mata -->
+              <div class="doc-section">
+                <h2>1.3 Mata</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Bentuk Mata</span><span class="attr-val">Almond sedang — Medium almond-shaped</span></div>
+                  <div class="attr-row"><span class="attr-key">Ukuran Mata</span><span class="attr-val">Sedang, proporsional — Medium, proportionate</span></div>
+                  <div class="attr-row"><span class="attr-key">Jarak Antar Mata</span><span class="attr-val">Seimbang — Balanced spacing</span></div>
+                  <div class="attr-row"><span class="attr-key">Warna Mata</span><span class="attr-val">Cokelat gelap — Dark brown</span></div>
+                  <div class="attr-row"><span class="attr-key">Ekspresi Mata</span><span class="attr-val">Hangat, ramah, engaged — Warm, friendly, engaged</span></div>
+                  <div class="attr-row"><span class="attr-key">Kelopak Mata</span><span class="attr-val">Soft crease, natural — Soft upper eyelid crease</span></div>
+                  <div class="attr-row"><span class="attr-key">Bulu Mata</span><span class="attr-val">Defined natural — Defined but natural, never exaggerated</span></div>
+                </div>
+              </div>
+
+              <!-- 1.4 Alis -->
+              <div class="doc-section">
+                <h2>1.4 Alis</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Bentuk Alis</span><span class="attr-val">Soft natural arch — Lengkungan natural lembut</span></div>
+                  <div class="attr-row"><span class="attr-key">Ketebalan Alis</span><span class="attr-val">Medium — Tidak tipis, tidak tebal</span></div>
+                  <div class="attr-row"><span class="attr-key">Warna Alis</span><span class="attr-val">Cokelat gelap ke hitam — Dark brown to black</span></div>
+                </div>
+              </div>
+
+              <!-- 1.5 Hidung -->
+              <div class="doc-section">
+                <h2>1.5 Hidung</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Pangkal Hidung</span><span class="attr-val">Straight bridge — Pangkal lurus</span></div>
+                  <div class="attr-row"><span class="attr-key">Batang Hidung</span><span class="attr-val">Lurus proporsional — Straight proportionate dorsum</span></div>
+                  <div class="attr-row"><span class="attr-key">Ujung Hidung</span><span class="attr-val">Rounded — Ujung membuat</span></div>
+                  <div class="attr-row"><span class="attr-key">Lebar Hidung</span><span class="attr-val">Small to medium — Kecil ke sedang</span></div>
+                </div>
+              </div>
+
+              <!-- 1.6 Bibir -->
+              <div class="doc-section">
+                <h2>1.6 Bibir</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Bentuk Bibir</span><span class="attr-val">Defined cupid's bow — Cupid's bow terdefinisi</span></div>
+                  <div class="attr-row"><span class="attr-key">Ketebalan Bibir</span><span class="attr-val">Medium fullness — Kepenuhan sedang</span></div>
+                  <div class="attr-row"><span class="attr-key">Warna Alami Bibir</span><span class="attr-val">Natural pink — Pink alami</span></div>
+                  <div class="attr-row"><span class="attr-key">Senyuman</span><span class="attr-val">Friendly smile — Gigi atas sedikit terlihat, natural, tidak exaggerated</span></div>
+                </div>
+              </div>
+
+              <!-- 1.7 Rambut -->
+              <div class="doc-section">
+                <h2>1.7 Rambut</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Warna Rambut</span><span class="attr-val">Hitam natural — Natural black</span></div>
+                  <div class="attr-row"><span class="attr-key">Panjang Rambut</span><span class="attr-val">Panjang, below shoulders — Below shoulders, tidak ekstrim</span></div>
+                  <div class="attr-row"><span class="attr-key">Tekstur Rambut</span><span class="attr-val">Lurus — Straight</span></div>
+                  <div class="attr-row"><span class="attr-key">Belahan Rambut</span><span class="attr-val">Soft side part — Belah samping lembut</span></div>
+                  <div class="attr-row"><span class="attr-key">Tingkat Kilau Rambut</span><span class="attr-val">Healthy shine — Kilau sehat natural</span></div>
+                </div>
+              </div>
+
+              <!-- 1.8 Makeup -->
+              <div class="doc-section">
+                <h2>1.8 Makeup (Natural Beauty)</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Foundation</span><span class="attr-val">Soft matte — Soft matte foundation</span></div>
+                  <div class="attr-row"><span class="attr-key">Blush</span><span class="attr-val">Light pink — Perona pipi pink lembut</span></div>
+                  <div class="attr-row"><span class="attr-key">Eyeshadow</span><span class="attr-val">Neutral, soft — Eyeshadow netral natural</span></div>
+                  <div class="attr-row"><span class="attr-key">Eyeliner</span><span class="attr-val">Brown, natural — Eyeliner cokelat natural</span></div>
+                  <div class="attr-row"><span class="attr-key">Lipstick</span><span class="attr-val">Nude pink — Lipstik nude pink</span></div>
+                </div>
+              </div>
+
+              <!-- 1.9 Tubuh -->
+              <div class="doc-section">
+                <h2>1.9 Tubuh</h2>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Bentuk Bahu</span><span class="attr-val">Relaxed, proporsional — Relaxed shoulders, elegant posture</span></div>
+                  <div class="attr-row"><span class="attr-key">Panjang Leher</span><span class="attr-val">Proporsional, elegan — Proportionate neck</span></div>
+                  <div class="attr-row"><span class="attr-key">Proporsi Tangan</span><span class="attr-val">Natural — Lima jari, kuku bersih, proporsional</span></div>
+                  <div class="attr-row"><span class="attr-key">Proporsi Kaki</span><span class="attr-val">Proporsional — Sesuai tinggi 160 cm, proporsi natural</span></div>
+                </div>
+              </div>
+
+              <!-- 1.10 Outfit Default -->
+              <div class="doc-section">
+                <h2>1.10 Outfit Default</h2>
+                <p class="doc-note">Outfit default hanya sebagai referensi awal. Outfit dapat berubah sesuai kebutuhan produk/kampanye (lihat Identity Lock).</p>
+                <div class="attr-table">
+                  <div class="attr-row"><span class="attr-key">Atasan</span><span class="attr-val">Minimalist fitted black short sleeve top — Atasan hitam fitted lengan pendek, tanpa logo</span></div>
+                  <div class="attr-row"><span class="attr-key">Bawahan</span><span class="attr-val">— (tidak terlihat, upper body framing)</span></div>
+                  <div class="attr-row"><span class="attr-key">Sepatu</span><span class="attr-val">— (tidak terlihat)</span></div>
+                  <div class="attr-row"><span class="attr-key">Aksesori</span><span class="attr-val">Minimal jewelry — Perhiasan minimal, tidak mencolok</span></div>
+                </div>
+              </div>
+
+              <!-- 1.11 Karakter Visual -->
+              <div class="doc-section">
+                <h2>1.11 Karakter Visual</h2>
+                <p class="doc-note">Bagaimana karakter ini terlihat dan terasa oleh orang lain. Kesan keseluruhan yang harus dipertahankan.</p>
+                <div class="tag-list">
+                  <span class="vibe-tag">Ramah</span>
+                  <span class="vibe-tag">Profesional</span>
+                  <span class="vibe-tag">Elegan</span>
+                  <span class="vibe-tag">Dapat dipercaya</span>
+                  <span class="vibe-tag">Hangat</span>
+                  <span class="vibe-tag">Premium</span>
+                  <span class="vibe-tag">Modern</span>
+                  <span class="vibe-tag">Ceria</span>
+                  <span class="vibe-tag">Approachable</span>
+                  <span class="vibe-tag">Feminin</span>
+                  <span class="vibe-tag">Enerjik</span>
+                </div>
+              </div>
+
             </div>
           </div>
-          <div class="db-body">
-            <div class="assembly-flow">
-              <div class="flow-step current">📨 User Request</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-step">📋 System Rules</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-step active">🧬 Character DNA</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-step active">🔒 Identity Lock</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-step future">🎬 Scene Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">📦 Product Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">🧘 Pose Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">📷 Camera Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">💡 Lighting Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">🏷️ Branding Module</div>
-              <div class="flow-arrow future">↓</div>
-              <div class="flow-step future">🚫 Negative Prompt</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-step goal">✅ Final Prompt</div>
+
+          <!-- Identity Lock -->
+          <div class="doc-view" id="view-lock">
+            <div class="doc-header">
+              <h1>🔒 MODUL 2 — Identity Lock</h1>
+              <p class="doc-desc">Aturan permanen yang menjamin AI tidak mengganti karakter ketika adegan berubah. Wajib diterapkan SEBELUM semua prompt lain.</p>
+              <div class="doc-actions">
+                <button class="doc-btn" onclick="copyModule('lock')">📋 Salin Modul</button>
+                <span class="doc-meta">11 kategori · 8 LOCKED · 3 VARIABLE</span>
+              </div>
             </div>
 
-            <div class="assembly-info">
-              <div class="ai-title">📐 Urutan Penyusunan</div>
-              <ol class="ai-list">
-                <li><strong>System Rules</strong> — aturan dasar AI (wajib)</li>
-                <li><strong>Character DNA</strong> — identitas karakter (wajib, sebelum scene apapun)</li>
-                <li><strong>Identity Lock</strong> — proteksi perubahan karakter (wajib, sebelum pose/produk)</li>
-                <li><strong>Scene Module</strong> — latar tempat (wajib, fase 2) <span class="tag-next">FASE 2</span></li>
-                <li><strong>Product Module</strong> — objek produk (wajib, fase 2) <span class="tag-next">FASE 2</span></li>
-                <li><strong>Pose Module</strong> — gestur karakter (opsional, fase 2) <span class="tag-next">FASE 2</span></li>
-                <li><strong>Camera Module</strong> — sudut kamera (opsional, fase 3) <span class="tag-next">FASE 3</span></li>
-                <li><strong>Lighting Module</strong> — pencahayaan (opsional, fase 3) <span class="tag-next">FASE 3</span></li>
-                <li><strong>Branding Module</strong> — brand overlay (opsional, fase 4) <span class="tag-next">FASE 4</span></li>
-                <li><strong>Negative Prompt</strong> — larangan AI (wajib, akhir)</li>
-              </ol>
+            <div class="doc-content">
+              <div class="doc-section">
+                <h2>🔴 Atribut LOCKED — Tidak Boleh Berubah</h2>
+                <p class="doc-note">Setiap atribut di bawah ini WAJIB identik di seluruh gambar. AI tidak boleh mengubahnya dalam kondisi apapun.</p>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">1. Wajah — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Bentuk wajah, rahang, dagu, pipi, simetri, warna kulit, tekstur kulit, kilau kulit, dahi</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Identitas visual utama seseorang ada di struktur wajah. Perubahan sekecil apapun akan membuat karakter tampak seperti orang berbeda. Wajah adalah fondasi pengenal karakter.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">2. Mata — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Bentuk, ukuran, jarak, warna, kelopak, bulu mata</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Mata adalah "jendela jiwa." Perubahan bentuk/warna mata mengubah persepsi emosional dan identitas karakter secara drastis. Karakter tidak akan dikenali jika matanya berbeda.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">3. Alis — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Bentuk, ketebalan, warna</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Alis membingkai wajah dan sangat mempengaruhi ekspresi. Bentuk alis yang berbeda bisa mengubah karakter dari ramah menjadi galak atau sebaliknya.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">4. Hidung — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Pangkal, batang, ujung, lebar</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Hidung adalah fitur yang sangat identik dengan seseorang. Perubahan bentuk hidung adalah perubahan wajah yang paling mudah dikenali.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">5. Bibir — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Bentuk, ketebalan, warna alami, senyuman</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Senyuman adalah "signature" karakter. Cara seseorang tersenyum adalah bagian dari identitas yang melekat.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">6. Rambut — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Warna, panjang, tekstur, belahan, kilau</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Rambut adalah bagian besar dari identitas visual. Mengubah warna/tekstur rambut bisa mengubah karakter secara signifikan. Konsisten = dikenali.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">7. Makeup (Natural Beauty) — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Foundation, blush, eyeshadow, eyeliner, lipstick</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Gaya makeup "natural beauty" adalah bagian dari identitas karakter. Makeup berbeda = karakter berbeda. Konsisten makeup = konsisten karakter.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card">
+                  <div class="lock-head locked">8. Tubuh — 🔒 LOCKED</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Tinggi (160 cm), bentuk tubuh (slim), proporsi, bahu, leher</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Proporsi fisik tidak berubah seiring waktu. Tinggi dan bentuk tubuh adalah identitas fisik dasar.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="doc-section">
+                <h2>🟢 Atribut VARIABLE — Boleh Berubah</h2>
+                <p class="doc-note">Atribut ini bisa berubah sesuai kebutuhan konten tanpa mengubah identitas karakter.</p>
+
+                <div class="lock-card var">
+                  <div class="lock-head variable">1. Outfit — 🔄 VARIABLE</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Atasan, bawahan, sepatu, aksesori</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Pakaian berubah sesuai produk/kampanye. Tidak mempengaruhi identitas wajah atau tubuh karakter. Outfit adalah "layer" temporer.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card var">
+                  <div class="lock-head variable">2. Pose — 🔄 VARIABLE</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Pose tubuh, gestur tangan, posisi, aktivitas</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Pose berubah sesuai konteks iklan. Karakter yang sama bisa berdiri, duduk, atau berjalan tanpa kehilangan identitas.</div>
+                  </div>
+                </div>
+
+                <div class="lock-card var">
+                  <div class="lock-head variable">3. Ekspresi Ringan & Sudut Kamera — 🔄 VARIABLE</div>
+                  <div class="lock-detail">
+                    <div class="lock-attr">Mood, intensitas senyum, arah pandang, sudut kamera</div>
+                    <div class="lock-reason"><strong>Alasan:</strong> Variasi natural tanpa mengubah identitas. Karakter bisa tersenyum lebih lebar atau melihat ke arah berbeda. Sudut kamera tidak mempengaruhi karakter itu sendiri.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="doc-note-box">
+                <strong>⚠️ Aturan Penggunaan:</strong> Identity Lock WAJIB digabungkan ke dalam prompt SEBELUM modul Scene, Product, Pose, Camera, Lighting, atau Branding. Identity Lock adalah lapisan proteksi pertama yang memastikan AI tidak "berimajinasi" mengganti karakter.
+              </div>
+            </div>
+          </div>
+
+          <!-- Prompt Assembly -->
+          <div class="doc-view" id="view-assembly">
+            <div class="doc-header">
+              <h1>⚡ MODUL 3 — Prompt Assembly</h1>
+              <p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul. Menentukan urutan, dependency, dan alur penggabungan.</p>
+              <div class="doc-actions">
+                <button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button>
+                <span class="doc-meta">10 langkah · 5 dependency rules</span>
+              </div>
             </div>
 
-            <div class="assembly-info">
-              <div class="ai-title">🔗 Dependency Graph</div>
-              <div class="dep-list">
-                <div class="dep-item"><span class="dep-mod">Character DNA</span> ← <span class="dep-need">wajib sebelum Scene, Product, Pose</span></div>
-                <div class="dep-item"><span class="dep-mod">Identity Lock</span> ← <span class="dep-need">wajib diterapkan sebelum Pose & Product</span></div>
-                <div class="dep-item"><span class="dep-mod">Scene Module</span> ← <span class="dep-need">butuh Character DNA untuk konteks</span></div>
-                <div class="dep-item"><span class="dep-mod">Product Module</span> ← <span class="dep-need">butuh Pose + Identity Lock</span></div>
-                <div class="dep-item"><span class="dep-mod">Prompt Assembly</span> ← <span class="dep-need">tahap akhir, menggabungkan semua modul</span></div>
+            <div class="doc-content">
+              <div class="doc-section">
+                <h2>Urutan Penyusunan Prompt</h2>
+                <p class="doc-note">Prompt akhir disusun secara berurutan dari atas ke bawah. Setiap modul menambahkan informasi spesifik tanpa mengubah modul sebelumnya.</p>
+
+                <div class="flow-diagram">
+                  <div class="flow-node" style="--level:0">
+                    <span class="flow-num">01</span>
+                    <span class="flow-label">📨 User Request</span>
+                    <span class="flow-desc">Input dari pengguna — produk, scene, pose</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:0">
+                    <span class="flow-num">02</span>
+                    <span class="flow-label">📋 System Rules</span>
+                    <span class="flow-desc">Aturan dasar AI — kualitas, format, larangan umum</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:1">
+                    <span class="flow-num">03</span>
+                    <span class="flow-label">🧬 Character DNA</span>
+                    <span class="flow-desc">Database identitas karakter — diambil dari MODUL 1</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:1">
+                    <span class="flow-num">04</span>
+                    <span class="flow-label">🔒 Identity Lock</span>
+                    <span class="flow-desc">Proteksi perubahan karakter — diambil dari MODUL 2</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:2">
+                    <span class="flow-num">05</span>
+                    <span class="flow-label">🎬 Scene Module</span>
+                    <span class="flow-desc">Latar tempat & lingkungan — MODUL 4 (FASE 2)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:2">
+                    <span class="flow-num">06</span>
+                    <span class="flow-label">📦 Product Module</span>
+                    <span class="flow-desc">Objek produk dalam frame — MODUL 5 (FASE 2)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:2">
+                    <span class="flow-num">07</span>
+                    <span class="flow-label">🧘 Pose Module</span>
+                    <span class="flow-desc">Gestur & posisi karakter — MODUL 6 (FASE 2)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:3">
+                    <span class="flow-num">08</span>
+                    <span class="flow-label">📷 Camera Module</span>
+                    <span class="flow-desc">Sudut kamera & framing — MODUL 7 (FASE 3)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:3">
+                    <span class="flow-num">09</span>
+                    <span class="flow-label">💡 Lighting Module</span>
+                    <span class="flow-desc">Pencahayaan & mood — MODUL 8 (FASE 3)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:4">
+                    <span class="flow-num">10</span>
+                    <span class="flow-label">🏷️ Branding Module</span>
+                    <span class="flow-desc">Brand overlay & marketing — MODUL 9 (FASE 4)</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node" style="--level:0">
+                    <span class="flow-num">11</span>
+                    <span class="flow-label">🚫 Negative Prompt</span>
+                    <span class="flow-desc">Aturan larangan — quality control akhir</span>
+                  </div>
+                  <div class="flow-connector">↓</div>
+                  <div class="flow-node goal">
+                    <span class="flow-num">✓</span>
+                    <span class="flow-label">✅ Final Prompt</span>
+                    <span class="flow-desc">Prompt siap pakai untuk AI Image Generator</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="doc-section">
+                <h2>Mengapa Urutan Ini?</h2>
+                <ol class="reason-list">
+                  <li><strong>System Rules pertama</strong> — AI perlu tahu aturan main sebelum menerima data.</li>
+                  <li><strong>Character DNA sebelum apapun</strong> — AI harus "mengenal" karakter sebelum karakter tersebut melakukan sesuatu.</li>
+                  <li><strong>Identity Lock setelah DNA</strong> — Setelah karakter dikenal, kunci identitasnya agar tidak berubah saat modul berikutnya ditambahkan.</li>
+                  <li><strong>Scene, Product, Pose di tengah</strong> — Ketiganya bergantung pada identitas karakter yang sudah terkunci.</li>
+                  <li><strong>Camera & Lighting belakang</strong> — Teknis produksi, tidak mempengaruhi konten.</li>
+                  <li><strong>Branding hampir akhir</strong> — Layer overlay, harus di atas konten utama.</li>
+                  <li><strong>Negative Prompt terakhir</strong> — Quality control & safeguard sebelum prompt dikirim ke AI.</li>
+                </ol>
+              </div>
+
+              <div class="doc-section">
+                <h2>Dependency Graph</h2>
+                <p class="doc-note">Modul yang wajib ada sebelum modul lain bisa digunakan.</p>
+                <div class="dep-graph">
+                  <div class="dep-card">
+                    <div class="dep-from">🧬 Character DNA</div>
+                    <div class="dep-arrow">← wajib sebelum →</div>
+                    <div class="dep-to">🎬 Scene · 📦 Product · 🧘 Pose</div>
+                  </div>
+                  <div class="dep-card">
+                    <div class="dep-from">🔒 Identity Lock</div>
+                    <div class="dep-arrow">← wajib sebelum →</div>
+                    <div class="dep-to">🧘 Pose · 📦 Product · 🎬 Scene</div>
+                  </div>
+                  <div class="dep-card">
+                    <div class="dep-from">🎬 Scene Module</div>
+                    <div class="dep-arrow">← butuh →</div>
+                    <div class="dep-to">🧬 Character DNA untuk konteks</div>
+                  </div>
+                  <div class="dep-card">
+                    <div class="dep-from">📦 Product Module</div>
+                    <div class="dep-arrow">← butuh →</div>
+                    <div class="dep-to">🔒 Identity Lock + 🧘 Pose</div>
+                  </div>
+                  <div class="dep-card accent">
+                    <div class="dep-from">⚡ Prompt Assembly</div>
+                    <div class="dep-arrow">← tahap AKHIR →</div>
+                    <div class="dep-to">Menggabungkan SEMUA modul</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="doc-section">
+                <h2>Fase Pengembangan</h2>
+                <div class="fase-table">
+                  <div class="fase-row">
+                    <span class="fase-name fase-1">FASE 1 ✅</span>
+                    <span class="fase-mods">Character DNA · Identity Lock · Prompt Assembly</span>
+                  </div>
+                  <div class="fase-row">
+                    <span class="fase-name fase-2">FASE 2 ⏳</span>
+                    <span class="fase-mods">Scene Engine · Product Module · Pose Module</span>
+                  </div>
+                  <div class="fase-row">
+                    <span class="fase-name fase-3">FASE 3 ⏳</span>
+                    <span class="fase-mods">Camera Engine · Lighting Engine</span>
+                  </div>
+                  <div class="fase-row">
+                    <span class="fase-name fase-4">FASE 4 ⏳</span>
+                    <span class="fase-mods">Branding Engine · Marketing Behavior</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- GENERATE BUTTON -->
-        <button class="btn-generate" id="btnGenerate" onclick="assemblePrompt()">
-          <span class="btn-icon">⚡</span> Rakit Prompt Lengkap
-        </button>
-      </div>
-
-      <!-- RIGHT PANEL — Output -->
-      <div class="right-panel">
-        <div class="output-area" id="outputArea">
-          <div class="output-empty">
-            <div class="empty-icon">🧬</div>
-            <h3>Fondasi Prompt Database</h3>
-            <p>FASE 1 — Character DNA · Identity Lock · Prompt Assembly</p>
-            <div class="empty-hint">Klik <strong>Rakit Prompt Lengkap</strong> untuk melihat hasil rakitan</div>
-          </div>
-        </div>
-        <div class="output-footer hidden" id="outputFooter">
+        <!-- FOOTER -->
+        <div class="output-footer">
           <div class="footer-left">
-            <span id="tokenCount"></span>
+            <span id="docInfo">Menampilkan: MODUL 1 — Character DNA</span>
           </div>
           <div class="footer-right">
-            <button class="btn-small copy-all-btn" onclick="copyAll()">📋 Salin Semua</button>
+            <button class="footer-btn" onclick="copyVisible()">📋 Salin Halaman Ini</button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- LOADER -->
-    <div class="loader-overlay hidden" id="loaderOverlay">
-      <div class="loader-modal">
-        <div class="loader-spinner"></div>
-        <p>Merakit prompt...</p>
       </div>
     </div>
 
