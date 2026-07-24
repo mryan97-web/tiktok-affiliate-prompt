@@ -1,32 +1,31 @@
-/* Prompt Database System — FASE 1 + 2 */
+/* Prompt Database System — FASE 1 + 2 + 3 */
 /* Navigasi modul + Utility */
 
 // ===== SWITCH PANEL =====
 function switchPanel(panelId) {
-  // Tab buttons
   document.querySelectorAll('.fase-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.fase-tab[data-panel="${panelId}"]`).classList.add('active');
+  const tab = document.querySelector(`.fase-tab[data-panel="${panelId}"]`);
+  if (tab) tab.classList.add('active');
 
-  // Panel groups
   document.querySelectorAll('.panel-group').forEach(p => p.classList.remove('active-panel'));
-  document.querySelector(`.panel-group[data-panel="${panelId}"]`).classList.add('active-panel');
+  const panel = document.querySelector(`.panel-group[data-panel="${panelId}"]`);
+  if (panel) panel.classList.add('active-panel');
 
-  // Show first module in that panel
   const firstModule = document.querySelector(`.panel-group[data-panel="${panelId}"] .modul-card:not(.disabled)`);
   if (firstModule && firstModule.dataset.module) {
     showModule(firstModule.dataset.module);
   }
 
-  // Info bar
   const labels = {
     fase1: 'FASE 1 — Fondasi Prompt Database',
     fase2: 'FASE 2 — Visual Engine',
-    fase3: 'FASE 3 (Coming Soon)',
+    fase3: 'FASE 3 — Marketing Engine',
     fase4: 'FASE 4 (Coming Soon)',
   };
   const subs = {
     fase1: 'Character DNA · Identity Lock · Prompt Assembly',
-    fase2: 'Camera · Lens · Lighting · Color Grading · Composition · Image Quality · Consistency · Presets',
+    fase2: 'Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets',
+    fase3: 'Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok Affiliate · Conversion · CTA · Shop · Social Commerce · Marketing Consistency',
   };
   document.getElementById('infoBar').querySelector('strong').textContent = labels[panelId] || panelId;
   document.getElementById('infoText').textContent = subs[panelId] || '';
@@ -34,16 +33,13 @@ function switchPanel(panelId) {
 
 // ===== SHOW MODULE =====
 function showModule(mod) {
-  // Update cards
   document.querySelectorAll('.modul-card').forEach(c => c.classList.remove('active'));
   document.querySelectorAll(`.modul-card[data-module="${mod}"]`).forEach(c => c.classList.add('active'));
 
-  // Update views
   document.querySelectorAll('.doc-view').forEach(v => v.classList.remove('active'));
   const view = document.getElementById('view-' + mod);
   if (view) view.classList.add('active');
 
-  // Update footer
   const names = {
     dna: 'MODUL 1 — Character DNA',
     lock: 'MODUL 2 — Identity Lock',
@@ -56,6 +52,21 @@ function showModule(mod) {
     quality: 'MODUL 9 — Image Quality Engine',
     consistency: 'MODUL 10 — Visual Consistency Rules',
     presets: 'MODUL 11 — Visual Presets',
+    role: 'MODUL 12 — Role Engine',
+    personality: 'MODUL 13 — Sales Personality Engine',
+    interaction: 'MODUL 14 — Customer Interaction Engine',
+    presentation: 'MODUL 15 — Product Presentation Engine',
+    gesture: 'MODUL 16 — Hand Gesture Engine',
+    expression: 'MODUL 17 — Facial Expression Engine',
+    bodylang: 'MODUL 18 — Body Language Engine',
+    psychology: 'MODUL 19 — Sales Psychology Engine',
+    trust: 'MODUL 20 — Trust Engine',
+    tiktok: 'MODUL 21 — TikTok Affiliate Engine',
+    conversion: 'MODUL 22 — Conversion Engine',
+    cta: 'MODUL 23 — Call To Action Engine',
+    shop: 'MODUL 24 — Shop Environment Experience',
+    social: 'MODUL 25 — Social Commerce Style',
+    mconsistency: 'MODUL 26 — Marketing Consistency Rules',
   };
   document.getElementById('docInfo').textContent = 'Menampilkan: ' + (names[mod] || mod);
 }
@@ -95,4 +106,4 @@ function showToast(msg) {
 }
 
 // ===== INIT =====
-showModule('dna');
+showModule('role');

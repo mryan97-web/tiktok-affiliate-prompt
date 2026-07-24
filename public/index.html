@@ -23,177 +23,70 @@
       </div>
     </div>
     <div class="header-fase-tabs">
-      <button class="fase-tab active" data-panel="fase1" onclick="switchPanel('fase1')">FASE 1</button>
+      <button class="fase-tab" data-panel="fase1" onclick="switchPanel('fase1')">FASE 1</button>
       <button class="fase-tab" data-panel="fase2" onclick="switchPanel('fase2')">FASE 2</button>
-      <button class="fase-tab disabled-tab">FASE 3</button>
+      <button class="fase-tab active" data-panel="fase3" onclick="switchPanel('fase3')">FASE 3</button>
       <button class="fase-tab disabled-tab">FASE 4</button>
     </div>
   </header>
 
   <!-- INFO BAR -->
   <div class="info-bar" id="infoBar">
-    <strong>FASE 2 — Visual Engine</strong>
+    <strong>FASE 3 — Marketing Engine</strong>
     <span class="separator">·</span>
-    <span id="infoText">Camera · Lens · Lighting · Color Grading · Composition · Image Quality · Consistency · Presets</span>
+    <span id="infoText">Role · Sales Personality · Customer Interaction · Product Presentation · Hand Gesture · Facial Expression · Body Language · Sales Psychology · Trust · TikTok Affiliate · Conversion · CTA · Shop Environment · Social Commerce · Marketing Consistency</span>
   </div>
 
   <!-- MAIN LAYOUT -->
   <div class="main-layout">
     <!-- LEFT PANEL -->
     <div class="left-panel" id="leftPanel">
+
       <!-- FASE 1 -->
       <div class="panel-group" data-panel="fase1">
-        <div class="fase-badge fase-1-badge">FASE 1 — Fondasi Prompt Database ✅</div>
-        <div class="modul-card active" data-module="dna" data-panel="fase1" onclick="showModule('dna')">
-          <div class="modul-header">
-            <div class="modul-icon">🧬</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 1 — Character DNA</span>
-              <span class="modul-desc">Database identitas visual karakter utama</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="lock" data-panel="fase1" onclick="showModule('lock')">
-          <div class="modul-header">
-            <div class="modul-icon">🔒</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 2 — Identity Lock</span>
-              <span class="modul-desc">Aturan permanen konsistensi karakter</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="assembly" data-panel="fase1" onclick="showModule('assembly')">
-          <div class="modul-header">
-            <div class="modul-icon">⚡</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 3 — Prompt Assembly</span>
-              <span class="modul-desc">Sistem penyusunan prompt modular</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
+        <div class="fase-badge fase-1-badge">FASE 1 — Fondasi ✅</div>
+        <div class="modul-card" data-module="dna" data-panel="fase1" onclick="showModule('dna')"><div class="modul-header"><div class="modul-icon">🧬</div><div class="modul-title-group"><span class="modul-title">MODUL 1 — Character DNA</span><span class="modul-desc">Database identitas visual karakter</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="lock" data-panel="fase1" onclick="showModule('lock')"><div class="modul-header"><div class="modul-icon">🔒</div><div class="modul-title-group"><span class="modul-title">MODUL 2 — Identity Lock</span><span class="modul-desc">Aturan konsistensi karakter</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="assembly" data-panel="fase1" onclick="showModule('assembly')"><div class="modul-header"><div class="modul-icon">⚡</div><div class="modul-title-group"><span class="modul-title">MODUL 3 — Prompt Assembly</span><span class="modul-desc">Sistem penyusunan prompt</span></div><div class="modul-status complete">✅</div></div></div>
       </div>
 
       <!-- FASE 2 -->
-      <div class="panel-group active-panel" data-panel="fase2">
-        <div class="fase-badge fase-2-badge">FASE 2 — Visual Engine 🔥</div>
-        <div class="modul-card" data-module="camera" data-panel="fase2" onclick="showModule('camera')">
-          <div class="modul-header">
-            <div class="modul-icon">📷</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 4 — Camera Engine</span>
-              <span class="modul-desc">Height · Distance · Orientation · Perspective · Movement</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="lens" data-panel="fase2" onclick="showModule('lens')">
-          <div class="modul-header">
-            <div class="modul-icon">🔭</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 5 — Lens Engine</span>
-              <span class="modul-desc">35mm · 50mm · 85mm · 100mm · 135mm · 24mm</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="lighting" data-panel="fase2" onclick="showModule('lighting')">
-          <div class="modul-header">
-            <div class="modul-icon">💡</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 6 — Lighting Engine</span>
-              <span class="modul-desc">Jenis · Direction · Intensity · Skin Tone · Mood</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="color" data-panel="fase2" onclick="showModule('color')">
-          <div class="modul-header">
-            <div class="modul-icon">🎨</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 7 — Color Grading Engine</span>
-              <span class="modul-desc">Tone · Contrast · Saturation · White Balance</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="composition" data-panel="fase2" onclick="showModule('composition')">
-          <div class="modul-header">
-            <div class="modul-icon">🖼️</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 8 — Composition Engine</span>
-              <span class="modul-desc">Rule of Thirds · Framing · Visual Hierarchy</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="quality" data-panel="fase2" onclick="showModule('quality')">
-          <div class="modul-header">
-            <div class="modul-icon">✨</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 9 — Image Quality Engine</span>
-              <span class="modul-desc">8K · HDR · Photorealistic · Detail · Texture</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="consistency" data-panel="fase2" onclick="showModule('consistency')">
-          <div class="modul-header">
-            <div class="modul-icon">🔐</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 10 — Visual Consistency Rules</span>
-              <span class="modul-desc">Aturan permanen kualitas visual</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
-        <div class="modul-card" data-module="presets" data-panel="fase2" onclick="showModule('presets')">
-          <div class="modul-header">
-            <div class="modul-icon">📋</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 11 — Visual Presets</span>
-              <span class="modul-desc">TikTok · Shopee · Luxury · Beauty · Lifestyle</span>
-            </div>
-            <div class="modul-status complete">✅ Selesai</div>
-          </div>
-        </div>
+      <div class="panel-group" data-panel="fase2">
+        <div class="fase-badge fase-2-badge">FASE 2 — Visual Engine ✅</div>
+        <div class="modul-card" data-module="camera" data-panel="fase2" onclick="showModule('camera')"><div class="modul-header"><div class="modul-icon">📷</div><div class="modul-title-group"><span class="modul-title">MODUL 4 — Camera Engine</span><span class="modul-desc">Height · Distance · Orientation</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="lens" data-panel="fase2" onclick="showModule('lens')"><div class="modul-header"><div class="modul-icon">🔭</div><div class="modul-title-group"><span class="modul-title">MODUL 5 — Lens Engine</span><span class="modul-desc">35mm · 50mm · 85mm · 100mm · 135mm · 24mm</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="lighting" data-panel="fase2" onclick="showModule('lighting')"><div class="modul-header"><div class="modul-icon">💡</div><div class="modul-title-group"><span class="modul-title">MODUL 6 — Lighting Engine</span><span class="modul-desc">Jenis cahaya & aturan</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="color" data-panel="fase2" onclick="showModule('color')"><div class="modul-header"><div class="modul-icon">🎨</div><div class="modul-title-group"><span class="modul-title">MODUL 7 — Color Grading</span><span class="modul-desc">Tone · Contrast · Grading</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="composition" data-panel="fase2" onclick="showModule('composition')"><div class="modul-header"><div class="modul-icon">🖼️</div><div class="modul-title-group"><span class="modul-title">MODUL 8 — Composition</span><span class="modul-desc">Rule of Thirds · Framing</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="quality" data-panel="fase2" onclick="showModule('quality')"><div class="modul-header"><div class="modul-icon">✨</div><div class="modul-title-group"><span class="modul-title">MODUL 9 — Image Quality</span><span class="modul-desc">8K · HDR · Detail</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="consistency" data-panel="fase2" onclick="showModule('consistency')"><div class="modul-header"><div class="modul-icon">🔐</div><div class="modul-title-group"><span class="modul-title">MODUL 10 — Consistency Rules</span><span class="modul-desc">Aturan permanen kualitas</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="presets" data-panel="fase2" onclick="showModule('presets')"><div class="modul-header"><div class="modul-icon">📋</div><div class="modul-title-group"><span class="modul-title">MODUL 11 — Visual Presets</span><span class="modul-desc">TikTok · Shopee · Luxury</span></div><div class="modul-status complete">✅</div></div></div>
       </div>
 
-      <!-- FASE 3 placeholder -->
-      <div class="panel-group" data-panel="fase3" style="display:none;">
-        <div class="fase-badge fase-3-badge">FASE 3 ⏳</div>
-        <div class="modul-card disabled">
-          <div class="modul-header">
-            <div class="modul-icon">🎬</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 12 — Scene Engine</span>
-              <span class="modul-desc">Latar tempat & lingkungan</span>
-            </div>
-            <div class="modul-status pending">⏳</div>
-          </div>
-        </div>
-        <div class="modul-card disabled">
-          <div class="modul-header">
-            <div class="modul-icon">📦</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 13 — Product Module</span>
-              <span class="modul-desc">Objek produk dalam frame</span>
-            </div>
-            <div class="modul-status pending">⏳</div>
-          </div>
-        </div>
-        <div class="modul-card disabled">
-          <div class="modul-header">
-            <div class="modul-icon">🧘</div>
-            <div class="modul-title-group">
-              <span class="modul-title">MODUL 14 — Pose Module</span>
-              <span class="modul-desc">Gestur & posisi karakter</span>
-            </div>
-            <div class="modul-status pending">⏳</div>
-          </div>
-        </div>
+      <!-- FASE 3 -->
+      <div class="panel-group active-panel" data-panel="fase3">
+        <div class="fase-badge fase-3-badge">FASE 3 — Marketing Engine 🔥</div>
+        <div class="modul-card active" data-module="role" data-panel="fase3" onclick="showModule('role')"><div class="modul-header"><div class="modul-icon">👔</div><div class="modul-title-group"><span class="modul-title">MODUL 12 — Role Engine</span><span class="modul-desc">Default role karakter</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="personality" data-panel="fase3" onclick="showModule('personality')"><div class="modul-header"><div class="modul-icon">💎</div><div class="modul-title-group"><span class="modul-title">MODUL 13 — Sales Personality</span><span class="modul-desc">Kepribadian saat menjual</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="interaction" data-panel="fase3" onclick="showModule('interaction')"><div class="modul-header"><div class="modul-icon">💬</div><div class="modul-title-group"><span class="modul-title">MODUL 14 — Customer Interaction</span><span class="modul-desc">Komunikasi dengan pelanggan</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="presentation" data-panel="fase3" onclick="showModule('presentation')"><div class="modul-header"><div class="modul-icon">📦</div><div class="modul-title-group"><span class="modul-title">MODUL 15 — Product Presentation</span><span class="modul-desc">Produk sebagai fokus utama</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="gesture" data-panel="fase3" onclick="showModule('gesture')"><div class="modul-header"><div class="modul-icon">🤲</div><div class="modul-title-group"><span class="modul-title">MODUL 16 — Hand Gesture</span><span class="modul-desc">Gerakan tangan saat menjual</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="expression" data-panel="fase3" onclick="showModule('expression')"><div class="modul-header"><div class="modul-icon">😊</div><div class="modul-title-group"><span class="modul-title">MODUL 17 — Facial Expression</span><span class="modul-desc">Ekspresi yang meningkatkan trust</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="bodylang" data-panel="fase3" onclick="showModule('bodylang')"><div class="modul-header"><div class="modul-icon">🧍</div><div class="modul-title-group"><span class="modul-title">MODUL 18 — Body Language</span><span class="modul-desc">Bahasa tubuh profesional</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="psychology" data-panel="fase3" onclick="showModule('psychology')"><div class="modul-header"><div class="modul-icon">🧠</div><div class="modul-title-group"><span class="modul-title">MODUL 19 — Sales Psychology</span><span class="modul-desc">Persepsi positif terhadap produk</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="trust" data-panel="fase3" onclick="showModule('trust')"><div class="modul-header"><div class="modul-icon">🛡️</div><div class="modul-title-group"><span class="modul-title">MODUL 20 — Trust Engine</span><span class="modul-desc">Meningkatkan rasa percaya</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="tiktok" data-panel="fase3" onclick="showModule('tiktok')"><div class="modul-header"><div class="modul-icon">📱</div><div class="modul-title-group"><span class="modul-title">MODUL 21 — TikTok Affiliate</span><span class="modul-desc">Gaya visual khas TikTok</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="conversion" data-panel="fase3" onclick="showModule('conversion')"><div class="modul-header"><div class="modul-icon">🎯</div><div class="modul-title-group"><span class="modul-title">MODUL 22 — Conversion Engine</span><span class="modul-desc">Scroll stop & minat beli</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="cta" data-panel="fase3" onclick="showModule('cta')"><div class="modul-header"><div class="modul-icon">🛒</div><div class="modul-title-group"><span class="modul-title">MODUL 23 — Call To Action</span><span class="modul-desc">Banner & CTA visual</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="shop" data-panel="fase3" onclick="showModule('shop')"><div class="modul-header"><div class="modul-icon">🏪</div><div class="modul-title-group"><span class="modul-title">MODUL 24 — Shop Environment</span><span class="modul-desc">Suasana toko premium</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="social" data-panel="fase3" onclick="showModule('social')"><div class="modul-header"><div class="modul-icon">🌐</div><div class="modul-title-group"><span class="modul-title">MODUL 25 — Social Commerce</span><span class="modul-desc">TikTok · Shopee · Instagram</span></div><div class="modul-status complete">✅</div></div></div>
+        <div class="modul-card" data-module="mconsistency" data-panel="fase3" onclick="showModule('mconsistency')"><div class="modul-header"><div class="modul-icon">🔐</div><div class="modul-title-group"><span class="modul-title">MODUL 26 — Marketing Consistency</span><span class="modul-desc">Aturan permanen marketing</span></div><div class="modul-status complete">✅</div></div></div>
+      </div>
+
+      <!-- FASE 4 -->
+      <div class="panel-group" data-panel="fase4" style="display:none;">
+        <div class="fase-badge fase-4-badge">FASE 4 ⏳</div>
+        <div class="modul-card disabled"><div class="modul-header"><div class="modul-icon">🏷️</div><div class="modul-title-group"><span class="modul-title">MODUL 27 — Branding Engine</span><span class="modul-desc">Overlay brand & identitas visual</span></div><div class="modul-status pending">⏳</div></div></div>
       </div>
     </div>
 
@@ -201,9 +94,7 @@
     <div class="right-panel" id="rightPanel">
       <div class="output-container" id="outputContainer">
 
-        <!-- ==================== FASE 1 VIEWS ==================== -->
-
-        <!-- view-dna -->
+        <!-- ==================== FASE 1 ==================== -->
         <div class="doc-view" id="view-dna">
           <div class="doc-header">
             <h1>🧬 MODUL 1 — Character DNA</h1>
@@ -254,661 +145,499 @@
                 <div class="attr-row"><span class="attr-key">Bulu Mata</span><span class="attr-val">Defined natural, never exaggerated</span></div>
               </div>
             </div>
-            <div class="doc-section">
-              <h2>1.4 Alis</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Bentuk Alis</span><span class="attr-val">Soft natural arch</span></div>
-                <div class="attr-row"><span class="attr-key">Ketebalan Alis</span><span class="attr-val">Medium</span></div>
-                <div class="attr-row"><span class="attr-key">Warna Alis</span><span class="attr-val">Cokelat gelap ke hitam</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.5 Hidung</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Pangkal Hidung</span><span class="attr-val">Straight bridge</span></div>
-                <div class="attr-row"><span class="attr-key">Batang Hidung</span><span class="attr-val">Lurus proporsional</span></div>
-                <div class="attr-row"><span class="attr-key">Ujung Hidung</span><span class="attr-val">Rounded</span></div>
-                <div class="attr-row"><span class="attr-key">Lebar Hidung</span><span class="attr-val">Small to medium</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.6 Bibir</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Bentuk Bibir</span><span class="attr-val">Defined cupid's bow</span></div>
-                <div class="attr-row"><span class="attr-key">Ketebalan Bibir</span><span class="attr-val">Medium fullness</span></div>
-                <div class="attr-row"><span class="attr-key">Warna Alami Bibir</span><span class="attr-val">Natural pink</span></div>
-                <div class="attr-row"><span class="attr-key">Senyuman</span><span class="attr-val">Friendly, gigi atas sedikit terlihat</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.7 Rambut</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Warna Rambut</span><span class="attr-val">Hitam natural</span></div>
-                <div class="attr-row"><span class="attr-key">Panjang Rambut</span><span class="attr-val">Panjang, below shoulders</span></div>
-                <div class="attr-row"><span class="attr-key">Tekstur Rambut</span><span class="attr-val">Lurus — Straight</span></div>
-                <div class="attr-row"><span class="attr-key">Belahan Rambut</span><span class="attr-val">Soft side part</span></div>
-                <div class="attr-row"><span class="attr-key">Tingkat Kilau Rambut</span><span class="attr-val">Healthy shine</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.8 Makeup (Natural Beauty)</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Foundation</span><span class="attr-val">Soft matte foundation</span></div>
-                <div class="attr-row"><span class="attr-key">Blush</span><span class="attr-val">Light pink</span></div>
-                <div class="attr-row"><span class="attr-key">Eyeshadow</span><span class="attr-val">Neutral, soft</span></div>
-                <div class="attr-row"><span class="attr-key">Eyeliner</span><span class="attr-val">Brown, natural</span></div>
-                <div class="attr-row"><span class="attr-key">Lipstick</span><span class="attr-val">Nude pink</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.9 Tubuh</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Bentuk Bahu</span><span class="attr-val">Relaxed, elegant posture</span></div>
-                <div class="attr-row"><span class="attr-key">Panjang Leher</span><span class="attr-val">Proporsional, elegan</span></div>
-                <div class="attr-row"><span class="attr-key">Proporsi Tangan</span><span class="attr-val">Natural, 5 jari, kuku bersih</span></div>
-                <div class="attr-row"><span class="attr-key">Proporsi Kaki</span><span class="attr-val">Proporsional sesuai tinggi 160 cm</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.10 Outfit Default</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Atasan</span><span class="attr-val">Minimalist fitted black short sleeve top</span></div>
-                <div class="attr-row"><span class="attr-key">Aksesori</span><span class="attr-val">Minimal jewelry</span></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>1.11 Karakter Visual</h2>
-              <div class="tag-list">
-                <span class="vibe-tag">Ramah</span><span class="vibe-tag">Profesional</span><span class="vibe-tag">Elegan</span>
-                <span class="vibe-tag">Dapat dipercaya</span><span class="vibe-tag">Hangat</span><span class="vibe-tag">Premium</span>
-                <span class="vibe-tag">Modern</span><span class="vibe-tag">Ceria</span><span class="vibe-tag">Approachable</span>
-                <span class="vibe-tag">Feminin</span><span class="vibe-tag">Enerjik</span>
-              </div>
-            </div>
+            <div class="doc-section"><h2>1.4 Alis</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Bentuk Alis</span><span class="attr-val">Soft natural arch</span></div><div class="attr-row"><span class="attr-key">Ketebalan Alis</span><span class="attr-val">Medium</span></div><div class="attr-row"><span class="attr-key">Warna Alis</span><span class="attr-val">Cokelat gelap ke hitam</span></div></div></div>
+            <div class="doc-section"><h2>1.5 Hidung</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Pangkal Hidung</span><span class="attr-val">Straight bridge</span></div><div class="attr-row"><span class="attr-key">Batang Hidung</span><span class="attr-val">Lurus proporsional</span></div><div class="attr-row"><span class="attr-key">Ujung Hidung</span><span class="attr-val">Rounded</span></div><div class="attr-row"><span class="attr-key">Lebar Hidung</span><span class="attr-val">Small to medium</span></div></div></div>
+            <div class="doc-section"><h2>1.6 Bibir</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Bentuk Bibir</span><span class="attr-val">Defined cupid's bow</span></div><div class="attr-row"><span class="attr-key">Ketebalan Bibir</span><span class="attr-val">Medium fullness</span></div><div class="attr-row"><span class="attr-key">Warna Alami Bibir</span><span class="attr-val">Natural pink</span></div><div class="attr-row"><span class="attr-key">Senyuman</span><span class="attr-val">Friendly, gigi atas sedikit terlihat</span></div></div></div>
+            <div class="doc-section"><h2>1.7 Rambut</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Warna Rambut</span><span class="attr-val">Hitam natural</span></div><div class="attr-row"><span class="attr-key">Panjang Rambut</span><span class="attr-val">Panjang, below shoulders</span></div><div class="attr-row"><span class="attr-key">Tekstur Rambut</span><span class="attr-val">Lurus — Straight</span></div><div class="attr-row"><span class="attr-key">Belahan Rambut</span><span class="attr-val">Soft side part</span></div><div class="attr-row"><span class="attr-key">Tingkat Kilau Rambut</span><span class="attr-val">Healthy shine</span></div></div></div>
+            <div class="doc-section"><h2>1.8 Makeup (Natural Beauty)</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Foundation</span><span class="attr-val">Soft matte foundation</span></div><div class="attr-row"><span class="attr-key">Blush</span><span class="attr-val">Light pink</span></div><div class="attr-row"><span class="attr-key">Eyeshadow</span><span class="attr-val">Neutral, soft</span></div><div class="attr-row"><span class="attr-key">Eyeliner</span><span class="attr-val">Brown, natural</span></div><div class="attr-row"><span class="attr-key">Lipstick</span><span class="attr-val">Nude pink</span></div></div></div>
+            <div class="doc-section"><h2>1.9 Tubuh</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Bentuk Bahu</span><span class="attr-val">Relaxed, elegant posture</span></div><div class="attr-row"><span class="attr-key">Panjang Leher</span><span class="attr-val">Proporsional, elegan</span></div><div class="attr-row"><span class="attr-key">Proporsi Tangan</span><span class="attr-val">Natural, 5 jari, kuku bersih</span></div></div></div>
+            <div class="doc-section"><h2>1.10 Outfit Default</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Atasan</span><span class="attr-val">Minimalist fitted black short sleeve top</span></div><div class="attr-row"><span class="attr-key">Aksesori</span><span class="attr-val">Minimal jewelry</span></div></div></div>
+            <div class="doc-section"><h2>1.11 Karakter Visual</h2><div class="tag-list"><span class="vibe-tag">Ramah</span><span class="vibe-tag">Profesional</span><span class="vibe-tag">Elegan</span><span class="vibe-tag">Dapat dipercaya</span><span class="vibe-tag">Hangat</span><span class="vibe-tag">Premium</span><span class="vibe-tag">Modern</span><span class="vibe-tag">Ceria</span><span class="vibe-tag">Approachable</span><span class="vibe-tag">Feminin</span><span class="vibe-tag">Enerjik</span></div></div>
           </div>
         </div>
 
-        <!-- view-lock -->
         <div class="doc-view" id="view-lock">
-          <div class="doc-header">
-            <h1>🔒 MODUL 2 — Identity Lock</h1>
-            <p class="doc-desc">Aturan permanen yang menjamin AI tidak mengganti karakter ketika adegan berubah.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('lock')">📋 Salin Modul</button>
-              <span class="doc-meta">11 kategori · 8 LOCKED · 3 VARIABLE</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>🔒 MODUL 2 — Identity Lock</h1><p class="doc-desc">Aturan permanen yang menjamin AI tidak mengganti karakter ketika adegan berubah.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('lock')">📋 Salin Modul</button><span class="doc-meta">11 kategori · 8 LOCKED · 3 VARIABLE</span></div></div>
           <div class="doc-content">
-            <div class="doc-section">
-              <h2>🔴 Atribut LOCKED — Tidak Boleh Berubah</h2>
-              <div class="lock-card"><div class="lock-head locked">1. Wajah — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Bentuk wajah, rahang, dagu, pipi, simetri, warna kulit, tekstur, kilau</div><div class="lock-reason"><strong>Alasan:</strong> Struktur wajah adalah fondasi identitas visual. Perubahan sekecil apapun membuat karakter tampak seperti orang berbeda.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">2. Mata — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Bentuk, ukuran, jarak, warna, kelopak, bulu mata</div><div class="lock-reason"><strong>Alasan:</strong> "Jendela jiwa." Perubahan bentuk/warna mata mengubah persepsi emosional secara drastis.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">3. Alis — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Bentuk, ketebalan, warna</div><div class="lock-reason"><strong>Alasan:</strong> Membingkai wajah. Bentuk alis berbeda bisa mengubah ramah jadi galak.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">4. Hidung — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Pangkal, batang, ujung, lebar</div><div class="lock-reason"><strong>Alasan:</strong> Fitur paling identik dengan seseorang. Perubahan mudah dikenali.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">5. Bibir — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Bentuk, ketebalan, warna alami, senyuman</div><div class="lock-reason"><strong>Alasan:</strong> Senyuman adalah "signature" karakter yang melekat.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">6. Rambut — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Warna, panjang, tekstur, belahan, kilau</div><div class="lock-reason"><strong>Alasan:</strong> Bagian besar identitas visual. Konsisten = dikenali.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">7. Makeup (Natural Beauty) — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Foundation, blush, eyeshadow, eyeliner, lipstick</div><div class="lock-reason"><strong>Alasan:</strong> Gaya makeup natural beauty adalah identitas. Makeup berbeda = karakter berbeda.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">8. Tubuh — 🔒 LOCKED</div><div class="lock-detail"><div class="lock-attr">Tinggi 160 cm, slim, proporsi, bahu, leher</div><div class="lock-reason"><strong>Alasan:</strong> Proporsi fisik tidak berubah.</div></div></div>
+            <div class="doc-section"><h2>🔴 Atribut LOCKED</h2>
+              <div class="lock-card"><div class="lock-head locked">1. Wajah</div><div class="lock-detail"><div class="lock-reason">Bentuk wajah, rahang, dagu, pipi, simetri, warna kulit, tekstur — fondasi identitas.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">2. Mata</div><div class="lock-detail"><div class="lock-reason">Bentuk, ukuran, jarak, warna, kelopak, bulu mata — "jendela jiwa."</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">3. Alis</div><div class="lock-detail"><div class="lock-reason">Bentuk, ketebalan, warna — membingkai ekspresi wajah.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">4. Hidung</div><div class="lock-detail"><div class="lock-reason">Pangkal, batang, ujung, lebar — fitur paling identik.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">5. Bibir</div><div class="lock-detail"><div class="lock-reason">Bentuk, ketebalan, warna alami, senyuman — signature karakter.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">6. Rambut</div><div class="lock-detail"><div class="lock-reason">Warna, panjang, tekstur, belahan, kilau — identitas visual besar.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">7. Makeup</div><div class="lock-detail"><div class="lock-reason">Natural beauty — foundation, blush, eyeshadow, eyeliner, lipstick.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">8. Tubuh</div><div class="lock-detail"><div class="lock-reason">Tinggi 160 cm, slim, proporsi — identitas fisik dasar.</div></div></div>
             </div>
-            <div class="doc-section">
-              <h2>🟢 Atribut VARIABLE — Boleh Berubah</h2>
-              <div class="lock-card var"><div class="lock-head variable">1. Outfit — 🔄 VARIABLE</div><div class="lock-detail"><div class="lock-attr">Atasan, bawahan, sepatu, aksesori</div><div class="lock-reason"><strong>Alasan:</strong> Pakaian berubah sesuai produk/kampanye. Tidak mempengaruhi wajah/tubuh.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">2. Pose — 🔄 VARIABLE</div><div class="lock-detail"><div class="lock-attr">Pose tubuh, gestur tangan, posisi, aktivitas</div><div class="lock-reason"><strong>Alasan:</strong> Pose berubah sesuai konteks tanpa kehilangan identitas.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">3. Ekspresi Ringan & Sudut Kamera — 🔄 VARIABLE</div><div class="lock-detail"><div class="lock-attr">Mood, intensitas senyum, arah pandang, sudut kamera</div><div class="lock-reason"><strong>Alasan:</strong> Variasi natural tidak mengubah identitas karakter.</div></div></div>
+            <div class="doc-section"><h2>🟢 Atribut VARIABLE</h2>
+              <div class="lock-card var"><div class="lock-head variable">Outfit</div><div class="lock-detail"><div class="lock-reason">Berubah sesuai produk/kampanye. Tidak mempengaruhi wajah/tubuh.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Pose</div><div class="lock-detail"><div class="lock-reason">Pose tubuh & gestur — berubah sesuai konteks.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Ekspresi Ringan & Sudut Kamera</div><div class="lock-detail"><div class="lock-reason">Variasi natural, tidak mengubah identitas.</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- view-assembly -->
         <div class="doc-view" id="view-assembly">
-          <div class="doc-header">
-            <h1>⚡ MODUL 3 — Prompt Assembly</h1>
-            <p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button>
-              <span class="doc-meta">11 langkah · 5 dependency rules</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>⚡ MODUL 3 — Prompt Assembly</h1><p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button><span class="doc-meta">19 langkah</span></div></div>
           <div class="doc-content">
-            <div class="doc-section">
-              <h2>Urutan Penyusunan Prompt</h2>
+            <div class="doc-section"><h2>Urutan Lengkap (3 Fase)</h2>
               <div class="flow-diagram">
-                <div class="flow-node" style="--level:0"><span class="flow-num">01</span><span class="flow-label">📨 User Request</span><span class="flow-desc">Input dari pengguna</span></div>
+                <div class="flow-node" style="--level:0"><span class="flow-num">01</span><span class="flow-label">📨 User Request</span><span class="flow-desc">Input pengguna</span></div>
                 <div class="flow-connector">↓</div>
                 <div class="flow-node" style="--level:0"><span class="flow-num">02</span><span class="flow-label">📋 System Rules</span><span class="flow-desc">Aturan dasar AI</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:1"><span class="flow-num">03</span><span class="flow-label">🧬 Character DNA</span><span class="flow-desc">MODUL 1 — Identitas karakter</span></div>
+                <div class="flow-node" style="--level:1"><span class="flow-num">03</span><span class="flow-label">🧬 Character DNA</span><span class="flow-desc">FASE 1 — Identitas</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:1"><span class="flow-num">04</span><span class="flow-label">🔒 Identity Lock</span><span class="flow-desc">MODUL 2 — Proteksi perubahan</span></div>
+                <div class="flow-node" style="--level:1"><span class="flow-num">04</span><span class="flow-label">🔒 Identity Lock</span><span class="flow-desc">FASE 1 — Proteksi</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">05</span><span class="flow-label">📷 Camera Engine</span><span class="flow-desc">MODUL 4 — Sudut & framing</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">05</span><span class="flow-label">📷 Camera Engine</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">06</span><span class="flow-label">🔭 Lens Engine</span><span class="flow-desc">MODUL 5 — Pilihan lensa</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">06</span><span class="flow-label">🔭 Lens Engine</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">07</span><span class="flow-label">💡 Lighting Engine</span><span class="flow-desc">MODUL 6 — Pencahayaan</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">07</span><span class="flow-label">💡 Lighting Engine</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">08</span><span class="flow-label">🎨 Color Grading</span><span class="flow-desc">MODUL 7 — Tone & warna</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">08</span><span class="flow-label">🎨 Color Grading</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">09</span><span class="flow-label">🖼️ Composition</span><span class="flow-desc">MODUL 8 — Framing</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">09</span><span class="flow-label">🖼️ Composition</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">10</span><span class="flow-label">✨ Image Quality</span><span class="flow-desc">MODUL 9 — Resolusi & detail</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">10</span><span class="flow-label">✨ Image Quality</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:2"><span class="flow-num">11</span><span class="flow-label">🔐 Consistency Rules</span><span class="flow-desc">MODUL 10 — Quality control</span></div>
+                <div class="flow-node" style="--level:2"><span class="flow-num">11</span><span class="flow-label">🔐 Consistency Rules</span><span class="flow-desc">FASE 2</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:3"><span class="flow-num">12</span><span class="flow-label">🎬 Scene Engine</span><span class="flow-desc">FASE 3 — Latar tempat</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">12</span><span class="flow-label">👔 Role Engine</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:3"><span class="flow-num">13</span><span class="flow-label">📦 Product Module</span><span class="flow-desc">FASE 3 — Objek produk</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">13</span><span class="flow-label">💎 Sales Personality</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:3"><span class="flow-num">14</span><span class="flow-label">🧘 Pose Module</span><span class="flow-desc">FASE 3 — Gestur karakter</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">14</span><span class="flow-label">💬 Customer Interaction</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:4"><span class="flow-num">15</span><span class="flow-label">🏷️ Branding Engine</span><span class="flow-desc">FASE 4 — Brand overlay</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">15</span><span class="flow-label">🤲 Hand Gesture</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:0"><span class="flow-num">16</span><span class="flow-label">🚫 Negative Prompt</span><span class="flow-desc">Quality control akhir</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">16</span><span class="flow-label">😊 Facial Expression</span><span class="flow-desc">FASE 3</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node goal"><span class="flow-num">✓</span><span class="flow-label">✅ Final Prompt</span><span class="flow-desc">Prompt siap pakai</span></div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">17</span><span class="flow-label">🧍 Body Language</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">18</span><span class="flow-label">🧠 Sales Psychology</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">19</span><span class="flow-label">🛡️ Trust Engine</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">20</span><span class="flow-label">📱 TikTok Affiliate</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">21</span><span class="flow-label">🎯 Conversion Engine</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">22</span><span class="flow-label">🛒 Call To Action</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">23</span><span class="flow-label">🏪 Shop Environment</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">24</span><span class="flow-label">🌐 Social Commerce</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:3"><span class="flow-num">25</span><span class="flow-label">🔐 Marketing Consistency</span><span class="flow-desc">FASE 3</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:4"><span class="flow-num">26</span><span class="flow-label">🏷️ Branding Engine</span><span class="flow-desc">FASE 4</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:0"><span class="flow-num">27</span><span class="flow-label">🚫 Negative Prompt</span><span class="flow-desc">Quality control akhir</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node goal"><span class="flow-num">✓</span><span class="flow-label">✅ Final Prompt</span><span class="flow-desc">Siap pakai</span></div>
               </div>
             </div>
-            <div class="doc-section">
-              <h2>Dependency Graph</h2>
-              <div class="dep-graph">
-                <div class="dep-card"><div class="dep-from">🧬 Character DNA</div><div class="dep-arrow">← wajib sebelum →</div><div class="dep-to">Semua modul visual & konten</div></div>
-                <div class="dep-card"><div class="dep-from">🔒 Identity Lock</div><div class="dep-arrow">← wajib sebelum →</div><div class="dep-to">Camera · Lens · Lighting · Pose · Product</div></div>
-                <div class="dep-card"><div class="dep-from">📷 Camera Engine</div><div class="dep-arrow">← butuh →</div><div class="dep-to">Lens Engine (menentukan jarak & framing)</div></div>
-                <div class="dep-card"><div class="dep-from">💡 Lighting Engine</div><div class="dep-arrow">← butuh →</div><div class="dep-to">Color Grading (white balance & tone)</div></div>
-                <div class="dep-card"><div class="dep-from">🎬 Scene Engine</div><div class="dep-arrow">← butuh →</div><div class="dep-to">Lighting + Composition + Camera</div></div>
-                <div class="dep-card accent"><div class="dep-from">⚡ Prompt Assembly</div><div class="dep-arrow">← tahap AKHIR →</div><div class="dep-to">Menggabungkan SEMUA modul</div></div>
-              </div>
-            </div>
-            <div class="doc-section">
-              <h2>Fase Pengembangan</h2>
+            <div class="doc-section"><h2>Fase Pengembangan</h2>
               <div class="fase-table">
                 <div class="fase-row"><span class="fase-name fase-1">FASE 1 ✅</span><span class="fase-mods">Character DNA · Identity Lock · Prompt Assembly</span></div>
-                <div class="fase-row"><span class="fase-name fase-2">FASE 2 🔥</span><span class="fase-mods">Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets</span></div>
-                <div class="fase-row"><span class="fase-name fase-3">FASE 3 ⏳</span><span class="fase-mods">Scene Engine · Product Module · Pose Module</span></div>
+                <div class="fase-row"><span class="fase-name fase-2">FASE 2 ✅</span><span class="fase-mods">Camera · Lens · Lighting · Color · Composition · Quality · Consistency · Presets</span></div>
+                <div class="fase-row"><span class="fase-name fase-3">FASE 3 🔥</span><span class="fase-mods">Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Marketing Consistency</span></div>
                 <div class="fase-row"><span class="fase-name fase-4">FASE 4 ⏳</span><span class="fase-mods">Branding Engine · Marketing Behavior</span></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ==================== FASE 2 VIEWS ==================== -->
+        <!-- ==================== FASE 2 ==================== -->
 
-        <!-- view-camera -->
         <div class="doc-view" id="view-camera">
-          <div class="doc-header">
-            <h1>📷 MODUL 4 — Camera Engine</h1>
-            <p class="doc-desc">Mengontrol sudut pandang kamera, framing, perspektif, dan orientasi gambar. Tidak mengubah identitas karakter dari FASE 1.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('camera')">📋 Salin Modul</button>
-              <span class="doc-meta">5 sub-bagian · 20+ aturan</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>📷 MODUL 4 — Camera Engine</h1><p class="doc-desc">Mengontrol sudut pandang kamera, framing, perspektif, dan orientasi gambar.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('camera')">📋 Salin Modul</button><span class="doc-meta">5 sub-bagian · 20+ aturan</span></div></div>
           <div class="doc-content">
-
-            <div class="doc-section">
-              <h2>Camera Height</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Eye Level</span><span class="attr-val">Kamera sejajar mata karakter. Paling natural, nyaman, dan komunikatif. Cocok untuk TikTok Affiliate, Shopee Live, beauty consultation. <strong>Rekomendasi utama untuk AREKA_GIRL_001.</strong></span></div>
-                <div class="attr-row"><span class="attr-key">Slight Eye Level</span><span class="attr-val">Kamera sedikit di atas mata karakter (~10°). Memberikan kesan ramah dan hangat. Cocok untuk konten review produk.</span></div>
-                <div class="attr-row"><span class="attr-key">High Angle</span><span class="attr-val">Kamera di atas karakter, melihat ke bawah. Kesan lebih intim, mendetail. Cocok untuk unboxing atau saat karakter melihat produk di tangan.</span></div>
-                <div class="attr-row"><span class="attr-key">Low Angle</span><span class="attr-val">Kamera di bawah karakter, melihat ke atas. Kesan premium, powerful, dominan. Hanya untuk campaign luxury/branding khusus.</span></div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Camera Distance</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Close Up</span><span class="attr-val">Wajah penuh, dari dahi ke dagu. Fokus pada ekspresi dan detail makeup/reaksi. Jarak sangat dekat, emosi terbaca jelas.</span></div>
-                <div class="attr-row"><span class="attr-key">Medium Close Up</span><span class="attr-val">Dada ke atas. Standar beauty content, menampilkan wajah + sebagian outfit. <strong>Pilihan utama TikTok Affiliate.</strong></span></div>
-                <div class="attr-row"><span class="attr-key">Medium Shot</span><span class="attr-val">Pinggang ke atas. Menampilkan karakter + produk + latar belakang. Cocok untuk perbandingan produk atau demo.</span></div>
-                <div class="attr-row"><span class="attr-key">Medium Long Shot</span><span class="attr-val">Lutut ke atas. Menampilkan karakter full upper body. Untuk konten yang membutuhkan gerakan tubuh.</span></div>
-                <div class="attr-row"><span class="attr-key">Full Body</span><span class="attr-val">Kepala ke kaki. Untuk konten fashion atau walk-through store tour.</span></div>
-                <div class="attr-row"><span class="attr-key">Detail Shot</span><span class="attr-val">Fokus pada satu bagian: tangan memegang produk, botol parfum, tekstur produk. <strong>WAJIB menggunakan 100mm Macro.</strong></span></div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Camera Orientation</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Portrait 9:16</span><span class="attr-val"><strong>PRIMARY.</strong> TikTok, Instagram Reels, YouTube Shorts, Shopee Live. Orientasi vertikal penuh. 9:16 ratio. <strong>Default untuk semua konten AREKA.</strong></span></div>
-                <div class="attr-row"><span class="attr-key">Landscape 16:9</span><span class="attr-val">YouTube, website, iklan display. Horizontal. Hanya untuk konten yang memang ditujukan ke platform horizontal.</span></div>
-                <div class="attr-row"><span class="attr-key">Square 1:1</span><span class="attr-val">Instagram Feed, Facebook. Format bujur sangkar. Cocok untuk foto produk utama di Shopee/Tokopedia.</span></div>
-                <div class="attr-row"><span class="attr-key">Story 9:16</span><span class="attr-val">Instagram Story, Facebook Story. Sama dengan portrait tapi dengan area aman untuk UI overlay (username, CTA, link).</span></div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Camera Perspective</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Natural Perspective</span><span class="attr-val"><strong>DEFAULT.</strong> Perspektif natural seperti mata manusia melihat. Tidak ada distorsi. Paling nyaman dan komunikatif.</span></div>
-                <div class="attr-row"><span class="attr-key">Commercial Perspective</span><span class="attr-val">Sedikit wide untuk menonjolkan produk. Biasa digunakan dalam iklan e-commerce. Distorsi minimal, tetap natural.</span></div>
-                <div class="attr-row"><span class="attr-key">Human Eye Perspective</span><span class="attr-val">Perspektif seolah-olah penonton sedang melihat langsung. Kesan "face-to-face" sangat kuat.</span></div>
-              </div>
-              <p class="doc-note" style="margin-top:8px;"><strong>Aturan:</strong> Never distorted. Semua perspektif harus realistis. Tidak ada fisheye, tidak ada ultra wide angle, tidak ada perspective warp.</p>
-            </div>
-
-            <div class="doc-section">
-              <h2>Camera Movement (untuk prompt video)</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Static</span><span class="attr-val"><strong>DEFAULT.</strong> Kamera diam di tripod. Paling stabil, profesional, dan fokus pada karakter. Cocok untuk review produk.</span></div>
-                <div class="attr-row"><span class="attr-key">Slow Push In</span><span class="attr-val">Kamera perlahan mendekat. Membangun intimasi dan fokus. Cocok saat memperkenalkan produk baru.</span></div>
-                <div class="attr-row"><span class="attr-key">Dolly</span><span class="attr-val">Kamera bergerak maju/mundur di track. Untuk walk-through atau peragaan produk.</span></div>
-                <div class="attr-row"><span class="attr-key">Orbit</span><span class="attr-val">Kamera berputar mengelilingi karakter. Efek dramatis premium. Hanya untuk campaign khusus.</span></div>
-                <div class="attr-row"><span class="attr-key">Handheld</span><span class="attr-val">Gaya kamera genggam ringan. Kesan behind-the-scenes, natural, personal. Hati-hati dengan excessive shake.</span></div>
-                <div class="attr-row"><span class="attr-key">Slider</span><span class="attr-val">Gerakan horizontal halus. Untuk memperlihatkan rak produk atau transisi adegan.</span></div>
-              </div>
-            </div>
-
-            <div class="doc-note-box">
-              <strong>⚡ Rules Ringkas — TikTok Affiliate:</strong> Eye Level · Medium Close Up · Portrait 9:16 · Natural Perspective · Static. Jangan menggunakan Low Angle atau Full Body untuk konten standar.
-            </div>
+            <div class="doc-section"><h2>Camera Height</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Eye Level</span><span class="attr-val">Kamera sejajar mata. Paling natural. <strong>PRIMARY.</strong></span></div><div class="attr-row"><span class="attr-key">Slight Eye Level</span><span class="attr-val">~10° di atas mata. Ramah, hangat.</span></div><div class="attr-row"><span class="attr-key">High Angle</span><span class="attr-val">Di atas karakter. Intim, mendetail.</span></div><div class="attr-row"><span class="attr-key">Low Angle</span><span class="attr-val">Di bawah karakter. Powerful, premium. Hanya campaign khusus.</span></div></div></div>
+            <div class="doc-section"><h2>Camera Distance</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Close Up</span><span class="attr-val">Wajah penuh. Fokus ekspresi.</span></div><div class="attr-row"><span class="attr-key">Medium Close Up</span><span class="attr-val">Dada ke atas. <strong>PRIMARY TikTok Affiliate.</strong></span></div><div class="attr-row"><span class="attr-key">Medium Shot</span><span class="attr-val">Pinggang ke atas. Karakter + produk + latar.</span></div><div class="attr-row"><span class="attr-key">Medium Long Shot</span><span class="attr-val">Lutut ke atas. Full upper body.</span></div><div class="attr-row"><span class="attr-key">Full Body</span><span class="attr-val">Kepala ke kaki. Fashion / walk-through.</span></div><div class="attr-row"><span class="attr-key">Detail Shot</span><span class="attr-val">Fokus bagian spesifik. <strong>WAJIB 100mm Macro.</strong></span></div></div></div>
+            <div class="doc-section"><h2>Camera Orientation</h2><div class="attr-table"><div class="attr-row"><span class="attr-key">Portrait 9:16</span><span class="attr-val"><strong>PRIMARY.</strong> TikTok, Reels, Shorts, Shopee Live.</span></div><div class="attr-row"><span class="attr-key">Landscape 16:9</span><span class="attr-val">YouTube, website, iklan display.</span></div><div class="attr-row"><span class="attr-key">Square 1:1</span><span class="attr-val">Instagram Feed, Shopee/Tokopedia.</span></div><div class="attr-row"><span class="attr-key">Story 9:16</span><span class="attr-val">IG/FB Story. Area aman untuk UI overlay.</span></div></div></div>
           </div>
         </div>
 
-        <!-- view-lens -->
         <div class="doc-view" id="view-lens">
-          <div class="doc-header">
-            <h1>🔭 MODUL 5 — Lens Engine</h1>
-            <p class="doc-desc">Menentukan karakter visual gambar melalui pilihan lensa. Setiap lensa memberi efek berbeda pada distorsi, depth of field, dan kompresi wajah.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('lens')">📋 Salin Modul</button>
-              <span class="doc-meta">6 lensa · 3 aturan pakai</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>🔭 MODUL 5 — Lens Engine</h1><p class="doc-desc">Karakter visual melalui pilihan lensa.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('lens')">📋 Salin Modul</button><span class="doc-meta">6 lensa</span></div></div>
           <div class="doc-content">
-
-            <div class="doc-section">
-              <h2>Jenis Lensa</h2>
-              <div class="lens-grid">
-                <div class="lens-card primary">
-                  <div class="lens-badge rekomendasi">⭐ PRIMARY</div>
-                  <div class="lens-label">85mm Portrait</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Premium, natural, flat-face compressions. Distorsi minimal. Background terkompresi indah.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Medium — bokeh halus tanpa kehilangan konteks.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Semua konten AREKA_GIRL_001 — TikTok Affiliate, beauty shot, portrait, perfume presentation. Lensa default untuk karakter.</div>
-                  </div>
-                </div>
-                <div class="lens-card">
-                  <div class="lens-badge">📌 STANDARD</div>
-                  <div class="lens-label">50mm Standard</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Paling mendekati perspektif mata manusia. Netral, alami, serbaguna.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Natural — mirip penglihatan manusia.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Fashion lookbook, outfit showcase, konten yang membutuhkan konteks lingkungan.</div>
-                  </div>
-                </div>
-                <div class="lens-card">
-                  <div class="lens-badge">📌 DETAIL</div>
-                  <div class="lens-label">100mm Macro</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Ultra detail. Setiap tekstur terlihat. Magnifikasi 1:1.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Sangat tipis. Fokus pada area kecil.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Detail produk — botol parfum, label, tekstur, emboss, logo. WAJIB untuk semua close-up produk.</div>
-                  </div>
-                </div>
-                <div class="lens-card">
-                  <div class="lens-badge">📌 PORTRAIT</div>
-                  <div class="lens-label">135mm Portrait</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Flat kompresi kuat. Background sangat terkompresi. Paling "mahal" secara visual.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Tipis. Bokeh creamy.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Campaign luxury, editorial, beauty close-up extreme. Jarak jauh, butuh ruang lebih.</div>
-                  </div>
-                </div>
-                <div class="lens-card">
-                  <div class="lens-badge">📌 WIDE</div>
-                  <div class="lens-label">35mm Wide</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Sedikit wide, menangkap lingkungan. Distorsi minimal dan natural.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Lebar — banyak area fokus.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Store interior, room tour, behind-the-scenes, konten yang menunjukkan lingkungan sekitar.</div>
-                  </div>
-                </div>
-                <div class="lens-card">
-                  <div class="lens-badge">📌 ULTRA WIDE</div>
-                  <div class="lens-label">24mm Wide</div>
-                  <div class="lens-detail">
-                    <div class="lens-stat"><strong>Karakter Visual:</strong> Sangat wide. Menangkap banyak lingkungan. Ada distorsi ringan di tepi.</div>
-                    <div class="lens-stat"><strong>Depth of Field:</strong> Sangat lebar.</div>
-                    <div class="lens-stat"><strong>Kapan Digunakan:</strong> Store opening, event coverage, konten yang ingin menunjukkan skala ruangan. HATI-HATI dengan distorsi wajah.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Aturan Penggunaan Lensa</h2>
-              <div class="dep-graph">
-                <div class="dep-card"><div class="dep-from">Beauty Product</div><div class="dep-arrow">→</div><div class="dep-to">85mm (karakter) + 100mm Macro (produk detail)</div></div>
-                <div class="dep-card"><div class="dep-from">Fashion / Outfit</div><div class="dep-arrow">→</div><div class="dep-to">50mm</div></div>
-                <div class="dep-card"><div class="dep-from">Store Interior</div><div class="dep-arrow">→</div><div class="dep-to">35mm</div></div>
-                <div class="dep-card"><div class="dep-from">Product Detail</div><div class="dep-arrow">→</div><div class="dep-to">100mm Macro</div></div>
-                <div class="dep-card"><div class="dep-from">Luxury Campaign</div><div class="dep-arrow">→</div><div class="dep-to">135mm</div></div>
-                <div class="dep-card"><div class="dep-from">TikTok Affiliate</div><div class="dep-arrow">→</div><div class="dep-to"><strong>85mm</strong> (Medium Close Up)</div></div>
-              </div>
-            </div>
+            <div class="doc-section"><h2>Lensa</h2><div class="lens-grid">
+              <div class="lens-card primary"><div class="lens-badge rekomendasi">⭐ PRIMARY</div><div class="lens-label">85mm Portrait</div><div class="lens-stat">Karakter visual premium. Distorsi minimal. Bokeh halus. <strong>Default AREKA_GIRL_001.</strong></div></div>
+              <div class="lens-card"><div class="lens-badge">📌 STANDARD</div><div class="lens-label">50mm</div><div class="lens-stat">Perspektif mata manusia. Netral. Fashion, lookbook.</div></div>
+              <div class="lens-card"><div class="lens-badge">📌 DETAIL</div><div class="lens-label">100mm Macro</div><div class="lens-stat">Magnifikasi 1:1. <strong>WAJIB untuk semua close-up produk.</strong></div></div>
+              <div class="lens-card"><div class="lens-badge">📌 PORTRAIT</div><div class="lens-label">135mm</div><div class="lens-stat">Kompresi kuat. Campaign luxury, editorial.</div></div>
+              <div class="lens-card"><div class="lens-badge">📌 WIDE</div><div class="lens-label">35mm</div><div class="lens-stat">Store interior, room tour. Distorsi minimal.</div></div>
+              <div class="lens-card"><div class="lens-badge">📌 ULTRA WIDE</div><div class="lens-label">24mm</div><div class="lens-stat">Event coverage. HATI-HATI distorsi wajah.</div></div>
+            </div></div>
           </div>
         </div>
 
-        <!-- view-lighting -->
         <div class="doc-view" id="view-lighting">
-          <div class="doc-header">
-            <h1>💡 MODUL 6 — Lighting Engine</h1>
-            <p class="doc-desc">Menghasilkan pencahayaan yang konsisten untuk seluruh konten. Lighting harus mempertahankan warna kulit natural dan suasana premium.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('lighting')">📋 Salin Modul</button>
-              <span class="doc-meta">7 jenis · 9 aturan</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>💡 MODUL 6 — Lighting Engine</h1><p class="doc-desc">Pencahayaan konsisten. Warna kulit natural & suasana premium.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('lighting')">📋 Salin Modul</button><span class="doc-meta">7 jenis · 5 rules</span></div></div>
           <div class="doc-content">
-
-            <div class="doc-section">
-              <h2>Jenis Cahaya</h2>
+            <div class="doc-section"><h2>Jenis & Aturan</h2>
               <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Natural Window Light</span><span class="attr-val">Cahaya jendela alami. Soft, diffuse, natural. Warna kulit paling akurat. Cocok untuk konten siang hari.</span></div>
-                <div class="attr-row"><span class="attr-key">Softbox</span><span class="attr-val">Cahaya studio lembut. Diffused, controlled. Hasil konsisten di setiap shot. <strong>PRIMARY untuk konten indoor terkontrol.</strong></span></div>
-                <div class="attr-row"><span class="attr-key">Ring Light</span><span class="attr-val">Cahaya melingkar di sekitar lensa. Flat lighting, menghilangkan shadow di wajah. Cocok untuk konten face-frontal.</span></div>
-                <div class="attr-row"><span class="attr-key">LED Retail Lighting</span><span class="attr-val">Cahaya toko ritel. Hangat, tersebar dari ceiling. Warna natural dengan tone hangat. <strong>PRIMARY untuk scene butik.</strong></span></div>
-                <div class="attr-row"><span class="attr-key">Golden Hour</span><span class="attr-val">Cahaya matahari sore. Hangat, dramatis, premium. Hanya untuk campaign khusus atau outdoor.</span></div>
-                <div class="attr-row"><span class="attr-key">Studio Light</span><span class="attr-val">Cahaya studio profesional. High output, controlled. Untuk commercial photography formal.</span></div>
-                <div class="attr-row"><span class="attr-key">Ambient Retail Light</span><span class="attr-val">Cahaya ambient toko. Mixed lighting dari berbagai sumber. Untuk scene yang lebih natural dan hidup.</span></div>
+                <div class="attr-row"><span class="attr-key">Natural Window Light</span><span class="attr-val">Soft, diffuse, warna kulit paling akurat.</span></div>
+                <div class="attr-row"><span class="attr-key">Softbox</span><span class="attr-val"><strong>PRIMARY indoor.</strong> Diffused, controlled.</span></div>
+                <div class="attr-row"><span class="attr-key">Ring Light</span><span class="attr-val">Flat lighting, menghilangkan shadow wajah.</span></div>
+                <div class="attr-row"><span class="attr-key">LED Retail Lighting</span><span class="attr-val"><strong>PRIMARY butik.</strong> Hangat, natural.</span></div>
+                <div class="attr-row"><span class="attr-key">Golden Hour</span><span class="attr-val">Hangat, dramatis. Campaign khusus.</span></div>
               </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Aturan Pencahayaan</h2>
-              <div class="lighting-rules">
-                <div class="lock-card"><div class="lock-head locked">Direction</div><div class="lock-detail"><div class="lock-reason">Frontal 45° sebagai key light. Fill light 30° dari sisi berlawanan. Backlight 135° untuk rim light pada rambut dan bahu. Hindari top-down lighting yang membuat shadow keras di wajah.</div></div></div>
-                <div class="lock-card"><div class="lock-head locked">Intensity</div><div class="lock-detail"><div class="lock-reason">Soft dan merata. Rasio key:fill = 2:1. Tidak ada hot spot. Tidak ada shadow keras di wajah. Wajah harus terang merata.</div></div></div>
-                <div class="lock-card"><div class="lock-head locked">Skin Tone Preservation</div><div class="lock-detail"><div class="lock-reason"><strong>PRIORITAS TERTINGGI.</strong> Warna kulit sawo matang AREKA_GIRL_001 harus akurat. Tidak boleh pucat/kemerahan. White balance disesuaikan untuk warm skin tone.</div></div></div>
-                <div class="lock-card"><div class="lock-head locked">Mood</div><div class="lock-detail"><div class="lock-reason">Luxury retail atmosphere. Hangat, inviting, premium. Tidak gelap, tidak terlalu terang. Bright premium look.</div></div></div>
-                <div class="lock-card"><div class="lock-head locked">Reflection & Shadow</div><div class="lock-detail"><div class="lock-reason">No harsh shadow. Shadow lembut dan natural. Botol parfum boleh memantulkan cahaya (glass reflection natural). Tidak boleh ada shadow yang mengganggu komposisi.</div></div></div>
-              </div>
-            </div>
-
-            <div class="doc-note-box">
-              <strong>⚡ Aturan Perfume Store:</strong> Warm LED (3500K–4500K) + Soft Fill Light + Natural Skin Tone priority + Luxury Retail Mood + No Harsh Shadow.
+              <div class="lock-card"><div class="lock-head locked">Direction</div><div class="lock-detail"><div class="lock-reason">Frontal 45° key light. Fill 30° opposite. Backlight 135° rim light. Hindari top-down.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Skin Tone</div><div class="lock-detail"><div class="lock-reason"><strong>PRIORITAS TERTINGGI.</strong> Sawo matang akurat. Tidak pucat/kemerahan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">No Harsh Shadow</div><div class="lock-detail"><div class="lock-reason">Shadow lembut. Botol parfum refleksi natural.</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- view-color -->
         <div class="doc-view" id="view-color">
-          <div class="doc-header">
-            <h1>🎨 MODUL 7 — Color Grading Engine</h1>
-            <p class="doc-desc">Menjaga konsistensi warna di seluruh gambar. Color grading adalah identitas visual brand — harus konsisten dari konten pertama hingga terakhir.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('color')">📋 Salin Modul</button>
-              <span class="doc-meta">6 tone · 9 parameter grading</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>🎨 MODUL 7 — Color Grading Engine</h1><p class="doc-desc">Konsistensi warna di seluruh gambar.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('color')">📋 Salin Modul</button><span class="doc-meta">6 tone · 9 parameter</span></div></div>
           <div class="doc-content">
-
-            <div class="doc-section">
-              <h2>Tone Palette</h2>
-              <div class="palette-grid">
-                <div class="palette-card active"><div class="palette-label">Warm Luxury <span class="palette-badge">⭐ PRIMARY</span></div><div class="palette-desc">Warm whites, hangat, premium. Cocok untuk AREKA Official Store. Kulit sawo matang terlihat natural dan glowing.</div><div class="palette-spec">Contrast: +10 · Saturation: +5 · Temp: 5500K · Skin: natural warm</div></div>
-                <div class="palette-card"><div class="palette-label">Clean White</div><div class="palette-desc">Bright, bersih, modern. Cocok untuk konten produk di background putih. Hati-hati dengan white balance.</div><div class="palette-spec">Contrast: +15 · Saturation: 0 · Temp: 5000K · Skin: neutral</div></div>
-                <div class="palette-card"><div class="palette-label">Natural Skin</div><div class="palette-desc">Fokus pada warna kulit akurat. Untuk konten beauty/demo makeup.</div><div class="palette-spec">Contrast: +5 · Saturation: -5 · Temp: 5200K · Skin: true color priority</div></div>
-                <div class="palette-card"><div class="palette-label">Premium Retail</div><div class="palette-desc">Tone toko ritel high-end. Kayu hangat, pencahayaan butik.</div><div class="palette-spec">Contrast: +12 · Saturation: +8 · Temp: 4200K · Wood: warm rich</div></div>
-                <div class="palette-card"><div class="palette-label">Elegant Neutral</div><div class="palette-desc">Netral elegan. Untuk konten formal atau campaign minimalis.</div><div class="palette-spec">Contrast: +8 · Saturation: -3 · Temp: 5000K · Clean blacks</div></div>
-                <div class="palette-card"><div class="palette-label">Commercial Beauty</div><div class="palette-desc">Standar iklan kecantikan komersial. Cerah, segar, premium.</div><div class="palette-spec">Contrast: +10 · Saturation: +10 · Temp: 4800K · Glowy skin</div></div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Parameter Grading</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Contrast</span><span class="attr-val">+8 sampai +12. Tidak flat, tidak terlalu kontras. Detail di shadow tetap terlihat.</span></div>
-                <div class="attr-row"><span class="attr-key">Saturation</span><span class="attr-val">+5 sampai +8. Warna produk akurat. Warna kulit natural. Tidak oversaturated.</span></div>
-                <div class="attr-row"><span class="attr-key">Whites</span><span class="attr-val">Bright tapi tidak clipping. Detail di area putih tetap ada.</span></div>
-                <div class="attr-row"><span class="attr-key">Blacks</span><span class="attr-val">Clean blacks. Shadow tidak flat dan tidak terlalu gelap. Detail tetap terlihat.</span></div>
-                <div class="attr-row"><span class="attr-key">Highlights</span><span class="attr-val">Soft highlights. Tidak blow out terutama di kulit dan botol parfum.</span></div>
-                <div class="attr-row"><span class="attr-key">Midtone</span><span class="attr-val">Warm midtone. Warna kulit di midtone harus akurat.</span></div>
-                <div class="attr-row"><span class="attr-key">Shadow</span><span class="attr-val">Lembut, tidak hitam pekat. Detail di area gelap tetap terlihat.</span></div>
-                <div class="attr-row"><span class="attr-key">Skin Tone</span><span class="attr-val">PRIORITAS. Sawo matang hangat. Tidak boleh kuning/merah/pucat.</span></div>
-                <div class="attr-row"><span class="attr-key">Wood Tone</span><span class="attr-val">Untuk rak parfum. Warm rich wood. Cokelat hangat, tidak dingin.</span></div>
-                <div class="attr-row"><span class="attr-key">Glass Reflection</span><span class="attr-val">Botol parfum harus memantulkan cahaya secara realistis. Tidak berlebihan.</span></div>
-              </div>
-            </div>
+            <div class="doc-section"><h2>Tone</h2><div class="palette-grid">
+              <div class="palette-card active"><div class="palette-label">Warm Luxury <span class="palette-badge">⭐ PRIMARY</span></div><div class="palette-desc">Warm whites, hangat, premium. Kulit sawo matang natural.</div></div>
+              <div class="palette-card"><div class="palette-label">Clean White</div><div class="palette-desc">Bright, bersih. Konten produk background putih.</div></div>
+              <div class="palette-card"><div class="palette-label">Natural Skin</div><div class="palette-desc">Fokus warna kulit akurat. Beauty/demo.</div></div>
+              <div class="palette-card"><div class="palette-label">Premium Retail</div><div class="palette-desc">Kayu hangat, butik. Contrast +12, Temp 4200K.</div></div>
+            </div></div>
           </div>
         </div>
 
-        <!-- view-composition -->
         <div class="doc-view" id="view-composition">
-          <div class="doc-header">
-            <h1>🖼️ MODUL 8 — Composition Engine</h1>
-            <p class="doc-desc">Mengatur posisi elemen visual dalam frame. Komposisi konsisten = brand identity kuat.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('composition')">📋 Salin Modul</button>
-              <span class="doc-meta">7 prinsip · 7 aturan positioning</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>🖼️ MODUL 8 — Composition Engine</h1><p class="doc-desc">Posisi elemen visual dalam frame.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('composition')">📋 Salin Modul</button><span class="doc-meta">7 prinsip · 6 aturan</span></div></div>
           <div class="doc-content">
-
-            <div class="doc-section">
-              <h2>Prinsip Komposisi</h2>
-              <div class="attr-table">
-                <div class="attr-row"><span class="attr-key">Rule of Thirds</span><span class="attr-val">Karakter di grid 2/3 kanan atau kiri. Produk di intersection point. Wajah di 1/3 atas vertikal.</span></div>
-                <div class="attr-row"><span class="attr-key">Center Composition</span><span class="attr-val">Karakter di tengah frame. Cocok untuk TikTok Affiliate face-frontal. Simetris, kuat, fokus.</span></div>
-                <div class="attr-row"><span class="attr-key">Commercial Composition</span><span class="attr-val">Karakter 60-70% frame. Produk jelas terlihat. Background terlihat sebagai konteks. Tidak terlalu penuh, tidak terlalu kosong.</span></div>
-                <div class="attr-row"><span class="attr-key">Negative Space</span><span class="attr-val">Area kosong di atas/bawah untuk teks overlay, CTA, username TikTok, harga produk.</span></div>
-                <div class="attr-row"><span class="attr-key">Leading Lines</span><span class="attr-val">Rak parfum, meja, atau garis arsitektur toko mengarah ke karakter/produk.</span></div>
-                <div class="attr-row"><span class="attr-key">Visual Hierarchy</span><span class="attr-val">Wajah karakter → Produk di tangan → Latar toko. Mata penonton harus mengalir dalam urutan itu.</span></div>
-                <div class="attr-row"><span class="attr-key">Foreground · Middle · Background</span><span class="attr-val">Foreground: produk (jika dipegang di depan). Middle: karakter. Background: rak parfum, display toko.</span></div>
-              </div>
-            </div>
-
-            <div class="doc-section">
-              <h2>Aturan Positioning</h2>
-              <div class="lock-card"><div class="lock-head locked">Karakter</div><div class="lock-detail"><div class="lock-reason">~65% frame. Wajah di 1/3 atas. Bahu rileks. Posisi sentral atau sedikit kanan/kiri. Tidak boleh terpotong di dagu atau dahi.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Produk</div><div class="lock-detail"><div class="lock-reason">Dipegang natural oleh karakter. Botol parfum label menghadap kamera. Jelas terlihat, tidak terhalang jari. Posisi di depan dada atau sedikit ke samping.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Meja / Counter</div><div class="lock-detail"><div class="lock-reason">Jika ada meja display, karakter di belakangnya. Meja di 1/3 bawah frame. Produk tambahan di atas meja.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Rak Parfum</div><div class="lock-detail"><div class="lock-reason">Background. Rak penuh dengan botol parfum. Tidak blur total — tetap terlihat sebagai konteks. Tersusun rapi.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Banner</div><div class="lock-detail"><div class="lock-reason">HANYA di bagian bawah. Lebar penuh. Area aman. Tidak overlap dengan karakter. Paling tinggi 8% dari tinggi frame.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Safe Area</div><div class="lock-detail"><div class="lock-reason">Area 10% dari tepi frame. Tidak ada elemen penting di sini. Untuk antisipasi cropping platform.</div></div></div>
+            <div class="doc-section"><h2>Aturan Positioning</h2>
+              <div class="lock-card"><div class="lock-head locked">Karakter</div><div class="lock-detail"><div class="lock-reason">~65% frame. Wajah di 1/3 atas. Center atau sedikit kanan/kiri.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Produk</div><div class="lock-detail"><div class="lock-reason">Dipegang natural. Label menghadap kamera. Tidak terhalang jari.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Banner</div><div class="lock-detail"><div class="lock-reason">HANYA bawah. 8% tinggi frame. Tidak overlap karakter.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Safe Area</div><div class="lock-detail"><div class="lock-reason">10% dari tepi. Antisipasi cropping platform.</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- view-quality -->
         <div class="doc-view" id="view-quality">
-          <div class="doc-header">
-            <h1>✨ MODUL 9 — Image Quality Engine</h1>
-            <p class="doc-desc">Menentukan kualitas akhir gambar. Setiap gambar AREKA harus memiliki standar kualitas premium komersial yang konsisten.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('quality')">📋 Salin Modul</button>
-              <span class="doc-meta">20+ parameter kualitas</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>✨ MODUL 9 — Image Quality</h1><p class="doc-desc">Standar kualitas premium komersial.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('quality')">📋 Salin Modul</button><span class="doc-meta">20 parameter</span></div></div>
           <div class="doc-content">
-            <div class="doc-section">
-              <h2>Standar Kualitas</h2>
-              <div class="quality-grid">
-                <div class="quality-item">Photorealistic</div>
-                <div class="quality-item">Commercial Photography</div>
-                <div class="quality-item">Magazine Quality</div>
-                <div class="quality-item">Luxury Retail Campaign</div>
-                <div class="quality-item">Ultra Detailed</div>
-                <div class="quality-item">Natural Skin Texture</div>
-                <div class="quality-item">Realistic Reflections</div>
-                <div class="quality-item">High Dynamic Range</div>
-                <div class="quality-item">8K Appearance</div>
-                <div class="quality-item">Professional Color</div>
-                <div class="quality-item">Balanced Exposure</div>
-                <div class="quality-item">Sharp Focus</div>
-                <div class="quality-item">Premium Advertising</div>
-                <div class="quality-item">Realistic Materials</div>
-                <div class="quality-item">Realistic Glass</div>
-                <div class="quality-item">Realistic Perfume Bottle</div>
-                <div class="quality-item">High Detail Hair</div>
-                <div class="quality-item">High Detail Eyes</div>
-                <div class="quality-item">Natural Finger Anatomy</div>
-                <div class="quality-item">Professional Product Rendering</div>
-              </div>
-            </div>
-            <div class="doc-note-box">
-              <strong>⚠️ Larangan Mutlak:</strong> No plastic skin · No porcelain · No wax figure · No CGI look · No anime/cartoon · No illustration · No blur (kecuali background depth of field yang natural) · No noise · No compression artifacts. Gambar harus terlihat seperti foto asli, bukan hasil render AI yang murahan.
-            </div>
+            <div class="doc-section"><h2>Parameter</h2><div class="quality-grid">
+              <span class="quality-item">Photorealistic</span><span class="quality-item">Commercial Photography</span><span class="quality-item">Magazine Quality</span>
+              <span class="quality-item">Luxury Retail</span><span class="quality-item">Ultra Detailed</span><span class="quality-item">Natural Skin Texture</span>
+              <span class="quality-item">Realistic Reflections</span><span class="quality-item">HDR</span><span class="quality-item">8K Appearance</span>
+              <span class="quality-item">Professional Color</span><span class="quality-item">Balanced Exposure</span><span class="quality-item">Sharp Focus</span>
+              <span class="quality-item">Realistic Glass</span><span class="quality-item">Realistic Perfume Bottle</span><span class="quality-item">Natural Finger Anatomy</span>
+            </div></div>
+            <div class="doc-note-box">Larangan: No plastic skin · No cartoon · No excessive HDR · No oversaturated · No noise</div>
           </div>
         </div>
 
-        <!-- view-consistency -->
         <div class="doc-view" id="view-consistency">
-          <div class="doc-header">
-            <h1>🔐 MODUL 10 — Visual Consistency Rules</h1>
-            <p class="doc-desc">Aturan permanen yang memastikan seluruh gambar AREKA memiliki kualitas visual yang konsisten. Aturan ini tidak boleh diubah per-konten.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('consistency')">📋 Salin Modul</button>
-              <span class="doc-meta">10 aturan wajib · 5 larangan mutlak</span>
-            </div>
-          </div>
+          <div class="doc-header"><h1>🔐 MODUL 10 — Consistency Rules</h1><p class="doc-desc">Aturan permanen kualitas visual.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('consistency')">📋 Salin Modul</button><span class="doc-meta">10 Always · 5 Never</span></div></div>
           <div class="doc-content">
-            <div class="doc-section">
-              <h2>✅ Aturan Wajib (Always)</h2>
-              <div class="lock-card"><div class="lock-head locked">Always Soft Lighting</div><div class="lock-detail"><div class="lock-reason">Pencahayaan lembut di setiap gambar. Tidak ada cahaya keras atau shadow kasar. Wajah harus terang merata.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Natural Skin Tone</div><div class="lock-detail"><div class="lock-reason">Warna kulit AREKA_GIRL_001 (sawo matang hangat) harus akurat di setiap gambar. Tidak ada color cast yang mengubah warna kulit.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Commercial Quality</div><div class="lock-detail"><div class="lock-reason">Setiap gambar harus memiliki standar kualitas fotografi komersial. Tidak ada gambar yang terlihat amatir/snapshot.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Premium</div><div class="lock-detail"><div class="lock-reason">Kesan premium harus terlihat dari lighting, komposisi, dan kualitas gambar. AREKA adalah brand parfum eksklusif.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Realistic Perspective</div><div class="lock-detail"><div class="lock-reason">Perspektif natural dan realistis. Tidak ada distorsi, tidak ada perspektif aneh yang tidak mungkin di fotografi nyata.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Proper Framing</div><div class="lock-detail"><div class="lock-reason">Wajah tidak terpotong. Tangan tidak terpotong. Produk terlihat utuh. Safe area dihormati.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Natural Makeup</div><div class="lock-detail"><div class="lock-reason">Makeup natural beauty — soft matte foundation, light blush, nude pink lipstick. Tidak ada makeup heavy/glamour.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Warm Atmosphere</div><div class="lock-detail"><div class="lock-reason">Suasana hangat dan mengundang. Karakter terlihat ramah dan approachable. Tidak ada tampilan dingin atau strictly formal.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always In Focus</div><div class="lock-detail"><div class="lock-reason">Wajah karakter harus tajam. Fokus pada mata. Produk juga harus fokus. Background DOF boleh blur natural, tapi tidak excessive.</div></div></div>
-              <div class="lock-card"><div class="lock-head locked">Always Detailed</div><div class="lock-detail"><div class="lock-reason">Tekstur kulit, rambut, kain, botol parfum harus terlihat detail. Tidak ada area yang terlihat flat/empty.</div></div></div>
+            <div class="doc-section"><h2>Always</h2>
+              <div class="lock-card"><div class="lock-head locked">Always Soft Lighting</div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Natural Skin Tone</div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Commercial Quality</div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Premium</div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Realistic Perspective</div></div>
             </div>
-            <div class="doc-section">
-              <h2>🚫 Larangan Mutlak (Never)</h2>
-              <div class="lock-card var"><div class="lock-head variable">Never Exaggerated Effects</div><div class="lock-detail"><div class="lock-reason">Tidak ada efek berlebihan — lens flare, glow, sparkle, bokeh berlebihan, efek fantasi.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">Never Cartoon/Anime</div><div class="lock-detail"><div class="lock-reason">Tidak ada filter kartun, gaya anime, ilustrasi, atau non-fotorealistik.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">Never Excessive HDR</div><div class="lock-detail"><div class="lock-reason">HDR natural diperbolehkan. HDR ekstrem dengan halo/glow di tepi objek TIDAK diperbolehkan.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">Never Oversaturated</div><div class="lock-detail"><div class="lock-reason">Warna harus natural. Produk harus akurat warnanya. Oversaturation membuat gambar terlihat murahan.</div></div></div>
-              <div class="lock-card var"><div class="lock-head variable">Never Noise or Blur</div><div class="lock-detail"><div class="lock-reason">Gambar harus bersih. Noise tidak diperbolehkan. Blur hanya natural depth of field, bukan motion blur atau out-of-focus.</div></div></div>
+            <div class="doc-section"><h2>Never</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never Cartoon/Anime</div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Excessive HDR</div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Oversaturated</div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Noise or Blur</div></div>
             </div>
           </div>
         </div>
 
-        <!-- view-presets -->
-        <div class="doc-view" id="view-presets">
-          <div class="doc-header">
-            <h1>📋 MODUL 11 — Visual Presets</h1>
-            <p class="doc-desc">Preset siap pakai untuk berbagai platform dan jenis konten. Setiap preset adalah kombinasi Camera + Lens + Lighting + Composition + Color Grading + Quality.</p>
-            <div class="doc-actions">
-              <button class="doc-btn" onclick="copyModule('presets')">📋 Salin Modul</button>
-              <span class="doc-meta">8 preset siap pakai</span>
+        <!-- ==================== FASE 3 ==================== -->
+
+        <!-- view-role -->
+        <div class="doc-view active" id="view-role">
+          <div class="doc-header"><h1>👔 MODUL 12 — Role Engine</h1><p class="doc-desc">Menentukan peran karakter dalam setiap konten. Karakter harus selalu terlihat memahami produk.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('role')">📋 Salin Modul</button><span class="doc-meta">7 role · 2 larangan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Default Role AREKA_GIRL_001</h2>
+              <div class="role-grid">
+                <div class="role-card primary"><div class="role-badge">⭐ PRIMARY</div><div class="role-title">Beauty Advisor</div><div class="role-desc">Penasihat kecantikan profesional. Mengerti produk, memberikan rekomendasi personal.</div></div>
+                <div class="role-card"><div class="role-title">Perfume Consultant</div><div class="role-desc">Konsultan parfum. Menjelaskan aroma, notes, longevity, silage.</div></div>
+                <div class="role-card"><div class="role-title">TikTok Affiliate Creator</div><div class="role-desc">Konten kreator affiliate. Gaya natural, personal, engaging.</div></div>
+                <div class="role-card"><div class="role-title">Luxury Store Sales Consultant</div><div class="role-desc">Pramuniaga butik mewah. Pelayanan eksklusif, premium.</div></div>
+                <div class="role-card"><div class="role-title">Fragrance Specialist</div><div class="role-desc">Spesialis wewangian. Pemahaman mendalam tentang parfum.</div></div>
+                <div class="role-card"><div class="role-title">Customer Assistant</div><div class="role-desc">Asisten pelanggan. Siap membantu, ramah, solutif.</div></div>
+                <div class="role-card"><div class="role-title">Professional Sales Representative</div><div class="role-desc">Perwakilan penjualan profesional. Mewakili brand AREKA.</div></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Aturan Role</h2>
+              <div class="lock-card"><div class="lock-head locked">Always</div><div class="lock-detail"><div class="lock-reason">Karakter harus selalu terlihat memahami produk yang dipromosikan. Paham aroma, keunggulan, harga, dan cara pakai.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Jangan pernah terlihat bingung, ragu-ragu, atau pasif. Karakter adalah ahli di bidangnya.</div></div></div>
             </div>
           </div>
+        </div>
+
+        <!-- view-personality -->
+        <div class="doc-view" id="view-personality">
+          <div class="doc-header"><h1>💎 MODUL 13 — Sales Personality Engine</h1><p class="doc-desc">Kepribadian karakter saat menjual. Menentukan bagaimana karakter terasa oleh calon pembeli.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('personality')">📋 Salin Modul</button><span class="doc-meta">11 traits · 4 larangan</span></div></div>
           <div class="doc-content">
+            <div class="doc-section"><h2>Personality Traits</h2>
+              <div class="personality-grid">
+                <div class="trait-positive">Ramah</div><div class="trait-positive">Profesional</div><div class="trait-positive">Percaya Diri</div>
+                <div class="trait-positive">Sopan</div><div class="trait-positive">Elegan</div><div class="trait-positive">Meyakinkan</div>
+                <div class="trait-positive">Antusias</div><div class="trait-positive">Mudah Didekati</div>
+              </div>
+              <p class="doc-note" style="margin-top:8px;">Karakter harus memberikan kesan membantu pelanggan, bukan sekadar menjual.</p>
+            </div>
+            <div class="doc-section"><h2>Aturan Personality</h2>
+              <div class="lock-card var"><div class="lock-head variable">Jangan</div><div class="lock-detail"><div class="lock-reason">Tidak memaksa. Tidak agresif. Tidak berlebihan. Tidak terlihat seperti robot sales.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Kunci</div><div class="lock-detail"><div class="lock-reason">Selalu memberikan kesan "saya di sini untuk membantu Anda memilih parfum terbaik." Bukan "saya harus menjual produk ini."</div></div></div>
+            </div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 1 — TikTok Affiliate ⭐ PRIMARY</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Eye Level · Medium Close Up · Portrait 9:16 · Natural Perspective · Static</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm</div>
-                <div class="preset-row"><strong>Lighting:</strong> Softbox Frontal 45° + Fill Light 30° + Rim Light 135°</div>
-                <div class="preset-row"><strong>Composition:</strong> Center Composition, Karakter 65% frame, Produk dipegang natural</div>
-                <div class="preset-row"><strong>Color:</strong> Warm Luxury, Contrast +8, Saturation +5, Temp 5500K</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · 8K · Natural Skin · Commercial Advertising</div>
+        <!-- view-interaction -->
+        <div class="doc-view" id="view-interaction">
+          <div class="doc-header"><h1>💬 MODUL 14 — Customer Interaction Engine</h1><p class="doc-desc">Membuat karakter terasa sedang berbicara langsung kepada pelanggan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('interaction')">📋 Salin Modul</button><span class="doc-meta">7 aturan interaksi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aturan Interaksi</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Kontak Mata</span><span class="attr-val">Melihat ke arah kamera. Kontak mata alami, tidak menatap kosong. Mata harus terasa "hidup" dan terhubung dengan penonton.</span></div>
+                <div class="attr-row"><span class="attr-key">Senyuman</span><span class="attr-val">Tersenyum hangat, menyambut pelanggan. Senyum natural dengan gigi atas sedikit terlihat.</span></div>
+                <div class="attr-row"><span class="attr-key">Ajakan</span><span class="attr-val">Mengajak pelanggan melihat produk. Seolah berkata "Ayo lihat parfum baru ini."</span></div>
+                <div class="attr-row"><span class="attr-key">Penjelasan</span><span class="attr-val">Terlihat sedang menjelaskan parfum — aroma, notes, keunggulan. Ekspresi serius tapi ramah.</span></div>
+                <div class="attr-row"><span class="attr-key">Interaktif</span><span class="attr-val">Seolah menjawab pertanyaan pelanggan. Ekspresi mendengarkan dan merespon.</span></div>
+                <div class="attr-row"><span class="attr-key">Pengalaman</span><span class="attr-val">Memberikan pengalaman belanja yang nyaman. Tidak terburu-buru, tidak tegang.</span></div>
               </div>
             </div>
+            <div class="doc-note-box">Karakter tidak boleh terlihat seperti seorang model yang hanya berpose. Ia harus terlihat seperti Beauty Advisor yang sedang bekerja melayani pelanggan.</div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 2 — Shopee Affiliate</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Slight Eye Level · Medium Shot · Square 1:1 atau Portrait 9:16 · Static</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm (karakter) + 100mm Macro (produk detail)</div>
-                <div class="preset-row"><strong>Lighting:</strong> Natural Window Light atau LED Retail Lighting</div>
-                <div class="preset-row"><strong>Composition:</strong> Rule of Thirds, Produk jelas, Negative Space untuk harga</div>
-                <div class="preset-row"><strong>Color:</strong> Clean White, Contrast +10, Saturation +3, Background putih/bersih</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · HDR · Sharp Focus · Professional Product Rendering</div>
+        <!-- view-presentation -->
+        <div class="doc-view" id="view-presentation">
+          <div class="doc-header"><h1>📦 MODUL 15 — Product Presentation Engine</h1><p class="doc-desc">Produk menjadi fokus utama setelah wajah karakter.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('presentation')">📋 Salin Modul</button><span class="doc-meta">8 aturan presentasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aturan Presentasi Produk</h2>
+              <div class="lock-card"><div class="lock-head locked">Visibilitas</div><div class="lock-detail"><div class="lock-reason">Produk selalu terlihat jelas. Tidak boleh terhadap oleh tangan, lengan, atau elemen lain.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Label</div><div class="lock-detail"><div class="lock-reason">Label produk menghadap kamera. Nama parfum dan brand AREKA harus terbaca.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Posisi</div><div class="lock-detail"><div class="lock-reason">Produk menjadi objek kedua setelah wajah dalam visual hierarchy. Mata penonton: wajah → produk.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Kebersihan</div><div class="lock-detail"><div class="lock-reason">Botol parfum selalu bersih. Tidak ada sidik jari, debu, atau noda. Refleksi kaca tetap realistis.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Fokus</div><div class="lock-detail"><div class="lock-reason">Produk tidak blur. Baik karakter maupun produk harus tajam (kecuali detail macro shot yang memang fokus terbatas).</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-gesture -->
+        <div class="doc-view" id="view-gesture">
+          <div class="doc-header"><h1>🤲 MODUL 16 — Hand Gesture Engine</h1><p class="doc-desc">Mengatur gerakan tangan saat menjual. Gestur alami memperkuat pesan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('gesture')">📋 Salin Modul</button><span class="doc-meta">6 gesture · 5 larangan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Gesture yang Direkomendasikan</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Memegang Parfum</span><span class="attr-val">Botol dipegang natural di tangan kanan. Genggaman rileks, tidak mencengkeram. Posisi di depan dada.</span></div>
+                <div class="attr-row"><span class="attr-key">Mengangkat Parfum</span><span class="attr-val">Mengangkat botol setinggi bahu untuk menunjukkan produk. Gerakan lambat dan anggun.</span></div>
+                <div class="attr-row"><span class="attr-key">Menunjuk Label</span><span class="attr-val">Jari telunjuk menunjuk ke label botol. Mengarahkan perhatian ke detail penting.</span></div>
+                <div class="attr-row"><span class="attr-key">Mengajak Melihat</span><span class="attr-val">Telapak tangan terbuka, gestur "silakan lihat." Ramah dan mengundang.</span></div>
+                <div class="attr-row"><span class="attr-key">Perbandingan</span><span class="attr-val">Dua botol dipegang bersebelahan untuk perbandingan. Posisi seimbang.</span></div>
               </div>
             </div>
+            <div class="doc-section"><h2>Larangan Gesture</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Tidak menutupi label produk. Tidak menutupi wajah. Tidak ada gestur kaku. Tidak ada jari rusak/aneh (AI sering salah generate jari). Tidak ada anatomi tangan yang salah.</div></div></div>
+            </div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 3 — Beauty Store</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Eye Level · Medium Close Up · Portrait 9:16 · Natural Perspective</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm</div>
-                <div class="preset-row"><strong>Lighting:</strong> Ring Light + Soft Fill. Flat lighting, no shadow</div>
-                <div class="preset-row"><strong>Composition:</strong> Center, Wajah fokus, Produk di samping wajah</div>
-                <div class="preset-row"><strong>Color:</strong> Natural Skin, Contrast +5, Saturation -5, True skin color priority</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · Natural Skin Texture · High Detail · Balanced Exposure</div>
+        <!-- view-expression -->
+        <div class="doc-view" id="view-expression">
+          <div class="doc-header"><h1>😊 MODUL 17 — Facial Expression Engine</h1><p class="doc-desc">Ekspresi yang meningkatkan rasa percaya dan mendorong interaksi.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('expression')">📋 Salin Modul</button><span class="doc-meta">6 ekspresi · 4 larangan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Ekspresi Default</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Senyum Hangat</span><span class="attr-val">Senyum natural. Gigi atas sedikit terlihat. Bibir tidak terlalu merekah. Tidak dipaksakan.</span></div>
+                <div class="attr-row"><span class="attr-key">Mata Ceria</span><span class="attr-val">Mata menyipit sedikit saat tersenyum (crow's feet natural). Ekspresi mata ikut "tersenyum."</span></div>
+                <div class="attr-row"><span class="attr-key">Percaya Diri</span><span class="attr-val">Dagu sedikit terangkat. Tatapan mantap. Ekspresi tenang dan yakin.</span></div>
+                <div class="attr-row"><span class="attr-key">Bangga</span><span class="attr-val">Saat menunjukkan produk, ekspresi bangga dan puas. Seperti "ini produk terbaik, saya merekomendasikannya."</span></div>
+                <div class="attr-row"><span class="attr-key">Natural</span><span class="attr-val">Tidak dibuat-buat. Tidak seperti pose model profesional. Harus terasa autentik.</span></div>
               </div>
             </div>
+            <div class="doc-section"><h2>Larangan Ekspresi</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Tidak tertawa berlebihan. Tidak wajah datar/tanpa ekspresi (resting bitch face). Tidak ekspresi terkejut/pura-pura kaget. Tidak meringis.</div></div></div>
+            </div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 4 — Luxury Perfume</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Slight Eye Level · Medium Close Up · Portrait 9:16 atau Square 1:1 · Commercial Perspective · Slow Push In</div>
-                <div class="preset-row"><strong>Lens:</strong> 135mm (karakter) + 100mm Macro (produk)</div>
-                <div class="preset-row"><strong>Lighting:</strong> Golden Hour atau Studio Light + Rim Light premium</div>
-                <div class="preset-row"><strong>Composition:</strong> Commercial, Karakter 60% frame, Produk dominan, Background butik mewah</div>
-                <div class="preset-row"><strong>Color:</strong> Premium Retail, Contrast +12, Saturation +8, Warm rich wood tone</div>
-                <div class="preset-row"><strong>Quality:</strong> Magazine Quality · Luxury Retail Campaign · 8K · Ultra Detail</div>
+        <!-- view-bodylang -->
+        <div class="doc-view" id="view-bodylang">
+          <div class="doc-header"><h1>🧍 MODUL 18 — Body Language Engine</h1><p class="doc-desc">Bahasa tubuh profesional yang meningkatkan kredibilitas dan kepercayaan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('bodylang')">📋 Salin Modul</button><span class="doc-meta">7 aturan · 4 larangan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aturan Body Language</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Postur</span><span class="attr-val">Berdiri tegak, percaya diri. Tulang belakang lurus, bahu ke belakang. Tidak membungkuk.</span></div>
+                <div class="attr-row"><span class="attr-key">Bahu</span><span class="attr-val">Rileks, tidak tegang. Bahu turun natural, tidak diangkat karena stres.</span></div>
+                <div class="attr-row"><span class="attr-key">Condong</span><span class="attr-val">Sedikit condong ke depan (sekitar 5-10°). Menunjukkan ketertarikan dan perhatian kepada pelanggan.</span></div>
+                <div class="attr-row"><span class="attr-key">Aktif</span><span class="attr-val">Terlihat aktif melayani, bukan sekadar berdiri. Energi positif mengalir dari postur tubuh.</span></div>
+                <div class="attr-row"><span class="attr-key">Siap Membantu</span><span class="attr-val">Tangan tidak di saku. Tangan tidak bersedekap. Posisi tangan siap bergerak, memegang produk, atau memberi gestur.</span></div>
               </div>
             </div>
+            <div class="doc-section"><h2>Larangan Body Language</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Tidak bersandar malas ke meja/dinding. Tidak menyilangkan tangan (terkesan tertutup/defensif). Tidak memasukkan tangan ke saku. Tidak terlihat gelisah atau tidak sabar.</div></div></div>
+            </div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 5 — Commercial Portrait</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Eye Level · Close Up · Square 1:1 · Natural Perspective</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm</div>
-                <div class="preset-row"><strong>Lighting:</strong> Softbox + Reflector. Dramatic soft shadow minimal</div>
-                <div class="preset-row"><strong>Composition:</strong> Center atau Rule of Thirds, Wajah fokus utama</div>
-                <div class="preset-row"><strong>Color:</strong> Elegant Neutral, Contrast +8, Saturation -3, Netral</div>
-                <div class="preset-row"><strong>Quality:</strong> Commercial Photography · Premium Advertising · Sharp Focus</div>
+        <!-- view-psychology -->
+        <div class="doc-view" id="view-psychology">
+          <div class="doc-header"><h1>🧠 MODUL 19 — Sales Psychology Engine</h1><p class="doc-desc">Membangun persepsi positif terhadap produk melalui visual.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('psychology')">📋 Salin Modul</button><span class="doc-meta">9 persepsi target</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Persepsi yang Harus Dibangun</h2>
+              <div class="psych-grid">
+                <div class="psych-item"><strong>Produk Premium</strong> — Tampil mewah, mahal, eksklusif</div>
+                <div class="psych-item"><strong>Produk Terpercaya</strong> — Brand resmi, kualitas terjamin</div>
+                <div class="psych-item"><strong>Produk Populer</strong> — Banyak digunakan, viral</div>
+                <div class="psych-item"><strong>Produk Layak Dimiliki</strong> — Value for money</div>
+                <div class="psych-item"><strong>Produk Berkualitas Tinggi</strong> — Bahan terbaik, long lasting</div>
+                <div class="psych-item"><strong>Produk Eksklusif</strong> — Tidak semua orang punya</div>
+                <div class="psych-item"><strong>Karakter Percaya</strong> — Beauty Advisor yakin dengan produk</div>
+                <div class="psych-item"><strong>Karakter Nikmati Pekerjaan</strong> — Bahagia melayani, autentik</div>
+                <div class="psych-item"><strong>Suasana Toko Profesional</strong> — Lingkungan mendukung kualitas premium</div>
               </div>
             </div>
+            <div class="doc-note-box">Visual harus membuat calon pembeli berpikir: "Wah, ini produk bagus. Saya juga harus punya." Tanpa teknik manipulatif — cukup tampilkan produk sebaik mungkin.</div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 6 — Lifestyle Marketing</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Eye Level · Medium Long Shot · Portrait 9:16 · Human Eye Perspective · Handheld ringan</div>
-                <div class="preset-row"><strong>Lens:</strong> 50mm</div>
-                <div class="preset-row"><strong>Lighting:</strong> Natural Window Light + Ambient Retail. Mixed lighting natural</div>
-                <div class="preset-row"><strong>Composition:</strong> Rule of Thirds, Karakter + lingkungan, Produk sebagai lifestyle item</div>
-                <div class="preset-row"><strong>Color:</strong> Natural Skin atau Warm Luxury, tergantung mood</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · Realistic Materials · Natural Reflections · HDR</div>
+        <!-- view-trust -->
+        <div class="doc-view" id="view-trust">
+          <div class="doc-header"><h1>🛡️ MODUL 20 — Trust Engine</h1><p class="doc-desc">Meningkatkan rasa percaya calon pembeli terhadap produk dan brand.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('trust')">📋 Salin Modul</button><span class="doc-meta">5 persona trust</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Persona yang Harus Terlihat</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Karyawan Toko Resmi</span><span class="attr-val">Bukan model lepas. Seragam/outfit toko, name tag (jika relevan). Berdiri di belakang counter toko resmi AREKA.</span></div>
+                <div class="attr-row"><span class="attr-key">Beauty Advisor Profesional</span><span class="attr-val">Terlatih, bersertifikasi (secara visual). Rapi, makeup natural, rambut tertata. Percaya diri dalam menjelaskan produk.</span></div>
+                <div class="attr-row"><span class="attr-key">Pegawai Berpengalaman</span><span class="attr-val">Terlihat sudah lama bekerja. Menguasai produk. Tidak canggung. Gerakan natural dan efisien.</span></div>
+                <div class="attr-row"><span class="attr-key">Fragrance Consultant</span><span class="attr-val">Spesialis parfum. Bisa "membaca" preferensi pelanggan. Memberikan rekomendasi personal.</span></div>
               </div>
             </div>
+            <div class="doc-note-box"><strong>⚠️ Kritikal:</strong> Jangan sampai karakter terlihat seperti model yang hanya berpose untuk iklan. Ia harus terlihat seperti benar-benar bekerja di toko parfum.</div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 7 — Product Review</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> High Angle atau Slight Eye Level · Medium Close Up · Portrait 9:16 · Static</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm untuk karakter + 100mm Macro untuk detail produk</div>
-                <div class="preset-row"><strong>Lighting:</strong> LED Retail Lighting + Soft Fill. Produk harus jelas dan mengkilap</div>
-                <div class="preset-row"><strong>Composition:</strong> Commercial, Produk di intersection point, Karakter melihat produk</div>
-                <div class="preset-row"><strong>Color:</strong> Clean White atau Commercial Beauty, tergantung produk</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · Ultra Detail · Realistic Glass · Professional Product Rendering</div>
+        <!-- view-tiktok -->
+        <div class="doc-view" id="view-tiktok">
+          <div class="doc-header"><h1>📱 MODUL 21 — TikTok Affiliate Engine</h1><p class="doc-desc">Gaya visual khas TikTok Affiliate yang engaging dan natural.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('tiktok')">📋 Salin Modul</button><span class="doc-meta">7 skenario konten</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Skenario TikTok Affiliate</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Video Review</span><span class="attr-val">Karakter sedang membuat video review parfum. Gaya bicara natural, seperti curhat ke teman. Enerjik tapi tetap informatif.</span></div>
+                <div class="attr-row"><span class="attr-key">Live TikTok</span><span class="attr-val">Karakter sedang live streaming. Interaktif, melihat kamera sebagai "penonton." Responsif, ramah.</span></div>
+                <div class="attr-row"><span class="attr-key">Rekomendasi</span><span class="attr-val">Sedang memberikan rekomendasi parfum. Seperti "Ini rekomendasi parfum untuk kamu yang suka aroma floral."</span></div>
+                <div class="attr-row"><span class="attr-key">Produk Viral</span><span class="attr-val">Menunjukkan produk yang sedang viral. Ekspresi "ini lagi hits banget." Antusias tanpa berlebihan.</span></div>
+                <div class="attr-row"><span class="attr-key">Aroma Parfum</span><span class="attr-val">Menjelaskan notes aroma. Gerakan menyemprot (simulasi), mengendus, ekspresi menikmati aroma.</span></div>
+                <div class="attr-row"><span class="attr-key">Perbandingan</span><span class="attr-val">Membandingkan dua parfum. Gestur "kanan vs kiri." Ekspresi netral informatif.</span></div>
+                <div class="attr-row"><span class="attr-key">Promo</span><span class="attr-val">Menawarkan promo/diskon. Ekspresi "jangan sampai kelewatan!" Antusias tapi tetap elegan.</span></div>
               </div>
             </div>
+            <div class="doc-note-box">Tetap natural. Gaya TikTok Affiliate tidak boleh mengorbankan identitas premium AREKA. Karakter tetap elegan walau dalam format TikTok.</div>
+          </div>
+        </div>
 
-            <div class="doc-section">
-              <h2>Preset 8 — Beauty Advisor</h2>
-              <div class="preset-grid">
-                <div class="preset-row"><strong>Camera:</strong> Eye Level · Close Up ke Medium Close Up · Portrait 9:16 · Natural Perspective</div>
-                <div class="preset-row"><strong>Lens:</strong> 85mm</div>
-                <div class="preset-row"><strong>Lighting:</strong> Softbox Frontal + Ring Light. Wajah terang merata, profesional</div>
-                <div class="preset-row"><strong>Composition:</strong> Center, Karakter sebagai beauty expert, Produk sebagai alat</div>
-                <div class="preset-row"><strong>Color:</strong> Natural Skin, True color priority, Warna kulit akurat</div>
-                <div class="preset-row"><strong>Quality:</strong> Photorealistic · Natural Skin Texture · High Detail Eyes · Balanced Exposure</div>
+        <!-- view-conversion -->
+        <div class="doc-view" id="view-conversion">
+          <div class="doc-header"><h1>🎯 MODUL 22 — Conversion Engine</h1><p class="doc-desc">Meningkatkan kemungkinan pengguna tertarik dan melakukan pembelian.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('conversion')">📋 Salin Modul</button><span class="doc-meta">8 langkah visual</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Langkah Visual untuk Conversion</h2>
+              <div class="conversion-flow">
+                <div class="conv-step"><span class="conv-num">1</span><span class="conv-label">Scroll Stop</span><span class="conv-desc">Wajah menarik + produk terlihat. Pengguna berhenti scrolling.</span></div>
+                <div class="conv-step"><span class="conv-num">2</span><span class="conv-label">Eye Contact</span><span class="conv-desc">Karakter melihat kamera. Koneksi personal terbangun.</span></div>
+                <div class="conv-step"><span class="conv-num">3</span><span class="conv-label">Produk Fokus</span><span class="conv-desc">Mata pengguna beralih ke parfum di tangan karakter.</span></div>
+                <div class="conv-step"><span class="conv-num">4</span><span class="conv-label">Banner CTA</span><span class="conv-desc">Pengguna membaca "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning"</span></div>
+                <div class="conv-step"><span class="conv-num">5</span><span class="conv-label">Keputusan</span><span class="conv-desc">Pengguna merasa ingin tahu produk lebih lanjut.</span></div>
+                <div class="conv-step"><span class="conv-num">6</span><span class="conv-label">Click</span><span class="conv-desc">Pengguna klik CTA atau keranjang kuning.</span></div>
               </div>
             </div>
+            <div class="doc-note-box">Tanpa teknik manipulatif. Tidak ada clickbait. Tidak ada ekspresi bohong. Cukup tampilkan produk sebaik mungkin dengan karakter yang meyakinkan.</div>
+          </div>
+        </div>
 
+        <!-- view-cta -->
+        <div class="doc-view" id="view-cta">
+          <div class="doc-header"><h1>🛒 MODUL 23 — Call To Action Engine</h1><p class="doc-desc">Mengatur CTA visual — banner bawah dengan brand & ajakan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('cta')">📋 Salin Modul</button><span class="doc-meta">1 banner · 6 aturan</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Banner CTA</h2>
+              <div class="lock-card"><div class="lock-head locked">Posisi</div><div class="lock-detail"><div class="lock-reason">Bawah frame. Tidak overlap dengan karakter, produk, atau elemen penting lainnya.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Ukuran</div><div class="lock-detail"><div class="lock-reason">~8% dari tinggi gambar. Cukup besar untuk terbaca, cukup kecil untuk tidak mengganggu.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Bentuk</div><div class="lock-detail"><div class="lock-reason">Rounded rectangle. Sudut membulat, modern, premium.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Teks</div><div class="lock-detail"><div class="lock-reason">"AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning"</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Desain</div><div class="lock-detail"><div class="lock-reason">Background putih. Teks hitam. Ikon keranjang kuning. Minimalis, typography bersih, premium.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-shop -->
+        <div class="doc-view" id="view-shop">
+          <div class="doc-header"><h1>🏪 MODUL 24 — Shop Environment Experience</h1><p class="doc-desc">Suasana toko yang hidup, premium, dan profesional.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('shop')">📋 Salin Modul</button><span class="doc-meta">8 elemen toko</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Elemen Toko yang Wajib Ada</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Rak Parfum</span><span class="attr-val">Penuh dengan botol parfum tersusun rapi. Tidak kosong. Tidak berantakan.</span></div>
+                <div class="attr-row"><span class="attr-key">Etalase</span><span class="attr-val">Bersih, mengkilap. Kaca etalase bebas sidik jari. Produk di display terlihat jelas.</span></div>
+                <div class="attr-row"><span class="attr-key">Pencahayaan</span><span class="attr-val">Hangat, premium. Lampu LED warm tone. Menonjolkan botol parfum dan wajah karakter.</span></div>
+                <div class="attr-row"><span class="attr-key">Counter</span><span class="attr-val">Meja display bersih, rapi. Tempat karakter berdiri di belakangnya.</span></div>
+                <div class="attr-row"><span class="attr-key">Dekorasi</span><span class="attr-val">Minimum namun premium. Bunga segar kecil atau dekorasi brand. Tidak berlebihan.</span></div>
+                <div class="attr-row"><span class="attr-key">Suasana</span><span class="attr-val">Terasa eksklusif. Seperti butik parfum di mal mewah. Bukan toko parfum pinggir jalan.</span></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Larangan Lingkungan</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never</div><div class="lock-detail"><div class="lock-reason">Toko tidak boleh terlihat kosong. Tidak boleh berantakan. Tidak boleh pencahayaan redup/suram. Tidak boleh terlihat seperti gudang atau toko murah.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-social -->
+        <div class="doc-view" id="view-social">
+          <div class="doc-header"><h1>🌐 MODUL 25 — Social Commerce Style</h1><p class="doc-desc">Tampilan visual yang cocok untuk berbagai platform e-commerce dan social commerce.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('social')">📋 Salin Modul</button><span class="doc-meta">6 platform</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Platform & Penyesuaian</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">TikTok Shop</span><span class="attr-val">Portrait 9:16. Enerjik. Produk jelas. CTA "Cek Keranjang Kuning" prominent. Gaya konten pendek, scrollable.</span></div>
+                <div class="attr-row"><span class="attr-key">Shopee Affiliate</span><span class="attr-val">Square 1:1 atau Portrait. Komposisi bersih. Background putih atau toko. Harga bisa ditampilkan sebagai overlay.</span></div>
+                <div class="attr-row"><span class="attr-key">Instagram Shop</span><span class="attr-val">Square 1:1. Estetik, premium. Produk sebagai lifestyle item. Feed yang cantik.</span></div>
+                <div class="attr-row"><span class="attr-key">Facebook Marketplace</span><span class="attr-val">Square 1:1. Produk jelas. Background sederhana. Fokus pada produk.</span></div>
+                <div class="attr-row"><span class="attr-key">E-commerce Banner</span><span class="attr-val">Landscape 16:9 atau Square. Produk besar. Karakter supportif. Teks promo terpisah.</span></div>
+                <div class="attr-row"><span class="attr-key">Thumbnail</span><span class="attr-val">Portrait 9:16. Wajah + produk dominan. Teks besar "REVIEW PARFUM" atau sejenisnya.</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Semua platform tetap mempertahankan Character DNA yang sama dari FASE 1. AREKA_GIRL_001 harus dikenali di semua platform.</div>
+          </div>
+        </div>
+
+        <!-- view-mconsistency -->
+        <div class="doc-view" id="view-mconsistency">
+          <div class="doc-header"><h1>🔐 MODUL 26 — Marketing Consistency Rules</h1><p class="doc-desc">Aturan permanen yang memastikan konsistensi pemasaran di seluruh konten.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('mconsistency')">📋 Salin Modul</button><span class="doc-meta">8 Always · 7 Never</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>✅ Always</h2>
+              <div class="lock-card"><div class="lock-head locked">Always Smile</div><div class="lock-detail"><div class="lock-reason">Karakter selalu tersenyum hangat. Tidak ada konten tanpa senyuman.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Eye Contact</div><div class="lock-detail"><div class="lock-reason">Selalu melakukan kontak mata dengan kamera/pelanggan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Selling</div><div class="lock-detail"><div class="lock-reason">Terlihat sedang menjual atau mempresentasikan produk. Tidak hanya berdiri.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Interact with Product</div><div class="lock-detail"><div class="lock-reason">Memegang atau berinteraksi dengan produk ketika relevan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Confident</div><div class="lock-detail"><div class="lock-reason">Percaya diri terhadap produk dan diri sendiri.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Helpful</div><div class="lock-detail"><div class="lock-reason">Terlihat membantu pelanggan, bukan sekadar menjual.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Always Premium Atmosphere</div><div class="lock-detail"><div class="lock-reason">Suasana toko premium dipertahankan.</div></div></div>
+            </div>
+            <div class="doc-section"><h2>🚫 Never</h2>
+              <div class="lock-card var"><div class="lock-head variable">Never Angry</div><div class="lock-detail"><div class="lock-reason">Tidak pernah terlihat marah atau kesal.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Bored</div><div class="lock-detail"><div class="lock-reason">Tidak pernah terlihat bosan atau tidak tertarik.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Pushy</div><div class="lock-detail"><div class="lock-reason">Tidak pernah terlihat memaksa pelanggan membeli.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Cover Product</div><div class="lock-detail"><div class="lock-reason">Tidak pernah menutupi produk dengan tangan/badan.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Cover Face</div><div class="lock-detail"><div class="lock-reason">Tidak pernah menutupi wajah dengan tangan/produk.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Confusing Gesture</div><div class="lock-detail"><div class="lock-reason">Tidak pernah membuat gestur yang membingungkan.</div></div></div>
+              <div class="lock-card var"><div class="lock-head variable">Never Empty Store</div><div class="lock-detail"><div class="lock-reason">Tidak pernah menghasilkan suasana toko yang kosong.</div></div></div>
+            </div>
           </div>
         </div>
 
       </div><!-- /output-container -->
 
       <div class="output-footer">
-        <div class="footer-left">
-          <span id="docInfo">Menampilkan: MODUL 1 — Character DNA</span>
-        </div>
-        <div class="footer-right">
-          <button class="footer-btn" onclick="copyVisible()">📋 Salin Halaman Ini</button>
-        </div>
+        <div class="footer-left"><span id="docInfo">Menampilkan: MODUL 12 — Role Engine</span></div>
+        <div class="footer-right"><button class="footer-btn" onclick="copyVisible()">📋 Salin Halaman Ini</button></div>
       </div>
     </div><!-- /right-panel -->
   </div><!-- /main-layout -->
