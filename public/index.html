@@ -28,7 +28,8 @@
       <button class="fase-tab" data-panel="fase3" onclick="switchPanel('fase3')">FASE 3</button>
       <button class="fase-tab" data-panel="fase4" onclick="switchPanel('fase4')">FASE 4</button>
       <button class="fase-tab" data-panel="fase5" onclick="switchPanel('fase5')">FASE 5</button>
-      <button class="fase-tab active" data-panel="fase6" onclick="switchPanel('fase6')">FASE 6</button>
+      <button class="fase-tab" data-panel="fase6" onclick="switchPanel('fase6')">FASE 6</button>
+      <button class="fase-tab" data-panel="fase7" onclick="switchPanel('fase7')">FASE 7</button>
     </div>
   </header>
 
@@ -144,6 +145,28 @@
         <div class="modul-card" data-module="workflowEngine" data-panel="fase6" onclick="showModule('workflowEngine')"><div class="modul-header"><div class="modul-icon">🔄</div><div class="modul-title-group"><span class="modul-title">MODUL 70 — Workflow Engine</span><span class="modul-desc">Alur kerja lengkap</span></div><div class="modul-status complete">✅</div></div></div>
         <div class="modul-card" data-module="automationOutput" data-panel="fase6" onclick="showModule('automationOutput')"><div class="modul-header"><div class="modul-icon">📤</div><div class="modul-title-group"><span class="modul-title">MODUL 71 — Output Engine</span><span class="modul-desc">Final prompt siap pakai</span></div><div class="modul-status complete">✅</div></div></div>
       </div>
+
+      <!-- FASE 7 -->
+      <div class="panel-group" data-panel="fase7">
+        <div class="fase-badge fase-7-badge">FASE 7 — Quality Assurance 🛡️</div>
+        <div class="modul-card active" data-module="promptValidator7" data-panel="fase7" onclick="showModule('promptValidator7')"><div class="modul-header"><div class="modul-icon">✅</div><div class="modul-title-group"><span class="modul-title">MODUL 72 — Prompt Validator</span><span class="modul-desc">Pemeriksaan menyeluruh Final Prompt</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="consistencyEngine" data-panel="fase7" onclick="showModule('consistencyEngine')"><div class="modul-header"><div class="modul-icon">🔗</div><div class="modul-title-group"><span class="modul-title">MODUL 73 — Consistency Engine</span><span class="modul-desc">Konsistensi karakter antar modul</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="conflictDetection" data-panel="fase7" onclick="showModule('conflictDetection')"><div class="modul-header"><div class="modul-icon">⚠️</div><div class="modul-title-group"><span class="modul-title">MODUL 74 — Conflict Detection</span><span class="modul-desc">Deteksi konflik instruksi</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="redundancy" data-panel="fase7" onclick="showModule('redundancy')"><div class="modul-header"><div class="modul-icon">🧹</div><div class="modul-title-group"><span class="modul-title">MODUL 75 — Redundancy Remover</span><span class="modul-desc">Hapus pengulangan kata/frasa</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="optimizer7" data-panel="fase7" onclick="showModule('optimizer7')"><div class="modul-header"><div class="modul-icon">✨</div><div class="modul-title-group"><span class="modul-title">MODUL 76 — Prompt Optimizer</span><span class="modul-desc">Tingkatkan kualitas prompt</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="sceneValidator" data-panel="fase7" onclick="showModule('sceneValidator')"><div class="modul-header"><div class="modul-icon">📚</div><div class="modul-title-group"><span class="modul-title">MODUL 77 — Scene Validator</span><span class="modul-desc">Validasi realitas scene</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="productValidator" data-panel="fase7" onclick="showModule('productValidator')"><div class="modul-header"><div class="modul-icon">📦</div><div class="modul-title-group"><span class="modul-title">MODUL 78 — Product Validator</span><span class="modul-desc">Validasi tampilan produk</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="characterValidator" data-panel="fase7" onclick="showModule('characterValidator')"><div class="modul-header"><div class="modul-icon">🧬</div><div class="modul-title-group"><span class="modul-title">MODUL 79 — Character Validator</span><span class="modul-desc">Validasi sesuai Character DNA</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="cameraValidator" data-panel="fase7" onclick="showModule('cameraValidator')"><div class="modul-header"><div class="modul-icon">📷</div><div class="modul-title-group"><span class="modul-title">MODUL 80 — Camera Validator</span><span class="modul-desc">Validasi kamera per platform</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="lightingValidator" data-panel="fase7" onclick="showModule('lightingValidator')"><div class="modul-header"><div class="modul-icon">💡</div><div class="modul-title-group"><span class="modul-title">MODUL 81 — Lighting Validator</span><span class="modul-desc">Validasi pencahayaan</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="compositionValidator" data-panel="fase7" onclick="showModule('compositionValidator')"><div class="modul-header"><div class="modul-icon">🖼️</div><div class="modul-title-group"><span class="modul-title">MODUL 82 — Composition Validator</span><span class="modul-desc">Validasi tata letak visual</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="brandValidator" data-panel="fase7" onclick="showModule('brandValidator')"><div class="modul-header"><div class="modul-icon">🏛️</div><div class="modul-title-group"><span class="modul-title">MODUL 83 — Brand Validator</span><span class="modul-desc">Jaga identitas brand</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="qualityScore" data-panel="fase7" onclick="showModule('qualityScore')"><div class="modul-header"><div class="modul-icon">📊</div><div class="modul-title-group"><span class="modul-title">MODUL 84 — Quality Score Engine</span><span class="modul-desc">Penilaian kualitas prompt</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="aiCompatibility" data-panel="fase7" onclick="showModule('aiCompatibility')"><div class="modul-header"><div class="modul-icon">🤖</div><div class="modul-title-group"><span class="modul-title">MODUL 85 — AI Compatibility</span><span class="modul-desc">Optimasi per model AI</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="failsafe" data-panel="fase7" onclick="showModule('failsafe')"><div class="modul-header"><div class="modul-icon">🛡️</div><div class="modul-title-group"><span class="modul-title">MODUL 86 — Failsafe Engine</span><span class="modul-desc">Tangani kesalahan otomatis</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="outputReport" data-panel="fase7" onclick="showModule('outputReport')"><div class="modul-header"><div class="modul-icon">📤</div><div class="modul-title-group"><span class="modul-title">MODUL 87 — Output Report Engine</span><span class="modul-desc">Laporan validasi lengkap</span></div><div class="modul-status pending">🔲</div></div></div>
+        <div class="modul-card" data-module="qualityRules" data-panel="fase7" onclick="showModule('qualityRules')"><div class="modul-header"><div class="modul-icon">🔐</div><div class="modul-title-group"><span class="modul-title">MODUL 88 — Final Quality Rules</span><span class="modul-desc">Aturan permanen kualitas final</span></div><div class="modul-status pending">🔲</div></div></div>
+      </div>
     </div>
 
     <!-- RIGHT PANEL -->
@@ -234,7 +257,7 @@
         </div>
 
         <div class="doc-view" id="view-assembly">
-          <div class="doc-header"><h1>⚡ MODUL 3 — Prompt Assembly</h1><p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button><span class="doc-meta">35 langkah</span></div></div>
+          <div class="doc-header"><h1>⚡ MODUL 3 — Prompt Assembly</h1><p class="doc-desc">Sistem penyusunan prompt akhir dari berbagai modul.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('assembly')">📋 Salin Modul</button><span class="doc-meta">42 langkah · 7 FASE · 88 modul</span></div></div>
           <div class="doc-content">
             <div class="doc-section"><h2>Urutan Lengkap (5 Fase)</h2>
               <div class="flow-diagram">
@@ -306,9 +329,23 @@
                 <div class="flow-connector">↓</div>
                 <div class="flow-node" style="--level:5"><span class="flow-num">34</span><span class="flow-label">✅ Prompt Validator</span><span class="flow-desc">FASE 6 — Validasi akhir</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node" style="--level:0"><span class="flow-num">35</span><span class="flow-label">🚫 Negative Prompt</span><span class="flow-desc">Quality control akhir</span></div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">35</span><span class="flow-label">✅ Validator QA</span><span class="flow-desc">FASE 7 — 12 checkpoints</span></div>
                 <div class="flow-connector">↓</div>
-                <div class="flow-node goal"><span class="flow-num">✓</span><span class="flow-label">✅ Final Prompt</span><span class="flow-desc">Siap pakai</span></div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">36</span><span class="flow-label">🔗 Consistency Engine</span><span class="flow-desc">FASE 7 — Cek DNA</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">37</span><span class="flow-label">⚠️ Conflict Detection</span><span class="flow-desc">FASE 7 — Resolve konflik</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">38</span><span class="flow-label">🧹 Redundancy Remover</span><span class="flow-desc">FASE 7 — Hapus duplikat</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">39</span><span class="flow-label">✨ Prompt Optimizer</span><span class="flow-desc">FASE 7 — Optimasi akhir</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">40</span><span class="flow-label">🤖 AI Compatibility</span><span class="flow-desc">FASE 7 — Per model AI</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">41</span><span class="flow-label">📊 Quality Score</span><span class="flow-desc">FASE 7 — Skor minimal 85</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node" style="--level:6"><span class="flow-num">42</span><span class="flow-label">📤 Output Report</span><span class="flow-desc">FASE 7 — Laporan validasi</span></div>
+                <div class="flow-connector">↓</div>
+                <div class="flow-node goal"><span class="flow-num">✓</span><span class="flow-label">✅ Final Prompt</span><span class="flow-desc">READY TO GENERATE</span></div>
               </div>
             </div>
             <div class="doc-section"><h2>Fase Pengembangan</h2>
@@ -319,6 +356,7 @@
                 <div class="fase-row"><span class="fase-name fase-4">FASE 4 ✅</span><span class="fase-mods">Scene Library · Default Store · Environment · Activity · Product Interaction · Customer Scene · Category · Time · Mood · Seasonal · Variation · Props · Consistency · Templates · Output</span></div>
                 <div class="fase-row"><span class="fase-name fase-5">FASE 5 ✅</span><span class="fase-mods">Brand Identity · Product Database · Display · Hierarchy · Placement · Banner · Typography · Color System · Campaign · Social Commerce · CTA · Consistency · Templates · Output</span></div>
                 <div class="fase-row"><span class="fase-name fase-6">FASE 6 🔥</span><span class="fase-mods">Assembly Engine · Request Analyzer · Module Selector · Priority Engine · Conflict Detector · Optimizer · Enhancer · Negative Builder · Validator · Default Engine · Multi Platform · Templates · Formatter · Automation Rules · Workflow · Output</span></div>
+                <div class="fase-row"><span class="fase-name fase-7">FASE 7 🛡️</span><span class="fase-mods">Prompt Validator · Consistency Engine · Conflict Detection · Redundancy Remover · Optimizer · Scene Validator · Product Validator · Character Validator · Camera Validator · Lighting Validator · Composition Validator · Brand Validator · Quality Score · AI Compatibility · Failsafe · Output Report · Final Quality Rules</span></div>
               </div>
             </div>
           </div>
@@ -1597,7 +1635,321 @@ No plastic skin, no cartoon, no distorted...
               <div class="lock-card"><div class="lock-head locked">✅ Siap Multi-Platform</div><div class="lock-detail"><div class="lock-reason">Final prompt langsung menghasilkan gambar untuk TikTok, Shopee, IG, FB, Marketplace, Website.</div></div></div>
               <div class="lock-card"><div class="lock-head locked">✅ Mudah Dipelihara</div><div class="lock-detail"><div class="lock-reason">Sistem modular. Setiap modul independen. Ganti satu modul tanpa pengaruhi yang lain.</div></div></div>
             </div>
-            <div class="doc-note-box"><strong>🧠 AUTOMATION ENGINE SELESAI.</strong> Prompt Database System AREKA Official Store sekarang memiliki 71 modul dalam 6 FASE. Engine mampu menerima input sederhana seperti "jual parfum Arab" dan menghasilkan Final Prompt lengkap dengan karakter, visual, marketing, scene, dan brand — tanpa perlu menyusun prompt secara manual.</div>
+            <div class="doc-note-box"><strong>🧠 AUTOMATION ENGINE SELESAI.</strong> Prompt Database System AREKA Official Store sekarang memiliki <strong>88 modul dalam 7 FASE</strong>. Engine mampu menerima input sederhana seperti "jual parfum Arab" dan menghasilkan Final Prompt lengkap dengan karakter, visual, marketing, scene, dan brand — tanpa perlu menyusun prompt secara manual.</div>
+          </div>
+        </div>
+
+        <!-- ==================== FASE 7 — PROMPT INTELLIGENCE & QA ==================== -->
+
+        <!-- view-promptValidator7 -->
+        <div class="doc-view" id="view-promptValidator7">
+          <div class="doc-header"><h1>✅ MODUL 72 — Prompt Validator</h1><p class="doc-desc">Pemeriksaan menyeluruh terhadap Final Prompt sebelum dikirim ke AI Image Generator.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('promptValidator7')">📋 Salin Modul</button><span class="doc-meta">12 checkpoints</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Checklist Validasi</h2>
+              <div class="lock-card"><div class="lock-head locked">✓ System Rules</div><div class="lock-detail"><div class="lock-reason">Aturan sistem tersedia dan aktif.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Character DNA</div><div class="lock-detail"><div class="lock-reason">Deskripsi karakter AREKA_GIRL_001 lengkap.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Identity Lock</div><div class="lock-detail"><div class="lock-reason">Proteksi identitas karakter aktif.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Scene</div><div class="lock-detail"><div class="lock-reason">Deskripsi scene/lokasi tersedia.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Marketing</div><div class="lock-detail"><div class="lock-reason">Role dan interaksi marketing tersedia.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Product</div><div class="lock-detail"><div class="lock-reason">Produk yang dipromosikan terdefinisi.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Camera</div><div class="lock-detail"><div class="lock-reason">Sudut kamera, jarak, orientasi terisi.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Lighting</div><div class="lock-detail"><div class="lock-reason">Jenis pencahayaan terdefinisi.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Composition</div><div class="lock-detail"><div class="lock-reason">Tata letak elemen visual jelas.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Branding</div><div class="lock-detail"><div class="lock-reason">Nama brand, banner, CTA tersedia.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Quality</div><div class="lock-detail"><div class="lock-reason">Parameter kualitas (8K, photorealistic) ada.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Negative Prompt</div><div class="lock-detail"><div class="lock-reason">Negative prompt terisi dan relevan.</div></div></div>
+            </div>
+            <div class="doc-note-box">Jika ada bagian yang hilang, gunakan nilai default dari FASE 6 — Default Engine. Validator memberikan warning, tidak blocking.</div>
+          </div>
+        </div>
+
+        <!-- view-consistencyEngine -->
+        <div class="doc-view" id="view-consistencyEngine">
+          <div class="doc-header"><h1>🔗 MODUL 73 — Consistency Engine</h1><p class="doc-desc">Menjaga konsistensi karakter AREKA_GIRL_001 di seluruh modul dan variasi scene.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('consistencyEngine')">📋 Salin Modul</button><span class="doc-meta">9 parameter terkunci</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Parameter Konsistensi</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Karakter</span><span class="attr-val">AREKA_GIRL_001 — TIDAK BOLEH BERUBAH</span></div>
+                <div class="attr-row"><span class="attr-key">Usia</span><span class="attr-val">25 tahun — konsisten di semua scene</span></div>
+                <div class="attr-row"><span class="attr-key">Wajah</span><span class="attr-val">Oval lembut, rahang gentle — identik setiap gambar</span></div>
+                <div class="attr-row"><span class="attr-key">Tinggi Badan</span><span class="attr-val">160 cm — proporsi konsisten</span></div>
+                <div class="attr-row"><span class="attr-key">Warna Kulit</span><span class="attr-val">Sawo matang hangat — tidak berubah</span></div>
+                <div class="attr-row"><span class="attr-key">Jenis Rambut</span><span class="attr-val">Hitam lurus, panjang bahu, belah samping</span></div>
+                <div class="attr-row"><span class="attr-key">Proporsi Tubuh</span><span class="attr-val">Slim feminin — konsisten dari scene ke scene</span></div>
+                <div class="attr-row"><span class="attr-key">Identitas Visual</span><span class="attr-val">LOCKED — walau lokasi/produk/aktivitas berubah</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Consistency Engine adalah lapisan keamanan kedua setelah Identity Lock. Jika ada modul yang mencoba mengubah atribut karakter, engine otomatis mengembalikan ke nilai DNA asli.</div>
+          </div>
+        </div>
+
+        <!-- view-conflictDetection -->
+        <div class="doc-view" id="view-conflictDetection">
+          <div class="doc-header"><h1>⚠️ MODUL 74 — Conflict Detection Engine</h1><p class="doc-desc">Mendeteksi konflik antar instruksi dalam Final Prompt. Memberikan solusi perbaikan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('conflictDetection')">📋 Salin Modul</button><span class="doc-meta">6+ pola konflik</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Pola Konflik & Solusi</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Outdoor Store vs Indoor Luxury Boutique</span><span class="attr-val">SOLUSI: Pilih Indoor Luxury Boutique (prioritas scene)</span></div>
+                <div class="attr-row"><span class="attr-key">Golden Hour vs Midnight Store</span><span class="attr-val">SOLUSI: Pilih Golden Hour jika campaign hangat, Midnight jika campaign eksklusif</span></div>
+                <div class="attr-row"><span class="attr-key">Standing vs Sitting</span><span class="attr-val">SOLUSI: Ikuti aktivitas user — jual parfum = Standing</span></div>
+                <div class="attr-row"><span class="attr-key">One Perfume vs Holding Two Products</span><span class="attr-val">SOLUSI: Fokus satu produk utama + satu produk pendukung</span></div>
+                <div class="attr-row"><span class="attr-key">Black Outfit vs White Dress</span><span class="attr-val">SOLUSI: Black Outfit (prioritas Identity Lock untuk AREKA_GIRL_001)</span></div>
+                <div class="attr-row"><span class="attr-key">Malam vs Siang</span><span class="attr-val">SOLUSI: Ikuti Time Engine — jika user menyebut waktu, gunakan itu</span></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Alur Resolusi</h2>
+              <div class="conversion-flow" style="grid-template-columns:1fr;">
+                <div class="conv-step"><span class="conv-num">1</span><span class="conv-label">🔍 Identifikasi konflik</span></div>
+                <div class="conv-step"><span class="conv-num">2</span><span class="conv-label">📝 Jelaskan konflik</span></div>
+                <div class="conv-step"><span class="conv-num">3</span><span class="conv-label">💡 Berikan solusi</span></div>
+                <div class="conv-step"><span class="conv-num">4</span><span class="conv-label">🗑️ Hapus instruksi yang kalah prioritas</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-redundancy -->
+        <div class="doc-view" id="view-redundancy">
+          <div class="doc-header"><h1>🧹 MODUL 75 — Redundancy Remover</h1><p class="doc-desc">Menghapus pengulangan kata, frasa, atau instruksi dalam Final Prompt tanpa mengubah makna.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('redundancy')">📋 Salin Modul</button><span class="doc-meta">Auto-deduplikasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Contoh Redundansi</h2>
+              <div class="lock-card"><div class="lock-head locked">❌ "Photorealistic" muncul 8 kali</div><div class="lock-detail"><div class="lock-reason">→ Simpan hanya 1 kali di bagian Quality.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">❌ "Luxury" diulang 15 kali</div><div class="lock-detail"><div class="lock-reason">→ Gabungkan menjadi satu dekripsi: "Luxury perfume store with premium atmosphere"</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">❌ "Warm lighting" di scene dan lighting</div><div class="lock-detail"><div class="lock-reason">→ Simpan hanya di bagian Lighting. Hapus dari Scene.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">❌ "8K" di quality, scene, dan camera</div><div class="lock-detail"><div class="lock-reason">→ Simpan hanya di bagian Quality.</div></div></div>
+            </div>
+            <div class="doc-note-box">Prompt harus tetap ringkas tetapi lengkap. Redundancy Remover menjaga agar token prompt tetap efisien untuk AI Image Generator.</div>
+          </div>
+        </div>
+
+        <!-- view-optimizer7 -->
+        <div class="doc-view" id="view-optimizer7">
+          <div class="doc-header"><h1>✨ MODUL 76 — Prompt Optimizer</h1><p class="doc-desc">Meningkatkan kualitas prompt — urutan kalimat, kelompok instruksi, prioritas, kejelasan, efisiensi.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('optimizer7')">📋 Salin Modul</button><span class="doc-meta">6 aspek optimasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aspek Optimasi</h2>
+              <div class="lock-card"><div class="lock-head locked">📝 Urutan Kalimat</div><div class="lock-detail"><div class="lock-reason">Karakter dulu, baru scene, produk, lighting, dll. Alur logis untuk AI.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">📊 Kelompok Instruksi</div><div class="lock-detail"><div class="lock-reason">Instruksi dikelompokkan per modul — karakter terpisah dari lighting.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">🎯 Prioritas</div><div class="lock-detail"><div class="lock-reason">Instruksi penting didahulukan. Character DNA > Scene > Marketing.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">🔍 Kejelasan</div><div class="lock-detail"><div class="lock-reason">Hapus kata ambigu. Ganti \"bagus\" dengan \"luxury premium\".</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">⚡ Efisiensi</div><div class="lock-detail"><div class="lock-reason">Maksimal 300 kata untuk prompt. Gunakan kata kunci yang kuat.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">🤖 Kompatibilitas AI</div><div class="lock-detail"><div class="lock-reason">Struktur prompt sesuai dengan yang dipahami Midjourney, FLUX, SD, GPT Image.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-sceneValidator -->
+        <div class="doc-view" id="view-sceneValidator">
+          <div class="doc-header"><h1>📚 MODUL 77 — Scene Validator</h1><p class="doc-desc">Memastikan Scene yang digunakan realistis dan memiliki elemen wajib yang lengkap.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('sceneValidator')">📋 Salin Modul</button><span class="doc-meta">Elemen wajib scene</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Elemen Wajib — Luxury Perfume Store</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Etalase Kaca</span><span class="attr-val">Glass display counter — WAJIB ada</span></div>
+                <div class="attr-row"><span class="attr-key">Rak Kayu</span><span class="attr-val">Warm wood shelves dengan botol parfum tersusun rapi</span></div>
+                <div class="attr-row"><span class="attr-key">Botol Parfum</span><span class="attr-val">Minimal 3-5 botol terlihat di latar belakang</span></div>
+                <div class="attr-row"><span class="attr-key">Kasir</span><span class="attr-val">Counter kasir dengan display produk</span></div>
+                <div class="attr-row"><span class="attr-key">Lampu Retail</span><span class="attr-val">Warm LED lighting — suasana premium</span></div>
+                <div class="attr-row"><span class="attr-key">Display Produk</span><span class="attr-val">Produk unggulan di atas meja/kaca</span></div>
+                <div class="attr-row"><span class="attr-key">Dekorasi</span><span class="attr-val">Elemen dekoratif — bunga, elegan, minimalis</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Jika salah satu elemen wajib hilang dari deskripsi scene, Scene Validator otomatis menambahkannya ke Final Prompt.</div>
+          </div>
+        </div>
+
+        <!-- view-productValidator -->
+        <div class="doc-view" id="view-productValidator">
+          <div class="doc-header"><h1>📦 MODUL 78 — Product Validator</h1><p class="doc-desc">Memastikan produk yang ditampilkan realistis, sesuai, dan konsisten dengan Product Database.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('productValidator')">📋 Salin Modul</button><span class="doc-meta">7 aspek produk</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aspek Validasi Produk</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Botol Parfum</span><span class="attr-val">Realistis — kaca, label, tutup sesuai kenyataan</span></div>
+                <div class="attr-row"><span class="attr-key">Kemasan</span><span class="attr-val">Box/dus sesuai dengan produk asli</span></div>
+                <div class="attr-row"><span class="attr-key">Label</span><span class="attr-val">Nama produk visible, huruf terbaca</span></div>
+                <div class="attr-row"><span class="attr-key">Ukuran</span><span class="attr-val">Proporsional dengan tangan karakter</span></div>
+                <div class="attr-row"><span class="attr-key">Posisi</span><span class="attr-val">Label menghadap kamera, tidak terhalang jari</span></div>
+                <div class="attr-row"><span class="attr-key">Refleksi</span><span class="attr-val">Refleksi botol realistis — cahaya memantul natural</span></div>
+                <div class="attr-row"><span class="attr-key">Kondisi</span><span class="attr-val">Produk baru, bersih, no scratch, no dust</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-characterValidator -->
+        <div class="doc-view" id="view-characterValidator">
+          <div class="doc-header"><h1>🧬 MODUL 79 — Character Validator</h1><p class="doc-desc">Memastikan karakter tetap sesuai Character DNA. Jika terjadi perubahan, DNA dipulihkan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('characterValidator')">📋 Salin Modul</button><span class="doc-meta">10 atribut terkunci</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Validasi Karakter</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Usia</span><span class="attr-val">25 tahun — tidak boleh lebih muda/tua</span></div>
+                <div class="attr-row"><span class="attr-key">Gender</span><span class="attr-val">Perempuan — tidak berubah</span></div>
+                <div class="attr-row"><span class="attr-key">Wajah</span><span class="attr-val">Oval lembut — tidak berubah bentuk</span></div>
+                <div class="attr-row"><span class="attr-key">Ekspresi</span><span class="attr-val">Hangat ramah — tersenyum natural</span></div>
+                <div class="attr-row"><span class="attr-key">Outfit</span><span class="attr-val">Black short sleeve top — konsisten</span></div>
+                <div class="attr-row"><span class="attr-key">Postur</span><span class="attr-val">Tegap, percaya diri, profesional</span></div>
+                <div class="attr-row"><span class="attr-key">Proporsi</span><span class="attr-val">Slim feminin, 160 cm — tidak berubah</span></div>
+                <div class="attr-row"><span class="attr-key">Rambut</span><span class="attr-val">Hitam lurus, panjang bahu, belah samping</span></div>
+                <div class="attr-row"><span class="attr-key">Kulit</span><span class="attr-val">Sawo matang hangat — natural glow</span></div>
+                <div class="attr-row"><span class="attr-key">Makeup</span><span class="attr-val">Natural beauty — soft matte, nude pink lipstick</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box"><strong>⚠️ Jika terjadi perubahan identitas:</strong> Character DNA AREKA_GIRL_001 harus dipulihkan sepenuhnya. Tidak ada toleransi perubahan.</div>
+          </div>
+        </div>
+
+        <!-- view-cameraValidator -->
+        <div class="doc-view" id="view-cameraValidator">
+          <div class="doc-header"><h1>📷 MODUL 80 — Camera Validator</h1><p class="doc-desc">Memastikan kamera, orientasi, dan jarak sesuai dengan platform target.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('cameraValidator')">📋 Salin Modul</button><span class="doc-meta">5 platform</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Validasi per Platform</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">TikTok</span><span class="attr-val">Portrait 9:16 ✓ · Eye Level ✓ · Medium Close Up ✓</span></div>
+                <div class="attr-row"><span class="attr-key">Instagram Feed</span><span class="attr-val">Square 1:1 ✓ · Eye Level ✓ · Medium Shot ✓</span></div>
+                <div class="attr-row"><span class="attr-key">Website Banner</span><span class="attr-val">Landscape 16:9 ✓ · Eye Level ✓ · Medium Long Shot ✓</span></div>
+                <div class="attr-row"><span class="attr-key">Marketplace</span><span class="attr-val">Square 1:1 ✓ · Eye Level ✓ · Close Up Product ✓</span></div>
+                <div class="attr-row"><span class="attr-key">Pinterest</span><span class="attr-val">Portrait 2:3 ✓ · Eye Level ✓ · Medium Shot ✓</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Jika orientasi tidak sesuai platform, Camera Validator memberikan peringatan dan saran perbaikan.</div>
+          </div>
+        </div>
+
+        <!-- view-lightingValidator -->
+        <div class="doc-view" id="view-lightingValidator">
+          <div class="doc-header"><h1>💡 MODUL 81 — Lighting Validator</h1><p class="doc-desc">Memastikan pencahayaan sesuai dengan scene, waktu, dan suasana yang diinginkan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('lightingValidator')">📋 Salin Modul</button><span class="doc-meta">3 skenario validasi</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Validasi Pencahayaan</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Luxury Boutique</span><span class="attr-val">Warm LED Retail ✓ · Soft fill light · No harsh shadows</span></div>
+                <div class="attr-row"><span class="attr-key">Beauty Portrait</span><span class="attr-val">Soft diffused light ✓ · Ring light optional · Skin tone akurat</span></div>
+                <div class="attr-row"><span class="attr-key">Outdoor Morning</span><span class="attr-val">Natural morning light ✓ · Golden hour hangat · No direct sun</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Pencahayaan harus menjaga warna kulit sawo matang tetap natural. Tidak boleh terlalu kuning/terlalu biru.</div>
+          </div>
+        </div>
+
+        <!-- view-compositionValidator -->
+        <div class="doc-view" id="view-compositionValidator">
+          <div class="doc-header"><h1>🖼️ MODUL 82 — Composition Validator</h1><p class="doc-desc">Memvalidasi tata letak elemen visual dalam frame — karakter, produk, banner, background.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('compositionValidator')">📋 Salin Modul</button><span class="doc-meta">6 checklist</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Checklist Komposisi</h2>
+              <div class="lock-card"><div class="lock-head locked">✓ Karakter tidak terpotong</div><div class="lock-detail"><div class="lock-reason">Wajah, bahu, tangan — semua dalam frame. Tidak ada cropping aneh.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Produk terlihat jelas</div><div class="lock-detail"><div class="lock-reason">Produk sebagai fokus kedua setelah karakter. Label menghadap kamera.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Banner terlihat</div><div class="lock-detail"><div class="lock-reason">Banner AREKA OFFICIAL STORE di bagian bawah frame. Tidak terpotong.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Rak parfum terlihat</div><div class="lock-detail"><div class="lock-reason">Latar belakang toko dengan rak botol parfum memperkuat scene.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Etalase terlihat</div><div class="lock-detail"><div class="lock-reason">Glass display counter sebagai elemen utama scene.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Background tidak berantakan</div><div class="lock-detail"><div class="lock-reason">Background bersih, rapi, tidak ada elemen mengganggu.</div></div></div>
+            </div>
+            <div class="doc-note-box">Visual hierarchy: Karakter (utama) → Produk (kedua) → Banner (pendukung) → Background (penguat scene).</div>
+          </div>
+        </div>
+
+        <!-- view-brandValidator -->
+        <div class="doc-view" id="view-brandValidator">
+          <div class="doc-header"><h1>🏛️ MODUL 83 — Brand Validator</h1><p class="doc-desc">Menjaga identitas brand AREKA Official Store — nama, banner, CTA, dan posisi elemen.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('brandValidator')">📋 Salin Modul</button><span class="doc-meta">6 validasi brand</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Validasi Brand</h2>
+              <div class="lock-card"><div class="lock-head locked">✓ Nama Brand</div><div class="lock-detail"><div class="lock-reason">"AREKA OFFICIAL STORE" — ejaan benar, kapitalisasi konsisten.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Banner</div><div class="lock-detail"><div class="lock-reason">Banner muncul di bagian bawah frame. Ukuran ~8% tinggi gambar.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ CTA</div><div class="lock-detail"><div class="lock-reason">Call to action relevan — "🛒 Cek Keranjang Kuning" atau sesuai campaign.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Ukuran Banner</div><div class="lock-detail"><div class="lock-reason">Proporsional — tidak terlalu besar hingga mendominasi, tidak terlalu kecil hingga tidak terbaca.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Banner tidak menghalangi wajah</div><div class="lock-detail"><div class="lock-reason">Banner di bawah frame — aman dari area wajah dan produk.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✓ Banner tidak menghalangi parfum</div><div class="lock-detail"><div class="lock-reason">Produk tetap visible. Banner tidak overlay di atas botol parfum.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-qualityScore -->
+        <div class="doc-view" id="view-qualityScore">
+          <div class="doc-header"><h1>📊 MODUL 84 — Quality Score Engine</h1><p class="doc-desc">Memberikan penilaian kualitas prompt secara objektif. Jika di bawah ambang, prompt diperbaiki.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('qualityScore')">📋 Salin Modul</button><span class="doc-meta">5 dimensi + overall</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Dimensi Penilaian</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Character Consistency</span><span class="attr-val">95/100 — DNA terjaga, tidak ada perubahan identitas</span></div>
+                <div class="attr-row"><span class="attr-key">Visual Quality</span><span class="attr-val">98/100 — Photorealistic, detail tajam, lighting tepat</span></div>
+                <div class="attr-row"><span class="attr-key">Marketing Quality</span><span class="attr-val">93/100 — Role, interaksi, CTA jelas dan efektif</span></div>
+                <div class="attr-row"><span class="attr-key">Prompt Efficiency</span><span class="attr-val">97/100 — Singkat, padat, tanpa duplikasi</span></div>
+                <div class="attr-row"><span class="attr-key">Brand Consistency</span><span class="attr-val">100/100 — Nama brand, banner, CTA sesuai standar</span></div>
+                <div class="attr-row" style="background:var(--bg2);font-weight:700;"><span class="attr-key">Overall Score</span><span class="attr-val">97/100 — READY TO GENERATE ✅</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box"><strong>Threshold:</strong> Minimal 85/100. Jika skor di bawah 85, prompt harus diperbaiki sebelum digunakan. Perbaikan otomatis oleh Prompt Optimizer.</div>
+          </div>
+        </div>
+
+        <!-- view-aiCompatibility -->
+        <div class="doc-view" id="view-aiCompatibility">
+          <div class="doc-header"><h1>🤖 MODUL 85 — AI Model Compatibility Engine</h1><p class="doc-desc">Menyesuaikan prompt dengan model AI Image Generator yang digunakan tanpa mengubah maksud.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('aiCompatibility')">📋 Salin Modul</button><span class="doc-meta">7 model AI</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Optimasi per Model</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">GPT Image (OpenAI)</span><span class="attr-val">Prompt naratif paragraf. Detail场景 deskriptif. Hindari kata teknis.</span></div>
+                <div class="attr-row"><span class="attr-key">FLUX / FLUX Kontext</span><span class="attr-val">Prompt pendek ~75 token. Kata kunci kuat. Komposisi jelas.</span></div>
+                <div class="attr-row"><span class="attr-key">Stable Diffusion XL</span><span class="attr-val">Struktur: subjek + scene + lighting + style. Weighted keywords.</span></div>
+                <div class="attr-row"><span class="attr-key">Midjourney</span><span class="attr-val">Prompt artistik. Gaya sinematik. Parameter --ar, --v, --s.</span></div>
+                <div class="attr-row"><span class="attr-key">Ideogram</span><span class="attr-val">Prompt pendek. Teks dalam gambar. Typography didukung.</span></div>
+                <div class="attr-row"><span class="attr-key">Imagen (Google)</span><span class="attr-val">Prompt natural language. Aman. Realistis. Detail produk bagus.</span></div>
+              </div>
+            </div>
+            <div class="doc-section"><h2>Penyesuaian Otomatis</h2>
+              <div class="lock-card"><div class="lock-head locked">Hapus kata tidak efektif</div><div class="lock-detail"><div class="lock-reason">"very", "extremely", "incredibly" — tidak perlu untuk AI.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Sesuaikan panjang prompt</div><div class="lock-detail"><div class="lock-reason">FLUX: 50-100 token. SDXL: 75-150 token. Midjourney: 30-80 token.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">Sesuaikan gaya penulisan</div><div class="lock-detail"><div class="lock-reason">Midjourney: deskriptif artistik. FLUX: kata kunci langsung.</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-failsafe -->
+        <div class="doc-view" id="view-failsafe">
+          <div class="doc-header"><h1>🛡️ MODUL 86 — Failsafe Engine</h1><p class="doc-desc">Menangani kesalahan dan data kosong dengan nilai default yang telah ditentukan.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('failsafe')">📋 Salin Modul</button><span class="doc-meta">6 failsafe rules</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Failsafe Defaults</h2>
+              <div class="attr-table">
+                <div class="attr-row"><span class="attr-key">Character DNA tidak ditemukan</span><span class="attr-val">→ Gunakan AREKA_GIRL_001 — Character DNA Default</span></div>
+                <div class="attr-row"><span class="attr-key">Scene tidak ditemukan</span><span class="attr-val">→ Gunakan Luxury Perfume Store (Default Store Scene)</span></div>
+                <div class="attr-row"><span class="attr-key">Lighting kosong</span><span class="attr-val">→ Gunakan Warm Soft Retail Lighting + Soft Fill Light</span></div>
+                <div class="attr-row"><span class="attr-key">Banner kosong</span><span class="attr-val">→ Gunakan "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning"</span></div>
+                <div class="attr-row"><span class="attr-key">Product kosong</span><span class="attr-val">→ Gunakan "Featured Luxury Perfume"</span></div>
+                <div class="attr-row"><span class="attr-key">Camera kosong</span><span class="attr-val">→ Gunakan Portrait 9:16, Eye Level, 85mm Medium Close Up</span></div>
+              </div>
+            </div>
+            <div class="doc-note-box">Failsafe Engine adalah lapisan terakhir sebelum prompt dikirim. Tidak boleh ada modul kosong yang lolos.</div>
+          </div>
+        </div>
+
+        <!-- view-outputReport -->
+        <div class="doc-view" id="view-outputReport">
+          <div class="doc-header"><h1>📤 MODUL 87 — Output Report Engine</h1><p class="doc-desc">Menghasilkan laporan validasi lengkap — status, konflik, optimasi, skor, dan rekomendasi.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('outputReport')">📋 Salin Modul</button><span class="doc-meta">Full validation report</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Contoh Laporan Validasi</h2>
+              <div class="lock-card"><div class="lock-head locked">✅ Prompt Status</div><div class="lock-detail"><div class="lock-reason">READY TO GENERATE</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ Conflict</div><div class="lock-detail"><div class="lock-reason">None — semua instruksi harmonis</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ Missing Module</div><div class="lock-detail"><div class="lock-reason">None — semua modul terisi lengkap</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ Optimization</div><div class="lock-detail"><div class="lock-reason">Completed — 3 redundansi dihapus, 2 konflik diresolve</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ Quality Score</div><div class="lock-detail"><div class="lock-reason">97/100 — di atas threshold</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ AI Compatibility</div><div class="lock-detail"><div class="lock-reason">GPT Image ✓ · FLUX ✓ · SDXL ✓ · Midjourney ✓ · Ideogram ✓ · Imagen ✓</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ Final Prompt</div><div class="lock-detail"><div class="lock-reason">APPROVED — siap dikirim ke AI Image Generator</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- view-qualityRules -->
+        <div class="doc-view" id="view-qualityRules">
+          <div class="doc-header"><h1>🔐 MODUL 88 — Final Quality Rules</h1><p class="doc-desc">Aturan permanen Prompt Intelligence & Quality Assurance Engine. Tidak boleh dilanggar.</p><div class="doc-actions"><button class="doc-btn" onclick="copyModule('qualityRules')">📋 Salin Modul</button><span class="doc-meta">10 aturan final</span></div></div>
+          <div class="doc-content">
+            <div class="doc-section"><h2>Aturan Permanen QA</h2>
+              <div class="lock-card"><div class="lock-head locked">✅ 1. Jelas</div><div class="lock-detail"><div class="lock-reason">Prompt harus mudah dipahami AI tanpa interpretasi ambigu.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 2. Ringkas</div><div class="lock-detail"><div class="lock-reason">Tidak ada filler words. Setiap kata punya tujuan.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 3. Tidak Ambigu</div><div class="lock-detail"><div class="lock-reason">Instruksi spesifik. Hindari kata multi-interpretasi.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 4. Tidak Bertabrakan</div><div class="lock-detail"><div class="lock-reason">Zero conflict. Semua instruksi selaras.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 5. Tidak Berulang</div><div class="lock-detail"><div class="lock-reason">Zero redundancy. Tidak ada kata/frasa yang disebut dua kali.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 6. Mudah Dipahami AI</div><div class="lock-detail"><div class="lock-reason">Struktur logis, separator jelas antara modul.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 7. Character DNA Terjaga</div><div class="lock-detail"><div class="lock-reason">AREKA_GIRL_001 tidak berubah dalam kondisi apapun.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 8. Realistis</div><div class="lock-detail"><div class="lock-reason">Gambar harus fotorealistik. Tidak ada elemen aneh/cartoon.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 9. Sesuai Platform</div><div class="lock-detail"><div class="lock-reason">Aspect ratio, komposisi, gaya sesuai platform target.</div></div></div>
+              <div class="lock-card"><div class="lock-head locked">✅ 10. Kualitas Komersial</div><div class="lock-detail"><div class="lock-reason">Standar komersial premium — siap produksi konten.</div></div></div>
+            </div>
+            <div class="doc-note-box"><strong>🏁 FASE 7 — PROMPT INTELLIGENCE & QA SELESAI.</strong> Prompt Database System AREKA Official Store sekarang memiliki <strong>88 modul dalam 7 FASE</strong>. Setiap prompt melewati 42 langkah validasi sebelum siap dikirim ke AI Image Generator. Quality gate terakhir: skor minimal 85/100.</div>
           </div>
         </div>
 
