@@ -442,6 +442,23 @@ body {
 .hier-label { font-weight: 600; color: var(--text); }
 .hier-desc { font-size: 9px; color: var(--text-sec); }
 
+/* ===== GENERATOR ===== */
+.gen-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; }
+.gen-controls { display: flex; flex-direction: column; gap: 8px; }
+.gen-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.gen-card-title { font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.gen-select { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 11px; background: var(--bg); color: var(--text); font-family: var(--mono); }
+.gen-textarea { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 11px; background: var(--bg); color: var(--text); font-family: var(--mono); resize: vertical; }
+.gen-generate-btn { grid-column:1/-1; padding: 12px; background: #2d241a; color: #fff; border: none; border-radius: var(--radius-sm); font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+.gen-generate-btn:hover { background: #1a1511; transform: translateY(-1px); }
+.gen-output { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; min-height: 400px; overflow-y: auto; font-family: var(--mono); font-size: 11px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.gen-output-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 360px; color: var(--text-muted); text-align: center; }
+.gen-output-placeholder h3 { font-size: 16px; color: var(--text); margin-bottom: 4px; }
+.gen-output-ready { background: var(--surface); }
+.gen-section { margin-bottom: 6px; }
+.gen-section-label { font-weight: 700; color: var(--accent); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: block; }
+.gen-section-divider { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
+
 /* ===== FASE 8 — FINAL PROMPT GENERATOR ===== */
 .fase-8-badge { background: rgba(245,158,11,0.1); color: #d97706; }
 

@@ -31,6 +31,7 @@
       <button class="fase-tab" data-panel="fase6" onclick="switchPanel('fase6')">FASE 6</button>
       <button class="fase-tab" data-panel="fase7" onclick="switchPanel('fase7')">FASE 7</button>
       <button class="fase-tab" data-panel="fase8" onclick="switchPanel('fase8')">FASE 8</button>
+      <button class="fase-tab" data-panel="generator" onclick="switchPanel('generator')">⚡ GENERATOR</button>
     </div>
   </header>
 
@@ -2294,6 +2295,141 @@ STATUS: ✅ READY TO GENERATE<br>
               <div class="lock-card"><div class="lock-head locked">🔐 8. Gunakan Validasi FASE 7</div><div class="lock-detail"><div class="lock-reason">Semua hasil validasi Quality Assurance harus diterapkan sebelum output final.</div></div></div>
             </div>
             <div class="doc-note-box"><strong>🏁 FASE 8 — FINAL PROMPT GENERATOR ENGINE SELESAI.</strong> Prompt Database System AREKA Official Store sekarang memiliki <strong>103 modul dalam 8 FASE</strong>. Engine mampu menerima input sederhana, memproses melalui 55+ langkah, dan menghasilkan Final Prompt siap kirim ke berbagai AI Image Generator. Mulai dari GPT Image, FLUX, Midjourney, SDXL, Ideogram, Imagen, Qwen, hingga Nano Banana — semua didukung dengan format output yang optimal untuk masing-masing model.</div>
+          </div>
+        </div>
+
+        <!-- ==================== GENERATOR ==================== -->
+        <div class="doc-view" id="view-generator">
+          <div class="doc-header">
+            <h1>⚡ AI Prompt Generator — AREKA Official Store</h1>
+            <p class="doc-desc">Sistem otomatis menghasilkan Final Prompt dari kombinasi modul FASE 1-8. Pilih parameter, klik Generate.</p>
+            <div class="doc-actions">
+              <span class="doc-meta">103 modul · 48 langkah · 8 FASE</span>
+            </div>
+          </div>
+          <div class="gen-layout">
+            <div class="gen-controls">
+              <div class="gen-card">
+                <div class="gen-card-title">🧬 Character</div>
+                <select class="gen-select" id="gen-character"><option value="areka_girl">AREKA_GIRL_001 — Beauty Advisor (Default)</option></select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">🎬 Scene</div>
+                <select class="gen-select" id="gen-scene">
+                  <option value="luxury_store">Luxury Perfume Store (Default)</option>
+                  <option value="luxury_store_night">Luxury Perfume Store — Night</option>
+                  <option value="luxury_store_morning">Luxury Perfume Store — Morning</option>
+                  <option value="luxury_store_evening">Luxury Perfume Store — Evening</option>
+                  <option value="boutique_interior">Boutique Interior — Premium</option>
+                  <option value="counter_display">Counter Display — Close Up</option>
+                  <option value="outdoor_garden">Outdoor Garden — Event</option>
+                  <option value="packing_table">Packing Table — Behind Scene</option>
+                  <option value="living_room">Living Room — Casual</option>
+                  <option value="studio">Studio Photography — Clean</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">📦 Product</div>
+                <select class="gen-select" id="gen-product">
+                  <option value="parfum_arab">Arabic Perfume — Luxury</option>
+                  <option value="parfum_floral">Floral Perfume — Women</option>
+                  <option value="parfum_musk">Musk Perfume — Premium</option>
+                  <option value="parfum_oudh">Oudh Perfume — Exclusive</option>
+                  <option value="parfum_fresh">Fresh Perfume — Daily</option>
+                  <option value="body_splash">Body Splash — Refreshing</option>
+                  <option value="gift_set">Gift Set — Bundle</option>
+                  <option value="miniset">Mini Set — Travel Pack</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">💎 Marketing Style</div>
+                <select class="gen-select" id="gen-marketing">
+                  <option value="beauty_advisor">Beauty Advisor (Default)</option>
+                  <option value="perfume_consultant">Perfume Consultant</option>
+                  <option value="tiktok_creator">TikTok Affiliate Creator</option>
+                  <option value="luxury_sales">Luxury Store Sales</option>
+                  <option value="fragrance_specialist">Fragrance Specialist</option>
+                  <option value="customer_assistant">Customer Assistant</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">📷 Camera</div>
+                <select class="gen-select" id="gen-camera">
+                  <option value="9_16_portrait">9:16 Portrait — TikTok (Default)</option>
+                  <option value="1_1_square">1:1 Square — Instagram</option>
+                  <option value="16_9_landscape">16:9 Landscape — Website</option>
+                  <option value="4_5_portrait">4:5 Portrait — Marketplace</option>
+                  <option value="2_3_portrait">2:3 Portrait — Pinterest</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">💡 Lighting</div>
+                <select class="gen-select" id="gen-lighting">
+                  <option value="warm_led">Warm LED Retail (Default)</option>
+                  <option value="soft_diffused">Soft Diffused — Studio</option>
+                  <option value="golden_hour">Golden Hour — Warm</option>
+                  <option value="natural_window">Natural Window Light</option>
+                  <option value="ring_light">Ring Light — Beauty</option>
+                  <option value="mood_ambient">Mood Ambient — Dramatic</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">🏛️ Brand</div>
+                <select class="gen-select" id="gen-brand">
+                  <option value="areka_default">AREKA OFFICIAL STORE (Default)</option>
+                  <option value="areka_flashsale">AREKA — Flash Sale 🔥</option>
+                  <option value="areka_new">AREKA — New Arrival ✨</option>
+                  <option value="areka_bestseller">AREKA — Best Seller 🏆</option>
+                  <option value="areka_gift">AREKA — Gift Recommendation 🎁</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">🤖 Output Model</div>
+                <select class="gen-select" id="gen-model">
+                  <option value="gpt">GPT Image — Natural Paragraph</option>
+                  <option value="flux">FLUX — Short Keyword</option>
+                  <option value="midjourney">Midjourney — Artistic</option>
+                  <option value="sdxl">Stable Diffusion XL — Structured</option>
+                  <option value="ideogram">Ideogram — Text Friendly</option>
+                  <option value="imagen">Imagen — Natural Language</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">📏 Prompt Length</div>
+                <select class="gen-select" id="gen-length">
+                  <option value="auto">Auto (sesuai model)</option>
+                  <option value="ultra_short">Ultra Short (~25 token)</option>
+                  <option value="short">Short (~50 token)</option>
+                  <option value="medium">Medium (~100 token)</option>
+                  <option value="long">Long (~200 token)</option>
+                  <option value="ultra_long">Ultra Long (~300+ token)</option>
+                </select>
+              </div>
+              <div class="gen-card">
+                <div class="gen-card-title">📋 Output Template</div>
+                <select class="gen-select" id="gen-template">
+                  <option value="prompt_only">Template 1 — Prompt Only</option>
+                  <option value="prompt_negative">Template 2 — Prompt + Negative</option>
+                  <option value="full">Template 3 — Full + Metadata</option>
+                  <option value="json">Template 4 — JSON</option>
+                  <option value="markdown">Template 5 — Markdown</option>
+                  <option value="api">Template 6 — API Payload</option>
+                </select>
+              </div>
+              <div class="gen-card" style="grid-column:1/-1;">
+                <div class="gen-card-title">✏️ Custom Request (Optional)</div>
+                <textarea class="gen-textarea" id="gen-custom" placeholder="Contoh: sedang memegang parfum dengan kedua tangan, tersenyum ke kamera..." rows="2"></textarea>
+              </div>
+              <button class="gen-generate-btn" onclick="generatePrompt()">⚡ GENERATE FINAL PROMPT</button>
+            </div>
+            <div class="gen-output" id="genOutput">
+              <div class="gen-output-placeholder">
+                <div style="font-size:48px;margin-bottom:12px;">🎯</div>
+                <h3>Prompt Generator Siap</h3>
+                <p>Pilih parameter di samping, lalu klik Generate.</p>
+                <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">103 modul · 8 FASE · 48 langkah otomatis</p>
+              </div>
+            </div>
           </div>
         </div>
 
