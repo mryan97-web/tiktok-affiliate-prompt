@@ -437,6 +437,36 @@ function buildNegativePrompt() {
 }
 
 // ===================================================================
+// LAST GENERATED (for copy)
+// ===================================================================
+let LAST_PROMPT = '';
+let LAST_NEGATIVE = '';
+let LAST_FULL = '';
+
+function copyPromptOnly() {
+  if (!LAST_PROMPT) return showToast('⚠️ Generate dulu');
+  copyText(LAST_PROMPT);
+}
+
+function copyNegativeOnly() {
+  if (!LAST_NEGATIVE) return showToast('⚠️ Generate dulu');
+  copyText(LAST_NEGATIVE);
+}
+
+function copyFullOutput() {
+  if (!LAST_FULL) return showToast('⚠️ Generate dulu');
+  copyText(LAST_FULL);
+}
+
+function buildCopyBar() {
+  return `<div class="gen-copy-bar">
+    <button class="gen-copy-btn" onclick="copyPromptOnly()">📋 Salin Prompt</button>
+    <button class="gen-copy-btn" onclick="copyNegativeOnly()">🚫 Salin Negative</button>
+    <button class="gen-copy-btn primary" onclick="copyFullOutput()">📄 Salin Semua</button>
+  </div>`;
+}
+
+// ===================================================================
 // MAIN GENERATOR — FASE 8 FINAL OUTPUT
 // ===================================================================
 function generatePrompt() {
@@ -570,39 +600,40 @@ function generatePrompt() {
 
   let html = '';
 
+  // Store for copy buttons
+  LAST_PROMPT = mainPrompt;
+  LAST_NEGATIVE = parts.negative;
+
   if (templateKey === 'prompt_only') {
-    html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span>${mainPrompt}</div></div>`;
+    LAST_FULL = mainPrompt;
+    html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
   } else if (templateKey === 'prompt_negative') {
+    LAST_FULL = `FINAL PROMPT\n${mainPrompt}\n\nNEGATIVE PROMPT\n${parts.negative}`;
     html = `<div class="gen-output-ready">
-      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span>${mainPrompt}</div>
+      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
-      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span>${parts.negative}</div>
+      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span><div class="gen-prompt-text">${parts.negative}</div></div>
     </div>`;
   } else if (templateKey === 'json') {
-    html = `<div class="gen-output-ready">${JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative, model: modelLabel, style: modelConf.style, aspect_ratio: ar, quality: qualityLabel, status: status }, null, 2)}</div>`;
+    const jsonOut = JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative, model: modelLabel, style: modelConf.style, aspect_ratio: ar, quality: qualityLabel, status: status }, null, 2);
+    LAST_FULL = jsonOut;
+    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${jsonOut}</pre></div>`;
   } else if (templateKey === 'markdown') {
-    html = `<div class="gen-output-ready">
-### Final Prompt
-${mainPrompt}
-
-### Negative Prompt
-${parts.negative}
-
-### Metadata
-- Model: ${modelLabel}
-- Aspect Ratio: ${ar}
-- Quality: ${qualityLabel}
-- Status: ${status}
-</div>`;
+    const mdOut = `### Final Prompt\n${mainPrompt}\n\n### Negative Prompt\n${parts.negative}\n\n### Metadata\n- Model: ${modelLabel}\n- Aspect Ratio: ${ar}\n- Quality: ${qualityLabel}\n- Status: ${status}`;
+    LAST_FULL = mdOut;
+    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${mdOut}</pre></div>`;
   } else if (templateKey === 'api') {
     const payload = { prompt: mainPrompt, negative_prompt: parts.negative, model: modelKey, aspect_ratio: ar, quality: 'ultra_realistic', style: modelConf.style, width: 1080, height: ar === '9:16' ? 1920 : ar === '1:1' ? 1080 : ar === '4:5' ? 1350 : 1080 };
-    html = `<div class="gen-output-ready">${JSON.stringify(payload, null, 2)}</div>`;
+    const apiOut = JSON.stringify(payload, null, 2);
+    LAST_FULL = apiOut;
+    html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${apiOut}</pre></div>`;
   } else {
     // Full template (default)
+    LAST_FULL = `FINAL PROMPT\n${mainPrompt}\n\nNEGATIVE PROMPT\n${parts.negative}\n\nModel: ${modelLabel}\nStyle: ${modelConf.style}\nAspect Ratio: ${ar}\nQuality: ${qualityLabel}\nStatus: ${status}\nQuality Score: ${score}/100`;
     html = `<div class="gen-output-ready">
-      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span>${mainPrompt}</div>
+      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
-      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span>${parts.negative}</div>
+      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span><div class="gen-prompt-text">${parts.negative}</div></div>
       <hr class="gen-section-divider">
       <div class="gen-section" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;">
         <span><strong>Model:</strong> ${modelLabel}</span>
@@ -616,7 +647,8 @@ ${parts.negative}
     </div>`;
   }
 
-  outputEl.innerHTML = html;
+  outputEl.innerHTML = buildCopyBar() + html;
+  showToast('✅ Prompt generated');
 }
 
 

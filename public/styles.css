@@ -458,6 +458,12 @@ body {
 .gen-section { margin-bottom: 6px; }
 .gen-section-label { font-weight: 700; color: var(--accent); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: block; }
 .gen-section-divider { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
+.gen-prompt-text { white-space: pre-wrap; word-break: break-word; line-height: 1.55; }
+.gen-copy-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; position: sticky; top: 0; background: var(--surface); padding-bottom: 8px; border-bottom: 1px solid var(--border-light); z-index: 2; }
+.gen-copy-btn { padding: 7px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.gen-copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.gen-copy-btn.primary { background: #2d241a; color: #fff; border-color: #2d241a; }
+.gen-copy-btn.primary:hover { background: #1a1511; color: #fff; }
 
 /* ===== FASE 8 — FINAL PROMPT GENERATOR ===== */
 .fase-8-badge { background: rgba(245,158,11,0.1); color: #d97706; }
