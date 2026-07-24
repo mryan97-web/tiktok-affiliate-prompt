@@ -1,4 +1,4 @@
-/* Prompt Database System — All FASE 1-5 */
+/* Prompt Database System — All FASE 1-6 */
 /* Navigasi modul + Utility */
 
 // ===== SWITCH PANEL =====
@@ -22,6 +22,7 @@ function switchPanel(panelId) {
     fase3: 'FASE 3 — Marketing Engine',
     fase4: 'FASE 4 — Scene Engine',
     fase5: 'FASE 5 — Brand & Product Engine',
+    fase6: 'FASE 6 — Automation Engine',
   };
   const subs = {
     fase1: 'Character DNA · Identity Lock · Prompt Assembly',
@@ -29,6 +30,7 @@ function switchPanel(panelId) {
     fase3: 'Role · Personality · Interaction · Presentation · Gesture · Expression · Body Language · Psychology · Trust · TikTok · Conversion · CTA · Shop · Social · Consistency',
     fase4: 'Scene Library · Default Store · Store Environment · Activity · Product Interaction · Customer Scene · Product Category · Time · Mood · Seasonal · Variation · Props · Consistency · Templates · Output',
     fase5: 'Brand Identity · Product Database · Product Display · Hierarchy · Placement · Banner · Typography · Color System · Campaign · Social Commerce · CTA · Consistency · Templates · Output',
+    fase6: 'Assembly Engine · Request Analyzer · Module Selector · Priority Engine · Conflict Detector · Optimizer · Enhancer · Negative Builder · Validator · Default Engine · Multi Platform · Template Engine · Formatter · Automation Rules · Workflow Engine · Output',
   };
   document.getElementById('infoBar').querySelector('strong').textContent = labels[panelId] || panelId;
   document.getElementById('infoText').textContent = subs[panelId] || '';
@@ -44,9 +46,11 @@ function showModule(mod) {
   if (view) view.classList.add('active');
 
   const names = {
+    // FASE 1
     dna: 'MODUL 1 — Character DNA',
     lock: 'MODUL 2 — Identity Lock',
     assembly: 'MODUL 3 — Prompt Assembly',
+    // FASE 2
     camera: 'MODUL 4 — Camera Engine',
     lens: 'MODUL 5 — Lens Engine',
     lighting: 'MODUL 6 — Lighting Engine',
@@ -55,6 +59,7 @@ function showModule(mod) {
     quality: 'MODUL 9 — Image Quality Engine',
     consistency: 'MODUL 10 — Visual Consistency Rules',
     presets: 'MODUL 11 — Visual Presets',
+    // FASE 3
     role: 'MODUL 12 — Role Engine',
     personality: 'MODUL 13 — Sales Personality Engine',
     interaction: 'MODUL 14 — Customer Interaction Engine',
@@ -70,6 +75,7 @@ function showModule(mod) {
     shop: 'MODUL 24 — Shop Environment Experience',
     social: 'MODUL 25 — Social Commerce Style',
     mconsistency: 'MODUL 26 — Marketing Consistency Rules',
+    // FASE 4
     scene: 'MODUL 27 — Scene Library',
     defaultScene: 'MODUL 28 — Default Store Scene',
     environment: 'MODUL 29 — Store Environment Engine',
@@ -85,6 +91,7 @@ function showModule(mod) {
     sceneConsistency: 'MODUL 39 — Scene Consistency Rules',
     templates: 'MODUL 40 — Scene Template Library',
     outputEngine: 'MODUL 41 — Output Engine',
+    // FASE 5
     brand: 'MODUL 42 — Brand Identity Engine',
     productDB: 'MODUL 43 — Product Database Engine',
     productDisplay: 'MODUL 44 — Product Display Engine',
@@ -99,6 +106,23 @@ function showModule(mod) {
     brandConsistency: 'MODUL 53 — Brand Consistency Rules',
     productTemplates: 'MODUL 54 — Product Template Library',
     brandOutput: 'MODUL 55 — Output Engine',
+    // FASE 6
+    assemblyEngine: 'MODUL 56 — Prompt Assembly Engine',
+    requestAnalyzer: 'MODUL 57 — Request Analyzer',
+    moduleSelector: 'MODUL 58 — Module Selector',
+    priorityEngine: 'MODUL 59 — Module Priority Engine',
+    conflictDetector: 'MODUL 60 — Conflict Detector',
+    promptOptimizer: 'MODUL 61 — Prompt Optimizer',
+    promptEnhancer: 'MODUL 62 — Prompt Enhancer',
+    negativeBuilder: 'MODUL 63 — Negative Prompt Builder',
+    promptValidator: 'MODUL 64 — Prompt Validator',
+    defaultEngine: 'MODUL 65 — Automatic Default Engine',
+    multiPlatform: 'MODUL 66 — Multi Platform Engine',
+    promptTemplateEngine: 'MODUL 67 — Prompt Template Engine',
+    finalFormatter: 'MODUL 68 — Final Prompt Formatter',
+    automationRules: 'MODUL 69 — Automation Rules',
+    workflowEngine: 'MODUL 70 — Workflow Engine',
+    automationOutput: 'MODUL 71 — Output Engine',
   };
   document.getElementById('docInfo').textContent = 'Menampilkan: ' + (names[mod] || mod);
 }
@@ -138,4 +162,4 @@ function showToast(msg) {
 }
 
 // ===== INIT =====
-showModule('brand');
+showModule('assemblyEngine');

@@ -435,6 +435,9 @@ body {
 .hier-label { font-weight: 600; color: var(--text); }
 .hier-desc { font-size: 9px; color: var(--text-sec); }
 
+/* ===== FASE 6 — AUTOMATION ENGINE ===== */
+.fase-6-badge { background: rgba(99,102,241,0.1); color: #4f46e5; }
+
 @media (max-width: 860px) {
   .main-layout { grid-template-columns: 1fr; }
   .left-panel { display: none; }
