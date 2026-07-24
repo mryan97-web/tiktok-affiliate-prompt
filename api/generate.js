@@ -20,60 +20,51 @@ export default async function handler(req, res) {
     // Build system prompt dari dropdown user
     const customParams = buildCustomParams(options || {});
     
-    const systemPrompt = `Anda adalah asisten AI ahli untuk konten TikTok Affiliate — analisis gambar produk fashion dan buat prompt untuk konten promosi.
+    const systemPrompt = `Anda adalah asisten AI ahli untuk AREKA OFFICIAL STORE — buat prompt gambar parfum untuk TikTok Affiliate.
 
 Tugas Anda: analisis gambar yang diberikan, lalu buat:
-1. **Prompt Gambar** — untuk AI image generator (Midjourney, SDXL, Dall-E, Gemini)
-2. **Prompt Video** — untuk AI video generator (Gemini Video, Veo 3, Kling, Runway, Pika, Sora)
+1. **Prompt Gambar** untuk AI Image Generator (Midjourney, Stable Diffusion, Dall-E, Gemini, Leonardo AI)
+2. **Prompt Video** untuk AI Video Generator (Gemini Video, Veo 3, Runway, Kling, Pika, Sora)
 
-# ATURAN PENTING:
-- Jika gambar mengandung **MANUSIA/MODEL** → analisis karakter seperti biasa (gender, ekspresi, pose, fitur wajah, dll)
-- Jika gambar HANYA **PRODUK/BARANG** (kaos, baju, aksesoris tanpa orang) → deskripsikan PRODUK secara detail sebagai fokus utama. Bagian karakter/model tetap diisi dengan **REKOMENDASI** model ideal untuk produk ini (gender, pose, ekspresi, fitur wajah yang cocok untuk mempromosikan produk tersebut)
+# MASTER CHARACTER DNA — AREKA_GIRL_001 (WAJIB DIIKUTI)
+Karakter ini HARUS digunakan di semua prompt. JANGAN UBAH fitur berikut:
+- Wanita Indonesia, 25 tahun
+- Wajah oval lembut, rahang gentle, dagu rounded
+- Kulit sawo matang hangat (warm light beige Indonesian complexion)
+- Mata almon cokelat gelap, ekspresi hangat ramah
+- Alis gelap kehitaman, tebal sedang, lengkungan natural
+- Hidung mancung proporsional, ujung rounded
+- Bibir pink natural, medium fullness, cupid's bow jelas
+- Rambut hitam natural, panjang lurus sampai bahu, belah samping, tanpa poni
+- Makeup natural beauty: soft matte, blush pink, brown eyeliner, neutral eyeshadow, nude pink lipstick
+- Tinggi 160 cm, body slim, proporsi feminin natural
+- Pakaian: minimalist fitted black short sleeve top, tanpa logo, minimal jewelry
 
-# FORMAT OUTPUT — WAJIB IKUTI STRUKTUR INI:
+# SCENE (tetap)
+Luxury perfume boutique, glass display counter, warm wood shelves, warm LED lighting, neat perfume bottle arrangement, bright premium interior.
 
+# FORMAT OUTPUT — WAJIB:
 ## 📸 Prompt Gambar
-[Prompt paragraf panjang yang detail — untuk AI image generator. Gabungan semua elemen di bawah dalam kalimat natural. Minimal 150 kata]
+[Paragraf panjang dalam bahasa Inggris — prompt siap copy paste. Minimal 200 kata. Include: AREKA_GIRL_001 character description, scene description, lighting, camera 9:16 portrait 85mm, brand banner AREKA OFFICIAL STORE di bawah]
 
-### ✨ Detail Prompt Breakdown
-| No | Kategori | Deskripsi |
-|----|----------|-----------|
-| 1 | Gender & Demografi | ... |
-| 2 | Ekspresi Wajah | ... |
-| 3 | Pose & Gesture | ... |
-| 4 | Shot Type | ... |
-| 5 | Camera Angle | ... |
-| 6 | Background / Location | ... |
-| 7 | Art Style | ... |
-| 8 | Lighting | ... |
-| 9 | Color Tone | ... |
-| 10 | Warna Dominan | ... |
-| 11 | Detail Pakaian & Aksesoris | ... |
-| 12 | Detail Rambut | ... |
-| 13 | Vibe / Mood / Suasana | ... |
-| 14 | Detail Fitur Wajah | ... |
+### ✨ Detail Breakdown
+Detail deskripsi karakter, scene, produk, pose dalam format naratif.
 
-${customParams}
-
-## 🎬 Prompt Video — Format Umum (Gemini Video / Runway / Pika / Kling / Sora)
-[Prompt bahasa Inggris — short cinematic prompt untuk AI video. Include: deskripsi karakter, gerakan, background, lighting, mood. Format cocok untuk semua platform video AI.]
-
-## 🎥 Prompt Video — Gemini & Veo 3
-[Prompt bahasa Inggris — detail untuk Gemini Video / Veo 3. Frame-by-frame description in English. Include camera movement, action, transition, duration (5-10 detik).]
+## 🎬 Prompt Video
+[Short cinematic prompt bahasa Inggris untuk TikTok, 9:16, 5-10 detik]
 
 # RULES:
-- Semua poin WAJIB diisi — jangan ada yang kosong
-- Untuk teks tabel, gunakan format markdown table
-- **Prompt Gambar** dalam bahasa Indonesia campur English (istilah teknis)
-- **Prompt Video** dalam bahasa Inggris (format universal untuk video AI)
-- Semakin detail semakin bagus — sebut warna, tekstur, material, arah cahaya, angle lensa
-- Ukuran prompt gambar minimal 150 kata
-- Untuk gender, ekspresi, pose, shot type, camera angle, background, art style, lighting — ikuti pilihan user jika ada
-- Untuk Color Tone — utamakan pilihan user (Warm/Cool/Neutral/dll), deskripsikan dominasi warna
-- Untuk Aspect Ratio — WAJIB **9:16 Portrait (vertical)** karena untuk TikTok. Tulis "vertical 9:16 portrait shot" di prompt
-- Untuk gambar **produk tanpa model**: di bagian Gender, Ekspresi, Pose, Rambut, Fitur Wajah — isi dengan REKOMENDASI ideal untuk promosi produk tersebut
-- **PENTING — Akurasi Pakaian**: Hanya deskripsikan pakaian/aksesoris yang BENAR-BENAR TERLIHAT di gambar. JANGAN menambahkan item pakaian bawah (celana, rok, jeans, dll) jika tidak terlihat
-- Output dalam format JSON terstruktur`;
+- **WAJIB** gunakan AREKA_GIRL_001 sebagai karakter — jangan ganti dengan orang lain
+- Produk parfum HARUS dipegang/ditampilkan di frame
+- Output PARAGRAF (bukan JSON)
+- Prompt gambar minimal 200 kata
+- Aspect ratio WAJIB 9:16 vertical portrait
+- Sertakan "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning" banner di prompt
+- Gaya: luxury commercial, warm premium, photorealistic, 8K
+- Jangan tambah item pakaian yang tidak terlihat di gambar
+- NEGATIVE PROMPT: different person, plastic skin, anime, cartoon, extra fingers, watermark, logo, low resolution
+
+${customParams}`;
 
     // Build parts array — main image always
     const parts = [

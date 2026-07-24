@@ -3,28 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Prompt Generator — TikTok Affiliate</title>
+  <title>AREKA Official Store — Generator Prompt Parfum</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="app-container">
     <!-- HEADER -->
     <header class="app-header">
       <div class="logo">
-        <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
-          <rect width="32" height="32" rx="8" fill="url(#g1)" />
-          <path d="M8 24V8h4l4 12 4-12h4v16h-3.5V13.5L16 24l-4.5-10.5V24H8z" fill="#fff" />
+        <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
+          <rect width="36" height="36" rx="10" fill="url(#ag)" />
+          <path d="M18 6c-3 0-5.5 2-6 5-.5 3 1 6 3 8 0 3 1 6 3 11 2-5 3-8 3-11 2-2 3.5-5 3-8-.5-3-3-5-6-5z" fill="#fff" opacity="0.95"/>
+          <path d="M14 15c1 2 2.5 3 4 3s3-1 4-3" stroke="#C7976F" stroke-width="1.5" stroke-linecap="round" fill="none"/>
           <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="32" y2="32">
-              <stop stop-color="#FF6B35" />
-              <stop offset="1" stop-color="#F7C948" />
+            <linearGradient id="ag" x1="0" y1="0" x2="36" y2="36">
+              <stop stop-color="#C7976F" />
+              <stop offset="1" stop-color="#8B5E3C" />
             </linearGradient>
           </defs>
         </svg>
-        <span class="logo-text"><strong>Generator Prompt Model</strong></span>
-        <span class="badge">by Areka Official Store</span>
+        <div class="logo-text-group">
+          <span class="logo-text"><strong>Generator Prompt Model</strong></span>
+          <span class="logo-sub">AREKA OFFICIAL STORE</span>
+        </div>
+        <span class="badge">✨ Parfum</span>
       </div>
       <div class="header-right">
         <span class="api-status" id="apiStatus">⚪ ...</span>
@@ -33,7 +37,7 @@
 
     <!-- Subtitle -->
     <div class="app-subtitle">
-      Sistem LEGO Master Database — karakter konsisten, tinggal ganti produk
+      🧬 <strong>Master Character DNA v3.0</strong> — AREKA_GIRL_001 · Karakter konsisten, tinggal ganti parfum & pose
     </div>
 
     <!-- MODEL SELECTOR BAR -->
@@ -47,102 +51,124 @@
       </div>
     </div>
 
-    <!-- MAIN LAYOUT: Left = Master DB, Right = Output -->
+    <!-- ⚠️ INFO BAR — Prompt Layer System -->
+    <div class="info-bar">
+      <div class="info-icon">💡</div>
+      <div class="info-text">
+        <strong>3 Layer Prompt:</strong> 
+        <span class="layer-tag dna">Character DNA</span> (tetap) + 
+        <span class="layer-tag style">Style Engine</span> (tetap) + 
+        <span class="layer-tag brand">Brand Layer</span> (tetap) · 
+        Ganti <strong>Pose</strong> & <strong>Parfum</strong> aja
+      </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
     <div class="main-layout">
       <!-- LEFT PANEL — Master Database -->
       <div class="left-panel">
-        <!-- DATABASE A — Master Model (fixed) -->
+        <!-- DATABASE A — Character DNA (fixed) -->
         <div class="db-section">
           <div class="db-section-header">
-            <span>👤 DATABASE A — Master Model</span>
-            <span class="db-badge fix">FIXED</span>
+            <div class="db-header-left">
+              <span class="db-section-icon">👩</span>
+              <span>DATABASE A — Character DNA</span>
+            </div>
+            <span class="db-badge fix">LOCKED</span>
           </div>
           <div class="db-content">
-            <textarea id="masterModel" rows="3">Indonesian male, 22 years old, Southeast Asian, 172 cm, slim athletic body, neat side-part hairstyle, tan skin, clean-shaven</textarea>
-            <div class="db-hint">Karakter tetap — jangan pernah berubah</div>
+            <textarea id="masterModel" rows="4">AREKA_GIRL_001 — Wanita Indonesia, 25 tahun, wajah oval lembut, kulit sawo matang hangat, mata almon cokelat gelap, alis rapi melengkung natural, hidung mancung proporsional, bibir pink natural, rambut hitam panjang lurus belah samping, tinggi 160 cm, body slim feminin, ekspresi hangat ramah profesional.</textarea>
+            <div class="db-hint">🔒 Wajah, tubuh, fitur — tidak pernah berubah</div>
           </div>
         </div>
 
-        <!-- DATABASE B — Master Studio (fixed) -->
+        <!-- DATABASE B — Style Engine (fixed) -->
         <div class="db-section">
           <div class="db-section-header">
-            <span>🎬 DATABASE B — Master Studio</span>
-            <span class="db-badge fix">FIXED</span>
+            <div class="db-header-left">
+              <span class="db-section-icon">🎨</span>
+              <span>DATABASE B — Style Engine</span>
+            </div>
+            <span class="db-badge fix">LOCKED</span>
           </div>
           <div class="db-content">
-            <textarea id="masterStudio" rows="3">White cyclorama studio, softbox right and left, grey floor, soft diffused shadow</textarea>
-            <div class="db-hint">Background & lighting tetap</div>
+            <textarea id="masterStudio" rows="4">Scene: Luxury perfume boutique, glass display counter, warm wood shelves, warm LED lighting, neat arrangement of perfume bottles, bright premium interior. Lighting: Soft commercial lighting, warm store lighting, balanced exposure, soft shadows, luxury retail atmosphere. Camera: Portrait orientation 9:16, eye-level, 85mm portrait lens look, moderate depth of field, sharp facial focus, subject centered, upper body dominant, background slightly softened. Color Grading: Premium commercial photography, warm whites, natural skin, rich wood tones, clean blacks, soft highlights, realistic saturation. Image Quality: Photorealistic, commercial advertisement, luxury retail campaign, magazine quality, ultra detailed, natural skin, 8K appearance, high dynamic range.</textarea>
+            <div class="db-hint">🔒 Scene, lighting, kamera, grading — tetap</div>
           </div>
         </div>
 
-        <!-- DATABASE C — Master Camera (fixed) -->
+        <!-- DATABASE C — Brand Layer (fixed) -->
         <div class="db-section">
           <div class="db-section-header">
-            <span>📷 DATABASE C — Master Camera</span>
-            <span class="db-badge fix">FIXED</span>
+            <div class="db-header-left">
+              <span class="db-section-icon">🏷️</span>
+              <span>DATABASE C — Brand Layer</span>
+            </div>
+            <span class="db-badge fix">LOCKED</span>
           </div>
           <div class="db-content">
-            <textarea id="masterCamera" rows="3">Camera directly behind, eye level, locked camera, 85mm lens, f/2.8, center composition, vertical 9:16</textarea>
-            <div class="db-hint">Angle & lens tetap</div>
+            <textarea id="masterBrand" rows="2">Brand banner at bottom: rounded rectangle, height 8% of image, white background, black text, yellow shopping cart icon. Text: "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning". Minimalist typography, premium appearance. Do not overlap the subject.</textarea>
+            <div class="db-hint">🔒 Banner AREKA — selalu ada di bawah</div>
           </div>
         </div>
 
-        <!-- DATABASE D — Master Pose (dropdown) -->
+        <!-- DATABASE D — Pose (variable) -->
         <div class="db-section">
           <div class="db-section-header">
-            <span>🧘 DATABASE D — Master Pose</span>
+            <div class="db-header-left">
+              <span class="db-section-icon">🧘</span>
+              <span>DATABASE D — Pose</span>
+            </div>
             <span class="db-badge variable">VARIABLE</span>
           </div>
           <div class="db-content">
             <select id="masterPose">
-              <option value="Hands on hips, confident stance">Pose 1 — Hands on hips</option>
-              <option value="One hand in pocket, relaxed" selected>Pose 2 — One hand in pocket</option>
-              <option value="Relaxed standing, arms at sides">Pose 3 — Relaxed standing</option>
-              <option value="Walking slowly forward">Pose 4 — Walking slowly</option>
-              <option value="Looking over shoulder back at camera">Pose 5 — Looking over shoulder</option>
-              <option value="Crossed arms, slight smirk">Pose 6 — Crossed arms</option>
-              <option value="Holding phone, looking down">Pose 7 — Holding phone</option>
-              <option value="Adjusting collar, looking up">Pose 8 — Adjusting collar</option>
+              <option value="Holding perfume bottle in right hand, bottle label facing camera, left hand resting naturally on counter, looking toward camera with warm smile">Pose 1 — Presenting Parfum</option>
+              <option value="Both hands holding perfume bottle at chest level, gentle presentation gesture, head slightly tilted, warm friendly smile" selected>Pose 2 — Menawarkan Parfum</option>
+              <option value="Spraying perfume on wrist, eyes looking down at wrist, subtle smile, elegant gesture">Pose 3 — Menyemprot Parfum</option>
+              <option value="Holding perfume bottle near face, eyes closed, enjoying the scent, peaceful expression, bottle angled to show label">Pose 4 — Menikmati Aroma</option>
+              <option value="Standing beside display counter, one hand holding perfume, other hand gesturing toward products, professional consultant pose">Pose 5 — Konsultan Parfum</option>
+              <option value="Talking to camera while holding perfume, host-like pose, holding bottle near shoulder level, natural smile">Pose 6 — Host TikTok Live</option>
+              <option value="Holding two perfume bottles for comparison, looking at bottles with thoughtful expression, slightly angled body">Pose 7 — Membandingkan</option>
+              <option value="Packing perfume order, holding wrapped box, looking up at camera with pleasant surprise, customer service vibe">Pose 8 — Packing Order</option>
             </select>
           </div>
         </div>
 
-        <!-- DATABASE E — Produk (yang sering ganti) -->
+        <!-- DATABASE E — Produk Parfum (variable) -->
         <div class="db-section">
           <div class="db-section-header">
-            <span>👕 DATABASE E — Produk</span>
+            <div class="db-header-left">
+              <span class="db-section-icon">🌸</span>
+              <span>DATABASE E — Parfum</span>
+            </div>
             <span class="db-badge variable">VARIABLE</span>
           </div>
           <div class="db-content">
             <div class="product-selector-row">
               <select id="masterProduct">
-                <option value="">— Pilih produk —</option>
-                <option value="Black cotton oversized T-shirt">Kaos Oversized Hitam</option>
-                <option value="Maroon cotton oversized T-shirt">Kaos Oversized Maroon</option>
-                <option value="Cream cotton oversized T-shirt">Kaos Oversized Cream</option>
-                <option value="White cotton oversized T-shirt">Kaos Oversized Putih</option>
-                <option value="Navy blue cotton oversized T-shirt">Kaos Oversized Navy</option>
-                <option value="Olive green cotton oversized T-shirt">Kaos Oversized Olive</option>
-                <option value="Charcoal grey oversized hoodie">Hoodie Oversized Charcoal</option>
-                <option value="Black oversized hoodie">Hoodie Oversized Hitam</option>
-                <option value="Cream oversized hoodie">Hoodie Oversized Cream</option>
-                <option value="Cargo pants black">Cargo Pants Hitam</option>
-                <option value="Cargo pants army green">Cargo Pants Army Green</option>
-                <option value="Blue straight jeans">Jeans Blue Straight</option>
-                <option value="Black slim jeans">Jeans Black Slim</option>
-                <option value="Grey sweatpants">Sweatpants Abu</option>
-                <option value="Denim jacket">Denim Jacket</option>
-                <option value="White sneakers">Sneakers Putih</option>
+                <option value="">— Pilih parfum —</option>
+                <option value="AREKA Signature Eau de Parfum 50ml — botol kaca transparan dengan aksen emas, cairan bening, label putih dengan logo AREKA hitam">AREKA Signature EDP — Emas</option>
+                <option value="AREKA Bloom Eau de Toilette 100ml — botol kaca pink pastel, tutup silver, label putih minimalis">AREKA Bloom EDT — Pink</option>
+                <option value="AREKA Noir Eau de Parfum 50ml — botol kaca hitam pekat doff, aksen rose gold, label hitam dengan tulisan gold">AREKA Noir EDP — Hitam</option>
+                <option value="AREKA Ocean Eau de Toilette 75ml — botol kaca biru gradient, tutup silver, label putih">AREKA Ocean EDT — Biru</option>
+                <option value="AREKA Velvet Eau de Parfum 30ml — botol kaca ungu transparan, tutup gold, label krem">AREKA Velvet EDP — Ungu</option>
+                <option value="AREKA Amber Eau de Parfum 100ml — botol kaca cokelat amber, tutup kayu, label krem vintage">AREKA Amber EDP — Cokelat</option>
+                <option value="AREKA Rose Eau de Toilette 50ml — botol kaca bening dengan stiker bunga mawar, tutup rose gold">AREKA Rose EDT — Mawar</option>
+                <option value="AREKA White Musk Eau de Parfum 75ml — botol putih susu doff, aksen chrome, label putih timbul">AREKA White Musk EDP — Putih</option>
+                <option value="AREKA Leather Eau de Parfum 50ml — botol kotak hitam dengan sleeve kulit sintetis, label gold">AREKA Leather EDP — Kulit</option>
+                <option value="AREKA Citrus Eau de Toilette 100ml — botol kaca kuning transparan, tutup putih, label warna cerah">AREKA Citrus EDT — Kuning</option>
+                <option value="AREKA Oud Royale Eau de Parfum 30ml — botol kaca hitam hexagonal, aksen emas 24K, label eksklusif">AREKA Oud Royale EDP — Eksklusif</option>
               </select>
               <button class="btn-small" onclick="manageProducts()">✏️</button>
             </div>
-            <div class="db-hint">Pilih produk yang mau dipromosikan</div>
+            <div class="db-hint">Pilih varian parfum yang mau dipromosikan</div>
           </div>
         </div>
 
         <!-- GENERATE BUTTON -->
         <button class="btn-generate" id="btnGenerate" onclick="generatePrompt()">
-          <span class="btn-icon">⚡</span> Generate Prompt
+          <span class="btn-icon">✨</span> Rakit Prompt Parfum
         </button>
       </div>
 
@@ -150,9 +176,12 @@
       <div class="right-panel">
         <div class="output-area" id="outputArea">
           <div class="output-empty">
-            <div class="empty-icon">🧩</div>
+            <div class="empty-icon">🌸</div>
             <h3>Prompt Siap Dirakit</h3>
-            <p>Pilih produk + pose, lalu klik Generate</p>
+            <p>Pilih parfum + pose, lalu klik Rakit Prompt</p>
+            <div class="empty-hint">
+              <span>3 Layer Prompt → 1 Output Komplit</span>
+            </div>
           </div>
         </div>
         <div class="output-footer hidden" id="outputFooter">
@@ -160,7 +189,7 @@
             <span id="tokenCount"></span>
           </div>
           <div class="footer-right">
-            <button class="btn-small" onclick="copyAll()">📋 Salin Semua</button>
+            <button class="btn-small" style="width:auto;padding:6px 14px;font-size:12px;" onclick="copyAll()">📋 Salin Semua</button>
           </div>
         </div>
       </div>
@@ -170,7 +199,7 @@
     <div class="loader-overlay hidden" id="loaderOverlay">
       <div class="loader-modal">
         <div class="loader-spinner"></div>
-        <p>Merakit prompt...</p>
+        <p>Merakit prompt parfum...</p>
       </div>
     </div>
 

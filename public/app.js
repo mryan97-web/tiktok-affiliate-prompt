@@ -1,111 +1,102 @@
-/* === Generator Prompt Model by Areka Official Store === */
-/* LEGO Master Database System — karakter konsisten, tinggal ganti produk */
+/* === Generator Prompt Model — AREKA Official Store === */
+/* Master Character DNA v3.0 — Premium Parfum Theme */
 
 const $ = id => document.getElementById(id);
 
 const state = {
-  masterModel: 'Indonesian male, 22 years old, Southeast Asian, 172 cm, slim athletic body, neat side-part hairstyle, tan skin, clean-shaven',
-  masterStudio: 'White cyclorama studio, softbox right and left, grey floor, soft diffused shadow',
-  masterCamera: 'Camera directly behind, eye level, locked camera, 85mm lens, f/2.8, center composition, vertical 9:16',
-  masterPose: 'One hand in pocket, relaxed',
+  masterModel: 'AREKA_GIRL_001 — Wanita Indonesia, 25 tahun, wajah oval lembut, kulit sawo matang hangat, mata almon cokelat gelap, alis rapi melengkung natural, hidung mancung proporsional, bibir pink natural, rambut hitam panjang lurus belah samping, tinggi 160 cm, body slim feminin, ekspresi hangat ramah profesional.',
+  masterStudio: 'Scene: Luxury perfume boutique, glass display counter, warm wood shelves, warm LED lighting, neat arrangement of perfume bottles, bright premium interior. Lighting: Soft commercial lighting, warm store lighting, balanced exposure, soft shadows, luxury retail atmosphere. Camera: Portrait orientation 9:16, eye-level, 85mm portrait lens look, moderate depth of field, sharp facial focus, subject centered, upper body dominant, background slightly softened. Color Grading: Premium commercial photography, warm whites, natural skin, rich wood tones, clean blacks, soft highlights, realistic saturation. Image Quality: Photorealistic, commercial advertisement, luxury retail campaign, magazine quality, ultra detailed, natural skin, 8K appearance, high dynamic range.',
+  masterBrand: 'Brand banner at bottom: rounded rectangle, height 8% of image, white background, black text, yellow shopping cart icon. Text: "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning". Minimalist typography, premium appearance. Do not overlap the subject.',
+  masterPose: 'Both hands holding perfume bottle at chest level, gentle presentation gesture, head slightly tilted, warm friendly smile',
   masterProduct: '',
 };
 
+// ===== POSE SUFFIX — detail bahasa Inggris untuk prompt =====
 const POSE_SUFFIX = {
-  'Hands on hips, confident stance': 'The model stands with hands on hips, elbows slightly bent, fingers spread confidently, shoulders back.',
-  'One hand in pocket, relaxed': 'The model stands with left hand casually in pocket, right hand relaxed at side, slight natural stance.',
-  'Relaxed standing, arms at sides': 'The model stands naturally with arms relaxed at sides, weight shifted slightly to one leg for a natural look.',
-  'Walking slowly forward': 'The model walks slowly forward toward camera with natural gait, slight arm swing, relaxed expression.',
-  'Looking over shoulder back at camera': 'The model looks back over right shoulder toward camera, body slightly turned away, hand near pocket.',
-  'Crossed arms, slight smirk': 'The model stands with arms crossed at chest, slight smirk, confident and relaxed upper body.',
-  'Holding phone, looking down': 'The model holds smartphone in right hand at waist level, gaze directed down at phone screen.',
-  'Adjusting collar, looking up': 'The model adjusts collar with right hand, chin slightly lifted, gaze directed slightly upward toward camera.',
+  'Holding perfume bottle in right hand, bottle label facing camera, left hand resting naturally on counter, looking toward camera with warm smile': 'The model stands behind a glass display counter, holding a perfume bottle in her right hand with the bottle label facing the camera, left hand resting naturally on the counter surface, looking directly toward the camera with a warm and inviting smile.',
+  'Both hands holding perfume bottle at chest level, gentle presentation gesture, head slightly tilted, warm friendly smile': 'The model holds a perfume bottle with both hands at chest level in a gentle presenting gesture, head slightly tilted to the right, warm friendly smile directed at the camera, elegant and approachable posture.',
+  'Spraying perfume on wrist, eyes looking down at wrist, subtle smile, elegant gesture': 'The model is spraying perfume on her inner wrist, eyes gently looking down at her wrist, subtle satisfied smile, elegant refined gesture, wearing the perfume bottle in one hand.',
+  'Holding perfume bottle near face, eyes closed, enjoying the scent, peaceful expression, bottle angled to show label': 'The model holds the perfume bottle near her cheek, eyes closed peacefully, enjoying the fragrance with a serene expression, the bottle angled slightly outward to show the label clearly, soft natural pose.',
+  'Standing beside display counter, one hand holding perfume, other hand gesturing toward products, professional consultant pose': 'The model stands beside a glass perfume display counter, one hand gracefully holding a perfume bottle, the other hand gesturing toward the array of products on the counter, professional beauty consultant posture, confident yet approachable.',
+  'Talking to camera while holding perfume, host-like pose, holding bottle near shoulder level, natural smile': 'The model addresses the camera like a TikTok Live host, holding the perfume bottle near shoulder level, talking with natural hand gestures, warm energetic smile, engaging and charismatic presence.',
+  'Holding two perfume bottles for comparison, looking at bottles with thoughtful expression, slightly angled body': 'The model holds two different perfume bottles, one in each hand, comparing them thoughtfully, gaze directed at the bottles with a contemplative expression, body slightly angled, professional stylist evaluating products.',
+  'Packing perfume order, holding wrapped box, looking up at camera with pleasant surprise, customer service vibe': 'The model holds a wrapped perfume box ready for delivery, looking up at the camera with a pleasant surprised expression, warm customer service smile, hands gently holding the package, ready-to-ship presentation.',
 };
 
+// ===== PRODUCTS — Perfume Varian =====
 const PRODUCTS = [
-  { value: '', label: '— Pilih produk —' },
-  { value: 'Black cotton oversized T-shirt', label: 'Kaos Oversized Hitam' },
-  { value: 'Maroon cotton oversized T-shirt', label: 'Kaos Oversized Maroon' },
-  { value: 'Cream cotton oversized T-shirt', label: 'Kaos Oversized Cream' },
-  { value: 'White cotton oversized T-shirt', label: 'Kaos Oversized Putih' },
-  { value: 'Navy blue cotton oversized T-shirt', label: 'Kaos Oversized Navy' },
-  { value: 'Olive green cotton oversized T-shirt', label: 'Kaos Oversized Olive' },
-  { value: 'Charcoal grey oversized hoodie', label: 'Hoodie Oversized Charcoal' },
-  { value: 'Black oversized hoodie', label: 'Hoodie Oversized Hitam' },
-  { value: 'Cream oversized hoodie', label: 'Hoodie Oversized Cream' },
-  { value: 'Cargo pants black', label: 'Cargo Pants Hitam' },
-  { value: 'Cargo pants army green', label: 'Cargo Pants Army Green' },
-  { value: 'Blue straight jeans', label: 'Jeans Blue Straight' },
-  { value: 'Black slim jeans', label: 'Jeans Black Slim' },
-  { value: 'Grey sweatpants', label: 'Sweatpants Abu' },
-  { value: 'Denim jacket', label: 'Denim Jacket' },
-  { value: 'White sneakers', label: 'Sneakers Putih' },
+  { value: '', label: '— Pilih parfum —' },
+  { value: 'AREKA Signature Eau de Parfum 50ml — botol kaca transparan dengan aksen emas, cairan bening, label putih dengan logo AREKA hitam', label: 'AREKA Signature EDP — Emas' },
+  { value: 'AREKA Bloom Eau de Toilette 100ml — botol kaca pink pastel, tutup silver, label putih minimalis', label: 'AREKA Bloom EDT — Pink' },
+  { value: 'AREKA Noir Eau de Parfum 50ml — botol kaca hitam pekat doff, aksen rose gold, label hitam dengan tulisan gold', label: 'AREKA Noir EDP — Hitam' },
+  { value: 'AREKA Ocean Eau de Toilette 75ml — botol kaca biru gradient, tutup silver, label putih', label: 'AREKA Ocean EDT — Biru' },
+  { value: 'AREKA Velvet Eau de Parfum 30ml — botol kaca ungu transparan, tutup gold, label krem', label: 'AREKA Velvet EDP — Ungu' },
+  { value: 'AREKA Amber Eau de Parfum 100ml — botol kaca cokelat amber, tutup kayu, label krem vintage', label: 'AREKA Amber EDP — Cokelat' },
+  { value: 'AREKA Rose Eau de Toilette 50ml — botol kaca bening dengan stiker bunga mawar, tutup rose gold', label: 'AREKA Rose EDT — Mawar' },
+  { value: 'AREKA White Musk Eau de Parfum 75ml — botol putih susu doff, aksen chrome, label putih timbul', label: 'AREKA White Musk EDP — Putih' },
+  { value: 'AREKA Leather Eau de Parfum 50ml — botol kotak hitam dengan sleeve kulit sintetis, label gold', label: 'AREKA Leather EDP — Kulit' },
+  { value: 'AREKA Citrus Eau de Toilette 100ml — botol kaca kuning transparan, tutup putih, label warna cerah', label: 'AREKA Citrus EDT — Kuning' },
+  { value: 'AREKA Oud Royale Eau de Parfum 30ml — botol kaca hitam hexagonal, aksen emas 24K, label eksklusif', label: 'AREKA Oud Royale EDP — Eksklusif' },
 ];
+
+// ===== NEGATIVE PROMPT =====
+const NEGATIVE_PROMPT = 'Different person, different face, different ethnicity, child, teenager, elderly, masculine appearance, heavy makeup, anime, cartoon, illustration, CGI, plastic skin, unnatural smile, crossed eyes, extra fingers, missing fingers, extra arms, extra legs, blur, noise, low resolution, watermark, logo, random text, poor anatomy, overexposed, underexposed, oversaturated, messy background, distorted perfume bottle, incorrect perspective, poor composition, unrealistic reflections.';
 
 // ===== INIT: sync DOM → state =====
 function initSync() {
   state.masterModel = $('masterModel').value;
   state.masterStudio = $('masterStudio').value;
-  state.masterCamera = $('masterCamera').value;
+  state.masterBrand = $('masterBrand').value;
   state.masterPose = $('masterPose').value;
   state.masterProduct = $('masterProduct').value;
 
   $('masterModel').addEventListener('input', () => { state.masterModel = $('masterModel').value; });
   $('masterStudio').addEventListener('input', () => { state.masterStudio = $('masterStudio').value; });
-  $('masterCamera').addEventListener('input', () => { state.masterCamera = $('masterCamera').value; });
+  $('masterBrand').addEventListener('input', () => { state.masterBrand = $('masterBrand').value; });
   $('masterPose').addEventListener('change', () => { state.masterPose = $('masterPose').value; });
   $('masterProduct').addEventListener('change', () => { state.masterProduct = $('masterProduct').value; });
 }
 
-// ===== BUILD PROMPT (LEGO style) =====
-function buildImagePrompt() {
-  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
+// ===== BUILD PROMPT — 3 Layer LEGO =====
+function buildFullPrompt() {
+  const { masterModel, masterStudio, masterBrand, masterPose, masterProduct } = state;
   if (!masterProduct) return '';
 
-  const poseDetail = POSE_SUFFIX[masterPose] || '';
-  const product = masterProduct;
+  const poseDetail = POSE_SUFFIX[masterPose] || masterPose;
 
-  return [
-    `A full-length portrait photo of a ${masterModel}.`,
-    poseDetail,
-    `Wearing: ${product}.`,
-    `Studio: ${masterStudio}. Camera: ${masterCamera}.`,
-    `Soft natural studio lighting, clean commercial fashion look, high detail, 4k, product photography style for TikTok shop.`
-  ].join(' ');
-}
+  // === LAYER 1: Character DNA ===
+  const layerDNA = `[CHARACTER DNA — LOCKED]
+${masterModel}`;
 
-function buildVideoPromptUniversal() {
-  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
-  if (!masterProduct) return '';
+  // === LAYER 2: Style Engine ===
+  const layerStyle = `[STYLE ENGINE — LOCKED]
+${masterStudio}. Pose: ${poseDetail}. Product in frame: ${masterProduct}.`;
 
-  const poseDesc = POSE_SUFFIX[masterPose] || masterPose;
+  // === LAYER 3: Brand Layer ===
+  const layerBrand = `[BRAND LAYER — LOCKED]
+${masterBrand}`;
 
-  return [
-    `Use the uploaded image as the first frame and visual reference.`,
-    `Keep exactly the same model identity: ${masterModel}.`,
-    `Keep exactly the same studio and lighting: ${masterStudio}.`,
-    `Keep exactly the same camera and framing: ${masterCamera}.`,
-    `Keep exactly the same pose: ${poseDesc}`,
-    `The model wears: ${masterProduct}.`,
-    `Only the clothing is different from the reference image. Everything else must remain identical.`,
-    `Slow cinematic movement, soft focus breathing, 5 seconds, smooth loop, 9:16 vertical, TikTok format.`
-  ].join('\n');
-}
+  // === FULL IMAGE PROMPT (paragraf panjang — siap copy paste) ===
+  const fullPrompt = `Photorealistic commercial portrait photo of an Indonesian female beauty consultant, 25 years old, soft oval face, warm light beige Indonesian skin complexion, medium almond-shaped dark brown eyes with warm friendly expression, soft natural arch dark brown eyebrows, straight nose bridge with rounded tip, natural pink medium fullness lips with defined cupid's bow showing a friendly warm smile, long straight natural black hair with soft side part, below shoulders, healthy shine. Slim feminine body type, 160 cm tall, elegant posture, relaxed shoulders, natural feminine proportions.
 
-function buildVideoPromptVeo() {
-  const { masterModel, masterStudio, masterCamera, masterPose, masterProduct } = state;
-  if (!masterProduct) return '';
+${poseDetail}
 
-  const poseDesc = POSE_SUFFIX[masterPose] || masterPose;
+Holding a ${masterProduct}.
 
-  return [
-    `Frame 0 (reference): uploaded image of Indonesian male model in ${masterProduct}.`,
-    `Frame 1-24 (0-2s): ${poseDesc}. Camera locked at eye level, 85mm f/2.8, center composition. The model wears ${masterProduct} on a white cyclorama studio with softbox lighting.`,
-    `Frame 25-48 (2-4s): slow subtle breathing motion — chest rises naturally, slight micro-movement in shoulders and arms.`,
-    `Frame 49-60 (4-5s): hold pose with micro-expression — slight natural eye blink.`,
-    `Consistent: same model, same studio, same lighting, same camera position, same framing. Only the ${masterProduct} remains as the product focus.`,
-    `9:16 vertical, 5 seconds, loop-ready, photorealistic, studio product showcase style.`
-  ].join('\n');
+${masterStudio}
+
+${masterBrand}
+
+${NEGATIVE_PROMPT}`;
+
+  return {
+    fullPrompt,
+    layerDNA,
+    layerStyle,
+    layerBrand,
+    product: masterProduct,
+    pose: masterPose,
+  };
 }
 
 // ===== GENERATE =====
@@ -113,29 +104,16 @@ function generatePrompt() {
   const btn = $('btnGenerate');
 
   if (!state.masterProduct) {
-    showToast('Pilih produk dulu!');
+    showToast('Pilih parfum dulu! 🌸');
     return;
   }
 
   btn.disabled = true;
 
-  // Buat semua prompt lokal (instant — no API needed)
-  const imagePrompt = buildImagePrompt();
-  const videoUniversal = buildVideoPromptUniversal();
-  const videoVeo = buildVideoPromptVeo();
+  const result = buildFullPrompt();
+  renderResult(result);
 
-  renderResult({
-    imagePrompt,
-    videoUniversal,
-    videoVeo,
-    product: state.masterProduct,
-    pose: state.masterPose,
-    model: state.masterModel,
-    raw: '',
-    usage: {}
-  });
-
-  showToast('Prompt siap! ✅', 'success');
+  showToast('Prompt parfum siap! ✅', 'success');
   btn.disabled = false;
 }
 
@@ -145,127 +123,123 @@ function renderResult(data) {
   const footer = $('outputFooter');
   const tokenCount = $('tokenCount');
 
-  const imgPrompt = data.imagePrompt || '';
-  const vidUniversal = data.videoUniversal || '';
-  const vidVeo = data.videoVeo || '';
+  const full = data.fullPrompt || '';
+  const layerDNA = data.layerDNA || '';
+  const layerStyle = data.layerStyle || '';
+  const layerBrand = data.layerBrand || '';
   const product = data.product || state.masterProduct;
   const pose = data.pose || state.masterPose;
-  const model = data.model || state.masterModel;
+
+  const productLabel = PRODUCTS.find(p => p.value === product)?.label || product;
+  const poseLabel = [...document.getElementById('masterPose').options].find(o => o.value === pose)?.label || pose;
 
   let html = '';
 
-  // Summary table
+  // Ringkasan
   html += `
     <div class="output-section">
       <div class="output-section-header">
         <span>📋 Ringkasan Rakitan</span>
       </div>
       <table class="output-summary-table">
-        <tr><td>Model</td><td>${escapeHtml(model)}</td></tr>
-        <tr><td>Produk</td><td>${escapeHtml(product)}</td></tr>
-        <tr><td>Pose</td><td>${escapeHtml(pose)}</td></tr>
+        <tr><td>👩 Karakter</td><td>AREKA_GIRL_001</td></tr>
+        <tr><td>🌸 Parfum</td><td>${escapeHtml(productLabel)}</td></tr>
+        <tr><td>🧘 Pose</td><td>${escapeHtml(poseLabel)}</td></tr>
       </table>
+      <div style="margin-top:10px;display:flex;gap:5px;flex-wrap:wrap;">
+        <span class="layer-tag dna">🧬 Character DNA</span>
+        <span class="layer-tag style">🎨 Style Engine</span>
+        <span class="layer-tag brand">🏷️ Brand Layer</span>
+      </div>
     </div>
   `;
 
-  // Image prompt
-  if (imgPrompt) {
-    html += `
-      <div class="output-section">
-        <div class="output-section-header">
-          <span><span class="output-section-icon">📸</span> Prompt Gambar</span>
-          <button class="copy-btn" data-prompt="${escapeAttr(imgPrompt)}">📋 Salin</button>
-        </div>
-        <div class="output-text">${escapeHtml(imgPrompt)}</div>
-        <div class="output-video-badges">
-          <span>🎨 Midjourney</span>
-          <span>🖼️ Stable Diffusion</span>
-          <span>🤖 Dall-E</span>
-          <span>🧠 Gemini Image</span>
-        </div>
+  // FULL PROMPT (siap copy)
+  html += `
+    <div class="output-section">
+      <div class="output-section-header">
+        <span><span class="output-section-icon">📸</span> Full Prompt — Siap Copy</span>
+        <button class="copy-btn" data-prompt="${escapeAttr(full)}">📋 Salin</button>
       </div>
-    `;
-  }
+      <div class="output-text">${escapeHtml(full)}</div>
+      <div class="output-video-badges">
+        <span>🌸 Midjourney</span>
+        <span>🌺 Stable Diffusion</span>
+        <span>✨ Dall-E</span>
+        <span>🧠 Gemini Image</span>
+        <span>🎨 Leonardo AI</span>
+      </div>
+    </div>
+  `;
 
-  // Video universal
-  if (vidUniversal) {
-    html += `
-      <div class="output-section">
-        <div class="output-section-header">
-          <span><span class="output-section-icon">🎬</span> Prompt Video — Universal</span>
-          <button class="copy-btn" data-prompt="${escapeAttr(vidUniversal)}">📋 Salin</button>
-        </div>
-        <div class="output-text">${escapeHtml(vidUniversal)}</div>
-        <div class="output-video-badges">
-          <span>🎬 Runway</span>
-          <span>📽️ Kling</span>
-          <span>✨ Pika</span>
-          <span>🌟 Sora</span>
-          <span>🧠 Gemini Video</span>
-        </div>
+  // Layer 1: Character DNA
+  html += `
+    <div class="output-section">
+      <div class="output-section-header">
+        <span><span class="output-section-icon">🧬</span> Layer 1 — Character DNA</span>
+        <button class="copy-btn" data-prompt="${escapeAttr(layerDNA)}">📋 Salin</button>
       </div>
-    `;
-  }
+      <div class="output-text">${escapeHtml(layerDNA)}</div>
+      <div class="output-video-badges">
+        <span>🔒 LOCKED - Tidak berubah</span>
+      </div>
+    </div>
+  `;
 
-  // Video Veo 3
-  if (vidVeo) {
-    html += `
-      <div class="output-section">
-        <div class="output-section-header">
-          <span><span class="output-section-icon">🎥</span> Prompt Video — Gemini & Veo 3</span>
-          <button class="copy-btn" data-prompt="${escapeAttr(vidVeo)}">📋 Salin</button>
-        </div>
-        <div class="output-text">${escapeHtml(vidVeo)}</div>
-        <div class="output-video-badges">
-          <span>🎥 Veo 3</span>
-          <span>🧠 Gemini Video</span>
-        </div>
+  // Layer 2: Style Engine
+  html += `
+    <div class="output-section">
+      <div class="output-section-header">
+        <span><span class="output-section-icon">🎨</span> Layer 2 — Style Engine</span>
+        <button class="copy-btn" data-prompt="${escapeAttr(layerStyle)}">📋 Salin</button>
       </div>
-    `;
-  }
+      <div class="output-text">${escapeHtml(layerStyle)}</div>
+      <div class="output-video-badges">
+        <span>🔒 LOCKED - Scene + Lighting + Camera + Grading</span>
+      </div>
+    </div>
+  `;
 
-  // Raw
-  if (data.raw) {
-    html += `
-      <div class="output-section">
-        <div class="output-section-header">
-          <span>📄 Response Mentah</span>
-        </div>
-        <div class="output-text" style="font-size:11px;color:var(--text-muted);max-height:200px;overflow-y:auto;">${escapeHtml(data.raw)}</div>
+  // Layer 3: Brand Layer
+  html += `
+    <div class="output-section">
+      <div class="output-section-header">
+        <span><span class="output-section-icon">🏷️</span> Layer 3 — Brand Layer</span>
+        <button class="copy-btn" data-prompt="${escapeAttr(layerBrand)}">📋 Salin</button>
       </div>
-    `;
-  }
+      <div class="output-text">${escapeHtml(layerBrand)}</div>
+      <div class="output-video-badges">
+        <span>🔒 LOCKED - Banner AREKA Official Store</span>
+      </div>
+    </div>
+  `;
 
   out.innerHTML = html;
 
-  if (data.usage && data.usage.promptTokenCount) {
-    tokenCount.textContent = `Tokens: ${data.usage.promptTokenCount || '?'} in → ${data.usage.candidatesTokenCount || '?'} out`;
-  } else {
-    tokenCount.textContent = 'Tokens: N/A (local build)';
-  }
+  // Count tokens roughly
+  const totalChars = full.length + layerDNA.length + layerStyle.length + layerBrand.length;
+  tokenCount.textContent = `~${Math.round(totalChars / 4)} tokens | ${totalChars.toLocaleString()} karakter`;
   footer.classList.remove('hidden');
 }
 
 // ===== COPY ALL =====
 function copyAll() {
-  const parts = [];
   const sections = document.querySelectorAll('.output-section');
+  let text = '';
   sections.forEach(sec => {
     const header = sec.querySelector('.output-section-header span');
-    const text = sec.querySelector('.output-text');
-    if (header && text) {
-      parts.push(header.textContent.trim() + '\n' + text.textContent.trim());
+    const content = sec.querySelector('.output-text');
+    if (header && content) {
+      text += '=== ' + header.textContent.trim() + ' ===\n\n' + content.textContent.trim() + '\n\n';
     }
   });
-  const full = parts.join('\n\n---\n\n');
-  copyText(full);
+  copyText(text);
 }
 
 // ===== MANAGE PRODUCTS =====
 function manageProducts() {
   const sel = $('masterProduct');
-  const currentVal = sel.value;
-  const newLabel = prompt('Tambah produk baru (contoh: Pink oversized T-shirt):');
+  const newLabel = prompt('Tambah varian parfum baru (contoh: AREKA Vanilla EDT 50ml — botol putih susu, label gold):');
   if (newLabel && newLabel.trim()) {
     const opt = document.createElement('option');
     opt.value = newLabel.trim();
@@ -273,7 +247,7 @@ function manageProducts() {
     sel.appendChild(opt);
     sel.value = newLabel.trim();
     state.masterProduct = newLabel.trim();
-    showToast(`Produk "${newLabel.trim()}" ditambahkan ✅`);
+    showToast(`Parfum "${newLabel.trim()}" ditambahkan ✅`);
   }
 }
 
@@ -291,7 +265,6 @@ const MODEL_OPTIONS = [
 ];
 
 async function loadModels() {
-  // Skip API check — render all models as active immediately
   renderStaticModels();
 }
 
