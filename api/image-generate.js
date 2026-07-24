@@ -30,6 +30,100 @@ export default async function handler(req, res) {
       'Photorealistic commercial photography. Keep the same consistent woman AREKA_GIRL_001. Natural anatomy, clean hands, readable product label facing camera when visible.',
     ].filter(Boolean).join('\n\n');
 
+    const attempts = [];
+
+    // 1) Gemini native image models (generateContent + responseModalities IMAGE)
+    // Ordered: cheapest/lightest first to reduce 429 risk
+    const geminiImageModels = [
+      'gemini-3.1-flash-lite-image',
+      'gemini-2.5-flash-image',
+      'gemini-3.1-flash-image',
+      'gemini-3.1-flash-image-preview',
+      'gemini-3-pro-image',
+      'gemini-3-pro-image-preview',
+      'nano-banana-pro-preview',
+    ];
+
+    for (const model of geminiImageModels) {
+      const result = await tryGeminiImageModel({
+        apiKey,
+        model,
+        fullPrompt,
+        productImage,
+        productMimeType,
+        aspectRatio,
+      });
+      attempts.push({ model, ...result.meta });
+      if (result.ok) {
+        return res.json({
+          success: true,
+          model,
+          mimeType: result.image.mimeType,
+          imageBase64: result.image.data,
+          text: result.text || '',
+          attempts,
+        });
+      }
+      // if hard not-found, skip; if quota, still try next lighter/heavier
+    }
+
+    // 2) Imagen predict API (text-only; no product reference image)
+    if (!productImage) {
+      const imagenModels = [
+        'imagen-4.0-fast-generate-001',
+        'imagen-4.0-generate-001',
+      ];
+      for (const model of imagenModels) {
+        const result = await tryImagenPredict({
+          apiKey,
+          model,
+          prompt: fullPrompt,
+          aspectRatio,
+        });
+        attempts.push({ model, ...result.meta });
+        if (result.ok) {
+          return res.json({
+            success: true,
+            model,
+            mimeType: result.image.mimeType,
+            imageBase64: result.image.data,
+            text: '',
+            attempts,
+          });
+        }
+      }
+    }
+
+    const quotaHit = attempts.some((a) => a.status === 429);
+    const detail = attempts
+      .map((a) => `${a.model}:${a.status}${a.msg ? `(${a.msg})` : ''}`)
+      .join(' | ');
+
+    return res.status(502).json({
+      error: quotaHit
+        ? 'Quota image Gemini habis (429). Prompt tetap bisa disalin.'
+        : 'Image generation failed',
+      detail,
+      attempts,
+      hint: quotaHit
+        ? 'Tunggu reset quota harian / naikkan billing Google AI Studio, atau uncheck auto-generate dan generate di Gemini/ChatGPT manual pakai prompt yang sudah disalin.'
+        : 'Cek model image + API key Google AI Studio.',
+    });
+  } catch (err) {
+    console.error('image-generate error:', err);
+    return res.status(500).json({ error: err.message });
+  }
+}
+
+async function tryGeminiImageModel({
+  apiKey,
+  model,
+  fullPrompt,
+  productImage,
+  productMimeType,
+  aspectRatio,
+}) {
+  try {
     const parts = [{ text: fullPrompt }];
     if (productImage) {
       parts.push({
@@ -40,94 +134,122 @@ export default async function handler(req, res) {
       });
     }
 
-    const models = [
-      'gemini-2.0-flash-preview-image-generation',
-      'gemini-2.0-flash-exp-image-generation',
-      'gemini-2.5-flash-image',
-      'gemini-2.0-flash-exp',
-    ];
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const payload = {
+      contents: [{ parts }],
+      generationConfig: {
+        responseModalities: ['TEXT', 'IMAGE'],
+      },
+    };
 
-    let lastErr = '';
-    for (const model of models) {
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-        const payload = {
-          contents: [{ parts }],
-          generationConfig: {
-            responseModalities: ['TEXT', 'IMAGE'],
-            temperature: 0.7,
-          },
-        };
+    // Only attach imageConfig when aspect ratio is common-supported
+    const ar = normalizeAspect(aspectRatio);
+    if (ar) payload.generationConfig.imageConfig = { aspectRatio: ar };
 
-        // Some models accept imageConfig; ignore if rejected by model
-        if (aspectRatio) {
-          payload.generationConfig.imageConfig = { aspectRatio };
-        }
+    let geminiRes = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    let raw = await geminiRes.text();
 
-        const geminiRes = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-
-        const raw = await geminiRes.text();
-        if (!geminiRes.ok) {
-          lastErr = raw;
-          // retry without imageConfig if aspect ratio unsupported
-          if (raw.includes('imageConfig') || raw.includes('aspectRatio')) {
-            delete payload.generationConfig.imageConfig;
-            const retryRes = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-            });
-            const retryRaw = await retryRes.text();
-            if (!retryRes.ok) {
-              lastErr = retryRaw;
-              continue;
-            }
-            const retryData = JSON.parse(retryRaw);
-            const image = extractImage(retryData);
-            if (image) {
-              return res.json({
-                success: true,
-                model,
-                mimeType: image.mimeType,
-                imageBase64: image.data,
-                text: extractText(retryData),
-              });
-            }
-            lastErr = 'No image in response';
-            continue;
-          }
-          continue;
-        }
-
-        const data = JSON.parse(raw);
-        const image = extractImage(data);
-        if (image) {
-          return res.json({
-            success: true,
-            model,
-            mimeType: image.mimeType,
-            imageBase64: image.data,
-            text: extractText(data),
-          });
-        }
-        lastErr = 'No image in response: ' + raw.slice(0, 400);
-      } catch (e) {
-        lastErr = e.message;
-      }
+    // Retry without imageConfig if rejected
+    if (!geminiRes.ok && (raw.includes('imageConfig') || raw.includes('aspectRatio'))) {
+      delete payload.generationConfig.imageConfig;
+      geminiRes = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      raw = await geminiRes.text();
     }
 
-    return res.status(502).json({
-      error: 'Image generation failed',
-      detail: lastErr,
-      hint: 'Gemini image model may be unavailable on this API key. Prompt is still ready to copy.',
+    if (!geminiRes.ok) {
+      return {
+        ok: false,
+        meta: {
+          status: geminiRes.status,
+          msg: shortErr(raw),
+        },
+      };
+    }
+
+    const data = JSON.parse(raw);
+    const image = extractImage(data);
+    if (!image) {
+      return {
+        ok: false,
+        meta: {
+          status: 200,
+          msg: 'no_image_in_response',
+        },
+      };
+    }
+
+    return {
+      ok: true,
+      image,
+      text: extractText(data),
+      meta: { status: 200, msg: 'ok' },
+    };
+  } catch (e) {
+    return { ok: false, meta: { status: 'err', msg: e.message } };
+  }
+}
+
+async function tryImagenPredict({ apiKey, model, prompt, aspectRatio }) {
+  try {
+    // Imagen uses :predict not :generateContent
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
+    const ar = normalizeAspect(aspectRatio) || '9:16';
+    const payload = {
+      instances: [{ prompt }],
+      parameters: {
+        sampleCount: 1,
+        aspectRatio: ar,
+      },
+    };
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     });
-  } catch (err) {
-    console.error('image-generate error:', err);
-    return res.status(500).json({ error: err.message });
+    const raw = await r.text();
+    if (!r.ok) {
+      return { ok: false, meta: { status: r.status, msg: shortErr(raw) } };
+    }
+    const data = JSON.parse(raw);
+    const pred = data?.predictions?.[0] || {};
+    const b64 = pred.bytesBase64Encoded || pred.image?.bytesBase64Encoded;
+    if (!b64) {
+      return { ok: false, meta: { status: 200, msg: 'no_image_in_response' } };
+    }
+    return {
+      ok: true,
+      image: {
+        data: b64,
+        mimeType: pred.mimeType || 'image/png',
+      },
+      meta: { status: 200, msg: 'ok' },
+    };
+  } catch (e) {
+    return { ok: false, meta: { status: 'err', msg: e.message } };
+  }
+}
+
+function normalizeAspect(ar) {
+  if (!ar) return null;
+  const allowed = new Set(['1:1', '3:4', '4:3', '9:16', '16:9']);
+  return allowed.has(ar) ? ar : null;
+}
+
+function shortErr(raw) {
+  try {
+    const j = JSON.parse(raw);
+    const msg = j?.error?.message || raw;
+    return String(msg).slice(0, 120);
+  } catch {
+    return String(raw || '').slice(0, 120);
   }
 }
 

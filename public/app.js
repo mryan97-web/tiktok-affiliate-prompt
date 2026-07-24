@@ -974,10 +974,14 @@ async function generateImageFromPrompt({ prompt, negative, aspectRatio, productI
     const data = await res.json();
 
     if (!res.ok || !data.success || !data.imageBase64) {
+      const errMsg = data.error || data.detail || 'unknown';
+      const hint = data.hint || '';
       if (slot) {
-        slot.innerHTML = `<div class="gen-status-line err">⚠️ Generate gambar gagal: ${escapeHtml(data.error || data.detail || 'unknown')}. Prompt tetap siap disalin.</div>`;
+        slot.innerHTML = `<div class="gen-status-line err">⚠️ Generate gambar gagal: ${escapeHtml(errMsg)}${hint ? `<br><small>${escapeHtml(hint)}</small>` : ''}<br><small>Prompt + Negative tetap siap disalin di atas.</small></div>`;
       }
-      showToast('⚠️ Prompt OK, gambar gagal');
+      showToast(String(errMsg).includes('429') || String(errMsg).toLowerCase().includes('quota')
+        ? '⚠️ Quota image Gemini habis — prompt tetap OK'
+        : '⚠️ Prompt OK, gambar gagal');
       return;
     }
 
