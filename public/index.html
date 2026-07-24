@@ -3,172 +3,384 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AREKA Official Store — Generator Prompt Parfum</title>
+  <title>FASE 1 — Fondasi Prompt Database | AREKA Official Store</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="app-container">
     <!-- HEADER -->
     <header class="app-header">
       <div class="logo">
-        <svg viewBox="0 0 36 36" width="30" height="30" fill="none">
-          <rect width="36" height="36" rx="10" fill="url(#ag)" />
-          <path d="M18 6c-3 0-5.5 2-6 5-.5 3 1 6 3 8 0 3 1 6 3 11 2-5 3-8 3-11 2-2 3.5-5 3-8-.5-3-3-5-6-5z" fill="#fff" opacity="0.95"/>
-          <path d="M14 15c1 2 2.5 3 4 3s3-1 4-3" stroke="#C7976F" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-          <defs>
-            <linearGradient id="ag" x1="0" y1="0" x2="36" y2="36">
-              <stop stop-color="#C7976F" />
-              <stop offset="1" stop-color="#8B5E3C" />
-            </linearGradient>
-          </defs>
+        <svg viewBox="0 0 36 36" width="28" height="28" fill="none">
+          <rect width="36" height="36" rx="8" fill="#2d241a" />
+          <text x="18" y="24" text-anchor="middle" font-size="18" font-weight="700" fill="#C7976F" font-family="Inter">A</text>
         </svg>
         <div class="logo-text-group">
-          <span class="logo-text"><strong>Generator Prompt Model</strong></span>
+          <span class="logo-text">Prompt Database — FASE 1</span>
           <span class="logo-sub">AREKA OFFICIAL STORE</span>
         </div>
-        <span class="badge">✨ Parfum</span>
+        <span class="badge">🧬 FONDASI</span>
       </div>
       <div class="header-right">
         <span class="api-status" id="apiStatus">⚪ ...</span>
       </div>
     </header>
 
-    <!-- Subtitle -->
+    <!-- SUBTITLE -->
     <div class="app-subtitle">
-      🧬 <strong>Master Character DNA v3.0</strong> — AREKA_GIRL_001 · Karakter konsisten, tinggal ganti parfum & pose
+      FASE 1 — Fondasi Prompt Database · Character DNA · Identity Lock · Prompt Assembly
     </div>
 
-    <!-- MODEL SELECTOR BAR -->
-    <div class="model-selector-bar">
-      <div class="model-selector-inner">
-        <label for="modelSelect">🧠 Model AI:</label>
-        <select id="modelSelect"></select>
-        <span class="model-status" id="modelStatus">
-          <span class="dot-active"></span> <span class="model-status-text">gemini-3.5-flash-lite — Aktif</span>
-        </span>
-      </div>
-    </div>
-
-    <!-- ⚠️ INFO BAR — Prompt Layer System -->
+    <!-- INFO BAR — Fase Info -->
     <div class="info-bar">
-      <div class="info-icon">💡</div>
+      <div class="info-icon">📌</div>
       <div class="info-text">
-        <strong>3 Layer Prompt:</strong> 
-        <span class="layer-tag dna">Character DNA</span> (tetap) + 
-        <span class="layer-tag style">Style Engine</span> (tetap) + 
-        <span class="layer-tag brand">Brand Layer</span> (tetap) · 
-        Ganti <strong>Pose</strong> & <strong>Parfum</strong> aja
+        <strong>Fase 1</strong> — hanya membangun fondasi karakter. Scene, kamera, pencahayaan, pemasaran, dan branding akan dibuat di fase terpisah.
       </div>
     </div>
 
     <!-- MAIN LAYOUT -->
     <div class="main-layout">
-      <!-- LEFT PANEL — Master Database -->
+      <!-- LEFT PANEL — Database -->
       <div class="left-panel">
-        <!-- DATABASE A — Character DNA (fixed) -->
-        <div class="db-section">
-          <div class="db-section-header">
+        <!-- MODUL 1 — Character DNA -->
+        <div class="db-section expanded" id="modul1">
+          <div class="db-section-header clickable" onclick="toggleSection('modul1')">
             <div class="db-header-left">
-              <span class="db-section-icon">👩</span>
-              <span>DATABASE A — Character DNA</span>
+              <span class="db-section-icon">🧬</span>
+              <span>MODUL 1 — Character DNA</span>
             </div>
-            <span class="db-badge fix">LOCKED</span>
+            <div class="db-header-right">
+              <span class="db-badge lock">LOCKED</span>
+              <span class="toggle-icon">▾</span>
+            </div>
           </div>
-          <div class="db-content">
-            <textarea id="masterModel" rows="4">AREKA_GIRL_001 — Wanita Indonesia, 25 tahun, wajah oval lembut, kulit sawo matang hangat, mata almon cokelat gelap, alis rapi melengkung natural, hidung mancung proporsional, bibir pink natural, rambut hitam panjang lurus belah samping, tinggi 160 cm, body slim feminin, ekspresi hangat ramah profesional.</textarea>
-            <div class="db-hint">🔒 Wajah, tubuh, fitur — tidak pernah berubah</div>
+          <div class="db-body">
+            <!-- 1.1 Identitas Dasar -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.1 Identitas Dasar</div>
+              <div class="db-grid-2">
+                <div class="db-field">
+                  <label>Character ID</label>
+                  <input type="text" id="charId" value="AREKA_GIRL_001" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Nama Internal</label>
+                  <input type="text" id="charName" value="Areka Girl" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Gender</label>
+                  <input type="text" id="charGender" value="Perempuan" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Umur</label>
+                  <input type="text" id="charAge" value="25 tahun" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Kebangsaan</label>
+                  <input type="text" id="charNation" value="Indonesia" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Etnis</label>
+                  <input type="text" id="charEthnic" value="Asia Tenggara (Melayu)" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Tinggi Badan</label>
+                  <input type="text" id="charHeight" value="160 cm" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Bentuk Tubuh</label>
+                  <input type="text" id="charBodyShape" value="Slim" readonly class="field-readonly" />
+                </div>
+                <div class="db-field">
+                  <label>Proporsi Tubuh</label>
+                  <input type="text" id="charBodyProp" value="Feminin natural, proporsional" readonly class="field-readonly" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 1.2 Wajah -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.2 Wajah</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Bentuk Wajah</label><input type="text" id="faceShape" value="Oval lembut" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Bentuk Rahang</label><input type="text" id="faceJaw" value="Gentle, refined" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Bentuk Dagu</label><input type="text" id="faceChin" value="Rounded dengan slight taper" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Bentuk Pipi</label><input type="text" id="faceCheeks" value="Softly defined" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Dahi</label><input type="text" id="faceForehead" value="Medium height, proporsional" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Simetri Wajah</label><input type="text" id="faceSymmetry" value="Natural dan balanced" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Warna Kulit</label><input type="text" id="faceSkinColor" value="Sawo matang hangat (warm light beige)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Tekstur Kulit</label><input type="text" id="faceSkinTex" value="Halus natural, subtle texture" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Kilau Kulit</label><input type="text" id="faceSkinGlow" value="Healthy glow, natural" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.3 Mata -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.3 Mata</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Bentuk Mata</label><input type="text" id="eyeShape" value="Almond sedang" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Ukuran Mata</label><input type="text" id="eyeSize" value="Sedang, proporsional" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Jarak Antar Mata</label><input type="text" id="eyeDist" value="Seimbang (balanced)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Warna Mata</label><input type="text" id="eyeColor" value="Cokelat gelap (dark brown)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Ekspresi Mata</label><input type="text" id="eyeExpr" value="Hangat, ramah, engaged" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Kelopak Mata</label><input type="text" id="eyeLid" value="Soft crease, natural" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Bulu Mata</label><input type="text" id="eyeLashes" value="Defined natural, tidak exaggerated" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.4 Alis -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.4 Alis</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Bentuk Alis</label><input type="text" id="browShape" value="Soft natural arch" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Ketebalan Alis</label><input type="text" id="browThick" value="Medium" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Warna Alis</label><input type="text" id="browColor" value="Dark brown to black" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.5 Hidung -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.5 Hidung</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Pangkal Hidung</label><input type="text" id="noseBridge" value="Straight bridge" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Batang Hidung</label><input type="text" id="noseDorsum" value="Lurus proporsional" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Ujung Hidung</label><input type="text" id="noseTip" value="Rounded" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Lebar Hidung</label><input type="text" id="noseWidth" value="Small to medium" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.6 Bibir -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.6 Bibir</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Bentuk Bibir</label><input type="text" id="lipShape" value="Cupid's bow terdefinisi" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Ketebalan Bibir</label><input type="text" id="lipFull" value="Medium fullness" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Warna Alami Bibir</label><input type="text" id="lipColor" value="Natural pink" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Senyuman</label><input type="text" id="lipSmile" value="Friendly, gigi atas sedikit terlihat" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.7 Rambut -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.7 Rambut</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Warna Rambut</label><input type="text" id="hairColor" value="Hitam natural" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Panjang Rambut</label><input type="text" id="hairLength" value="Panjang, below shoulders" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Tekstur Rambut</label><input type="text" id="hairTex" value="Lurus (straight)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Belahan Rambut</label><input type="text" id="hairPart" value="Soft side part" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Kilau Rambut</label><input type="text" id="hairShine" value="Healthy shine" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.8 Makeup -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.8 Makeup (Natural Beauty)</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Foundation</label><input type="text" id="muFoundation" value="Soft matte" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Blush</label><input type="text" id="muBlush" value="Light pink" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Eyeshadow</label><input type="text" id="muEyeshadow" value="Neutral, soft" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Eyeliner</label><input type="text" id="muEyeliner" value="Brown, natural" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Lipstick</label><input type="text" id="muLipstick" value="Nude pink" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.9 Tubuh -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.9 Tubuh</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Bentuk Bahu</label><input type="text" id="bodyShoulders" value="Relaxed, proporsional" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Panjang Leher</label><input type="text" id="bodyNeck" value="Proporsional, elegan" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Proporsi Tangan</label><input type="text" id="bodyArms" value="Natural, 5 jari, kuku bersih" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Proporsi Kaki</label><input type="text" id="bodyLegs" value="Proporsional, tidak terlihat di frame" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.10 Outfit Default -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.10 Outfit Default</div>
+              <div class="db-grid-2">
+                <div class="db-field"><label>Atasan</label><input type="text" id="outfitTop" value="Minimalist fitted black short sleeve top" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Bawahan</label><input type="text" id="outfitBottom" value="— (tidak terlihat, upper body framing)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Sepatu</label><input type="text" id="outfitShoes" value="— (tidak terlihat)" readonly class="field-readonly" /></div>
+                <div class="db-field"><label>Aksesori</label><input type="text" id="outfitAcc" value="Minimal jewelry" readonly class="field-readonly" /></div>
+              </div>
+            </div>
+
+            <!-- 1.11 Karakter Visual -->
+            <div class="db-subsection">
+              <div class="db-sub-header">1.11 Karakter Visual</div>
+              <div class="db-field" style="grid-column: 1/-1;">
+                <textarea id="charVisual" rows="2" readonly class="field-readonly">Ramah, profesional, elegan, dapat dipercaya, hangat, premium, modern, ceria, approachable, feminine</textarea>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- DATABASE B — Style Engine (fixed) -->
-        <div class="db-section">
-          <div class="db-section-header">
+        <!-- MODUL 2 — Identity Lock -->
+        <div class="db-section expanded" id="modul2">
+          <div class="db-section-header clickable" onclick="toggleSection('modul2')">
             <div class="db-header-left">
-              <span class="db-section-icon">🎨</span>
-              <span>DATABASE B — Style Engine</span>
+              <span class="db-section-icon">🔒</span>
+              <span>MODUL 2 — Identity Lock</span>
             </div>
-            <span class="db-badge fix">LOCKED</span>
+            <div class="db-header-right">
+              <span class="db-badge rule">RULES</span>
+              <span class="toggle-icon">▾</span>
+            </div>
           </div>
-          <div class="db-content">
-            <textarea id="masterStudio" rows="4">Scene: Luxury perfume boutique, glass display counter, warm wood shelves, warm LED lighting, neat arrangement of perfume bottles, bright premium interior. Lighting: Soft commercial lighting, warm store lighting, balanced exposure, soft shadows, luxury retail atmosphere. Camera: Portrait orientation 9:16, eye-level, 85mm portrait lens look, moderate depth of field, sharp facial focus, subject centered, upper body dominant, background slightly softened. Color Grading: Premium commercial photography, warm whites, natural skin, rich wood tones, clean blacks, soft highlights, realistic saturation. Image Quality: Photorealistic, commercial advertisement, luxury retail campaign, magazine quality, ultra detailed, natural skin, 8K appearance, high dynamic range.</textarea>
-            <div class="db-hint">🔒 Scene, lighting, kamera, grading — tetap</div>
+          <div class="db-body">
+            <div class="identity-table">
+              <div class="identity-row header">
+                <div class="id-col-cat">Kategori</div>
+                <div class="id-col-attr">Atribut</div>
+                <div class="id-col-status">Status</div>
+                <div class="id-col-reason">Alasan</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Wajah</div>
+                <div class="id-col-attr">Bentuk wajah, rahang, dagu, pipi, simetri, warna kulit, tekstur kulit, kilau kulit</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Identitas visual utama — perubahan akan membuat karakter berbeda orang</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Mata</div>
+                <div class="id-col-attr">Bentuk, ukuran, jarak, warna, kelopak, bulu mata</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Jendela jiwa — perubahan drastis mengubah persepsi karakter</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Alis</div>
+                <div class="id-col-attr">Bentuk, ketebalan, warna</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Mengubah ekspresi dasar dan struktur wajah</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Hidung</div>
+                <div class="id-col-attr">Pangkal, batang, ujung, lebar</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Fitur yang sangat identik dengan wajah seseorang</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Bibir</div>
+                <div class="id-col-attr">Bentuk, ketebalan, warna alami, senyuman</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Senyuman adalah signature karakter</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Rambut</div>
+                <div class="id-col-attr">Warna, panjang, tekstur, belahan, kilau</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Bagian besar dari identitas visual karakter</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Makeup</div>
+                <div class="id-col-attr">Foundation, blush, eyeshadow, eyeliner, lipstick</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Natural beauty look — konsisten dengan karakter</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Tubuh</div>
+                <div class="id-col-attr">Tinggi, bentuk tubuh, proporsi, bentuk bahu, leher</div>
+                <div class="id-col-status"><span class="status-locked">🔒 LOCKED</span></div>
+                <div class="id-col-reason">Proporsi fisik yang tidak berubah</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Outfit</div>
+                <div class="id-col-attr">Atasan, bawahan, sepatu, aksesori</div>
+                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
+                <div class="id-col-reason">Berubah sesuai produk/kampanye — tidak mempengaruhi identitas wajah</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Pose</div>
+                <div class="id-col-attr">Pose tubuh, gestur, posisi tangan</div>
+                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
+                <div class="id-col-reason">Berubah sesuai konteks iklan tanpa mengubah karakter</div>
+              </div>
+              <div class="identity-row">
+                <div class="id-col-cat">Ekspresi Ringan</div>
+                <div class="id-col-attr">Mood, intensitas senyum, arah pandang</div>
+                <div class="id-col-status"><span class="status-var">🔄 VARIABLE</span></div>
+                <div class="id-col-reason">Variasi natural tanpa mengubah identitas</div>
+              </div>
+            </div>
+            <div class="db-hint">Aturan ini akan digabungkan sebelum semua prompt lain.</div>
           </div>
         </div>
 
-        <!-- DATABASE C — Brand Layer (fixed) -->
-        <div class="db-section">
-          <div class="db-section-header">
+        <!-- MODUL 3 — Prompt Assembly -->
+        <div class="db-section expanded" id="modul3">
+          <div class="db-section-header clickable" onclick="toggleSection('modul3')">
             <div class="db-header-left">
-              <span class="db-section-icon">🏷️</span>
-              <span>DATABASE C — Brand Layer</span>
+              <span class="db-section-icon">⚡</span>
+              <span>MODUL 3 — Prompt Assembly</span>
             </div>
-            <span class="db-badge fix">LOCKED</span>
+            <div class="db-header-right">
+              <span class="db-badge rule">FLOW</span>
+              <span class="toggle-icon">▾</span>
+            </div>
           </div>
-          <div class="db-content">
-            <textarea id="masterBrand" rows="2">Brand banner at bottom: rounded rectangle, height 8% of image, white background, black text, yellow shopping cart icon. Text: "AREKA OFFICIAL STORE 🛒 Cek Keranjang Kuning". Minimalist typography, premium appearance. Do not overlap the subject.</textarea>
-            <div class="db-hint">🔒 Banner AREKA — selalu ada di bawah</div>
-          </div>
-        </div>
+          <div class="db-body">
+            <div class="assembly-flow">
+              <div class="flow-step current">📨 User Request</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step">📋 System Rules</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step active">🧬 Character DNA</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step active">🔒 Identity Lock</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step future">🎬 Scene Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">📦 Product Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">🧘 Pose Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">📷 Camera Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">💡 Lighting Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">🏷️ Branding Module</div>
+              <div class="flow-arrow future">↓</div>
+              <div class="flow-step future">🚫 Negative Prompt</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-step goal">✅ Final Prompt</div>
+            </div>
 
-        <!-- DATABASE D — Pose (variable) -->
-        <div class="db-section">
-          <div class="db-section-header">
-            <div class="db-header-left">
-              <span class="db-section-icon">🧘</span>
-              <span>DATABASE D — Pose</span>
+            <div class="assembly-info">
+              <div class="ai-title">📐 Urutan Penyusunan</div>
+              <ol class="ai-list">
+                <li><strong>System Rules</strong> — aturan dasar AI (wajib)</li>
+                <li><strong>Character DNA</strong> — identitas karakter (wajib, sebelum scene apapun)</li>
+                <li><strong>Identity Lock</strong> — proteksi perubahan karakter (wajib, sebelum pose/produk)</li>
+                <li><strong>Scene Module</strong> — latar tempat (wajib, fase 2) <span class="tag-next">FASE 2</span></li>
+                <li><strong>Product Module</strong> — objek produk (wajib, fase 2) <span class="tag-next">FASE 2</span></li>
+                <li><strong>Pose Module</strong> — gestur karakter (opsional, fase 2) <span class="tag-next">FASE 2</span></li>
+                <li><strong>Camera Module</strong> — sudut kamera (opsional, fase 3) <span class="tag-next">FASE 3</span></li>
+                <li><strong>Lighting Module</strong> — pencahayaan (opsional, fase 3) <span class="tag-next">FASE 3</span></li>
+                <li><strong>Branding Module</strong> — brand overlay (opsional, fase 4) <span class="tag-next">FASE 4</span></li>
+                <li><strong>Negative Prompt</strong> — larangan AI (wajib, akhir)</li>
+              </ol>
             </div>
-            <span class="db-badge variable">VARIABLE</span>
-          </div>
-          <div class="db-content">
-            <select id="masterPose">
-              <option value="Holding perfume bottle in right hand, bottle label facing camera, left hand resting naturally on counter, looking toward camera with warm smile">Pose 1 — Presenting Parfum</option>
-              <option value="Both hands holding perfume bottle at chest level, gentle presentation gesture, head slightly tilted, warm friendly smile" selected>Pose 2 — Menawarkan Parfum</option>
-              <option value="Spraying perfume on wrist, eyes looking down at wrist, subtle smile, elegant gesture">Pose 3 — Menyemprot Parfum</option>
-              <option value="Holding perfume bottle near face, eyes closed, enjoying the scent, peaceful expression, bottle angled to show label">Pose 4 — Menikmati Aroma</option>
-              <option value="Standing beside display counter, one hand holding perfume, other hand gesturing toward products, professional consultant pose">Pose 5 — Konsultan Parfum</option>
-              <option value="Talking to camera while holding perfume, host-like pose, holding bottle near shoulder level, natural smile">Pose 6 — Host TikTok Live</option>
-              <option value="Holding two perfume bottles for comparison, looking at bottles with thoughtful expression, slightly angled body">Pose 7 — Membandingkan</option>
-              <option value="Packing perfume order, holding wrapped box, looking up at camera with pleasant surprise, customer service vibe">Pose 8 — Packing Order</option>
-            </select>
-          </div>
-        </div>
 
-        <!-- DATABASE E — Produk Parfum (variable) -->
-        <div class="db-section">
-          <div class="db-section-header">
-            <div class="db-header-left">
-              <span class="db-section-icon">🌸</span>
-              <span>DATABASE E — Parfum</span>
+            <div class="assembly-info">
+              <div class="ai-title">🔗 Dependency Graph</div>
+              <div class="dep-list">
+                <div class="dep-item"><span class="dep-mod">Character DNA</span> ← <span class="dep-need">wajib sebelum Scene, Product, Pose</span></div>
+                <div class="dep-item"><span class="dep-mod">Identity Lock</span> ← <span class="dep-need">wajib diterapkan sebelum Pose & Product</span></div>
+                <div class="dep-item"><span class="dep-mod">Scene Module</span> ← <span class="dep-need">butuh Character DNA untuk konteks</span></div>
+                <div class="dep-item"><span class="dep-mod">Product Module</span> ← <span class="dep-need">butuh Pose + Identity Lock</span></div>
+                <div class="dep-item"><span class="dep-mod">Prompt Assembly</span> ← <span class="dep-need">tahap akhir, menggabungkan semua modul</span></div>
+              </div>
             </div>
-            <span class="db-badge variable">VARIABLE</span>
-          </div>
-          <div class="db-content">
-            <div class="product-selector-row">
-              <select id="masterProduct">
-                <option value="">— Pilih parfum —</option>
-                <option value="AREKA Signature Eau de Parfum 50ml — botol kaca transparan dengan aksen emas, cairan bening, label putih dengan logo AREKA hitam">AREKA Signature EDP — Emas</option>
-                <option value="AREKA Bloom Eau de Toilette 100ml — botol kaca pink pastel, tutup silver, label putih minimalis">AREKA Bloom EDT — Pink</option>
-                <option value="AREKA Noir Eau de Parfum 50ml — botol kaca hitam pekat doff, aksen rose gold, label hitam dengan tulisan gold">AREKA Noir EDP — Hitam</option>
-                <option value="AREKA Ocean Eau de Toilette 75ml — botol kaca biru gradient, tutup silver, label putih">AREKA Ocean EDT — Biru</option>
-                <option value="AREKA Velvet Eau de Parfum 30ml — botol kaca ungu transparan, tutup gold, label krem">AREKA Velvet EDP — Ungu</option>
-                <option value="AREKA Amber Eau de Parfum 100ml — botol kaca cokelat amber, tutup kayu, label krem vintage">AREKA Amber EDP — Cokelat</option>
-                <option value="AREKA Rose Eau de Toilette 50ml — botol kaca bening dengan stiker bunga mawar, tutup rose gold">AREKA Rose EDT — Mawar</option>
-                <option value="AREKA White Musk Eau de Parfum 75ml — botol putih susu doff, aksen chrome, label putih timbul">AREKA White Musk EDP — Putih</option>
-                <option value="AREKA Leather Eau de Parfum 50ml — botol kotak hitam dengan sleeve kulit sintetis, label gold">AREKA Leather EDP — Kulit</option>
-                <option value="AREKA Citrus Eau de Toilette 100ml — botol kaca kuning transparan, tutup putih, label warna cerah">AREKA Citrus EDT — Kuning</option>
-                <option value="AREKA Oud Royale Eau de Parfum 30ml — botol kaca hitam hexagonal, aksen emas 24K, label eksklusif">AREKA Oud Royale EDP — Eksklusif</option>
-              </select>
-              <button class="btn-small" onclick="manageProducts()">✏️</button>
-            </div>
-            <div class="db-hint">Pilih varian parfum yang mau dipromosikan</div>
           </div>
         </div>
 
         <!-- GENERATE BUTTON -->
-        <button class="btn-generate" id="btnGenerate" onclick="generatePrompt()">
-          <span class="btn-icon">✨</span> Rakit Prompt Parfum
+        <button class="btn-generate" id="btnGenerate" onclick="assemblePrompt()">
+          <span class="btn-icon">⚡</span> Rakit Prompt Lengkap
         </button>
       </div>
 
@@ -176,12 +388,10 @@
       <div class="right-panel">
         <div class="output-area" id="outputArea">
           <div class="output-empty">
-            <div class="empty-icon">🌸</div>
-            <h3>Prompt Siap Dirakit</h3>
-            <p>Pilih parfum + pose, lalu klik Rakit Prompt</p>
-            <div class="empty-hint">
-              <span>3 Layer Prompt → 1 Output Komplit</span>
-            </div>
+            <div class="empty-icon">🧬</div>
+            <h3>Fondasi Prompt Database</h3>
+            <p>FASE 1 — Character DNA · Identity Lock · Prompt Assembly</p>
+            <div class="empty-hint">Klik <strong>Rakit Prompt Lengkap</strong> untuk melihat hasil rakitan</div>
           </div>
         </div>
         <div class="output-footer hidden" id="outputFooter">
@@ -189,7 +399,7 @@
             <span id="tokenCount"></span>
           </div>
           <div class="footer-right">
-            <button class="btn-small" style="width:auto;padding:6px 14px;font-size:12px;" onclick="copyAll()">📋 Salin Semua</button>
+            <button class="btn-small copy-all-btn" onclick="copyAll()">📋 Salin Semua</button>
           </div>
         </div>
       </div>
@@ -199,7 +409,7 @@
     <div class="loader-overlay hidden" id="loaderOverlay">
       <div class="loader-modal">
         <div class="loader-spinner"></div>
-        <p>Merakit prompt parfum...</p>
+        <p>Merakit prompt...</p>
       </div>
     </div>
 
