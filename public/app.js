@@ -526,15 +526,19 @@ function copyNegativeOnly() {
 }
 
 function copyFullOutput() {
-  if (!LAST_FULL) return showToast('⚠️ Generate dulu');
-  copyText(LAST_FULL);
+  // Clean payload only — no labels, no model/style metadata
+  if (!LAST_PROMPT) return showToast('⚠️ Generate dulu');
+  const clean = LAST_NEGATIVE
+    ? `${LAST_PROMPT}\n\n${LAST_NEGATIVE}`
+    : LAST_PROMPT;
+  copyText(clean);
 }
 
 function buildCopyBar() {
   return `<div class="gen-copy-bar">
     <button class="gen-copy-btn" onclick="copyPromptOnly()">📋 Salin Prompt</button>
     <button class="gen-copy-btn" onclick="copyNegativeOnly()">🚫 Salin Negative</button>
-    <button class="gen-copy-btn primary" onclick="copyFullOutput()">📄 Salin Semua</button>
+    <button class="gen-copy-btn primary" onclick="copyFullOutput()">📄 Salin Prompt + Negative</button>
   </div>`;
 }
 
@@ -624,26 +628,29 @@ function generatePrompt() {
 
   let html = '';
 
-  // Store for copy buttons
+  // Store for copy buttons — pure text only, no labels/metadata
   LAST_PROMPT = mainPrompt;
   LAST_NEGATIVE = parts.negative;
+  LAST_FULL = parts.negative ? `${mainPrompt}\n\n${parts.negative}` : mainPrompt;
 
   if (templateKey === 'prompt_only') {
-    LAST_FULL = mainPrompt;
-    html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
+    html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
   } else if (templateKey === 'prompt_negative') {
-    LAST_FULL = `FINAL PROMPT\n${mainPrompt}\n\nNEGATIVE PROMPT\n${parts.negative}`;
     html = `<div class="gen-output-ready">
-      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
+      <div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
-      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span><div class="gen-prompt-text">${parts.negative}</div></div>
+      <div class="gen-section"><span class="gen-section-label">NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
     </div>`;
   } else if (templateKey === 'json') {
-    const jsonOut = JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative, model: modelLabel, style: modelConf.style, aspect_ratio: ar, quality: qualityLabel, status: status }, null, 2);
+    // JSON copy stays pure payload without UI labels
+    const jsonOut = JSON.stringify({ prompt: mainPrompt, negative_prompt: parts.negative }, null, 2);
+    LAST_PROMPT = mainPrompt;
+    LAST_NEGATIVE = parts.negative;
     LAST_FULL = jsonOut;
     html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${jsonOut}</pre></div>`;
   } else if (templateKey === 'markdown') {
-    const mdOut = `### Final Prompt\n${mainPrompt}\n\n### Negative Prompt\n${parts.negative}\n\n### Metadata\n- Model: ${modelLabel}\n- Aspect Ratio: ${ar}\n- Quality: ${qualityLabel}\n- Status: ${status}`;
+    // Markdown copy = clean content only
+    const mdOut = `${mainPrompt}\n\n${parts.negative}`;
     LAST_FULL = mdOut;
     html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${mdOut}</pre></div>`;
   } else if (templateKey === 'api') {
@@ -652,13 +659,13 @@ function generatePrompt() {
     LAST_FULL = apiOut;
     html = `<div class="gen-output-ready"><pre class="gen-prompt-text">${apiOut}</pre></div>`;
   } else {
-    LAST_FULL = `FINAL PROMPT\n${mainPrompt}\n\nNEGATIVE PROMPT\n${parts.negative}\n\nModel: ${modelLabel}\nStyle: ${modelConf.style}\nAspect Ratio: ${ar}\nQuality: ${qualityLabel}\nStatus: ${status}\nQuality Score: ${score}/100`;
+    // Full template: display metadata on screen, but copy remains clean
     html = `<div class="gen-output-ready">
-      <div class="gen-section"><span class="gen-section-label">FINAL PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
+      <div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div>
       <hr class="gen-section-divider">
-      <div class="gen-section"><span class="gen-section-label">NEGATIVE PROMPT</span><div class="gen-prompt-text">${parts.negative}</div></div>
+      <div class="gen-section"><span class="gen-section-label">NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
       <hr class="gen-section-divider">
-      <div class="gen-section" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;">
+      <div class="gen-section gen-meta-only" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;">
         <span><strong>Model:</strong> ${modelLabel}</span>
         <span><strong>Style:</strong> ${modelConf.style}</span>
         <span><strong>Aspect Ratio:</strong> ${ar}</span>
