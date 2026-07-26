@@ -885,12 +885,16 @@ function buildVideoPrompt(parts) {
   }
 
   // Indonesian dialogue/narration — spoken by the model, target audience Indonesia
-  if (productText.includes('kaos') || productText.includes('shirt') || productText.includes('jaket') || productText.includes('hoodie') || productText.includes('kemeja')) {
-    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Coba lihat nih kaos AREKA — bahan adem, nyaman dipakai seharian, cocok buat daily outfit. Langsung checkout di link yang ada ya!"`;
-  } else if (productText.includes('parfum') || productText.includes('perfume') || productText.includes('body splash')) {
-    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Perkenalkan nih parfum AREKA — wanginya fresh, elegan, tahan lama banget. Link ada di bio — buruan checkout!"`;
+  // Gunakan custom description dari productSceneDesc klo ada, klo nggak pakai generik
+  const sceneDesc = document.getElementById('gen-scene-desc')?.value?.trim() || '';
+  const narLines = sceneDesc.split('\n').filter(l => l.trim());
+  if (narLines[0]) {
+    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "${narLines[0]}"`;
+    if (narLines[1]) {
+      prompt += `\nnarration (Bahasa Indonesia, spoken by model): "${narLines[1]}"`;
+    }
   } else {
-    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Cek produk AREKA ini — kualitas premium, harga terjangkau. Langsung order di link dalam bio!"`;
+    prompt += `\nnarration (Bahasa Indonesia): model menjelaskan dan mempromosikan produk ini secara natural dengan gaya TikTok influencer Indonesia, ajak audiens untuk cek link di bio. Dialog terserah model — spontan natural, tidak perlu script.`;
   }
 
   // Special handling for "memakai kaos" pose (wearing the shirt)
@@ -997,19 +1001,13 @@ function build4ScenePrompt(parts, productDesc) {
     ? `Catatan Aroma: "${scentNotes}" — ekspresi puas dan elegan saat mencium`
     : `Bahan & Fit: "${scentNotes}" — model bergerak natural nunjukin fit`;
 
-  // Build Indonesian dialogue lines based on product type
-  const dialog1 = isPerfume
-    ? 'Dialog: "Hai guys! Perkenalkan nih parfum terbaru dari AREKA — wanginya super fresh dan tahan lama banget, cocok buat daily wear!"'
-    : 'Dialog: "Hai guys! Coba lihat nih kaos terbaru dari AREKA — bahan adem, nyaman dipakai, cocok buat daily outfit!"';
-  const dialog2 = isPerfume
-    ? `Dialog: "Detail botolnya mewah banget guys — ${scentNotes}. Wanginya tahan 8-10 jam loh!"`
-    : `Dialog: "Detail kainnya premium banget — ${scentNotes}. Jahitan rapi, nyaman dipakai seharian!"`;
-  const dialog3 = isPerfume
-    ? 'Dialog: "Coba semprot dikit guys — aromanya langsung fresh, wangi dan elegant banget!"'
-    : 'Dialog: "Coba liat fit-nya guys — pas di badan, gerak bebas, gaya makin kece!"';
-  const dialog4 = isPerfume
-    ? 'Dialog: "Buruan checkout sebelum kehabisan guys! Link ada di bio — gas!"'
-    : 'Dialog: "Yang mau kaos ini langsung aja checkout di link yang ada guys — limited edition!"';
+  // Dialog — ambil dari deskripsi produk yang di-paste user
+  // Kalo kosong, dialog line gak ditampilkan
+  const scentLines = (productDesc || '').split('\n').filter(l => l.trim());
+  const dialog1 = scentLines[0] ? `Dialog: "${scentLines[0]}"` : '';
+  const dialog2 = scentLines[1] ? `Dialog: "${scentLines[1]}"` : (scentLines[0] ? `Dialog: "${scentLines[0]}"` : '');
+  const dialog3 = scentLines[2] ? `Dialog: "${scentLines[2]}"` : '';
+  const dialog4 = scentLines[3] ? `Dialog: "${scentLines[3]}"` : (scentLines[0] ? `Dialog: "Link di bio guys — checkout sekarang!"` : '');
 
   const scenes = [];
 
@@ -1034,10 +1032,12 @@ Fokus Produk: ${scene2Desc}
 Gaya: Estetik fotografi produk, gerakan tangan pelan`);
 
   if (isApparel) {
+    const pargoyDialog = scentLines[2] || scentLines[1] || '';
+    const pargoyLine = pargoyDialog ? `Dialog: "${pargoyDialog}"` : '';
     scenes.push(`=== SCENE 3: PARGOY TIKTOK — DANCE SHOWCASE ===
 Karakter: ${genderText}
 Aksi: TikTok pargoy dance sambil pamerin kaos yang dipakai — body roll, joget energik, tangan nunjuk kaos sendiri
-Dialog: "Coba lihat guys — kaos AREKA ini enak banget dipakai, bahannya adem, style makin kece!"
+${pargoyLine}
 Lokasi: ${roomDesc}
 Kamera: Dynamic handheld gaya TikTok, wide to medium shot, ngikutin gerakan dance
 Pencahayaan: ${lighting}, tone terang energik
