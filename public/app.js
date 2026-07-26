@@ -863,7 +863,7 @@ function buildVideoPrompt(parts) {
     `quality: 4K cinematic, 24fps, shallow depth of field,`,
     `mood: confident, relatable, energetic but natural, like a real Indonesian influencer making content,`,
     `movement: gentle natural movement, slight camera sway, breathing room, casual walk or turn as appropriate,`,
-    `text overlay suggestion at end: "CHECK LINK IN BIO" in bottom area`,
+    `text overlay: none, no text overlay, no watermark, no logo, no link in bio, clean screen`,
   ];
 
   let prompt = base.filter(Boolean).join('\n');
@@ -894,7 +894,7 @@ function buildVideoPrompt(parts) {
       prompt += `\nnarration (Bahasa Indonesia, spoken by model): "${narLines[1]}"`;
     }
   } else {
-    prompt += `\nnarration (Bahasa Indonesia): model menjelaskan dan mempromosikan produk ini secara natural dengan gaya TikTok influencer Indonesia, ajak audiens untuk cek link di bio. Dialog terserah model — spontan natural, tidak perlu script.`;
+    prompt += `\nnarration (Bahasa Indonesia): model menjelaskan dan mempromosikan produk ini secara natural dengan gaya TikTok influencer Indonesia, tidak ada teks overlay apapun. Dialog terserah model — spontan natural, tidak perlu script.`;
   }
 
   // Special handling for "memakai kaos" pose (wearing the shirt)
@@ -1055,9 +1055,7 @@ Lokasi: ${roomDesc}
 Kamera: Eye level, langsung ke kamera engaging
 Pencahayaan: ${lighting}, tone terang percaya diri
 Fokus Produk: ${product} — ${scentNotes}
-Gaya: High conversion, CTA fun energik
-Teks CTA: "CHECK LINK IN BIO — SHOP NOW!" overlay bawah
-Kartu Akhir: ${product} ditampilkan prominently`);
+Gaya: High conversion, CTA fun energik`);
   } else {
     scenes.push(`=== SCENE 3: DEMO / INTERAKSI ===
 Karakter: ${genderText}
@@ -1077,9 +1075,7 @@ Lokasi: ${roomDesc}
 Kamera: ${shot}, eye level, langsung ke kamera engaging
 Pencahayaan: ${lighting}, tone terang percaya diri
 Fokus Produk: Final showcase ${product} — ${scentNotes}
-Gaya: High conversion, direct engagement, CTA hangat ramah
-Teks CTA: "CHECK LINK IN BIO" overlay bawah
-Kartu Akhir: ${product} ditampilkan prominently`);
+Gaya: High conversion, direct engagement, CTA hangat ramah`);
   }
 
   // Append multi-image notes to appropriate scenes
