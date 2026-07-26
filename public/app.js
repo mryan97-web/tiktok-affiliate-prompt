@@ -16,7 +16,6 @@ const CHARACTER_DNA = {
   height: '160 cm',
   body: 'Slim',
   proportion: 'Feminin natural, proporsional',
-  // Face
   face_shape: 'Oval lembut — Soft oval',
   jaw: 'Gentle dan refined',
   chin: 'Rounded dengan slight taper',
@@ -26,46 +25,92 @@ const CHARACTER_DNA = {
   skin: 'Sawo matang hangat — Warm light beige',
   skin_texture: 'Halus natural, subtle texture',
   skin_glow: 'Healthy glow — bukan plastik/porcelain',
-  // Eyes
   eye_shape: 'Almond sedang — Medium almond-shaped',
   eye_size: 'Sedang, proporsional',
   eye_spacing: 'Seimbang — Balanced spacing',
   eye_color: 'Cokelat gelap — Dark brown',
   eye_expression: 'Hangat, ramah, engaged',
   eyelid: 'Soft crease, natural',
-  // Brows
   brow_shape: 'Lengkung natural — Natural arch',
   brow_thickness: 'Sedang — Medium',
   brow_color: 'Hitam gelap natural',
-  // Nose
   nose_shape: 'Mancung proporsional',
   nose_tip: 'Rounded',
   nose_profile: 'Lurus dengan slight slope',
-  // Lips
   lip_shape: 'Medium fullness, cupid\'s bow jelas',
   lip_color: 'Pink natural',
   lip_texture: 'Lembut natural',
-  // Hair
   hair_length: 'Panjang sampai bahu',
   hair_color: 'Hitam natural',
   hair_texture: 'Lurus',
   hair_style: 'Belah samping, tanpa poni',
-  // Makeup
   makeup_style: 'Natural beauty — soft matte',
   makeup_blush: 'Pink soft',
   makeup_eyeliner: 'Brown natural',
   makeup_eyeshadow: 'Neutral',
   makeup_lipstick: 'Nude pink',
-  // Clothing - default
   outfit: 'minimalist fitted black short sleeve top',
   outfit_style: 'Tanpa logo, minimal jewelry',
-  // Personality for prompt
   expression: 'Warm, friendly, professional smile',
   pose_natural: 'Standing behind counter, slight lean forward',
   confidence: 'Confident but approachable, expert in perfume',
 };
 
-const DNA_LOCK_RULES = [
+const MALE_CHARACTER_DNA = {
+  id: 'AREKA_GUY_001',
+  name: 'Areka Guy',
+  gender: 'Laki-laki',
+  age: '27 tahun',
+  nationality: 'Indonesia',
+  ethnicity: 'Asia Tenggara (Melayu)',
+  height: '172 cm',
+  body: 'Athletic slim — atletis ramping',
+  proportion: 'Proporsional, bahu bidang, postur tegap',
+  face_shape: 'Tajam maskulin — Sharp masculine jawline',
+  jaw: 'Defined dan tegas',
+  chin: 'Strong square chin',
+  cheeks: 'Defined cheekbones, subtle hollow',
+  forehead: 'Medium height, proporsional',
+  symmetry: 'Natural maskulin',
+  skin: 'Sawo matang hangat — Warm medium tan',
+  skin_texture: 'Halus natural, subtle skin texture',
+  skin_glow: 'Healthy natural glow, bukan plastik',
+  eye_shape: 'Almond medium — Medium almond-shaped',
+  eye_size: 'Sedang, tajam',
+  eye_spacing: 'Seimbang — Balanced spacing',
+  eye_color: 'Cokelat gelap — Dark brown',
+  eye_expression: 'Percaya diri, hangat, ramah',
+  eyelid: 'Deep set, natural',
+  brow_shape: 'Lurus tegas — Straight strong brow',
+  brow_thickness: 'Tebal — Thick',
+  brow_color: 'Hitam gelap natural',
+  nose_shape: 'Mancung tegas — Sharp defined bridge',
+  nose_tip: 'Slight downward, masculine',
+  nose_profile: 'Lurus strong profile',
+  lip_shape: 'Medium fullness, defined cupid\'s bow',
+  lip_color: 'Brown natural',
+  lip_texture: 'Lembut natural',
+  hair_length: 'Pendek rapi — Short neat',
+  hair_color: 'Hitam natural',
+  hair_texture: 'Lurus agak tebal',
+  hair_style: 'Rapi disisir ke samping, undercut fade',
+  makeup_style: 'No makeup — natural masculine',
+  makeup_blush: '',
+  makeup_eyeliner: '',
+  makeup_eyeshadow: '',
+  makeup_lipstick: '',
+  outfit: 'black plain t-shirt, denim jacket or casual streetwear',
+  outfit_style: 'Casual streetwear Indonesia, minimalis',
+  expression: 'Confident, friendly, warm masculine smile',
+  pose_natural: 'Standing relaxed, holding product naturally',
+  confidence: 'Confident and relatable, casual influencer style',
+};
+
+function getActiveCharacter(genderKey) {
+  return genderKey === 'male' ? MALE_CHARACTER_DNA : CHARACTER_DNA;
+}
+
+const DNA_LOCK_RULES_FEMALE = [
   'Wajah oval lembut — TIDAK BOLEH BERUBAH',
   'Mata almon cokelat gelap — TIDAK BOLEH BERUBAH',
   'Kulit sawo matang hangat — TIDAK BOLEH BERUBAH',
@@ -73,6 +118,16 @@ const DNA_LOCK_RULES = [
   'Tinggi 160 cm, slim feminine — TIDAK BOLEH BERUBAH',
   'Makeup natural beauty — TIDAK BOLEH BERUBAH',
   'Outfit black top minimalis — TIDAK BOLEH BERUBAH',
+];
+
+const DNA_LOCK_RULES_MALE = [
+  'Rahang tajam maskulin — TIDAK BOLEH BERUBAH',
+  'Mata almon cokelat gelap — TIDAK BOLEH BERUBAH',
+  'Kulit sawo matang hangat — TIDAK BOLEH BERUBAH',
+  'Rambut hitam pendek rapi, undercut fade — TIDAK BOLEH BERUBAH',
+  'Tinggi 172 cm, athletic slim — TIDAK BOLEH BERUBAH',
+  'No makeup, natural masculine — TIDAK BOLEH BERUBAH',
+  'Postur tegap, bahu bidang — TIDAK BOLEH BERUBAH',
 ];
 
 // ===================================================================
@@ -129,6 +184,27 @@ const SCENES = {
     desc: 'Professional photography studio, clean white background, soft diffused lighting, minimalist setup, focus on subject and product',
     elements: ['clean background', 'soft diffused lighting', 'minimalist setup', 'professional studio', 'focus on subject'],
   },
+  // ===== NEW SCENES FOR KAOS + VIDEO =====
+  cafe_interior: {
+    label: 'Cafe — Indoor Casual',
+    desc: 'Modern casual cafe interior, warm wooden tables, coffee cups, soft indoor lighting, comfortable chairs, cozy Indonesian cafe atmosphere, brick wall background',
+    elements: ['wooden tables', 'coffee cups', 'cafe chairs', 'warm indoor lighting', 'brick wall', 'casual atmosphere'],
+  },
+  outdoor_street: {
+    label: 'Outdoor Street — Urban Walk',
+    desc: 'Urban street in Indonesian city, pedestrian walkway, modern buildings, natural daylight, trees along sidewalk, casual outdoor atmosphere, bright natural lighting',
+    elements: ['pedestrian walkway', 'modern buildings', 'natural daylight', 'street trees', 'urban atmosphere'],
+  },
+  outdoor_mall: {
+    label: 'Outdoor Mall — Plaza',
+    desc: 'Modern outdoor shopping mall plaza, open area, fountains, stores around, natural daylight, casual hangout vibe, Indonesian urban mall atmosphere',
+    elements: ['mall plaza', 'fountains', 'stores', 'open area', 'natural daylight'],
+  },
+  studio_indoor: {
+    label: 'Studio Indoor — Minimalist',
+    desc: 'Minimalist indoor studio, plain light gray wall, smooth concrete floor, clean modern vibe, soft artificial lighting, focus on model and product',
+    elements: ['light gray wall', 'concrete floor', 'minimalist', 'soft artificial lighting', 'clean modern vibe'],
+  },
 };
 
 // ===================================================================
@@ -143,6 +219,13 @@ const PRODUCTS = {
   body_splash: { label: 'Body Splash', desc: 'Refreshing body splash, large transparent bottle with spray nozzle, colorful liquid, fun label design' },
   gift_set: { label: 'Gift Set', desc: 'Premium gift set box, contains 3 perfume vials, elegant packaging, ribbon bow, branded gift box' },
   miniset: { label: 'Mini Set', desc: 'Travel mini perfume set, 5 small vials in a branded case, organized display, compact packaging' },
+  // ===== NEW PRODUCTS: KAOS / APPAREL =====
+  kaos_oversized: { label: 'Kaos Oversized — Casual', desc: 'Oversized cotton t-shirt, relaxed fit, comfortable streetwear style, solid color or simple graphic print, casual Indonesian fashion' },
+  kaos_polos: { label: 'Kaos Polos — Basic', desc: 'Plain cotton t-shirt, regular fit, clean look, solid neutral color (black, white, cream), minimalistic everyday wear' },
+  kaos_sablon: { label: 'Kaos Sablon — Graphic', desc: 'Graphic print t-shirt, bold design on front, trendy street style, comfortable cotton material, casual wear for young adults' },
+  jaket_denim: { label: 'Jaket Denim — Streetwear', desc: 'Classic denim jacket, dark blue wash, button front, chest pockets, stylish outer layer, Indonesian streetwear staple' },
+  jaket_hoodie: { label: 'Hoodie — Sweater', desc: 'Comfortable cotton hoodie, kangaroo pocket, drawstring hood, relaxed oversized fit, casual warm layer' },
+  kemeja_flannel: { label: 'Kemeja Flannel — Casual', desc: 'Casual flannel shirt, red-black plaid pattern, button-down, rolled-up sleeves, relaxed masculine style' },
 };
 
 // ===================================================================
@@ -204,6 +287,7 @@ const CAMERA_SHOTS = {
   side_profile: { label: 'Side Profile', desc: 'Three-quarter side angle, 50mm, elegant profile with product in hand' },
   top_down: { label: 'Top Down / Flat Lay', desc: 'Top-down flat lay angle focusing on hands and perfume bottle on counter' },
   selfie_pov: { label: 'Selfie / POV', desc: 'Selfie-style front camera POV, arm-length distance, natural TikTok framing' },
+  from_behind: { label: 'From Behind — Back View', desc: 'Shot from behind the subject, back facing camera, natural candid perspective, focus on silhouette and outfit' },
 };
 
 const LIGHTINGS = {
@@ -306,6 +390,63 @@ const POSES = {
   invite_look: {
     label: 'Mengajak Melihat Produk',
     desc: 'open palm gesture inviting viewer to look at perfume bottle on counter, friendly welcoming pose, product as visual focus',
+  },
+  // ===== NEW POSES: KAOS + VIDEO INFLUENCER =====
+  stand_hold_shirt: {
+    label: 'Berdiri — Pegang Kaos (Depan)',
+    desc: 'standing upright holding a folded t-shirt in both hands at chest level, presenting the shirt to camera, relaxed confident stance, warm smile, casual influencer style',
+  },
+  stand_hold_shirt_side: {
+    label: 'Berdiri — Pegang Kaos (Samping)',
+    desc: 'standing with body angled slightly, holding a t-shirt draped over one shoulder, looking back slightly toward camera, casual street style pose',
+  },
+  sit_hold_shirt: {
+    label: 'Duduk — Pegang Kaos',
+    desc: 'sitting casually on a chair or sofa, holding a folded t-shirt on lap with one hand, relaxed posture, natural conversation pose, lifestyle influencer',
+  },
+  sit_coffee_shirt: {
+    label: 'Duduk di Cafe — Kaos di Meja',
+    desc: 'sitting at cafe table with a coffee cup, folded t-shirt placed on table next to coffee, casual lifestyle scene, relaxed influencer vibe',
+  },
+  stand_hold_product: {
+    label: 'Berdiri — Pegang Produk',
+    desc: 'standing upright holding product naturally in one hand at chest level, presenting to camera, relaxed confident stance, warm masculine or feminine smile',
+  },
+  sit_hold_product: {
+    label: 'Duduk — Pegang Produk',
+    desc: 'sitting casually while holding product in both hands, relaxed presentation pose, natural product showcase, lifestyle influencer style',
+  },
+  walk_carry_shirt: {
+    label: 'Jalan — Bawa Kaos (Urban)',
+    desc: 'walking naturally on urban street while carrying a folded t-shirt under arm or in hand, casual candid street style, dynamic outdoor pose',
+  },
+  lean_wall_shirt: {
+    label: 'Bersandar di Tembok — Pegang Kaos',
+    desc: 'leaning casually against a wall, one hand holding a t-shirt draped over shoulder, relaxed street style pose, confident casual vibe',
+  },
+  hands_up_shirt: {
+    label: 'Tangan Terangkat — Tunjuk Kaos',
+    desc: 'one hand raised pointing at own t-shirt being worn, streetwear showcase, confident energetic pose, as if saying "check this out"',
+  },
+  show_tag: {
+    label: 'Menunjukkan Label/Detail Kaos',
+    desc: 'holding the collar or tag of a t-shirt to show detail, one hand holding fabric, close attention to product quality, informative influencer pose',
+  },
+  walk_away: {
+    label: 'Berjalan Menjauh — From Behind',
+    desc: 'walking away from camera, back facing camera, looking over shoulder slightly, dynamic candid street style, urban fashion shot',
+  },
+  sit_back_view: {
+    label: 'Duduk Punggung — From Behind',
+    desc: 'sitting with back facing camera at cafe, slight head turn to side, candid lifestyle shot showing outfit from behind, natural atmosphere',
+  },
+  stand_back_view: {
+    label: 'Berdiri Punggung — From Behind',
+    desc: 'standing with back fully facing camera, looking at phone or over shoulder, casual back view shot showing outfit and silhouette',
+  },
+  hold_shirt_over_shoulder: {
+    label: 'Kaos Disampirkan di Bahu',
+    desc: 't-shirt casually draped over one shoulder while walking, seen from behind or three-quarter angle, urban street style influencer',
   },
 };
 
@@ -481,15 +622,21 @@ function trimByWords(text, maxWords) {
 // PROMPT ASSEMBLER ENGINE (FASE 6 + 8) — CLEAN VERSION
 // ===================================================================
 
-/** Compact subject — Gemini already locks face consistency */
-function buildSubjectCompact() {
-  const d = CHARACTER_DNA;
-  return `same consistent woman AREKA_GIRL_001, Indonesian beauty advisor, 25 years old, warm light beige skin, soft oval face, dark brown almond eyes, long straight black shoulder-length hair, natural soft makeup, slim feminine figure, wearing ${d.outfit}`;
+/** Compact subject — dynamic by gender */
+function buildSubjectCompact(gender) {
+  const d = getActiveCharacter(gender);
+  const female = `same consistent woman AREKA_GIRL_001, Indonesian beauty advisor, 25 years old, warm light beige skin, soft oval face, dark brown almond eyes, long straight black shoulder-length hair, natural soft makeup, slim feminine figure, wearing ${d.outfit}`;
+  const male = `same consistent man AREKA_GUY_001, Indonesian young man, 27 years old, warm medium tan skin, sharp masculine face, strong jawline, dark brown almond eyes, short neat black hair undercut fade, athletic slim build, wearing ${d.outfit}`;
+  return gender === 'male' ? male : female;
 }
 
 /** Short subject for keyword models */
-function buildSubjectShort() {
-  return 'Indonesian female beauty advisor, 25yo, warm beige skin, oval face, dark brown almond eyes, long black hair, natural makeup, black fitted top';
+function buildSubjectShort(gender) {
+  const d = getActiveCharacter(gender);
+  if (gender === 'male') {
+    return `Indonesian young man AREKA_GUY_001, 27yo, warm tan skin, sharp jawline, dark brown eyes, short black hair undercut, athletic build, ${d.outfit}`;
+  }
+  return `Indonesian female AREKA_GIRL_001, 25yo, warm beige skin, oval face, dark brown almond eyes, long black hair, natural makeup, black fitted top`;
 }
 
 /** Scene only — no element dump (desc already complete) */
@@ -516,11 +663,12 @@ function buildLighting(lgtKey) {
   return cleanText(l.desc.split(',').slice(0, 3).join(','));
 }
 
-function buildComposition(brdKey) {
+function buildComposition(brdKey, fromBehind) {
+  const behind = fromBehind ? ', subject seen from behind, back and shoulders fill frame, head turned slightly showing profile, natural candid framing' : '';
   if (brdKey === 'no_brand') {
-    return 'subject fills about 65% of frame, face in upper third, product held naturally with label facing camera, clean commercial composition, no banner, no text overlay';
+    return `subject fills about 65% of frame, face in upper third${behind}, product held naturally with label facing camera, clean commercial composition, no banner, no text overlay`;
   }
-  return 'subject fills about 65% of frame, face in upper third, product held naturally with label facing camera, brand banner only at bottom 8%, clean commercial composition';
+  return `subject fills about 65% of frame, face in upper third${behind}, product held naturally with label facing camera, brand banner only at bottom 8%, clean commercial composition`;
 }
 
 function buildBrand(brdKey) {
@@ -547,8 +695,9 @@ function buildNegativePrompt(noBrand) {
 }
 
 function buildNaturalPrompt(parts) {
+  const withFromBehind = parts.fromBehind ? ', viewed from behind, back facing camera' : '';
   return joinParts([
-    parts.subject,
+    parts.subject + withFromBehind,
     `working as ${parts.marketing}`,
     `in ${parts.scene}`,
     parts.pose,
@@ -611,6 +760,55 @@ function buildIdeogramPrompt(parts) {
     parts.custom || '',
     'photorealistic commercial style',
   ]);
+}
+
+// ===================================================================
+// VIDEO PROMPT BUILDER — untuk AI video generation
+// ===================================================================
+function buildVideoPrompt(parts) {
+  const isMale = parts.gender === 'male';
+  const genderText = isMale ? 'Indonesian young man AREKA_GUY_001' : 'Indonesian woman AREKA_GIRL_001';
+  const poseText = parts.pose.split(',')[0].toLowerCase();
+  const sceneText = parts.scene.split(',')[0].toLowerCase();
+  const productText = parts.product ? parts.product.split(',')[0].toLowerCase() : 'product';
+  const behindText = parts.fromBehind ? ', seen from behind, back facing camera' : '';
+
+  const base = [
+    `[Video Prompt]`,
+    `${genderText}${behindText} acting as a confident TikTok affiliate influencer,`,
+    `location: ${sceneText},`,
+    `action: ${poseText},`,
+    `showcasing product: ${productText},`,
+    `style: natural candid influencer video, dynamic movement, casual Indonesian street style,`,
+    parts.custom ? parts.custom : null,
+    `lighting: ${parts.lighting.split(',')[0].toLowerCase()},`,
+    `shot type: ${parts.camera.split(',')[0].toLowerCase()},`,
+    `aspect ratio: 9:16 vertical for TikTok/Reels/Shorts,`,
+    `quality: 4K cinematic, 24fps, shallow depth of field,`,
+    `mood: confident, relatable, energetic but natural, like a real Indonesian influencer making content,`,
+    `movement: gentle natural movement, slight camera sway, breathing room, casual walk or turn as appropriate,`,
+    `text overlay suggestion at end: "CHECK LINK IN BIO" in bottom area`,
+  ];
+
+  let prompt = base.filter(Boolean).join('\n');
+
+  // Add influencer personality based on marketing role
+  if (parts.marketing && parts.marketing.toLowerCase().includes('tiktok')) {
+    prompt += `\nenergy: high energy TikTok style, direct yet casual, engaging, modern young audience vibe`;
+  } else if (parts.marketing && parts.marketing.toLowerCase().includes('luxury')) {
+    prompt += `\nenergy: premium sophisticated elegance, refined movement, luxury influencer aesthetic`;
+  } else {
+    prompt += `\nenergy: natural friendly influencer style, relatable and authentic, warm personality`;
+  }
+
+  // Add product-specific video behavior
+  if (productText.includes('kaos') || productText.includes('shirt') || productText.includes('jaket') || productText.includes('hoodie') || productText.includes('kemeja')) {
+    prompt += `\nproduct interaction: model touches and adjusts the fabric naturally, shows fit and texture, holds it up to camera, demonstrates comfort and style`;
+  } else if (productText.includes('parfum') || productText.includes('perfume') || productText.includes('body splash')) {
+    prompt += `\nproduct interaction: model holds the bottle delicately, sprays gently, gestures to show the fragrance, elegant product handling`;
+  }
+
+  return prompt;
 }
 
 // ===================================================================
@@ -780,6 +978,7 @@ async function generatePrompt() {
   try {
     // 1. INPUT COLLECTOR
     const character = document.getElementById('gen-character').value;
+    const gender = document.getElementById('gen-gender')?.value || 'female';
     const sceneKey = document.getElementById('gen-scene').value;
     const prodKey = document.getElementById('gen-product').value;
     const mktKey = document.getElementById('gen-marketing').value;
@@ -793,6 +992,8 @@ async function generatePrompt() {
     const templateKey = document.getElementById('gen-template').value;
     const customReq = document.getElementById('gen-custom').value.trim();
     const autoImage = document.getElementById('gen-auto-image')?.checked !== false;
+    const outputType = document.getElementById('gen-output-type')?.value || 'image';
+    const videoLength = document.getElementById('gen-video-length')?.value || '15';
 
     if (prodKey === 'upload_custom' && !getCustomProductDescription() && !UPLOADED_PRODUCT) {
       showToast('⚠️ Upload foto produk dulu');
@@ -809,21 +1010,26 @@ async function generatePrompt() {
     const validation = validatePrompt(state);
 
     // 3. CLEAN PARTS — no DNA dump, no identity lock spam
+    const isFromBehind = shotKey === 'from_behind' || shotKey?.includes('back_view') || poseKey?.includes('back_view') || poseKey?.includes('walk_away');
     const parts = {
-      subject: buildSubjectCompact(),
-      subjectShort: buildSubjectShort(),
+      gender: gender,
+      subject: buildSubjectCompact(gender),
+      subjectShort: buildSubjectShort(gender),
       scene: buildScene(sceneKey),
       marketing: buildMarketing(mktKey),
       product: buildProduct(prodKey),
       pose: buildPose(poseKey),
-      camera: buildCamera(camKey, shotKey),
+      camera: buildCamera(camKey, isFromBehind ? 'from_behind' : shotKey),
       lighting: buildLighting(lgtKey),
-      composition: buildComposition(brdKey),
+      composition: buildComposition(brdKey, isFromBehind),
       brand: buildBrand(brdKey),
       noBrand: brdKey === 'no_brand',
       quality: buildQuality(),
       custom: customReq || '',
       negative: buildNegativePrompt(brdKey === 'no_brand'),
+      fromBehind: isFromBehind,
+      outputType: outputType,
+      videoLength: videoLength,
     };
 
     // 4. MODEL CONFIG + LENGTH
@@ -844,17 +1050,30 @@ async function generatePrompt() {
 
     // 5. BUILD CLEAN PROMPT PER MODEL
     let mainPrompt = '';
-    if (modelKey === 'flux') {
-      mainPrompt = buildKeywordPrompt(parts);
-    } else if (modelKey === 'midjourney') {
-      mainPrompt = buildMidjourneyPrompt(parts, modelConf);
-    } else if (modelKey === 'sdxl') {
-      mainPrompt = buildSdxlPrompt(parts);
-    } else if (modelKey === 'ideogram') {
-      mainPrompt = buildIdeogramPrompt(parts);
+    let videoPrompt = '';
+
+    if (outputType === 'video') {
+      // Video mode: build image prompt + video prompt
+      const imgParts = { ...parts, gender };
+      if (modelKey === 'flux') {
+        mainPrompt = buildKeywordPrompt(imgParts);
+      } else {
+        mainPrompt = buildNaturalPrompt(imgParts);
+      }
+      videoPrompt = buildVideoPrompt(parts);
     } else {
-      // gpt / imagen / default — natural clean paragraph
-      mainPrompt = buildNaturalPrompt(parts);
+      if (modelKey === 'flux') {
+        mainPrompt = buildKeywordPrompt(parts);
+      } else if (modelKey === 'midjourney') {
+        mainPrompt = buildMidjourneyPrompt(parts, modelConf);
+      } else if (modelKey === 'sdxl') {
+        mainPrompt = buildSdxlPrompt(parts);
+      } else if (modelKey === 'ideogram') {
+        mainPrompt = buildIdeogramPrompt(parts);
+      } else {
+        // gpt / imagen / default — natural clean paragraph
+        mainPrompt = buildNaturalPrompt(parts);
+      }
     }
 
     // 6. FINAL CLEAN + LENGTH TRIM
@@ -874,12 +1093,41 @@ async function generatePrompt() {
     let html = '';
 
     // Store for copy buttons — pure text only, no labels/metadata
-    LAST_PROMPT = mainPrompt;
+    LAST_PROMPT = outputType === 'video' && videoPrompt ? videoPrompt : mainPrompt;
     LAST_NEGATIVE = parts.negative;
-    LAST_FULL = parts.negative ? `${mainPrompt}\n\n${parts.negative}` : mainPrompt;
+    LAST_FULL = parts.negative ? `${LAST_PROMPT}\n\n${parts.negative}` : LAST_PROMPT;
     LAST_IMAGE_DATAURL = '';
 
-    if (templateKey === 'prompt_only') {
+    if (outputType === 'video') {
+      // VIDEO MODE OUTPUT
+      const genderLabel = gender === 'male' ? '👤 AREKA_GUY_001 (Pria)' : '👩 AREKA_GIRL_001 (Wanita)';
+      html = `<div class="gen-output-ready">
+      <div class="gen-section" style="border:2px solid #6366f1;border-radius:8px;padding:12px;margin-bottom:8px;background:rgba(99,102,241,0.04);">
+        <span class="gen-section-label" style="color:#6366f1">🎬 VIDEO PROMPT — ${genderLabel}</span>
+        <div class="gen-section-sub-label" style="font-size:10px;color:var(--text-sec);margin-bottom:8px;">
+          Untuk Flow · Gemini Video · Kling · Runway · Pika · Sora · Hailuo
+          ${videoLength ? `| Durasi: ~${videoLength} detik` : ''}
+        </div>
+        <div class="gen-prompt-text" style="font-size:13px;white-space:pre-wrap;">${escapeHtml(videoPrompt)}</div>
+      </div>
+      <hr class="gen-section-divider">
+      <div class="gen-section">
+        <span class="gen-section-label">📷 REFERENCE IMAGE PROMPT</span>
+        <div class="gen-prompt-text">${mainPrompt}</div>
+      </div>
+      <hr class="gen-section-divider">
+      <div class="gen-section"><span class="gen-section-label">🚫 NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
+      <hr class="gen-section-divider">
+      <div class="gen-section gen-meta-only" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;">
+        <span><strong>Output:</strong> 🎬 Video</span>
+        <span><strong>Gender:</strong> ${genderLabel}</span>
+        <span><strong>Scene:</strong> ${sceneKey}</span>
+        <span><strong>Pose:</strong> ${poseKey}</span>
+        <span><strong>Aspect Ratio:</strong> ${ar}</span>
+        <span><strong>Status:</strong> ${status}</span>
+      </div>
+    </div>`;
+    } else if (templateKey === 'prompt_only') {
       html = `<div class="gen-output-ready"><div class="gen-section"><span class="gen-section-label">PROMPT</span><div class="gen-prompt-text">${mainPrompt}</div></div></div>`;
     } else if (templateKey === 'prompt_negative') {
       html = `<div class="gen-output-ready">
@@ -1241,10 +1489,36 @@ function showToast(msg) {
 }
 
 // ===================================================================
+// GENDER + OUTPUT TYPE HANDLERS
+// ===================================================================
+function updatePoseByGender() {
+  const gender = document.getElementById('gen-gender')?.value || 'female';
+  const characterSelect = document.getElementById('gen-character');
+  if (characterSelect) {
+    characterSelect.value = gender === 'male' ? 'areka_guy' : 'areka_girl';
+  }
+  // Toast not needed, silent update
+}
+
+function onOutputTypeChange() {
+  const type = document.getElementById('gen-output-type')?.value || 'image';
+  const videoLen = document.getElementById('gen-video-length');
+  if (videoLen) {
+    videoLen.style.display = type === 'video' ? 'inline-block' : 'none';
+  }
+  const generateBtn = document.querySelector('.gen-generate-btn');
+  if (generateBtn) {
+    generateBtn.textContent = type === 'video' ? '🎬 GENERATE VIDEO PROMPT' : '⚡ GENERATE PROMPT + GAMBAR';
+  }
+}
+
+// ===================================================================
 // INIT
 // ===================================================================
 document.addEventListener('DOMContentLoaded', () => {
   // Default to generator view
   switchPanel('generator');
   onProductModeChange();
+  updatePoseByGender();
+  onOutputTypeChange();
 });

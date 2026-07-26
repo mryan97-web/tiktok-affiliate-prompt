@@ -2309,43 +2309,81 @@ STATUS: ✅ READY TO GENERATE<br>
           </div>
           <div class="gen-layout">
             <div class="gen-controls">
-              <div class="gen-card">
-                <div class="gen-card-title">🧬 Character</div>
-                <select class="gen-select" id="gen-character"><option value="areka_girl">AREKA_GIRL_001 — Beauty Advisor (Default)</option></select>
+              <div class="gen-card" style="grid-column:span 2;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+                <div class="gen-card-title" style="margin-bottom:0;white-space:nowrap;">👤 Karakter</div>
+                <select class="gen-select" id="gen-gender" style="flex:1;" onchange="updatePoseByGender()">
+                  <option value="female">👩 AREKA_GIRL_001 — Perempuan</option>
+                  <option value="male">👤 AREKA_GUY_001 — Laki-laki</option>
+                </select>
+                <select class="gen-select" id="gen-character" style="flex:1;display:none;">
+                  <option value="areka_girl">AREKA_GIRL_001 (Perempuan Default)</option>
+                </select>
+                <div class="gen-card-title" style="margin-bottom:0;white-space:nowrap;">🎬 Output</div>
+                <select class="gen-select" id="gen-output-type" style="flex:0.6;" onchange="onOutputTypeChange()">
+                  <option value="image">🖼️ Gambar (Image Prompt)</option>
+                  <option value="video">🎬 Video Prompt</option>
+                </select>
+                <select class="gen-select" id="gen-video-length" style="flex:0.5;display:none;">
+                  <option value="5">5 detik</option>
+                  <option value="10">10 detik</option>
+                  <option value="15">15 detik (Default)</option>
+                  <option value="30">30 detik</option>
+                  <option value="60">60 detik</option>
+                </select>
               </div>
               <div class="gen-card">
                 <div class="gen-card-title">🎬 Scene</div>
                 <select class="gen-select" id="gen-scene">
-                  <option value="luxury_store">Luxury Perfume Store (Default)</option>
-                  <option value="luxury_store_night">Luxury Perfume Store — Night</option>
-                  <option value="luxury_store_morning">Luxury Perfume Store — Morning</option>
-                  <option value="luxury_store_evening">Luxury Perfume Store — Evening</option>
-                  <option value="boutique_interior">Boutique Interior — Premium</option>
-                  <option value="counter_display">Counter Display — Close Up</option>
-                  <option value="outdoor_garden">Outdoor Garden — Event</option>
-                  <option value="packing_table">Packing Table — Behind Scene</option>
-                  <option value="living_room">Living Room — Casual</option>
-                  <option value="studio">Studio Photography — Clean</option>
+                  <optgroup label="🏪 Perfume Store">
+                    <option value="luxury_store">Luxury Perfume Store (Default)</option>
+                    <option value="luxury_store_night">Luxury Perfume Store — Night</option>
+                    <option value="luxury_store_morning">Luxury Perfume Store — Morning</option>
+                    <option value="luxury_store_evening">Luxury Perfume Store — Evening</option>
+                    <option value="boutique_interior">Boutique Interior — Premium</option>
+                    <option value="counter_display">Counter Display — Close Up</option>
+                    <option value="outdoor_garden">Outdoor Garden — Event</option>
+                    <option value="packing_table">Packing Table — Behind Scene</option>
+                  </optgroup>
+                  <optgroup label="☕ Cafe & Outdoor">
+                    <option value="cafe_interior">Cafe — Indoor Casual</option>
+                    <option value="outdoor_street">Outdoor Street — Urban Walk</option>
+                    <option value="outdoor_mall">Outdoor Mall — Plaza</option>
+                  </optgroup>
+                  <optgroup label="🏠 Indoor & Studio">
+                    <option value="living_room">Living Room — Casual</option>
+                    <option value="studio">Studio Photography — Clean</option>
+                    <option value="studio_indoor">Studio Indoor — Minimalist</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="gen-card">
                 <div class="gen-card-title">📦 Product</div>
                 <select class="gen-select" id="gen-product" onchange="onProductModeChange()">
                   <option value="upload_custom">📷 Upload Produk Saya (Recommended)</option>
-                  <option value="parfum_arab">Arabic Perfume — Luxury</option>
-                  <option value="parfum_floral">Floral Perfume — Women</option>
-                  <option value="parfum_musk">Musk Perfume — Premium</option>
-                  <option value="parfum_oudh">Oudh Perfume — Exclusive</option>
-                  <option value="parfum_fresh">Fresh Perfume — Daily</option>
-                  <option value="body_splash">Body Splash — Refreshing</option>
-                  <option value="gift_set">Gift Set — Bundle</option>
-                  <option value="miniset">Mini Set — Travel Pack</option>
+                  <optgroup label="🧥 Kaos / Apparel">
+                    <option value="kaos_oversized">Kaos Oversized — Casual</option>
+                    <option value="kaos_polos">Kaos Polos — Basic</option>
+                    <option value="kaos_sablon">Kaos Sablon — Graphic</option>
+                    <option value="jaket_denim">Jaket Denim — Streetwear</option>
+                    <option value="jaket_hoodie">Hoodie — Sweater</option>
+                    <option value="kemeja_flannel">Kemeja Flannel — Casual</option>
+                  </optgroup>
+                  <optgroup label="🧴 Parfum / Skincare">
+                    <option value="parfum_arab">Arabic Perfume — Luxury</option>
+                    <option value="parfum_floral">Floral Perfume — Women</option>
+                    <option value="parfum_musk">Musk Perfume — Premium</option>
+                    <option value="parfum_oudh">Oudh Perfume — Exclusive</option>
+                    <option value="parfum_fresh">Fresh Perfume — Daily</option>
+                    <option value="body_splash">Body Splash — Refreshing</option>
+                    <option value="gift_set">Gift Set — Bundle</option>
+                    <option value="miniset">Mini Set — Travel Pack</option>
+                  </optgroup>
                 </select>
                 <div id="productUploadBox" class="product-upload-box">
                   <label class="product-upload-label" for="gen-product-file">
                     <input type="file" id="gen-product-file" accept="image/*" onchange="onProductFileSelected(event)" hidden>
                     <span class="product-upload-cta">📁 Pilih / drop foto produk</span>
-                    <span class="product-upload-hint">JPG/PNG · botol parfum yang mau diiklankan</span>
+                    <span class="product-upload-hint">JPG/PNG · foto produk (parfum / kaos / apparel) yang mau diiklankan</span>
                   </label>
                   <div id="productPreviewWrap" class="product-preview-wrap hidden">
                     <img id="productPreview" class="product-preview" alt="Product preview">
@@ -2359,8 +2397,8 @@ STATUS: ✅ READY TO GENERATE<br>
                 <div class="gen-card-title">💎 Marketing Style</div>
                 <select class="gen-select" id="gen-marketing">
                   <option value="beauty_advisor">Beauty Advisor (Default)</option>
-                  <option value="perfume_consultant">Perfume Consultant</option>
                   <option value="tiktok_creator">TikTok Affiliate Creator</option>
+                  <option value="perfume_consultant">Perfume Consultant</option>
                   <option value="luxury_sales">Luxury Store Sales</option>
                   <option value="fragrance_specialist">Fragrance Specialist</option>
                   <option value="customer_assistant">Customer Assistant</option>
@@ -2369,28 +2407,37 @@ STATUS: ✅ READY TO GENERATE<br>
               <div class="gen-card">
                 <div class="gen-card-title">🕺 Pose / Aktivitas</div>
                 <select class="gen-select" id="gen-pose">
-                  <option value="hold_chest">Memegang Parfum (Depan Dada)</option>
-                  <option value="lift_shoulder">Mengangkat Parfum (Setinggi Bahu)</option>
-                  <option value="point_label">Menunjuk Label Parfum</option>
-                  <option value="point_product">Menunjuk Parfum ke Kamera</option>
-                  <option value="open_cap">Membuka Tutup Botol</option>
-                  <option value="close_cap">Menutup Tutup Botol</option>
-                  <option value="spray_air">Menyemprot Parfum ke Udara</option>
-                  <option value="spray_wrist">Menyemprot ke Pergelangan Tangan</option>
-                  <option value="spray_tester">Menyemprot ke Kertas Tester</option>
-                  <option value="open_box">Membuka Kemasan / Box</option>
-                  <option value="compare_two">Membandingkan 2 Parfum</option>
-                  <option value="offer_customer">Menawarkan ke Pelanggan</option>
-                  <option value="hand_over">Menyerahkan Parfum</option>
-                  <option value="shelf_pick">Mengambil dari Rak</option>
-                  <option value="shelf_place">Menata ke Etalase</option>
-                  <option value="gift_wrap">Membungkus Gift Set</option>
-                  <option value="explain_notes">Menjelaskan Aroma / Notes</option>
-                  <option value="smell_cap">Mencium Aroma dari Tutup</option>
-                  <option value="show_size">Menunjukkan Ukuran Botol</option>
-                  <option value="live_tiktok">Live TikTok / Review</option>
-                  <option value="counter_lean">Bersandar di Counter</option>
-                  <option value="invite_look">Mengajak Melihat Produk</option>
+                  <optgroup label="🌟 Rekomendasi Baru">
+                    <option value="stand_hold_shirt">Berdiri — Pegang Kaos (Depan)</option>
+                    <option value="stand_hold_shirt_side">Berdiri — Pegang Kaos (Samping)</option>
+                    <option value="sit_hold_shirt">Duduk — Pegang Kaos</option>
+                    <option value="sit_coffee_shirt">Duduk di Cafe — Kaos di Meja</option>
+                    <option value="walk_carry_shirt">Jalan — Bawa Kaos (Urban)</option>
+                    <option value="lean_wall_shirt">Bersandar di Tembok — Pegang Kaos</option>
+                    <option value="hands_up_shirt">Tangan Terangkat — Tunjuk Kaos</option>
+                    <option value="show_tag">Menunjukkan Label/Detail Kaos</option>
+                    <option value="hold_shirt_over_shoulder">Kaos Disampirkan di Bahu</option>
+                    <option value="stand_hold_product">Berdiri — Pegang Produk</option>
+                    <option value="sit_hold_product">Duduk — Pegang Produk</option>
+                  </optgroup>
+                  <optgroup label="📍 From Behind (Punggung)">
+                    <option value="walk_away">Berjalan Menjauh — From Behind</option>
+                    <option value="sit_back_view">Duduk Punggung — From Behind</option>
+                    <option value="stand_back_view">Berdiri Punggung — From Behind</option>
+                  </optgroup>
+                  <optgroup label="🧴 Parfum (Pose Lama)">
+                    <option value="hold_chest">Memegang Parfum (Depan Dada)</option>
+                    <option value="lift_shoulder">Mengangkat Parfum (Setinggi Bahu)</option>
+                    <option value="point_label">Menunjuk Label Parfum</option>
+                    <option value="point_product">Menunjuk Parfum ke Kamera</option>
+                    <option value="open_cap">Membuka Tutup Botol</option>
+                    <option value="spray_air">Menyemprot Parfum ke Udara</option>
+                    <option value="spray_wrist">Menyemprot ke Pergelangan Tangan</option>
+                    <option value="offer_customer">Menawarkan ke Pelanggan</option>
+                    <option value="live_tiktok">Live TikTok / Review</option>
+                    <option value="counter_lean">Bersandar di Counter</option>
+                    <option value="invite_look">Mengajak Melihat Produk</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="gen-card">
@@ -2407,6 +2454,7 @@ STATUS: ✅ READY TO GENERATE<br>
                 <div class="gen-card-title">🎥 Shot Kamera</div>
                 <select class="gen-select" id="gen-shot">
                   <option value="medium_closeup">Medium Close Up (Default)</option>
+                  <option value="from_behind">From Behind — Back View 🔄</option>
                   <option value="closeup_product">Close Up Produk + Tangan</option>
                   <option value="medium_shot">Medium Shot (Pinggang ke Atas)</option>
                   <option value="cowboy_shot">Cowboy Shot</option>
