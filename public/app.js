@@ -288,6 +288,8 @@ const CAMERA_SHOTS = {
   top_down: { label: 'Top Down / Flat Lay', desc: 'Top-down flat lay angle focusing on hands and perfume bottle on counter' },
   selfie_pov: { label: 'Selfie / POV', desc: 'Selfie-style front camera POV, arm-length distance, natural TikTok framing' },
   from_behind: { label: 'From Behind — Back View', desc: 'Shot from behind the subject, back facing camera, natural candid perspective, focus on silhouette and outfit' },
+  locked_from_behind: { label: '🔒 Locked From Behind — Static', desc: 'Camera locked on subject from behind, steady static shot, subject remains with back to camera throughout, no camera movement, focus on back details and silhouette, professional fashion back-view' },
+  front_to_back_tracking: { label: 'Front to Back — Tracking Follow', desc: 'Camera tracks subject from front as they walk past, following the turn to back view, continuous tracking shot, outfit seen from front transitioning to back' },
 };
 
 const LIGHTINGS = {
@@ -431,6 +433,47 @@ const POSES = {
   show_tag: {
     label: 'Menunjukkan Label/Detail Kaos',
     desc: 'holding the collar or tag of a t-shirt to show detail, one hand holding fabric, close attention to product quality, informative influencer pose',
+  },
+  // ===== NEW: MEMAKAI KAOS + FRONT TO BACK =====
+  wear_shirt_front: {
+    label: 'Memakai Kaos — Dari Depan',
+    desc: 'standing and wearing the t-shirt, looking down at the shirt adjusting the collar or fabric, showing how it fits on body, natural mirror self-check pose, front facing camera',
+  },
+  wear_shirt_side: {
+    label: 'Memakai Kaos — Dari Samping',
+    desc: 'standing and wearing the t-shirt, body angled slightly to side, one hand touching or adjusting the sleeve or hem, showing side fit and silhouette, natural style check',
+  },
+  wear_shirt_turn: {
+    label: 'Memakai Kaos — Depan ke Belakang (Turn)',
+    desc: 'starting front facing wearing the t-shirt, then slowly turning body to show back view, dynamic rotation movement, one hand adjusting collar while turning, showcasing full outfit from all angles',
+  },
+  wear_shirt_collar: {
+    label: 'Memakai Kaos — Tarik Kerah',
+    desc: 'wearing the t-shirt while pulling the collar forward slightly with one finger, showing neckline and fabric texture, relaxed casual pose, confident expression',
+  },
+  wear_shirt_tug: {
+    label: 'Memakai Kaos — Tarik Bawah',
+    desc: 'wearing the t-shirt and tugging at the hem or bottom edge lightly, showing fit and length, casual fitting room style pose',
+  },
+  wear_shirt_back: {
+    label: 'Memakai Kaos — Pemandangan Belakang',
+    desc: 'wearing the t-shirt with back fully facing camera, looking over shoulder slightly, hands in pockets or resting at sides, showcasing back design and fit',
+  },
+  wear_shirt_adjust: {
+    label: 'Memakai Kaos — Menyesuaikan (From Behind)',
+    desc: 'wearing the t-shirt seen from behind, both hands adjusting the collar or shoulders, natural movement, candid getting-ready style shot',
+  },
+  front_to_back_turn_slow: {
+    label: 'Putaran Depan ke Belakang — Slow Motion',
+    desc: 'slow motion rotation from front view to back view, starting facing camera then turning 180 degrees to show back, hands naturally at sides, fluid graceful movement, outfit visible from both sides',
+  },
+  front_to_back_walk: {
+    label: 'Berjalan Depan ke Belakang — Walk Past',
+    desc: 'walking toward camera from front then passing by and continuing with back to camera, dynamic movement shot, outfit seen from front then back in one continuous motion',
+  },
+  front_to_back_pose: {
+    label: 'Pose Depan lalu Balik ke Belakang',
+    desc: 'posing briefly facing camera then turning around to show back, one hand in pocket during turn, confident model walkway pose, showcasing full apparel',
   },
   walk_away: {
     label: 'Berjalan Menjauh — From Behind',
@@ -808,6 +851,23 @@ function buildVideoPrompt(parts) {
     prompt += `\nproduct interaction: model holds the bottle delicately, sprays gently, gestures to show the fragrance, elegant product handling`;
   }
 
+  // Special handling for "memakai kaos" pose (wearing the shirt)
+  const poseKeyLower = (parts.pose || '').toLowerCase();
+  if (poseKeyLower.includes('wear_shirt') || poseKeyLower.includes('memakai')) {
+    prompt += `\nwear interaction: model is already wearing the product (t-shirt/apparel), demonstrates fit on body, touches fabric to show texture and comfort, natural body movement to showcase how it looks when worn`;
+  }
+
+  // Special handling for front-to-back turn poses
+  if (poseKeyLower.includes('front_to_back') || poseKeyLower.includes('wear_shirt_turn')) {
+    prompt += `\ncamera technique: dynamic rotation shot starting from front view, model slowly turns body 180 degrees revealing back view, continuous smooth motion, outfit visible from every angle in one take`;
+  }
+
+  // Locked from behind shot
+  const shotKeyLower = (parts.camera || '').toLowerCase();
+  if (shotKeyLower.includes('locked_from_behind') || shotKeyLower.includes('locked from behind')) {
+    prompt += `\ncamera: completely static locked shot, no camera movement, subject remains with back fully facing camera throughout the entire video, focus on back silhouette and outfit details, professional fashion back-view cinematography`;
+  }
+
   return prompt;
 }
 
@@ -1010,7 +1070,7 @@ async function generatePrompt() {
     const validation = validatePrompt(state);
 
     // 3. CLEAN PARTS — no DNA dump, no identity lock spam
-    const isFromBehind = shotKey === 'from_behind' || shotKey?.includes('back_view') || poseKey?.includes('back_view') || poseKey?.includes('walk_away');
+    const isFromBehind = shotKey === 'from_behind' || shotKey === 'locked_from_behind' || shotKey === 'front_to_back_tracking' || shotKey?.includes('back_view') || poseKey?.includes('back_view') || poseKey?.includes('walk_away') || poseKey?.includes('wear_shirt_back') || poseKey?.includes('wear_shirt_adjust') || poseKey?.includes('front_to_back') || poseKey?.includes('wear_shirt_turn');
     const parts = {
       gender: gender,
       subject: buildSubjectCompact(gender),
