@@ -884,6 +884,15 @@ function buildVideoPrompt(parts) {
     prompt += `\nproduct interaction: model holds the bottle delicately, sprays gently, gestures to show the fragrance, elegant product handling`;
   }
 
+  // Indonesian dialogue/narration — spoken by the model, target audience Indonesia
+  if (productText.includes('kaos') || productText.includes('shirt') || productText.includes('jaket') || productText.includes('hoodie') || productText.includes('kemeja')) {
+    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Coba lihat nih kaos AREKA — bahan adem, nyaman dipakai seharian, cocok buat daily outfit. Langsung checkout di link yang ada ya!"`;
+  } else if (productText.includes('parfum') || productText.includes('perfume') || productText.includes('body splash')) {
+    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Perkenalkan nih parfum AREKA — wanginya fresh, elegan, tahan lama banget. Link ada di bio — buruan checkout!"`;
+  } else {
+    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "Hai guys! Cek produk AREKA ini — kualitas premium, harga terjangkau. Langsung order di link dalam bio!"`;
+  }
+
   // Special handling for "memakai kaos" pose (wearing the shirt)
   const poseKeyLower = (parts.pose || '').toLowerCase();
   if (poseKeyLower.includes('wear_shirt') || poseKeyLower.includes('memakai')) {
@@ -988,11 +997,26 @@ function build4ScenePrompt(parts, productDesc) {
     ? `Catatan Aroma: "${scentNotes}" — ekspresi puas dan elegan saat mencium`
     : `Bahan & Fit: "${scentNotes}" — model bergerak natural nunjukin fit`;
 
+  // Build Indonesian dialogue lines based on product type
+  const dialog1 = isPerfume
+    ? 'Dialog: "Hai guys! Perkenalkan nih parfum terbaru dari AREKA — wanginya super fresh dan tahan lama banget, cocok buat daily wear!"'
+    : 'Dialog: "Hai guys! Coba lihat nih kaos terbaru dari AREKA — bahan adem, nyaman dipakai, cocok buat daily outfit!"';
+  const dialog2 = isPerfume
+    ? `Dialog: "Detail botolnya mewah banget guys — ${scentNotes}. Wanginya tahan 8-10 jam loh!"`
+    : `Dialog: "Detail kainnya premium banget — ${scentNotes}. Jahitan rapi, nyaman dipakai seharian!"`;
+  const dialog3 = isPerfume
+    ? 'Dialog: "Coba semprot dikit guys — aromanya langsung fresh, wangi dan elegant banget!"'
+    : 'Dialog: "Coba liat fit-nya guys — pas di badan, gerak bebas, gaya makin kece!"';
+  const dialog4 = isPerfume
+    ? 'Dialog: "Buruan checkout sebelum kehabisan guys! Link ada di bio — gas!"'
+    : 'Dialog: "Yang mau kaos ini langsung aja checkout di link yang ada guys — limited edition!"';
+
   const scenes = [];
 
   scenes.push(`=== SCENE 1: PERKENALAN ===
 Karakter: ${genderText}
 Aksi: ${introAction}
+${dialog1}
 Lokasi: ${roomDesc}
 Kamera: ${shot}, tampak depan, full body sampai pinggang
 Pencahayaan: ${lighting}
@@ -1002,6 +1026,7 @@ Gaya: Kasual estetik, vibe influencer`);
   scenes.push(`=== SCENE 2: DETAIL PRODUK ===
 Karakter: ${genderText}
 Aksi: ${detailAction}
+${dialog2}
 Lokasi: Sama seperti Scene 1, framing lebih dekat
 Kamera: Close-up pada tangan dan produk, produk mengisi 60% frame
 Pencahayaan: Soft natural, fokus ke detail produk
@@ -1012,6 +1037,7 @@ Gaya: Estetik fotografi produk, gerakan tangan pelan`);
     scenes.push(`=== SCENE 3: PARGOY TIKTOK — DANCE SHOWCASE ===
 Karakter: ${genderText}
 Aksi: TikTok pargoy dance sambil pamerin kaos yang dipakai — body roll, joget energik, tangan nunjuk kaos sendiri
+Dialog: "Coba lihat guys — kaos AREKA ini enak banget dipakai, bahannya adem, style makin kece!"
 Lokasi: ${roomDesc}
 Kamera: Dynamic handheld gaya TikTok, wide to medium shot, ngikutin gerakan dance
 Pencahayaan: ${lighting}, tone terang energik
@@ -1024,6 +1050,7 @@ Tagar: #OOTD #FashionTikTok #Pargoy #FYP #Kaos`);
     scenes.push(`=== SCENE 4: AJAKAN BELI (CTA) ===
 Karakter: ${genderText}
 Aksi: Dance pose lalu berhenti di akhir, tatap kamera sambil senyum, tunjuk kaos
+${dialog4}
 Lokasi: ${roomDesc}
 Kamera: Eye level, langsung ke kamera engaging
 Pencahayaan: ${lighting}, tone terang percaya diri
@@ -1035,6 +1062,7 @@ Kartu Akhir: ${product} ditampilkan prominently`);
     scenes.push(`=== SCENE 3: DEMO / INTERAKSI ===
 Karakter: ${genderText}
 Aksi: ${demoAction}
+${dialog3}
 Lokasi: ${roomDesc}
 Kamera: ${demoCam}
 Pencahayaan: ${lighting}
@@ -1044,6 +1072,7 @@ Gaya: Konten lifestyle influencer, vibe natural candid`);
     scenes.push(`=== SCENE 4: AJAKAN BELI (CTA) ===
 Karakter: ${genderText}
 Aksi: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli
+${dialog4}
 Lokasi: ${roomDesc}
 Kamera: ${shot}, eye level, langsung ke kamera engaging
 Pencahayaan: ${lighting}, tone terang percaya diri
