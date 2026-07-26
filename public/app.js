@@ -929,6 +929,7 @@ async function onProductFileSelected(event) {
     }
 
     UPLOADED_PRODUCT.description = data.description || '';
+    UPLOADED_PRODUCT.category = data.category || 'unknown';
     const descEl = document.getElementById('gen-product-desc');
     if (descEl) descEl.value = UPLOADED_PRODUCT.description;
     setProductStatus('✅ Produk siap dipakai di prompt');
@@ -969,10 +970,25 @@ function getCustomProductDescription() {
 function buildProduct(prodKey) {
   if (prodKey === 'upload_custom') {
     const desc = getCustomProductDescription();
-    return cleanText(desc || 'exact product from uploaded perfume bottle photo, realistic glass bottle, label facing camera');
+    return cleanText(desc || 'exact product from uploaded photo, realistic detail, label facing camera');
   }
   const p = PRODUCTS[prodKey];
   return p ? cleanText(p.desc) : '';
+}
+
+/** Detect product category from key */
+function detectProductCategory(prodKey) {
+  if (prodKey === 'upload_custom') {
+    if (UPLOADED_PRODUCT?.category && UPLOADED_PRODUCT.category !== 'unknown') {
+      return UPLOADED_PRODUCT.category;
+    }
+    return 'unknown';
+  }
+  const apparel = ['kaos_', 'jaket_', 'kemeja_', 'hoodie_'];
+  for (const p of apparel) {
+    if (prodKey.startsWith(p)) return 'apparel';
+  }
+  return 'perfume';
 }
 
 // ===================================================================
@@ -1268,6 +1284,7 @@ async function generateImageFromPrompt({ prompt, negative, aspectRatio, productI
       prompt,
       negative,
       aspectRatio: aspectRatio || '9:16',
+      productCategory: detectProductCategory(document.getElementById('gen-product')?.value || 'perfume'),
     };
     if (productImage?.base64) {
       body.productImage = productImage.base64;

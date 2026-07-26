@@ -1,4 +1,5 @@
-// Analyze uploaded product photo → English product description for prompt assembly
+// Analyze uploaded product photo → product description for prompt
+// Auto-detects: apparel (kaos/jaket/hoodie) vs perfume vs other
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -14,12 +15,19 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Gemini API key not configured' });
 
-    const systemPrompt = `You analyze product photos for perfume / fragrance affiliate ads.
-Return ONLY a single English product description line for AI image generation.
-Focus on: bottle shape, glass color, liquid color, cap style, label style, packaging, materials, size feel.
-Do NOT invent brand names unless clearly visible on the product.
-Do NOT describe people, faces, hands, rooms, or lifestyle scenes.
-Max 45 words. No markdown. No quotes. No prefix labels.`;
+    const systemPrompt = `You analyze ANY product photo for AI image generation ads.
+First, identify what TYPE of product this is (apparel/kaos, perfume, skincare, etc).
+
+If it's APPAREL (t-shirt, kaos, hoodie, jaket, kemeja, tank top, etc):
+Return ONLY a single English description line about: fabric type, color, neckline style (crew neck/v-neck/oxford), sleeve type (short/long/raglan), fit (oversized/regular/slim), any print/text/graphic design on it, texture, hem style. Max 45 words.
+
+If it's PERFUME / FRAGRANCE:
+Return ONLY a single English description line about: bottle shape, glass color, liquid color, cap style, label style, packaging. Max 45 words.
+
+If it's OTHER (skincare, accessories, etc):
+Return ONLY a single English description line describing: shape, color, material, packaging, size feel. Max 45 words.
+
+Do NOT mention people, hands, rooms, or backgrounds. Do NOT invent brand names unless clearly visible. No markdown. No quotes. No prefix labels. Max 45 words.`;
 
     const models = [
       'gemini-2.0-flash',
@@ -87,9 +95,25 @@ Max 45 words. No markdown. No quotes. No prefix labels.`;
       .replace(/\s+/g, ' ')
       .trim();
 
+    // Detect product category from description
+    const lower = text.toLowerCase();
+    let category = 'other';
+    if (lower.includes('shirt') || lower.includes('t-shirt') || lower.includes('kaos') ||
+        lower.includes('hoodie') || lower.includes('jaket') || lower.includes('jacket') ||
+        lower.includes('kemeja') || lower.includes('apparel') || lower.includes('fabric') ||
+        lower.includes('neckline') || lower.includes('sleeve') || lower.includes('oversized') ||
+        lower.includes('cotton') || lower.includes('polyester')) {
+      category = 'apparel';
+    } else if (lower.includes('bottle') || lower.includes('perfume') || lower.includes('fragrance') ||
+               lower.includes('parfum') || lower.includes('glass') || lower.includes('liquid') ||
+               lower.includes('cap') || lower.includes('spray')) {
+      category = 'perfume';
+    }
+
     return res.json({
       success: true,
       description: text,
+      category: category,
       model: usedModel,
     });
   } catch (err) {

@@ -1,4 +1,5 @@
 // Generate final ad image from prompt (+ optional product reference image)
+// Supports: apparel (kaos/jaket/hoodie) AND perfume
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -13,6 +14,7 @@ export default async function handler(req, res) {
       negative,
       productImage,
       productMimeType,
+      productCategory = 'perfume',
       aspectRatio = '9:16',
     } = req.body || {};
 
@@ -21,19 +23,32 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'Gemini API key not configured' });
 
+    // Build dynamic reference instruction based on product category
+    let refInstruction = '';
+    if (productImage) {
+      if (productCategory === 'apparel') {
+        refInstruction = 'Use the attached product photo as the EXACT product reference. Match the t-shirt/clothing type, fabric color, texture, neckline style (crew/v-neck), sleeve type, fit (oversized/regular), and any graphic print or design. Do NOT invent a different style of clothing.';
+      } else if (productCategory === 'perfume') {
+        refInstruction = 'Use the attached product photo as the EXACT product reference. Match bottle shape, color, liquid, cap, and label style as closely as possible. Do not invent a different perfume bottle.';
+      } else {
+        refInstruction = 'Use the attached product photo as the EXACT product reference. Match shape, color, material, and design as closely as possible. Do not invent a different product.';
+      }
+    }
+
+    // Build quality/clothing suffix — keep gender/genre neutral for image gen
+    const qualitySuffix = productCategory === 'apparel'
+      ? 'Photorealistic commercial fashion photography. Natural anatomy, clean hands, fabric texture visible, realistic clothing fit, magazine quality.'
+      : 'Photorealistic commercial photography. Natural anatomy, clean hands, readable product label facing camera when visible.';
+
     const fullPrompt = [
       prompt,
       negative ? `Avoid: ${negative}` : '',
-      productImage
-        ? 'Use the attached product photo as the EXACT product reference. Match bottle shape, color, liquid, cap, and label style as closely as possible. Do not invent a different perfume bottle.'
-        : '',
-      'Photorealistic commercial photography. Keep the same consistent woman AREKA_GIRL_001. Natural anatomy, clean hands, readable product label facing camera when visible.',
+      refInstruction,
+      qualitySuffix,
     ].filter(Boolean).join('\n\n');
 
     const attempts = [];
 
-    // 1) Gemini native image models (generateContent + responseModalities IMAGE)
-    // Ordered: cheapest/lightest first to reduce 429 risk
     const geminiImageModels = [
       'gemini-3.1-flash-lite-image',
       'gemini-2.5-flash-image',
@@ -64,7 +79,6 @@ export default async function handler(req, res) {
           attempts,
         });
       }
-      // if hard not-found, skip; if quota, still try next lighter/heavier
     }
 
     // 2) Imagen predict API (text-only; no product reference image)
@@ -106,7 +120,7 @@ export default async function handler(req, res) {
       detail,
       attempts,
       hint: quotaHit
-        ? 'Tunggu reset quota harian / naikkan billing Google AI Studio, atau uncheck auto-generate dan generate di Gemini/ChatGPT manual pakai prompt yang sudah disalin.'
+        ? 'Tunggu reset quota harian / naikkan billing Google AI Studio'
         : 'Cek model image + API key Google AI Studio.',
     });
   } catch (err) {
@@ -142,7 +156,6 @@ async function tryGeminiImageModel({
       },
     };
 
-    // Only attach imageConfig when aspect ratio is common-supported
     const ar = normalizeAspect(aspectRatio);
     if (ar) payload.generationConfig.imageConfig = { aspectRatio: ar };
 
@@ -153,7 +166,6 @@ async function tryGeminiImageModel({
     });
     let raw = await geminiRes.text();
 
-    // Retry without imageConfig if rejected
     if (!geminiRes.ok && (raw.includes('imageConfig') || raw.includes('aspectRatio'))) {
       delete payload.generationConfig.imageConfig;
       geminiRes = await fetch(url, {
@@ -165,33 +177,16 @@ async function tryGeminiImageModel({
     }
 
     if (!geminiRes.ok) {
-      return {
-        ok: false,
-        meta: {
-          status: geminiRes.status,
-          msg: shortErr(raw),
-        },
-      };
+      return { ok: false, meta: { status: geminiRes.status, msg: shortErr(raw) } };
     }
 
     const data = JSON.parse(raw);
     const image = extractImage(data);
     if (!image) {
-      return {
-        ok: false,
-        meta: {
-          status: 200,
-          msg: 'no_image_in_response',
-        },
-      };
+      return { ok: false, meta: { status: 200, msg: 'no_image_in_response' } };
     }
 
-    return {
-      ok: true,
-      image,
-      text: extractText(data),
-      meta: { status: 200, msg: 'ok' },
-    };
+    return { ok: true, image, text: extractText(data), meta: { status: 200, msg: 'ok' } };
   } catch (e) {
     return { ok: false, meta: { status: 'err', msg: e.message } };
   }
@@ -199,15 +194,11 @@ async function tryGeminiImageModel({
 
 async function tryImagenPredict({ apiKey, model, prompt, aspectRatio }) {
   try {
-    // Imagen uses :predict not :generateContent
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${apiKey}`;
     const ar = normalizeAspect(aspectRatio) || '9:16';
     const payload = {
       instances: [{ prompt }],
-      parameters: {
-        sampleCount: 1,
-        aspectRatio: ar,
-      },
+      parameters: { sampleCount: 1, aspectRatio: ar },
     };
     const r = await fetch(url, {
       method: 'POST',
@@ -215,23 +206,12 @@ async function tryImagenPredict({ apiKey, model, prompt, aspectRatio }) {
       body: JSON.stringify(payload),
     });
     const raw = await r.text();
-    if (!r.ok) {
-      return { ok: false, meta: { status: r.status, msg: shortErr(raw) } };
-    }
+    if (!r.ok) return { ok: false, meta: { status: r.status, msg: shortErr(raw) } };
     const data = JSON.parse(raw);
     const pred = data?.predictions?.[0] || {};
     const b64 = pred.bytesBase64Encoded || pred.image?.bytesBase64Encoded;
-    if (!b64) {
-      return { ok: false, meta: { status: 200, msg: 'no_image_in_response' } };
-    }
-    return {
-      ok: true,
-      image: {
-        data: b64,
-        mimeType: pred.mimeType || 'image/png',
-      },
-      meta: { status: 200, msg: 'ok' },
-    };
+    if (!b64) return { ok: false, meta: { status: 200, msg: 'no_image_in_response' } };
+    return { ok: true, image: { data: b64, mimeType: pred.mimeType || 'image/png' }, meta: { status: 200, msg: 'ok' } };
   } catch (e) {
     return { ok: false, meta: { status: 'err', msg: e.message } };
   }
@@ -257,12 +237,7 @@ function extractImage(data) {
   const parts = data?.candidates?.[0]?.content?.parts || [];
   for (const p of parts) {
     const inline = p.inlineData || p.inline_data;
-    if (inline?.data) {
-      return {
-        data: inline.data,
-        mimeType: inline.mimeType || inline.mime_type || 'image/png',
-      };
-    }
+    if (inline?.data) return { data: inline.data, mimeType: inline.mimeType || inline.mime_type || 'image/png' };
   }
   return null;
 }
