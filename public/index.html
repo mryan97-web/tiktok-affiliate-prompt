@@ -2322,6 +2322,7 @@ STATUS: ✅ READY TO GENERATE<br>
                 <select class="gen-select" id="gen-output-type" style="flex:0.6;" onchange="onOutputTypeChange()">
                   <option value="image">🖼️ Gambar (Image Prompt)</option>
                   <option value="video">🎬 Video Prompt</option>
+                  <option value="4scene">🎬 4-Scene Campaign</option>
                 </select>
                 <select class="gen-select" id="gen-video-length" style="flex:0.5;display:none;">
                   <option value="5">5 detik</option>
@@ -2330,6 +2331,12 @@ STATUS: ✅ READY TO GENERATE<br>
                   <option value="30">30 detik</option>
                   <option value="60">60 detik</option>
                 </select>
+              </div>
+              <!-- 4-Scene Description Box -->
+              <div id="gen-scene-desc-box" class="gen-card" style="grid-column:span 2;display:none;">
+                <div class="gen-card-title">📝 Deskripsi Produk untuk Scene</div>
+                <textarea id="gen-scene-desc" class="gen-textarea" rows="4" placeholder="Paste deskripsi produk di sini&#10;&#10;Contoh Parfum:&#10;Aroma: floral musky dengan sentuhan vanilla&#10;Notes: top (bergamot, pear), middle (rose, jasmine), base (musk, sandalwood)&#10;Cocok untuk: wanita karir, daily wear, tahan lama 8-10 jam&#10;&#10;Contoh Kaos:&#10;Bahan: cotton combed 30s, adem dan nyaman&#10;Fit: oversized, relaxed fit&#10;Detail: rib collar, double stitch hem, sablon rubber premium&#10;Size: S-5XL, cocok pria dan wanita&#10;&#10;Prompt akan otomatis menyesuaikan parfum/kaos berdasarkan deskripsi yang kamu paste."></textarea>
+                <div class="product-upload-hint" style="margin-top:4px;">💡 Prompt tiap scene (1-4) akan menyesuaikan konten deskripsi ini. Parfum → fokus aroma. Kaos → fokus bahan/fit.</div>
               </div>
               <div class="gen-card">
                 <div class="gen-card-title">🎬 Scene</div>

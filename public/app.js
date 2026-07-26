@@ -872,6 +872,102 @@ function buildVideoPrompt(parts) {
 }
 
 // ===================================================================
+// 4-SCENE CAMPAIGN BUILDER — untuk promosi produk bertahap
+// ===================================================================
+function build4ScenePrompt(parts, productDesc) {
+  const isMale = parts.gender === 'male';
+  const genderText = isMale ? 'AREKA_GUY_001 (Pria Indonesia)' : 'AREKA_GIRL_001 (Wanita Indonesia)';
+  const scene = parts.scene.split(',')[0].toLowerCase();
+  const product = parts.product ? parts.product.split(',')[0].toLowerCase() : 'product';
+  const roomDesc = parts.scene;
+  const lighting = parts.lighting.split(',')[0].toLowerCase();
+  const shot = parts.camera.split(',')[0].toLowerCase();
+
+  const lowerDesc = (productDesc || '').toLowerCase();
+  const isApparel = product.includes('kaos') || product.includes('shirt') || product.includes('jaket') ||
+                    product.includes('hoodie') || product.includes('kemeja') ||
+                    lowerDesc.includes('kain') || lowerDesc.includes('bahan') || lowerDesc.includes('cotton') ||
+                    lowerDesc.includes('fabric') || lowerDesc.includes('fit');
+  const isPerfume = product.includes('parfum') || product.includes('perfume') || product.includes('body splash') ||
+                    lowerDesc.includes('aroma') || lowerDesc.includes('fragrance') || lowerDesc.includes('wangi') ||
+                    lowerDesc.includes('note') || lowerDesc.includes('botol') || lowerDesc.includes('bottle');
+
+  let scentNotes = productDesc || '';
+  let materialText = '';
+  const lines = (productDesc || '').split('\n').filter(l => l.trim());
+  if (lines.length > 1) {
+    scentNotes = lines.slice(0, 2).join('. ');
+    materialText = lines.slice(2).join('. ');
+  }
+
+  const introAction = isPerfume
+    ? 'Berdiri memegang botol parfum di tangan, memperkenalkan ke kamera dengan senyum ramah.'
+    : 'Berdiri memegang kaos/apparel di tangan, menunjukkan produk ke kamera dengan senyum ramah.';
+
+  const detailAction = isPerfume
+    ? 'Close-up pada botol parfum, tangan memegang botol dengan hati-hati, menunjuk label dan detail botol.'
+    : 'Close-up pada kain kaos, tangan memegang dan meraba tekstur kain, menunjukkan detail jahitan dan print.';
+
+  const demoAction = isPerfume
+    ? 'Menyemprot parfum ke pergelangan tangan atau kertas tester, mencium aroma dengan ekspresi menikmati.'
+    : 'Memakai kaos, menunjukkan fit di badan, merapikan kerah dan lengan, berpose depan-belakang.';
+
+  const demoCam = isPerfume
+    ? 'Medium close-up, fokus ke gesture tangan menyemprot dan ekspresi wajah'
+    : 'Full body, front to back rotation, dynamic angle showing fit';
+
+  const scene2Desc = isPerfume
+    ? 'Detail botol, label, warna cairan, tutup'
+    : 'Detail kain, jahitan, print/grafis, tekstur';
+
+  const scene3Desc = isPerfume
+    ? `Aroma Notes: "${scentNotes}" — ekspresi puas dan elegan saat mencium`
+    : `Material: "${scentNotes}" — model bergerak natural nunjukin fit`;
+
+  const scenes = [];
+
+  scenes.push(`=== SCENE 1: INTRODUCTION ===
+Character: ${genderText}
+Action: ${introAction}
+Location: ${roomDesc}
+Camera: ${shot}, front view, full body to waist level
+Lighting: ${lighting}
+Product Focus: Menunjukkan ${product} secara keseluruhan
+Style: Casual aesthetic, influencer vibe`);
+
+  scenes.push(`=== SCENE 2: DETAIL SHOT ===
+Character: ${genderText}
+Action: ${detailAction}
+Location: Same as Scene 1, closer framing
+Camera: Close-up shot on hands and product, product fills 60% frame
+Lighting: Natural soft, focus on product details
+Product Focus: ${scene2Desc}
+Style: Product photography aesthetic, slow gentle hand movement`);
+
+  scenes.push(`=== SCENE 3: DEMO / INTERACTION ===
+Character: ${genderText}
+Action: ${demoAction}
+Location: ${roomDesc}
+Camera: ${demoCam}
+Lighting: ${lighting}
+Product Focus: ${scene3Desc}
+Style: Lifestyle influencer content, candid natural vibe`);
+
+  scenes.push(`=== SCENE 4: CALL TO ACTION ===
+Character: ${genderText}
+Action: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli.
+Location: ${roomDesc}
+Camera: ${shot}, eye level, direct to camera engaging
+Lighting: ${lighting}, bright confident tone
+Product Focus: Final showcase ${product} — ${scentNotes}
+Style: High conversion, direct engagement, warm friendly CTA
+CTA Text: "CHECK LINK IN BIO" bottom text overlay
+End Card: ${product} display prominently`);
+
+  return scenes.join('\n\n');
+}
+
+// ===================================================================
 // PRODUCT UPLOAD STATE
 // ===================================================================
 let UPLOADED_PRODUCT = null; // { base64, mimeType, dataUrl, description }
@@ -1070,6 +1166,7 @@ async function generatePrompt() {
     const autoImage = document.getElementById('gen-auto-image')?.checked !== false;
     const outputType = document.getElementById('gen-output-type')?.value || 'image';
     const videoLength = document.getElementById('gen-video-length')?.value || '15';
+    const productSceneDesc = document.getElementById('gen-scene-desc')?.value?.trim() || '';
 
     if (prodKey === 'upload_custom' && !getCustomProductDescription() && !UPLOADED_PRODUCT) {
       showToast('⚠️ Upload foto produk dulu');
@@ -1127,8 +1224,13 @@ async function generatePrompt() {
     // 5. BUILD CLEAN PROMPT PER MODEL
     let mainPrompt = '';
     let videoPrompt = '';
+    let scene4Prompt = '';
 
-    if (outputType === 'video') {
+    if (outputType === '4scene') {
+      // 4-Scene Campaign
+      scene4Prompt = build4ScenePrompt(parts, productSceneDesc);
+      mainPrompt = buildNaturalPrompt(parts);
+    } else if (outputType === 'video') {
       // Video mode: build image prompt + video prompt
       const imgParts = { ...parts, gender };
       if (modelKey === 'flux') {
@@ -1169,12 +1271,45 @@ async function generatePrompt() {
     let html = '';
 
     // Store for copy buttons — pure text only, no labels/metadata
-    LAST_PROMPT = outputType === 'video' && videoPrompt ? videoPrompt : mainPrompt;
+    LAST_PROMPT = outputType === '4scene' ? scene4Prompt : (outputType === 'video' && videoPrompt ? videoPrompt : mainPrompt);
     LAST_NEGATIVE = parts.negative;
     LAST_FULL = parts.negative ? `${LAST_PROMPT}\n\n${parts.negative}` : LAST_PROMPT;
     LAST_IMAGE_DATAURL = '';
 
-    if (outputType === 'video') {
+    if (outputType === '4scene') {
+      // 4-SCENE CAMPAIGN OUTPUT
+      const genderLabel = gender === 'male' ? '👤 AREKA_GUY_001 (Pria)' : '👩 AREKA_GIRL_001 (Wanita)';
+      const prodLabel = document.getElementById('gen-product')?.options?.[document.getElementById('gen-product')?.selectedIndex]?.text || productSceneDesc?.split('\n')[0] || 'Product';
+      html = `<div class="gen-output-ready">
+      <div class="gen-section" style="border:2px solid #8b5cf6;border-radius:8px;padding:12px;margin-bottom:8px;background:rgba(139,92,246,0.04);">
+        <span class="gen-section-label" style="color:#8b5cf6;font-size:14px;">🎬 4-SCENE CAMPAIGN — ${genderLabel}</span>
+        <div class="gen-section-sub-label" style="font-size:10px;color:var(--text-sec);margin-bottom:8px;">
+          ${prodLabel} | Scene: 1 (Intro) → 2 (Detail) → 3 (Demo) → 4 (CTA)
+        </div>
+        <div class="gen-prompt-text" style="font-size:12px;white-space:pre-wrap;font-family:var(--mono);background:#f8f5f0;padding:12px;border-radius:6px;">${escapeHtml(scene4Prompt)}</div>
+      </div>
+      <hr class="gen-section-divider">
+      <div class="gen-section">
+        <span class="gen-section-label">📷 REFERENCE IMAGE PROMPT</span>
+        <div class="gen-prompt-text">${mainPrompt}</div>
+      </div>
+      <hr class="gen-section-divider">
+      <div class="gen-section"><span class="gen-section-label">🚫 NEGATIVE</span><div class="gen-prompt-text">${parts.negative}</div></div>
+      <hr class="gen-section-divider">
+      <div class="gen-section gen-meta-only" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;">
+        <span><strong>Output:</strong> 🎬 4-Scene Campaign</span>
+        <span><strong>Gender:</strong> ${genderLabel}</span>
+        <span><strong>Location:</strong> ${sceneKey}</span>
+        <span><strong>Scene count:</strong> 4 scenes</span>
+        <span><strong>Aspect Ratio:</strong> ${ar}</span>
+        <span><strong>Status:</strong> ✅ Siap Dicopy</span>
+      </div>
+      <hr class="gen-section-divider">
+      <div class="gen-section" style="font-size:11px;color:var(--text-sec);">
+        💡 <strong>Cara pakai:</strong> Copy semua → paste di ChatGPT/Gemini sebagai instruksi video. Atau paste tiap Scene satu-satu ke AI image/video generator.
+      </div>
+    </div>`;
+    } else if (outputType === 'video') {
       // VIDEO MODE OUTPUT
       const genderLabel = gender === 'male' ? '👤 AREKA_GUY_001 (Pria)' : '👩 AREKA_GIRL_001 (Wanita)';
       html = `<div class="gen-output-ready">
@@ -1580,12 +1715,18 @@ function updatePoseByGender() {
 function onOutputTypeChange() {
   const type = document.getElementById('gen-output-type')?.value || 'image';
   const videoLen = document.getElementById('gen-video-length');
+  const sceneDescBox = document.getElementById('gen-scene-desc-box');
   if (videoLen) {
     videoLen.style.display = type === 'video' ? 'inline-block' : 'none';
   }
+  if (sceneDescBox) {
+    sceneDescBox.style.display = type === '4scene' ? 'block' : 'none';
+  }
   const generateBtn = document.querySelector('.gen-generate-btn');
   if (generateBtn) {
-    generateBtn.textContent = type === 'video' ? '🎬 GENERATE VIDEO PROMPT' : '⚡ GENERATE PROMPT + GAMBAR';
+    if (type === 'video') generateBtn.textContent = '🎬 GENERATE VIDEO PROMPT';
+    else if (type === '4scene') generateBtn.textContent = '🎬 GENERATE 4-SCENE CAMPAIGN';
+    else generateBtn.textContent = '⚡ GENERATE PROMPT + GAMBAR';
   }
 }
 
