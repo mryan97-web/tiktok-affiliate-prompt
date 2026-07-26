@@ -491,6 +491,39 @@ const POSES = {
     label: 'Kaos Disampirkan di Bahu',
     desc: 't-shirt casually draped over one shoulder while walking, seen from behind or three-quarter angle, urban street style influencer',
   },
+  // ===== NEW: TIKTOK PARGOY / JOGET DANCE =====
+  pargoy_body_roll: {
+    label: '🕺 Pargoy — Body Roll sambil Tunjuk Kaos',
+    desc: 'TikTok-style body roll dance, one hand sliding down body to point at own t-shirt, confident pargoy moves, showing off shirt fit while dancing, energetic TikTok dancer vibe',
+  },
+  pargoy_walk_dance: {
+    label: '🕺 Pargoy — Jalan Joget (Walk Dance)',
+    desc: 'walking while dancing to camera, TikTok signature walk-dance move, gesturing at own shirt while walking, playful energetic movement showcasing apparel in motion',
+  },
+  pargoy_spin_show: {
+    label: '🕺 Pargoy — Spin Putar Nunjukin Kaos',
+    desc: 'dancing spin rotation to show t-shirt from all angles, one hand pointing at shirt mid-spin, ending with back to camera pose, dynamic TikTok dance move',
+  },
+  pargoy_hand_gesture: {
+    label: '🕺 Pargoy — Gerakan Tangan TikTok',
+    desc: 'TikTok famous hand gesture dance, pointing at own outfit repeatedly with rhythm, head nodding to beat, wearing the branded t-shirt, engaging energetic street dance vibe',
+  },
+  pargoy_bounce_show: {
+    label: '🕺 Pargoy — Bounce sambil Tarik Kaos',
+    desc: 'bouncy dance motion while pulling at the hem or front of own t-shirt to show fit, rhythm movement, streetwear vibe, engaging with camera through dance',
+  },
+  pargoy_front_to_back: {
+    label: '🕺 Pargoy — Depan ke Belakang Sambil Joget',
+    desc: 'joget from front then spin to back while dancing, showing t-shirt from front and back views in one continuous dance move, hands up moving to rhythm, TikTok trending dance style',
+  },
+  pargoy_stop_pose: {
+    label: '🕺 Pargoy — Dance lalu Pose (TikTok Signature)',
+    desc: 'TikTok signature stop pose: sharp dance moves then freezing in a confident stance with hands pointing at own shirt at the end, transition from high energy dance to model pose',
+  },
+  pargoy_duet_style: {
+    label: '🕺 Pargoy — Duet Style (Mirror Dance)',
+    desc: 'TikTok duet-style dance, acting as if doing mirror challenge, showing off t-shirt while dancing, pointing at own shirt and giving thumbs up, engaging energetic performance',
+  },
 };
 
 const COMPOSITION = {
@@ -868,6 +901,31 @@ function buildVideoPrompt(parts) {
     prompt += `\ncamera: completely static locked shot, no camera movement, subject remains with back fully facing camera throughout the entire video, focus on back silhouette and outfit details, professional fashion back-view cinematography`;
   }
 
+  // TikTok Pargoy — dance mode override
+  if (poseKeyLower.includes('pargoy')) {
+    prompt += `\nmovement: FULL DANCE MODE. Model performs energetic TikTok dance (joget pargoy), dynamic body movement, grooving to music rhythm, sharp and fluid dance moves, TikTok-style choreography, continuous motion throughout the video, dance moves that showcase the outfit naturally`
+      + `\nenergy: MAXIMUM ENERGY, high energy TikTok influencer, playful and confident, engaging dance to camera, like viral TikTok fashion content`
+      + `\ncamera: dynamic handheld style, slight movement following the dancer, TikTok videography vibe`
+      + `\nmood: fun, energetic, youthful, viral TikTok fashion content, outfit reveal through dance`
+      + `\nsound: sync to trending TikTok audio beat, dance choreography matching rhythm`;
+  }
+  // Specific pargoy pose overrides
+  if (poseKeyLower.includes('pargoy_spin')) {
+    prompt += `\nspin: model does a full dancing spin/rotation to show the t-shirt from all directions, one hand pointing at shirt during spin, playful finish`;
+  }
+  if (poseKeyLower.includes('pargoy_front_to_back')) {
+    prompt += `\ntransition: dance from front then spin to back while continuing to move, continuous 180-degree turn during dance, shirt visible from both sides in one fluid motion`;
+  }
+  if (poseKeyLower.includes('pargoy_stop')) {
+    prompt += `\ndance structure: sharp energetic dance moves ending with a sudden freeze pose, hands pointing at own outfit in final still frame, TikTok signature stop-challenge style`;
+  }
+  if (poseKeyLower.includes('pargoy_bounce')) {
+    prompt += `\nbounce: rhythmic bouncing movement while pulling and adjusting own t-shirt to show fit, hands touching fabric in sync with body movement`;
+  }
+  if (poseKeyLower.includes('pargoy_hand_gesture')) {
+    prompt += `\ngesture: iconic TikTok hand gesture dance, hands moving rhythmically pointing at own outfit repeatedly, head nodding to beat, streetwear fashion dance style`;
+  }
+
   return prompt;
 }
 
@@ -944,7 +1002,31 @@ Lighting: Natural soft, focus on product details
 Product Focus: ${scene2Desc}
 Style: Product photography aesthetic, slow gentle hand movement`);
 
-  scenes.push(`=== SCENE 3: DEMO / INTERACTION ===
+  if (isApparel) {
+    scenes.push(`=== SCENE 3: TIKTOK PARGOY — DANCE SHOWCASE ===
+Character: ${genderText}
+Action: TikTok pargoy dance sambil pamerin kaos yang dipakai — body roll, joget energik, tangan nunjuk kaos sendiri
+Location: ${roomDesc}
+Camera: Dynamic handheld TikTok style, wide to medium shot, mengikuti gerakan dance
+Lighting: ${lighting}, energetic bright tone
+Product Focus: ${scentNotes} — kaos terlihat dinamis saat dipakai bergerak
+Style: HIGH ENERGY TikTok fashion content, viral dance challenge vibe
+Movement: Full dance choreography, spin putar nunjukin kaos dari semua angle, bounce, stop pose
+Music: Sync to TikTok trending beat
+HashTags: #OOTD #FashionTikTok #Pargoy #FYP #Kaos`);
+
+    scenes.push(`=== SCENE 4: CALL TO ACTION ===
+Character: ${genderText}
+Action: Dance pose lalu berhenti di akhir, tatap kamera sambil senyum, tunjuk kaos
+Location: ${roomDesc}
+Camera: Eye level, direct to camera engaging
+Lighting: ${lighting}, bright confident tone
+Product Focus: ${product} — ${scentNotes}
+Style: High conversion, fun energetic CTA
+CTA Text: "CHECK LINK IN BIO — SHOP NOW!" bottom text overlay
+End Card: ${product} display prominently`);
+  } else {
+    scenes.push(`=== SCENE 3: DEMO / INTERACTION ===
 Character: ${genderText}
 Action: ${demoAction}
 Location: ${roomDesc}
@@ -952,6 +1034,18 @@ Camera: ${demoCam}
 Lighting: ${lighting}
 Product Focus: ${scene3Desc}
 Style: Lifestyle influencer content, candid natural vibe`);
+
+    scenes.push(`=== SCENE 4: CALL TO ACTION ===
+Character: ${genderText}
+Action: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli.
+Location: ${roomDesc}
+Camera: ${shot}, eye level, direct to camera engaging
+Lighting: ${lighting}, bright confident tone
+Product Focus: Final showcase ${product} — ${scentNotes}
+Style: High conversion, direct engagement, warm friendly CTA
+CTA Text: "CHECK LINK IN BIO" bottom text overlay
+End Card: ${product} display prominently`);
+  }
 
   scenes.push(`=== SCENE 4: CALL TO ACTION ===
 Character: ${genderText}
