@@ -958,6 +958,13 @@ function build4ScenePrompt(parts, productDesc) {
     materialText = lines.slice(2).join('. ');
   }
 
+  // Multi-image: get front + back descriptions
+  const frontDesc = UPLOADED_IMAGES[0]?.description || '';
+  const backDesc = UPLOADED_IMAGES[1]?.description || '';
+  const multiImageNote = frontDesc && backDesc
+    ? `\nProduct Reference: Front view — ${frontDesc}\nProduct Reference: Back view — ${backDesc}`
+    : '';
+
   const introAction = isPerfume
     ? 'Berdiri memegang botol parfum di tangan, memperkenalkan ke kamera dengan senyum ramah.'
     : 'Berdiri memegang kaos/apparel di tangan, menunjukkan produk ke kamera dengan senyum ramah.';
@@ -1047,24 +1054,20 @@ CTA Text: "CHECK LINK IN BIO" bottom text overlay
 End Card: ${product} display prominently`);
   }
 
-  scenes.push(`=== SCENE 4: CALL TO ACTION ===
-Character: ${genderText}
-Action: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli.
-Location: ${roomDesc}
-Camera: ${shot}, eye level, direct to camera engaging
-Lighting: ${lighting}, bright confident tone
-Product Focus: Final showcase ${product} — ${scentNotes}
-Style: High conversion, direct engagement, warm friendly CTA
-CTA Text: "CHECK LINK IN BIO" bottom text overlay
-End Card: ${product} display prominently`);
+  // Append multi-image notes to appropriate scenes
+  if (multiImageNote) {
+    scenes[0] += multiImageNote;
+    scenes[2] += multiImageNote;
+  }
 
   return scenes.join('\n\n');
 }
 
 // ===================================================================
-// PRODUCT UPLOAD STATE
+// PRODUCT UPLOAD STATE — MULTI-IMAGE
 // ===================================================================
-let UPLOADED_PRODUCT = null; // { base64, mimeType, dataUrl, description }
+let UPLOADED_IMAGES = []; // [{base64, mimeType, dataUrl, description, label}, ...]
+let UPLOADED_PRODUCT = null; // backward compat
 
 function onProductModeChange() {
   const key = document.getElementById('gen-product')?.value;
@@ -1082,63 +1085,93 @@ function setProductStatus(msg, isError) {
 }
 
 async function onProductFileSelected(event) {
-  const file = event.target.files && event.target.files[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) {
+  const files = Array.from(event.target.files || []).slice(0, 5); // max 5
+  if (!files.length) return;
+  const invalid = files.find(f => !f.type.startsWith('image/'));
+  if (invalid) {
     setProductStatus('File harus gambar (JPG/PNG/WebP)', true);
     return;
   }
-  if (file.size > 8 * 1024 * 1024) {
-    setProductStatus('Max 8MB — kompres dulu', true);
+  const oversized = files.find(f => f.size > 8 * 1024 * 1024);
+  if (oversized) {
+    setProductStatus('Max 8MB per gambar — kompres dulu', true);
     return;
   }
 
-  setProductStatus('⏳ Membaca gambar...');
+  setProductStatus('⏳ Membaca ' + files.length + ' gambar...');
   try {
-    const dataUrl = await readFileAsDataURL(file);
-    const base64 = dataUrl.split(',')[1];
-    const mimeType = file.type || 'image/jpeg';
-
-    UPLOADED_PRODUCT = { base64, mimeType, dataUrl, description: '' };
-
-    const preview = document.getElementById('productPreview');
-    const wrap = document.getElementById('productPreviewWrap');
-    if (preview) preview.src = dataUrl;
-    if (wrap) wrap.classList.remove('hidden');
-
-    setProductStatus('🤖 AI menganalisis produk...');
-    const res = await fetch('/api/product-analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: base64, mimeType }),
-    });
-    const data = await res.json();
-    if (!res.ok || !data.success) {
-      setProductStatus('⚠️ Analisis gagal — isi deskripsi manual', true);
-      return;
+    const loaded = [];
+    for (const file of files) {
+      const dataUrl = await readFileAsDataURL(file);
+      const base64 = dataUrl.split(',')[1];
+      const mimeType = file.type || 'image/jpeg';
+      const label = files.length > 1
+        ? (loaded.length === 0 ? 'Depan' : loaded.length === 1 ? 'Belakang' : `Angle ${loaded.length + 1}`)
+        : 'Produk';
+      loaded.push({ base64, mimeType, dataUrl, description: '', label, category: 'unknown' });
     }
 
-    UPLOADED_PRODUCT.description = data.description || '';
-    UPLOADED_PRODUCT.category = data.category || 'unknown';
+    UPLOADED_IMAGES = loaded;
+    UPLOADED_PRODUCT = loaded[0] || null;
+    renderUploadedImages();
+
+    // Analyze all images
+    setProductStatus('🤖 AI menganalisis ' + loaded.length + ' produk...');
+    const results = [];
+    for (let i = 0; i < loaded.length; i++) {
+      try {
+        const res = await fetch('/api/product-analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: loaded[i].base64, mimeType: loaded[i].mimeType }),
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          loaded[i].description = data.description || '';
+          loaded[i].category = data.category || 'unknown';
+          results.push(`${loaded[i].label}: ${data.description}`);
+        }
+      } catch (e) {
+        results.push(`${loaded[i].label}: (gagal分析)`);
+      }
+    }
+
+    // Update global descriptions
+    const allDesc = results.join('\n\n');
     const descEl = document.getElementById('gen-product-desc');
-    if (descEl) descEl.value = UPLOADED_PRODUCT.description;
-    setProductStatus('✅ Produk siap dipakai di prompt');
+    if (descEl) descEl.value = allDesc;
+
+    // Update preview grid labels
+    renderUploadedImages();
+    setProductStatus(`✅ ${loaded.length} produk siap dipakai di prompt`);
   } catch (err) {
     console.error(err);
     setProductStatus('⚠️ Upload error: ' + err.message, true);
   }
 }
 
+function renderUploadedImages() {
+  const grid = document.getElementById('productPreviewGrid');
+  if (!grid) return;
+  if (!UPLOADED_IMAGES.length) { grid.classList.add('hidden'); grid.innerHTML = ''; return; }
+  grid.classList.remove('hidden');
+  grid.innerHTML = UPLOADED_IMAGES.map((img, i) => `
+    <div class="product-preview-item">
+      <img src="${img.dataUrl}" class="product-preview" alt="${img.label}">
+      <div class="product-preview-label">${img.label}</div>
+    </div>
+  `).join('');
+}
+
 function clearProductUpload() {
+  UPLOADED_IMAGES = [];
   UPLOADED_PRODUCT = null;
   const fileEl = document.getElementById('gen-product-file');
   const descEl = document.getElementById('gen-product-desc');
-  const preview = document.getElementById('productPreview');
-  const wrap = document.getElementById('productPreviewWrap');
+  const grid = document.getElementById('productPreviewGrid');
   if (fileEl) fileEl.value = '';
   if (descEl) descEl.value = '';
-  if (preview) preview.src = '';
-  if (wrap) wrap.classList.add('hidden');
+  if (grid) { grid.innerHTML = ''; grid.classList.add('hidden'); }
   setProductStatus('');
 }
 
@@ -1154,6 +1187,9 @@ function readFileAsDataURL(file) {
 function getCustomProductDescription() {
   const typed = document.getElementById('gen-product-desc')?.value?.trim() || '';
   if (typed) return typed;
+  // Combine all uploaded image descriptions
+  const descs = UPLOADED_IMAGES.map(img => img.description).filter(Boolean);
+  if (descs.length) return descs.join('\n\n');
   return UPLOADED_PRODUCT?.description || '';
 }
 
@@ -1169,6 +1205,9 @@ function buildProduct(prodKey) {
 /** Detect product category from key */
 function detectProductCategory(prodKey) {
   if (prodKey === 'upload_custom') {
+    if (UPLOADED_IMAGES[0]?.category && UPLOADED_IMAGES[0].category !== 'unknown') {
+      return UPLOADED_IMAGES[0].category;
+    }
     if (UPLOADED_PRODUCT?.category && UPLOADED_PRODUCT.category !== 'unknown') {
       return UPLOADED_PRODUCT.category;
     }
@@ -1262,14 +1301,16 @@ async function generatePrompt() {
     const videoLength = document.getElementById('gen-video-length')?.value || '15';
     const productSceneDesc = document.getElementById('gen-scene-desc')?.value?.trim() || '';
 
-    if (prodKey === 'upload_custom' && !getCustomProductDescription() && !UPLOADED_PRODUCT) {
-      showToast('⚠️ Upload foto produk dulu');
+    if (prodKey === 'upload_custom' && !getCustomProductDescription() && !UPLOADED_IMAGES.length) {
+      showToast('⚠️ Upload foto produk dulu (min 1)');
       return;
     }
 
     // sync typed description into upload state
-    if (prodKey === 'upload_custom' && UPLOADED_PRODUCT) {
-      UPLOADED_PRODUCT.description = getCustomProductDescription();
+    if (prodKey === 'upload_custom') {
+      const allDesc = getCustomProductDescription();
+      UPLOADED_IMAGES.forEach(img => { img.description = allDesc; });
+      if (UPLOADED_PRODUCT) UPLOADED_PRODUCT.description = allDesc;
     }
 
     // 2. STATE + VALIDATION
@@ -1486,6 +1527,7 @@ async function generatePrompt() {
         prompt: mainPrompt,
         negative: parts.negative,
         aspectRatio: ar,
+        productImages: prodKey === 'upload_custom' ? UPLOADED_IMAGES : null,
         productImage: prodKey === 'upload_custom' ? UPLOADED_PRODUCT : null,
       });
     } else {
@@ -1502,10 +1544,11 @@ async function generatePrompt() {
   }
 }
 
-async function generateImageFromPrompt({ prompt, negative, aspectRatio, productImage }) {
+async function generateImageFromPrompt({ prompt, negative, aspectRatio, productImage, productImages }) {
   const slot = document.getElementById('genImageSlot');
   if (slot) {
-    slot.innerHTML = `<div class="gen-status-line">🖼️ Generating gambar dengan produk referensi...</div>`;
+    const count = productImages?.length || (productImage ? 1 : 0);
+    slot.innerHTML = `<div class="gen-status-line">🖼️ Generating gambar dengan ${count} produk referensi...</div>`;
   }
 
   try {
@@ -1515,7 +1558,14 @@ async function generateImageFromPrompt({ prompt, negative, aspectRatio, productI
       aspectRatio: aspectRatio || '9:16',
       productCategory: detectProductCategory(document.getElementById('gen-product')?.value || 'perfume'),
     };
-    if (productImage?.base64) {
+    // Send multiple images if available
+    if (productImages?.length) {
+      body.productImages = productImages.map(img => ({
+        image: img.base64,
+        mimeType: img.mimeType || 'image/jpeg',
+        label: img.label || 'produk',
+      }));
+    } else if (productImage?.base64) {
       body.productImage = productImage.base64;
       body.productMimeType = productImage.mimeType || 'image/jpeg';
     }

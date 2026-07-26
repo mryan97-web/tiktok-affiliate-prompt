@@ -16,6 +16,7 @@ export default async function handler(req, res) {
       productMimeType,
       productCategory = 'perfume',
       aspectRatio = '9:16',
+      productImages = [],
     } = req.body || {};
 
     if (!prompt) return res.status(400).json({ error: 'Prompt required' });
@@ -66,6 +67,7 @@ export default async function handler(req, res) {
         fullPrompt,
         productImage,
         productMimeType,
+        productImages,
         aspectRatio,
       });
       attempts.push({ model, ...result.meta });
@@ -135,11 +137,22 @@ async function tryGeminiImageModel({
   fullPrompt,
   productImage,
   productMimeType,
+  productImages = [],
   aspectRatio,
 }) {
   try {
     const parts = [{ text: fullPrompt }];
-    if (productImage) {
+    // Attach ALL product images as reference
+    if (productImages.length) {
+      for (const img of productImages) {
+        parts.push({
+          inline_data: {
+            mime_type: img.mimeType || 'image/jpeg',
+            data: img.image,
+          },
+        });
+      }
+    } else if (productImage) {
       parts.push({
         inline_data: {
           mime_type: productMimeType || 'image/jpeg',
