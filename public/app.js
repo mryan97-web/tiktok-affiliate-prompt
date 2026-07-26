@@ -935,8 +935,7 @@ function buildVideoPrompt(parts) {
 function build4ScenePrompt(parts, productDesc) {
   const isMale = parts.gender === 'male';
   const genderText = isMale ? 'AREKA_GUY_001 (Pria Indonesia)' : 'AREKA_GIRL_001 (Wanita Indonesia)';
-  const scene = parts.scene.split(',')[0].toLowerCase();
-  const product = parts.product ? parts.product.split(',')[0].toLowerCase() : 'product';
+  const product = parts.product ? parts.product.split(',')[0].toLowerCase() : 'produk';
   const roomDesc = parts.scene;
   const lighting = parts.lighting.split(',')[0].toLowerCase();
   const shot = parts.camera.split(',')[0].toLowerCase();
@@ -962,7 +961,7 @@ function build4ScenePrompt(parts, productDesc) {
   const frontDesc = UPLOADED_IMAGES[0]?.description || '';
   const backDesc = UPLOADED_IMAGES[1]?.description || '';
   const multiImageNote = frontDesc && backDesc
-    ? `\nProduct Reference: Front view — ${frontDesc}\nProduct Reference: Back view — ${backDesc}`
+    ? `\nReferensi Produk: Tampak Depan — ${frontDesc}\nReferensi Produk: Tampak Belakang — ${backDesc}`
     : '';
 
   const introAction = isPerfume
@@ -978,80 +977,80 @@ function build4ScenePrompt(parts, productDesc) {
     : 'Memakai kaos, menunjukkan fit di badan, merapikan kerah dan lengan, berpose depan-belakang.';
 
   const demoCam = isPerfume
-    ? 'Medium close-up, fokus ke gesture tangan menyemprot dan ekspresi wajah'
-    : 'Full body, front to back rotation, dynamic angle showing fit';
+    ? 'Medium close-up, fokus ke tangan menyemprot dan ekspresi wajah'
+    : 'Full body, rotasi depan ke belakang, sudut dinamis, nunjukin fit kaos';
 
   const scene2Desc = isPerfume
     ? 'Detail botol, label, warna cairan, tutup'
-    : 'Detail kain, jahitan, print/grafis, tekstur';
+    : 'Detail kain, jahitan, print/grafis, tekstur, bahan';
 
   const scene3Desc = isPerfume
-    ? `Aroma Notes: "${scentNotes}" — ekspresi puas dan elegan saat mencium`
-    : `Material: "${scentNotes}" — model bergerak natural nunjukin fit`;
+    ? `Catatan Aroma: "${scentNotes}" — ekspresi puas dan elegan saat mencium`
+    : `Bahan & Fit: "${scentNotes}" — model bergerak natural nunjukin fit`;
 
   const scenes = [];
 
-  scenes.push(`=== SCENE 1: INTRODUCTION ===
-Character: ${genderText}
-Action: ${introAction}
-Location: ${roomDesc}
-Camera: ${shot}, front view, full body to waist level
-Lighting: ${lighting}
-Product Focus: Menunjukkan ${product} secara keseluruhan
-Style: Casual aesthetic, influencer vibe`);
+  scenes.push(`=== SCENE 1: PERKENALAN ===
+Karakter: ${genderText}
+Aksi: ${introAction}
+Lokasi: ${roomDesc}
+Kamera: ${shot}, tampak depan, full body sampai pinggang
+Pencahayaan: ${lighting}
+Fokus Produk: Menunjukkan ${product} secara keseluruhan
+Gaya: Kasual estetik, vibe influencer`);
 
-  scenes.push(`=== SCENE 2: DETAIL SHOT ===
-Character: ${genderText}
-Action: ${detailAction}
-Location: Same as Scene 1, closer framing
-Camera: Close-up shot on hands and product, product fills 60% frame
-Lighting: Natural soft, focus on product details
-Product Focus: ${scene2Desc}
-Style: Product photography aesthetic, slow gentle hand movement`);
+  scenes.push(`=== SCENE 2: DETAIL PRODUK ===
+Karakter: ${genderText}
+Aksi: ${detailAction}
+Lokasi: Sama seperti Scene 1, framing lebih dekat
+Kamera: Close-up pada tangan dan produk, produk mengisi 60% frame
+Pencahayaan: Soft natural, fokus ke detail produk
+Fokus Produk: ${scene2Desc}
+Gaya: Estetik fotografi produk, gerakan tangan pelan`);
 
   if (isApparel) {
-    scenes.push(`=== SCENE 3: TIKTOK PARGOY — DANCE SHOWCASE ===
-Character: ${genderText}
-Action: TikTok pargoy dance sambil pamerin kaos yang dipakai — body roll, joget energik, tangan nunjuk kaos sendiri
-Location: ${roomDesc}
-Camera: Dynamic handheld TikTok style, wide to medium shot, mengikuti gerakan dance
-Lighting: ${lighting}, energetic bright tone
-Product Focus: ${scentNotes} — kaos terlihat dinamis saat dipakai bergerak
-Style: HIGH ENERGY TikTok fashion content, viral dance challenge vibe
-Movement: Full dance choreography, spin putar nunjukin kaos dari semua angle, bounce, stop pose
-Music: Sync to TikTok trending beat
-HashTags: #OOTD #FashionTikTok #Pargoy #FYP #Kaos`);
+    scenes.push(`=== SCENE 3: PARGOY TIKTOK — DANCE SHOWCASE ===
+Karakter: ${genderText}
+Aksi: TikTok pargoy dance sambil pamerin kaos yang dipakai — body roll, joget energik, tangan nunjuk kaos sendiri
+Lokasi: ${roomDesc}
+Kamera: Dynamic handheld gaya TikTok, wide to medium shot, ngikutin gerakan dance
+Pencahayaan: ${lighting}, tone terang energik
+Fokus Produk: ${scentNotes} — kaos keliatan dinamis pas dipakai gerak
+Gaya: HIGH ENERGY konten fashion TikTok, vibe viral dance challenge
+Gerakan: Full koreografi dance, spin putar nunjukin kaos dari semua sudut, bounce, stop pose
+Musik: Sync ke beat TikTok trending
+Tagar: #OOTD #FashionTikTok #Pargoy #FYP #Kaos`);
 
-    scenes.push(`=== SCENE 4: CALL TO ACTION ===
-Character: ${genderText}
-Action: Dance pose lalu berhenti di akhir, tatap kamera sambil senyum, tunjuk kaos
-Location: ${roomDesc}
-Camera: Eye level, direct to camera engaging
-Lighting: ${lighting}, bright confident tone
-Product Focus: ${product} — ${scentNotes}
-Style: High conversion, fun energetic CTA
-CTA Text: "CHECK LINK IN BIO — SHOP NOW!" bottom text overlay
-End Card: ${product} display prominently`);
+    scenes.push(`=== SCENE 4: AJAKAN BELI (CTA) ===
+Karakter: ${genderText}
+Aksi: Dance pose lalu berhenti di akhir, tatap kamera sambil senyum, tunjuk kaos
+Lokasi: ${roomDesc}
+Kamera: Eye level, langsung ke kamera engaging
+Pencahayaan: ${lighting}, tone terang percaya diri
+Fokus Produk: ${product} — ${scentNotes}
+Gaya: High conversion, CTA fun energik
+Teks CTA: "CHECK LINK IN BIO — SHOP NOW!" overlay bawah
+Kartu Akhir: ${product} ditampilkan prominently`);
   } else {
-    scenes.push(`=== SCENE 3: DEMO / INTERACTION ===
-Character: ${genderText}
-Action: ${demoAction}
-Location: ${roomDesc}
-Camera: ${demoCam}
-Lighting: ${lighting}
-Product Focus: ${scene3Desc}
-Style: Lifestyle influencer content, candid natural vibe`);
+    scenes.push(`=== SCENE 3: DEMO / INTERAKSI ===
+Karakter: ${genderText}
+Aksi: ${demoAction}
+Lokasi: ${roomDesc}
+Kamera: ${demoCam}
+Pencahayaan: ${lighting}
+Fokus Produk: ${scene3Desc}
+Gaya: Konten lifestyle influencer, vibe natural candid`);
 
-    scenes.push(`=== SCENE 4: CALL TO ACTION ===
-Character: ${genderText}
-Action: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli.
-Location: ${roomDesc}
-Camera: ${shot}, eye level, direct to camera engaging
-Lighting: ${lighting}, bright confident tone
-Product Focus: Final showcase ${product} — ${scentNotes}
-Style: High conversion, direct engagement, warm friendly CTA
-CTA Text: "CHECK LINK IN BIO" bottom text overlay
-End Card: ${product} display prominently`);
+    scenes.push(`=== SCENE 4: AJAKAN BELI (CTA) ===
+Karakter: ${genderText}
+Aksi: Berdiri percaya diri, produk di tangan, tatap kamera, ajak beli
+Lokasi: ${roomDesc}
+Kamera: ${shot}, eye level, langsung ke kamera engaging
+Pencahayaan: ${lighting}, tone terang percaya diri
+Fokus Produk: Final showcase ${product} — ${scentNotes}
+Gaya: High conversion, direct engagement, CTA hangat ramah
+Teks CTA: "CHECK LINK IN BIO" overlay bawah
+Kartu Akhir: ${product} ditampilkan prominently`);
   }
 
   // Append multi-image notes to appropriate scenes
