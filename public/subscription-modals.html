@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription & Payment | AREKA Official Store</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* MODAL STYLES */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      overflow: auto;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #2d241a;
+    }
+
+    .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: black;
+    }
+
+    /* TABS */
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .tab-button {
+      padding: 0.75rem 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #999;
+      border-bottom: 3px solid transparent;
+      transition: 0.2s;
+    }
+
+    .tab-button.active {
+      color: #2d7a3e;
+      border-bottom-color: #2d7a3e;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* FORMS */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2d7a3e;
+      box-shadow: 0 0 0 3px rgba(45, 122, 62, 0.1);
+    }
+
+    /* BUTTONS */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: #2d7a3e;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #24632f;
+    }
+
+    .btn-secondary {
+      background: #1976d2;
+      color: white;
+      margin-top: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background: #1565c0;
+    }
+
+    .btn-text {
+      background: none;
+      color: #1976d2;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .btn-text:hover {
+      color: #1565c0;
+    }
+
+    /* PRICING CARDS */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .price-card {
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .price-card:hover {
+      border-color: #2d7a3e;
+      box-shadow: 0 4px 12px rgba(45, 122, 62, 0.1);
+    }
+
+    .price-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #2d241a;
+    }
+
+    .price-card .amount {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d7a3e;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .period {
+      font-size: 0.85rem;
+      color: #999;
+      margin-bottom: 1rem;
+    }
+
+    .price-card ul {
+      list-style: none;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .price-card li {
+      padding: 0.25rem 0;
+      color: #666;
+    }
+
+    .price-card li:before {
+      content: "✓ ";
+      color: #2d7a3e;
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    .price-card .btn {
+      width: 100%;
+    }
+
+    /* QRIS MODAL */
+    .qris-container {
+      text-align: center;
+    }
+
+    .qris-container img {
+      max-width: 300px;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+
+    .qris-info {
+      background: #e8f5e9;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .qris-info p {
+      margin: 0.5rem 0;
+    }
+
+    .qris-info strong {
+      color: #2d7a3e;
+    }
+
+    /* USER STATUS */
+    .user-status {
+      padding: 1rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .user-status strong {
+      color: #2d7a3e;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #999;
+      position: relative;
+    }
+
+    .divider:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e0e0e0;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 1rem;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+    <div class="modal-header">🔑 Login / Daftar</div>
+
+    <div class="tab-buttons">
+      <button class="tab-button active" onclick="showLoginTab()">Login</button>
+      <button class="tab-button" onclick="showSignupTab()">Daftar</button>
+    </div>
+
+    <!-- LOGIN TAB -->
+    <div id="loginTab" class="tab-content active">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Min 6 karakter">
+      </div>
+      <button class="btn btn-primary" onclick="loginWithEmail()">Login</button>
+
+      <div class="divider"><span>atau</span></div>
+
+      <button class="btn btn-secondary" onclick="loginWithGoogle()">
+        🔵 Login dengan Google
+      </button>
+    </div>
+
+    <!-- SIGNUP TAB -->
+    <div id="signupTab" class="tab-content">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Min 6 karakter">
+      </div>
+      <div class="form-group">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="signupConfirmPassword" placeholder="Min 6 karakter">
+      </div>
+      <button class="btn btn-primary" onclick="signupWithEmail()">Daftar</button>
+
+      <div class="divider"><span>atau</span></div>
+
+      <button class="btn btn-secondary" onclick="loginWithGoogle()">
+        🔵 Daftar dengan Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING MODAL -->
+<div id="pricingModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closePricingModal()">&times;</span>
+    <div class="modal-header">💳 Pilih Paket</div>
+
+    <div class="pricing-grid">
+      <div class="price-card" onclick="startSubscription('WEEKLY')">
+        <h3>📅 Weekly</h3>
+        <div class="amount">Rp 5.000</div>
+        <div class="period">7 hari</div>
+        <ul>
+          <li>10 upload/hari</li>
+          <li>Semua pose</li>
+          <li>Semua scene</li>
+          <li>Email login</li>
+        </ul>
+        <button class="btn btn-primary">Pilih</button>
+      </div>
+
+      <div class="price-card" onclick="startSubscription('MONTHLY')">
+        <h3>📆 Monthly</h3>
+        <div class="amount">Rp 30.000</div>
+        <div class="period">30 hari</div>
+        <ul>
+          <li>100 upload/hari</li>
+          <li>Semua pose</li>
+          <li>Semua scene</li>
+          <li>Email login</li>
+        </ul>
+        <button class="btn btn-primary">Pilih</button>
+      </div>
+
+      <div class="price-card" onclick="startSubscription('YEARLY')">
+        <h3>🎁 Yearly</h3>
+        <div class="amount">Rp 150.000</div>
+        <div class="period">365 hari</div>
+        <ul>
+          <li>1000 upload/hari</li>
+          <li>Semua pose</li>
+          <li>Semua scene</li>
+          <li>Email login</li>
+        </ul>
+        <button class="btn btn-primary">Pilih</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QRIS PAYMENT MODAL -->
+<div id="qrisModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeQRISModal()">&times;</span>
+    <div class="modal-header">💳 Pembayaran QRIS</div>
+
+    <div class="qris-container">
+      <h3 id="tierName"></h3>
+      <p style="color: #999; margin-bottom: 1.5rem;">Scan QRIS di bawah untuk melanjutkan</p>
+      <img id="qrisImage" src="" alt="QRIS Code">
+
+      <div class="qris-info">
+        <p>Order ID: <strong id="orderId"></strong></p>
+        <p>Amount: <strong>Rp <span id="tierPrice"></span></strong></p>
+        <p style="margin-top: 1rem; color: #666; font-size: 0.85rem;">
+          ⏳ Menunggu pembayaran... (polling setiap 3 detik)
+        </p>
+      </div>
+
+      <button class="btn" style="background: #999; color: white;" onclick="closeQRISModal()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- USER STATUS WIDGET (to be inserted in index.html header) -->
+<div id="userStatus" class="user-status"></div>
+
+<script src="subscription.js"></script>
+</body>
+</html>
