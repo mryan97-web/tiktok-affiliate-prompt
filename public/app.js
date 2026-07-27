@@ -839,6 +839,60 @@ function buildIdeogramPrompt(parts) {
 }
 
 // ===================================================================
+// CHARACTER CONSISTENCY LOCK — compact DNA block utk Google Flow / Kling / Runway
+// Copas ke tiap prompt biar subjek konsisten
+// ===================================================================
+let CHAR_SEED = Math.floor(Math.random() * 99999);
+
+function generateNewSeed() {
+  CHAR_SEED = Math.floor(Math.random() * 99999);
+  return CHAR_SEED;
+}
+
+function buildCharacterLock(gender, includeFace) {
+  const dna = gender === 'male' ? MALE_CHARACTER_DNA : CHARACTER_DNA;
+  const propsDNA = gender === 'male' ? DNA_LOCK_RULES_MALE : DNA_LOCK_RULES_FEMALE;
+
+  let block = `[CHARACTER IDENTITY — DO NOT CHANGE]
+`;
+  block += `Character: ${dna.name} (${dna.nationality})
+`;
+  block += `Seed: ${CHAR_SEED} — GUNAKAN SEED INI UNTUK MENJAGA KONSISTENSI WAJAH
+`;
+  block += `Gender: ${dna.gender}
+`;
+  block += `Age: ${dna.age}
+`;
+  block += `Ethnicity: ${dna.ethnicity}
+`;
+  block += `Skin: ${dna.skin}, ${dna.skin_texture}, ${dna.skin_glow}
+`;
+  block += `Face: ${dna.face_shape}, ${dna.jaw}, ${dna.chin}, ${dna.cheeks}
+`;
+  block += `Eyes: ${dna.eye_shape}, ${dna.eye_size}, ${dna.eye_color}, ${dna.eye_expression}
+`;
+  block += `Nose: ${dna.nose_shape}, ${dna.nose_tip}, ${dna.nose_profile}
+`;
+  block += `Lips: ${dna.lip_shape}, ${dna.lip_color}
+`;
+  block += `Hair: ${dna.hair_length} ${dna.hair_color} ${dna.hair_texture}, ${dna.hair_style}
+`;
+  block += `Height-Body: ${dna.height}, ${dna.body}, ${dna.proportion}
+`;
+  block += `Outfit: ${dna.outfit}, ${dna.outfit_style}
+`;
+  if (includeFace) {
+    block += `Brows: ${dna.brow_shape}, ${dna.brow_thickness}, ${dna.brow_color}
+`;
+    block += `Makeup: ${dna.makeup_style}${dna.gender === 'Perempuan' ? `, blush ${dna.makeup_blush}, eyeliner ${dna.makeup_eyeliner}, lipstick ${dna.makeup_lipstick}` : ''}
+`;
+  }
+  block += `[END CHARACTER IDENTITY]
+`;
+  return block;
+}
+
+// ===================================================================
 // VIDEO PROMPT BUILDER — untuk AI video generation
 // ===================================================================
 function buildVideoPrompt(parts) {
@@ -851,6 +905,7 @@ function buildVideoPrompt(parts) {
 
   const base = [
     `[Video Prompt]`,
+    buildCharacterLock(isMale ? 'male' : 'female', true),
     `${genderText}${behindText} acting as a confident TikTok affiliate influencer,`,
     `location: ${sceneText},`,
     `action: ${poseText},`,
@@ -1010,8 +1065,12 @@ function build4ScenePrompt(parts, productDesc) {
   const dialog4 = scentLines[3] ? `Dialog: "${scentLines[3]}"` : (scentLines[0] ? `Dialog: "Link di bio guys — checkout sekarang!"` : '');
 
   const scenes = [];
+  const charLock = buildCharacterLock(isMale ? 'male' : 'female', false);
+  const platformTip = `IMPORTANT: Generate ALL 4 scenes using the SAME Seed (${CHAR_SEED}) in Google Flow, Kling, or Runway for consistent character appearance across scenes. Use Character Reference Image if supported.`;
 
   scenes.push(`=== SCENE 1: PERKENALAN ===
+${charLock}
+${platformTip}
 Karakter: ${genderText}
 Aksi: ${introAction}
 ${dialog1}
@@ -1898,6 +1957,25 @@ function onOutputTypeChange() {
   }
 }
 
+// Handle seed from user input
+function updateSeedFromInput() {
+  const seedInput = document.getElementById('gen-char-seed');
+  if (seedInput) {
+    const val = parseInt(seedInput.value);
+    if (!isNaN(val) && val >= 0) {
+      CHAR_SEED = val;
+    }
+  }
+}
+
+function onNewSeedClick() {
+  generateNewSeed();
+  const seedInput = document.getElementById('gen-char-seed');
+  if (seedInput) {
+    seedInput.value = CHAR_SEED;
+  }
+}
+
 // ===================================================================
 // INIT
 // ===================================================================
@@ -1907,4 +1985,10 @@ document.addEventListener('DOMContentLoaded', () => {
   onProductModeChange();
   updatePoseByGender();
   onOutputTypeChange();
+
+  // Seed controls
+  const newSeedBtn = document.getElementById('gen-new-seed');
+  if (newSeedBtn) newSeedBtn.addEventListener('click', onNewSeedClick);
+  const seedInput = document.getElementById('gen-char-seed');
+  if (seedInput) seedInput.addEventListener('change', updateSeedFromInput);
 });

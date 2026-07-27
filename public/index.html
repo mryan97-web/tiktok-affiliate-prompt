@@ -2338,6 +2338,26 @@ STATUS: ✅ READY TO GENERATE<br>
                 <textarea id="gen-scene-desc" class="gen-textarea" rows="4" placeholder="Paste deskripsi produk di sini&#10;&#10;Contoh Parfum:&#10;Aroma: floral musky dengan sentuhan vanilla&#10;Notes: top (bergamot, pear), middle (rose, jasmine), base (musk, sandalwood)&#10;Cocok untuk: wanita karir, daily wear, tahan lama 8-10 jam&#10;&#10;Contoh Kaos:&#10;Bahan: cotton combed 30s, adem dan nyaman&#10;Fit: oversized, relaxed fit&#10;Detail: rib collar, double stitch hem, sablon rubber premium&#10;Size: S-5XL, cocok pria dan wanita&#10;&#10;Prompt akan otomatis menyesuaikan parfum/kaos berdasarkan deskripsi yang kamu paste."></textarea>
                 <div class="product-upload-hint" style="margin-top:4px;">💡 Prompt tiap scene (1-4) akan menyesuaikan konten deskripsi ini. Parfum → fokus aroma. Kaos → fokus bahan/fit.</div>
               </div>
+              
+              <!-- Character Consistency Section -->
+              <div id="gen-consistency-box" class="gen-card" style="grid-column:span 2;">
+                <div class="gen-card-title">🎭 Konsistensi Karakter</div>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                  <div style="flex:1;min-width:120px;">
+                    <label style="font-size:11px;color:var(--text-sec);">Seed Number</label>
+                    <input type="number" id="gen-char-seed" class="gen-input" value="12345" style="width:100%;" min="0" max="99999">
+                  </div>
+                  <div style="flex:2;min-width:160px;">
+                    <label style="font-size:11px;color:var(--text-sec);">Upload Foto Karakter (Referensi Wajah)</label>
+                    <input type="file" id="gen-char-ref" accept="image/*" style="font-size:12px;">
+                  </div>
+                  <button id="gen-new-seed" class="gen-btn gen-btn-sm" style="margin-top:12px;">🎲 Acak Seed</button>
+                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;">
+                  💡 <strong>Tips Google Flow / Kling / Runway:</strong> Gunakan Seed yang SAMA untuk semua scene. Upload foto karakter sebagai reference image agar wajah model konsisten.
+                </div>
+              </div>
+              
               <div class="gen-card">
                 <div class="gen-card-title">🎬 Scene</div>
                 <select class="gen-select" id="gen-scene">
