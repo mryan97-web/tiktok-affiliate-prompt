@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FASE 9 — Character Management | AREKA Official Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 1rem;
+    }
+    .header h1 {
+      font-size: 2rem;
+      color: #2d241a;
+      margin-bottom: 0.5rem;
+    }
+    .header p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #e0e0e0;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #2d241a;
+    }
+    .card p {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .status-box {
+      padding: 1rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: #2d7a3e;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #24632f;
+    }
+    .btn-secondary {
+      background: #1976d2;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #1565c0;
+    }
+    .btn-danger {
+      background: #c62828;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #ad1d1d;
+    }
+    .upload-zone {
+      border: 2px dashed #ccc;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .upload-zone input {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+    .result-box {
+      padding: 1rem;
+      background: #e8f5e9;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: none;
+    }
+    .result-box.show {
+      display: block;
+    }
+    .error-box {
+      padding: 1rem;
+      background: #ffebee;
+      border-radius: 8px;
+      color: #c62828;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-box.show {
+      display: block;
+    }
+    .tier-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .info-box {
+      background: #f0f4c3;
+      border-left: 4px solid #fbc02d;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>👤 FASE 9 — Character Management</h1>
+    <p>Kelola karakter untuk campaign. FREE: default chars only. PRO: upload custom dengan AI descriptor.</p>
+    <span class="tier-badge" id="tierBadge">Tier: FREE</span>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+    <!-- CARD 1: CHARACTER OVERVIEW -->
+    <div class="card">
+      <h2>👤 Character Overview</h2>
+      <p>Lihat status tier dan karakter yang tersedia.</p>
+      <div id="tierInfo" class="status-box">
+        <p id="tierStatus">Initializing...</p>
+      </div>
+      <div id="availableChars" style="display: grid; gap: 1rem; margin-top: 1rem;">
+      </div>
+      <button class="btn btn-secondary" onclick="document.getElementById('upgrade-card').scrollIntoView({behavior: 'smooth'})" style="width: 100%; margin-top: 1rem;">⭐ Upgrade ke PRO</button>
+    </div>
+
+    <!-- CARD 2: UPLOAD CHARACTER (PRO ONLY) -->
+    <div class="card">
+      <h2>📤 Upload Character (PRO)</h2>
+      <p>Upload max 2 foto referensi untuk custom karakter.</p>
+      
+      <div id="uploadStatus" class="error-box"></div>
+
+      <div class="upload-zone">
+        <input type="file" id="charPhoto1" accept="image/*">
+        <input type="file" id="charPhoto2" accept="image/*">
+        <button class="btn btn-primary" onclick="document.getElementById('charPhoto1').click()">📸 Upload Foto 1</button>
+        <span id="photo1Status" style="margin-left: 0.5rem;"></span>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-primary" onclick="document.getElementById('charPhoto2').click()">📸 Upload Foto 2</button>
+          <span id="photo2Status" style="margin-left: 0.5rem;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nama Karakter</label>
+        <input type="text" id="charName" placeholder="cth: Areka Slim, Areka Casual">
+      </div>
+
+      <button class="btn btn-primary" onclick="uploadCharacter()" style="width: 100%;">✅ Upload & Extract</button>
+      
+      <div id="uploadResult" class="result-box"></div>
+    </div>
+
+    <!-- CARD 3: CHARACTER LOCK -->
+    <div class="card">
+      <h2>🔒 Character Lock</h2>
+      <p>Set karakter default untuk campaign. Locked = tidak berubah.</p>
+      
+      <div class="form-group">
+        <label>Pilih Karakter</label>
+        <select id="lockCharSelect">
+          <option value="">-- Pilih Karakter --</option>
+        </select>
+      </div>
+
+      <label style="display: flex; align-items: center; margin-bottom: 1rem;">
+        <input type="checkbox" id="lockToggle" style="margin-right: 0.5rem;">
+        <span>Lock karakter ini untuk semua prompt</span>
+      </label>
+
+      <button class="btn btn-primary" onclick="lockCharacter()" style="width: 100%;">🔒 Lock</button>
+      
+      <div id="lockStatus" class="result-box"></div>
+    </div>
+
+    <!-- CARD 4: CHARACTER PREVIEW -->
+    <div class="card">
+      <h2>👁️ Character Preview</h2>
+      <p>Lihat detail lengkap karakter yang sudah diupload.</p>
+      
+      <div class="form-group">
+        <label>Pilih Karakter</label>
+        <select id="previewCharSelect" onchange="previewCharacter()">
+          <option value="">-- Pilih Karakter --</option>
+        </select>
+      </div>
+
+      <div id="charPreviewContent">
+        <p>Pilih karakter untuk preview</p>
+      </div>
+    </div>
+
+    <!-- CARD 5: DELETE CHARACTER -->
+    <div class="card">
+      <h2>🗑️ Delete Character</h2>
+      <p>Hapus karakter custom (tidak bisa dihapus: default chars).</p>
+      
+      <div class="form-group">
+        <label>Pilih Karakter Custom</label>
+        <select id="deleteCharSelect">
+          <option value="">-- Pilih Karakter Custom --</option>
+        </select>
+      </div>
+
+      <button class="btn btn-danger" onclick="deleteCharacter()" style="width: 100%;">🗑️ Hapus Karakter</button>
+      
+      <div id="deleteStatus" class="result-box"></div>
+    </div>
+
+    <!-- CARD 6: TIER UPGRADE -->
+    <div class="card" id="upgrade-card">
+      <h2>⭐ Tier Upgrade</h2>
+      <p>Unlock custom character upload dengan upgrade ke PRO tier.</p>
+      
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem;">
+        <tr style="background: #f5f5f5;">
+          <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">Feature</th>
+          <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">FREE</th>
+          <th style="padding: 0.75rem; border: 1px solid #ddd; text-align: left;">PRO</th>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Max Characters</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">1 (default only)</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">5</td>
+        </tr>
+        <tr style="background: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Upload Reference</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">❌</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ (2 foto)</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">AI Descriptor</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">❌</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">✅</td>
+        </tr>
+        <tr style="background: #f9f9f9;">
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">Character Lock</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">❌</td>
+          <td style="padding: 0.75rem; border: 1px solid #ddd;">✅</td>
+        </tr>
+      </table>
+
+      <button class="btn btn-secondary" onclick="upgradeToProDemo()" style="width: 100%;">⭐ Demo Upgrade (for testing)</button>
+      
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: #999;">Note: Real payment integration akan ditambahkan soon.</p>
+    </div>
+  </div>
+
+  <!-- INFO BOX -->
+  <div class="info-box" style="margin-top: 2rem;">
+    <strong>ℹ️ Cara Kerja FASE 9:</strong><br>
+    1. FREE tier: Gunakan default characters (AREKA_GIRL_001, AREKA_GUY_001)<br>
+    2. PRO tier: Upload foto karakter custom (max 2 foto)<br>
+    3. AI auto-extract: wajah, rambut, body, outfit, expression, makeup<br>
+    4. Lock karakter: set default untuk semua campaign<br>
+    5. Preview: lihat descriptor lengkap dalam format JSON
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="fase9-character-management.js"></script>
+</body>
+</html>
