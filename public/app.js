@@ -923,6 +923,13 @@ function buildVideoPrompt(parts) {
 
   let prompt = base.filter(Boolean).join('\n');
 
+  // ===== HARD TEXT & LANGUAGE RULES — ABSOLUTE, WAJIB DIIKUTI =====
+  prompt += `\n[ABSOLUTE RULES — VIOLATION WILL RUIN THE OUTPUT]
+- CRITICAL: NO TEXT ON SCREEN AT ALL. Zero text, zero writing, zero letters, zero captions, zero subtitles, zero labels, zero watermark, zero logo, zero banner, zero "link in bio", zero "shop now", zero overlay of any kind. The entire video frame must be PURE VIDEO only — no graphic elements, no text overlays, no floating text, no bottom bars, no top bars, no brand marks, no call-to-action text.
+- CRITICAL: LANGUAGE MUST BE BAHASA INDONESIA ONLY. The model/subject must speak in Bahasa Indonesia. NO ENGLISH SPEECH. NO ENGLISH TEXT. If you show any text or English in this video, the output is REJECTED.
+- The video must look like a raw clean TikTok video: just the model, the product, and the background. Nothing else on screen. No text badges, no stickers, no subtitles, no animated text, no brand logo.
+- DO NOT add text even if you think it looks good. Clean screen always.`;
+
   // Add influencer personality based on marketing role
   if (parts.marketing && parts.marketing.toLowerCase().includes('tiktok')) {
     prompt += `\nenergy: high energy TikTok style, direct yet casual, engaging, modern young audience vibe`;
@@ -944,12 +951,12 @@ function buildVideoPrompt(parts) {
   const sceneDesc = document.getElementById('gen-scene-desc')?.value?.trim() || '';
   const narLines = sceneDesc.split('\n').filter(l => l.trim());
   if (narLines[0]) {
-    prompt += `\nnarration (Bahasa Indonesia, spoken by model): "${narLines[0]}"`;
+    prompt += `\nDIALOGUE (Bahasa Indonesia WAJIB — model mengucapkan): "${narLines[0]}"`;
     if (narLines[1]) {
-      prompt += `\nnarration (Bahasa Indonesia, spoken by model): "${narLines[1]}"`;
+      prompt += `\nDIALOGUE (Bahasa Indonesia WAJIB — model mengucapkan): "${narLines[1]}"`;
     }
   } else {
-    prompt += `\nnarration (Bahasa Indonesia): model menjelaskan dan mempromosikan produk ini secara natural dengan gaya TikTok influencer Indonesia, tidak ada teks overlay apapun. Dialog terserah model — spontan natural, tidak perlu script.`;
+    prompt += `\nDIALOGUE LANGUAGE: WAJIB Bahasa Indonesia. Model harus berbicara dalam Bahasa Indonesia, TIDAK BOLEH Bahasa Inggris. Model mempromosikan produk secara natural dengan gaya TikTok influencer Indonesia — spontan, tidak perlu script. Contoh dialog yang boleh: "Hai guys coba lihat nih produknya", "Ini dia yang lagi viral", "Langganan gua dari dulu", "Gas beli sekarang". TIDAK BOLEH ADA KATA "CHECK LINK IN BIO" atau bahasa Inggris apapun dalam dialog.`;
   }
 
   // Special handling for "memakai kaos" pose (wearing the shirt)
@@ -1066,7 +1073,12 @@ function build4ScenePrompt(parts, productDesc) {
 
   const scenes = [];
   const charLock = buildCharacterLock(isMale ? 'male' : 'female', false);
-  const platformTip = `IMPORTANT: Generate ALL 4 scenes using the SAME Seed (${CHAR_SEED}) in Google Flow, Kling, or Runway for consistent character appearance across scenes. Use Character Reference Image if supported.`;
+  const rulesBlock = `[ABSOLUTE TEXT RULES]
+- NO TEXT ON SCREEN AT ALL. Zero captions, zero subtitles, zero watermark, zero logo, zero banner, zero "link in bio", zero "shop now", zero overlay of any kind. ONLY the character, product, and background are allowed.
+- NO ENGLISH. Language must be 100% Bahasa Indonesia. If any text or English appears in this scene, the entire output is REJECTED.
+- Clean screen: no text badges, no stickers, no animated text, no brand logo, no bottom/top bars.
+[END RULES]`;
+  const platformTip = `IMPORTANT: Generate ALL 4 scenes using the SAME Seed (${CHAR_SEED}) for consistent character appearance. Use Character Reference Image if supported.\n${rulesBlock}`;
 
   scenes.push(`=== SCENE 1: PERKENALAN ===
 ${charLock}
