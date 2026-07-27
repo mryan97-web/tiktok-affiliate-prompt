@@ -1413,7 +1413,10 @@ async function generatePrompt() {
     const validation = validatePrompt(state);
 
     // 3. CLEAN PARTS — no DNA dump, no identity lock spam
-    const isFromBehind = shotKey === 'from_behind' || shotKey === 'locked_from_behind' || shotKey === 'front_to_back_tracking' || shotKey?.includes('back_view') || poseKey?.includes('back_view') || poseKey?.includes('walk_away') || poseKey?.includes('wear_shirt_back') || poseKey?.includes('wear_shirt_adjust') || poseKey?.includes('front_to_back') || poseKey?.includes('wear_shirt_turn');
+    // From-behind ONLY from SHOT selection — NOT from pose key.
+    // Poses like front_to_back or wear_shirt_back describe the ACTION,
+    // not the camera position. Camera position is controlled by shot selection only.
+    const isFromBehind = shotKey === 'from_behind' || shotKey === 'locked_from_behind' || shotKey === 'front_to_back_tracking';
     const parts = {
       gender: gender,
       subject: buildSubjectCompact(gender),
