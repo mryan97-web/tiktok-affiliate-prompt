@@ -898,17 +898,40 @@ function buildCharacterLock(gender, includeFace) {
 function buildVideoPrompt(parts) {
   const isMale = parts.gender === 'male';
   const genderText = isMale ? 'Indonesian young man AREKA_GUY_001' : 'Indonesian woman AREKA_GIRL_001';
-  const poseText = parts.pose.split(',')[0].toLowerCase();
   const sceneText = parts.scene.split(',')[0].toLowerCase();
   const productText = parts.product ? parts.product.split(',')[0].toLowerCase() : 'product';
   const behindText = parts.fromBehind ? ', seen from behind, back facing camera' : '';
+
+  // Use the ORIGINAL pose KEY (e.g. "wear_shirt_front") not the description
+  const poseKeyRaw = parts.poseKey || '';
+  const poseDesc = parts.pose; // full description from POSES
+  const shotKeyRaw = (parts.camera || '').toLowerCase();
+
+  // Generate action instruction from pose key
+  let actionInstruction = poseDesc;
+
+  // If wearing a shirt — NEVER "hold it up", always "already wearing"
+  const isWearingShirt = poseKeyRaw.includes('wear_shirt') || poseKeyRaw.includes('front_to_back') || poseKeyRaw.includes('memakai');
+  const isFromBehindPose = poseKeyRaw.includes('back_view') || poseKeyRaw.includes('walk_away') || poseKeyRaw.includes('sit_back');
+
+  // Camera facing direction
+  if (parts.fromBehind || isFromBehindPose) {
+    // From behind — model's back is to camera
+  } else if (poseKeyRaw.includes('wear_shirt_back') || poseKeyRaw.includes('wear_shirt_adjust')) {
+    // These poses naturally show back
+  } else if (poseKeyRaw.includes('front_to_back') || poseKeyRaw.includes('wear_shirt_turn')) {
+    // Starts front, turns to back — dynamic
+  } else {
+    // DEFAULT: model must face camera
+    actionInstruction += '. Model FACING CAMERA, looking directly at lens — NOT from behind';
+  }
 
   const base = [
     `[Video Prompt]`,
     buildCharacterLock(isMale ? 'male' : 'female', true),
     `${genderText}${behindText} acting as a confident TikTok affiliate influencer,`,
     `location: ${sceneText},`,
-    `action: ${poseText},`,
+    `action: ${actionInstruction}`,
     `showcasing product: ${productText},`,
     `style: natural candid influencer video, dynamic movement, casual Indonesian street style,`,
     parts.custom ? parts.custom : null,
@@ -923,14 +946,14 @@ function buildVideoPrompt(parts) {
 
   let prompt = base.filter(Boolean).join('\n');
 
-  // ===== HARD TEXT & LANGUAGE RULES — ABSOLUTE, WAJIB DIIKUTI =====
+  // ===== HARD TEXT & LANGUAGE RULES =====
   prompt += `\n[ABSOLUTE RULES — VIOLATION WILL RUIN THE OUTPUT]
 - CRITICAL: NO TEXT ON SCREEN AT ALL. Zero text, zero writing, zero letters, zero captions, zero subtitles, zero labels, zero watermark, zero logo, zero banner, zero "link in bio", zero "shop now", zero overlay of any kind. The entire video frame must be PURE VIDEO only — no graphic elements, no text overlays, no floating text, no bottom bars, no top bars, no brand marks, no call-to-action text.
 - CRITICAL: LANGUAGE MUST BE BAHASA INDONESIA ONLY. The model/subject must speak in Bahasa Indonesia. NO ENGLISH SPEECH. NO ENGLISH TEXT. If you show any text or English in this video, the output is REJECTED.
 - The video must look like a raw clean TikTok video: just the model, the product, and the background. Nothing else on screen. No text badges, no stickers, no subtitles, no animated text, no brand logo.
 - DO NOT add text even if you think it looks good. Clean screen always.`;
 
-  // Add influencer personality based on marketing role
+  // Energy / personality
   if (parts.marketing && parts.marketing.toLowerCase().includes('tiktok')) {
     prompt += `\nenergy: high energy TikTok style, direct yet casual, engaging, modern young audience vibe`;
   } else if (parts.marketing && parts.marketing.toLowerCase().includes('luxury')) {
@@ -939,15 +962,18 @@ function buildVideoPrompt(parts) {
     prompt += `\nenergy: natural friendly influencer style, relatable and authentic, warm personality`;
   }
 
-  // Add product-specific video behavior
-  if (productText.includes('kaos') || productText.includes('shirt') || productText.includes('jaket') || productText.includes('hoodie') || productText.includes('kemeja')) {
-    prompt += `\nproduct interaction: model touches and adjusts the fabric naturally, shows fit and texture, holds it up to camera, demonstrates comfort and style`;
+  // Product-specific behavior — CORRECTED: check isWearingShirt first
+  if (isWearingShirt) {
+    // Model is ALREADY wearing the shirt — NEVER hold it up
+    prompt += `\nproduct interaction: model is ALREADY WEARING the t-shirt/apparel. NO holding product up to camera. Instead, model touches fabric on own body naturally, adjusts collar or sleeve, shows fit by moving body, demonstrates comfort while worn. Product stays ON the model body — not in hands.`;
+  } else if (productText.includes('kaos') || productText.includes('shirt') || productText.includes('jaket') || productText.includes('hoodie') || productText.includes('kemeja')) {
+    // Holding the shirt (not wearing)
+    prompt += `\nproduct interaction: model holds the apparel item with both hands, shows front and back of fabric to camera, points at details and print, natural presenter style`;
   } else if (productText.includes('parfum') || productText.includes('perfume') || productText.includes('body splash')) {
     prompt += `\nproduct interaction: model holds the bottle delicately, sprays gently, gestures to show the fragrance, elegant product handling`;
   }
 
-  // Indonesian dialogue/narration — spoken by the model, target audience Indonesia
-  // Gunakan custom description dari productSceneDesc klo ada, klo nggak pakai generik
+  // Indonesian dialogue
   const sceneDesc = document.getElementById('gen-scene-desc')?.value?.trim() || '';
   const narLines = sceneDesc.split('\n').filter(l => l.trim());
   if (narLines[0]) {
@@ -956,48 +982,46 @@ function buildVideoPrompt(parts) {
       prompt += `\nDIALOGUE (Bahasa Indonesia WAJIB — model mengucapkan): "${narLines[1]}"`;
     }
   } else {
-    prompt += `\nDIALOGUE LANGUAGE: WAJIB Bahasa Indonesia. Model harus berbicara dalam Bahasa Indonesia, TIDAK BOLEH Bahasa Inggris. Model mempromosikan produk secara natural dengan gaya TikTok influencer Indonesia — spontan, tidak perlu script. Contoh dialog yang boleh: "Hai guys coba lihat nih produknya", "Ini dia yang lagi viral", "Langganan gua dari dulu", "Gas beli sekarang". TIDAK BOLEH ADA KATA "CHECK LINK IN BIO" atau bahasa Inggris apapun dalam dialog.`;
+    prompt += `\nDIALOGUE LANGUAGE: WAJIB Bahasa Indonesia. Model harus berbicara dalam Bahasa Indonesia, TIDAK BOLEH Bahasa Inggris. Model mempromosikan produk secara natural dengan gaya TikTok influencer Indonesia — spontan, tidak perlu script. TIDAK BOLEH ADA KATA "CHECK LINK IN BIO" atau bahasa Inggris apapun dalam dialog.`;
   }
 
-  // Special handling for "memakai kaos" pose (wearing the shirt)
-  const poseKeyLower = (parts.pose || '').toLowerCase();
-  if (poseKeyLower.includes('wear_shirt') || poseKeyLower.includes('memakai')) {
-    prompt += `\nwear interaction: model is already wearing the product (t-shirt/apparel), demonstrates fit on body, touches fabric to show texture and comfort, natural body movement to showcase how it looks when worn`;
+  // Pose-specific overrides (using ORIGINAL poseKey)
+  if (isWearingShirt) {
+    prompt += `\nwear status: model is WEARING the t-shirt already. T-shirt is ON the model's body the entire video. NOT holding it. DO NOT show model holding the shirt as a separate item.`;
   }
 
-  // Special handling for front-to-back turn poses
-  if (poseKeyLower.includes('front_to_back') || poseKeyLower.includes('wear_shirt_turn')) {
-    prompt += `\ncamera technique: dynamic rotation shot starting from front view, model slowly turns body 180 degrees revealing back view, continuous smooth motion, outfit visible from every angle in one take`;
+  // Front-to-back turn
+  if (poseKeyRaw.includes('front_to_back') || poseKeyRaw.includes('wear_shirt_turn')) {
+    prompt += `\ncamera technique: dynamic rotation shot starting from FRONT view facing camera, model slowly turns body 180 degrees revealing back view, continuous smooth motion, outfit visible from every angle in one take`;
   }
 
   // Locked from behind shot
-  const shotKeyLower = (parts.camera || '').toLowerCase();
-  if (shotKeyLower.includes('locked_from_behind') || shotKeyLower.includes('locked from behind')) {
+  if (shotKeyRaw.includes('locked_from_behind') || shotKeyRaw.includes('locked from behind')) {
     prompt += `\ncamera: completely static locked shot, no camera movement, subject remains with back fully facing camera throughout the entire video, focus on back silhouette and outfit details, professional fashion back-view cinematography`;
   }
 
-  // TikTok Pargoy — dance mode override
-  if (poseKeyLower.includes('pargoy')) {
+  // TikTok Pargoy — dance mode
+  if (poseKeyRaw.includes('pargoy')) {
     prompt += `\nmovement: FULL DANCE MODE. Model performs energetic TikTok dance (joget pargoy), dynamic body movement, grooving to music rhythm, sharp and fluid dance moves, TikTok-style choreography, continuous motion throughout the video, dance moves that showcase the outfit naturally`
       + `\nenergy: MAXIMUM ENERGY, high energy TikTok influencer, playful and confident, engaging dance to camera, like viral TikTok fashion content`
       + `\ncamera: dynamic handheld style, slight movement following the dancer, TikTok videography vibe`
       + `\nmood: fun, energetic, youthful, viral TikTok fashion content, outfit reveal through dance`
       + `\nsound: sync to trending TikTok audio beat, dance choreography matching rhythm`;
   }
-  // Specific pargoy pose overrides
-  if (poseKeyLower.includes('pargoy_spin')) {
+  // Specific pargoy overrides
+  if (poseKeyRaw.includes('pargoy_spin')) {
     prompt += `\nspin: model does a full dancing spin/rotation to show the t-shirt from all directions, one hand pointing at shirt during spin, playful finish`;
   }
-  if (poseKeyLower.includes('pargoy_front_to_back')) {
+  if (poseKeyRaw.includes('pargoy_front_to_back')) {
     prompt += `\ntransition: dance from front then spin to back while continuing to move, continuous 180-degree turn during dance, shirt visible from both sides in one fluid motion`;
   }
-  if (poseKeyLower.includes('pargoy_stop')) {
+  if (poseKeyRaw.includes('pargoy_stop')) {
     prompt += `\ndance structure: sharp energetic dance moves ending with a sudden freeze pose, hands pointing at own outfit in final still frame, TikTok signature stop-challenge style`;
   }
-  if (poseKeyLower.includes('pargoy_bounce')) {
+  if (poseKeyRaw.includes('pargoy_bounce')) {
     prompt += `\nbounce: rhythmic bouncing movement while pulling and adjusting own t-shirt to show fit, hands touching fabric in sync with body movement`;
   }
-  if (poseKeyLower.includes('pargoy_hand_gesture')) {
+  if (poseKeyRaw.includes('pargoy_hand_gesture')) {
     prompt += `\ngesture: iconic TikTok hand gesture dance, hands moving rhythmically pointing at own outfit repeatedly, head nodding to beat, streetwear fashion dance style`;
   }
 
@@ -1419,6 +1443,7 @@ async function generatePrompt() {
     const isFromBehind = shotKey === 'from_behind' || shotKey === 'locked_from_behind' || shotKey === 'front_to_back_tracking';
     const parts = {
       gender: gender,
+      poseKey: poseKey, // original key for detection
       subject: buildSubjectCompact(gender),
       subjectShort: buildSubjectShort(gender),
       scene: buildScene(sceneKey),
