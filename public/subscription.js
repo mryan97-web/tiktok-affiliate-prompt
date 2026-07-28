@@ -377,8 +377,18 @@ function showSignupTab() {
   document.querySelector('[onclick*="showSignupTab"]')?.classList.add('active');
 }
 
-// Auto-init
-document.addEventListener('DOMContentLoaded', () => {
+// Auto-init (runs when script loads, even if DOMContentLoaded already fired)
+function initSubscriptionUI() {
   initSubscriptionSystem();
   renderUserStatus();
-});
+  document.getElementById('loginTab')?.classList.add('active');
+  document.getElementById('signupTab')?.classList.remove('active');
+  document.querySelector('[onclick*="showLoginTab"]')?.classList.add('active');
+}
+
+// If DOMContentLoaded already fired, run now; otherwise wait
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initSubscriptionUI();
+} else {
+  document.addEventListener('DOMContentLoaded', initSubscriptionUI);
+}

@@ -63,6 +63,348 @@ body {
 .fase-tab.disabled-tab { opacity: 0.35; cursor: default; }
 .fase-tab.disabled-tab:hover { border-color: var(--border); color: var(--text-sec); }
 
+/* HEADER RIGHT: Login + Tier Badge */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.header-login-btn {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--accent), #a67c50);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.header-login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(199, 151, 111, 0.3);
+}
+
+.header-tier-badge {
+  padding: 0.3rem 0.75rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ==================== MODAL STYLES ==================== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  overflow: auto;
+}
+
+.modal-content {
+  background: white;
+  margin: 5% auto;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.modal-pricing {
+  max-width: 900px;
+}
+
+.modal-qris {
+  max-width: 420px;
+  text-align: center;
+}
+
+.modal-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2d241a;
+}
+
+.close-btn {
+  color: #999;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+/* TABS */
+.tab-buttons {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #999;
+  border-bottom: 3px solid transparent;
+  transition: 0.2s;
+  margin-bottom: -2px;
+}
+
+.tab-button.active {
+  color: #2d7a3e;
+  border-bottom-color: #2d7a3e;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* FORM */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(199, 151, 111, 0.15);
+}
+
+.divider {
+  text-align: center;
+  margin: 1.25rem 0;
+  color: #999;
+  position: relative;
+  font-size: 0.85rem;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.divider span {
+  background: white;
+  padding: 0 1rem;
+  position: relative;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: #2d7a3e;
+  color: white;
+}
+.btn-primary:hover {
+  background: #24632f;
+}
+
+.btn-secondary {
+  background: #666;
+  color: white;
+}
+.btn-secondary:hover {
+  background: #555;
+}
+
+.btn-google {
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+}
+.btn-google:hover {
+  background: #f5f5f5;
+}
+
+/* PRICING CARDS */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.price-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.price-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(199, 151, 111, 0.15);
+}
+
+.price-card-popular {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #fffaf5, white);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), #a67c50);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.price-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #2d241a;
+}
+
+.amount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #2d7a3e;
+  margin-bottom: 0.25rem;
+}
+
+.period {
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 1rem;
+}
+
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.price-card li {
+  padding: 0.25rem 0;
+  color: #666;
+}
+
+.price-card li::before {
+  content: "✓ ";
+  color: #2d7a3e;
+  font-weight: 700;
+}
+
+/* QRIS */
+.qris-container {
+  text-align: center;
+}
+
+.qris-subtitle {
+  color: #999;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.qris-image {
+  max-width: 280px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  padding: 1rem;
+  background: white;
+}
+
+.qris-info {
+  background: #e8f5e9;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.qris-info p {
+  margin: 0.5rem 0;
+}
+
+.qris-status {
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 1rem !important;
+}
+
 /* ===== INFO BAR ===== */
 .info-bar {
   padding: 7px 20px;
