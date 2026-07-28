@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing | AREKA Prompt Database</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #fafafa 0%, #f0ead6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1100px;
+      width: 100%;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      color: #2d241a;
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+    }
+    .header p {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      border: 2px solid #e0e0e0;
+      text-align: center;
+      transition: 0.3s;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(45, 37, 26, 0.1);
+    }
+    .card.popular {
+      border-color: #C7976F;
+      background: linear-gradient(180deg, #fffcf8, white);
+      box-shadow: 0 8px 30px rgba(199, 151, 111, 0.15);
+    }
+    .badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #C7976F, #a67c50);
+      color: white;
+      padding: 0.4rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: #2d241a;
+    }
+    .price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #2d7a3e;
+      margin-bottom: 0.25rem;
+    }
+    .price small {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #999;
+    }
+    .period {
+      color: #999;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .card ul {
+      list-style: none;
+      text-align: left;
+      margin: 1.5rem 0;
+      padding: 0;
+    }
+    .card li {
+      padding: 0.5rem 0;
+      font-size: 0.95rem;
+      color: #444;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .card li:last-child { border-bottom: none; }
+    .card li::before {
+      content: "✅ ";
+      margin-right: 0.5rem;
+    }
+    .card li.disabled { color: #ccc; }
+    .card li.disabled::before { content: "❌ "; }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .btn-primary {
+      background: #2d7a3e;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #24632f;
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: white;
+      color: #2d7a3e;
+      border: 2px solid #2d7a3e;
+    }
+    .btn-outline:hover {
+      background: #f0fff0;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      color: #999;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover { color: #2d7a3e; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>💳 Pilih Paket</h1>
+    <p>Dapatkan akses tak terbatas ke Prompt Database System AREKA Official Store</p>
+  </div>
+
+  <div class="grid">
+    <!-- WEEKLY -->
+    <div class="card">
+      <h3>📅 Weekly</h3>
+      <div class="price">Rp 5.000 <small>/ 7 hari</small></div>
+      <p class="period">Coba dulu, cocok? Lanjut!</p>
+      <ul>
+        <li>10 prompt / hari</li>
+        <li>Semua pose akses</li>
+        <li>Semua scene akses</li>
+        <li class="disabled">Character custom</li>
+        <li class="disabled">Character lock</li>
+      </ul>
+      <a class="btn btn-outline" href="https://tiktok-affiliate-prompt.vercel.app">Coba FREE dulu</a>
+    </div>
+
+    <!-- MONTHLY - POPULAR -->
+    <div class="card popular">
+      <div class="badge">🎯 POPULER</div>
+      <h3>📆 Monthly</h3>
+      <div class="price">Rp 30.000 <small>/ 30 hari</small></div>
+      <p class="period">Paling laris! Cocok untuk creator aktif</p>
+      <ul>
+        <li>100 prompt / hari</li>
+        <li>Semua pose akses</li>
+        <li>Semua scene akses</li>
+        <li>Character custom</li>
+        <li>Character lock</li>
+      </ul>
+      <a class="btn btn-primary" href="https://tiktok-affiliate-prompt.vercel.app">🔑 Login & Pilih</a>
+    </div>
+
+    <!-- YEARLY -->
+    <div class="card">
+      <h3>🎁 Yearly</h3>
+      <div class="price">Rp 150.000 <small>/ 365 hari</small></div>
+      <p class="period">Rp 12.500/bulan — hemat 60%!</p>
+      <ul>
+        <li>1000 prompt / hari</li>
+        <li>Semua pose akses</li>
+        <li>Semua scene akses</li>
+        <li>Character custom</li>
+        <li>Character lock</li>
+      </ul>
+      <a class="btn btn-primary" href="https://tiktok-affiliate-prompt.vercel.app">🔑 Login & Pilih</a>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 12px; max-width: 500px; margin: 0 auto;">
+      <strong style="color: #2d7a3e;">💰 Pembayaran via QRIS</strong>
+      <p style="color: #666; margin-top: 0.5rem; font-size: 0.9rem;">
+        Scan QRIS → Bayar → Akses langsung aktif
+      </p>
+    </div>
+  </div>
+
+  <a class="back-link" href="https://tiktok-affiliate-prompt.vercel.app">← Kembali ke Generator</a>
+</div>
+</body>
+</html>
